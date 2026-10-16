@@ -1,0 +1,25 @@
+{
+  "name": "esda-qolsin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Esda qolsin: o'rgangan va bilganlaringiz hisobi. Server: Express + PostgreSQL (Neon), Render'da.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.14.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.12.0",
+    "web-push": "^3.6.7"
+  }
+}

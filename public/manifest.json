@@ -1,0 +1,21 @@
+{
+  "name": "Esda qolsin",
+  "short_name": "Esda qolsin",
+  "description": "O'rgangan va bilganlaringiz hisobi",
+  "lang": "uz",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05060f",
+  "theme_color": "#05060f",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Bugungi takror", "url": "/#takror", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

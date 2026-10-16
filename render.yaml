@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: esda-qolsin
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: CRON_KEY
+        generateValue: true
+      - key: MAX_FILE_MB
+        value: "10"
+      - key: USER_QUOTA_MB
+        value: "300"
