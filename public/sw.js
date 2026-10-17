@@ -1,5 +1,5 @@
-// Esda qolsin service worker: offline app shell and review reminders. The API is never cached.
-const CACHE = "esda-qolsin-v5";
+// ME'MORI service worker: offline app shell and review reminders. The API is never cached.
+const CACHE = "memori-v6";
 const SHELL = ["/", "/manifest.json", "/push.js", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -23,7 +23,7 @@ self.addEventListener("fetch", e => {
 self.addEventListener("push", e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (err) { d = { body: e.data ? e.data.text() : "" }; }
-  e.waitUntil(self.registration.showNotification(d.title || "Esda qolsin", {
+  e.waitUntil(self.registration.showNotification(d.title || "ME'MORI", {
     body: d.body || "Bugungi takror vaqti keldi.",
     icon: "/icon-192.png",
     badge: "/icon-192.png",

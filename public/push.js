@@ -1,4 +1,4 @@
-// Esda qolsin: daily review reminders by web push.
+// ME'MORI: daily review reminders by web push.
 // The app calls window.EsdaPush from its settings; the server sends the reminder at the chosen hour.
 (function () {
   "use strict";
