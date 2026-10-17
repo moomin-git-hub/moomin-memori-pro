@@ -1,4 +1,4 @@
-// Esda qolsin server: accounts, record sync and file attachments on PostgreSQL (Neon).
+// ME'MORI server (formerly Esda qolsin): accounts, record sync and file attachments on PostgreSQL (Neon).
 // Serves the app from ./public and the API under /api. Deploys to Render as one web service.
 "use strict";
 const path = require("path");
@@ -20,6 +20,14 @@ const USER_QUOTA_MB = +process.env.USER_QUOTA_MB || 300;
 const PROD = process.env.NODE_ENV === "production";
 const COOKIE = "eq_session";
 const CRON_KEY = process.env.CRON_KEY || "";
+const APP = () => `ME'MORI ${new Date().getFullYear()}`;
+const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
+const PUBLIC_URL = (process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL || "").replace(/\/$/, "");
+const GEMINI_KEY = process.env.GEMINI_API_KEY || "";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || "";
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5";
+const AI_ON = !!(GEMINI_KEY || ANTHROPIC_KEY);
 
 if (!DATABASE_URL) { console.error("DATABASE_URL is not set. Put your Neon connection string there."); process.exit(1); }
 if (!JWT_SECRET || JWT_SECRET.length < 24) { console.error("JWT_SECRET must be set to a random string of at least 24 characters."); process.exit(1); }
@@ -70,6 +78,17 @@ async function migrate() {
       created_at timestamptz NOT NULL DEFAULT now()
     );
     CREATE INDEX IF NOT EXISTS push_subs_user ON push_subs (user_id);
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS api_key text UNIQUE;
+    CREATE TABLE IF NOT EXISTS tg_links (
+      user_id uuid PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+      chat_id bigint UNIQUE NOT NULL,
+      name text NOT NULL DEFAULT '',
+      hour smallint NOT NULL DEFAULT 7,
+      last_day text NOT NULL DEFAULT '',
+      last_backup timestamptz,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+    CREATE TABLE IF NOT EXISTS tg_codes (code text PRIMARY KEY, user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, exp timestamptz NOT NULL);
   `);
 }
 
@@ -110,7 +129,7 @@ const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.length <= 200;
 
 /* ── health and config ── */
 app.get("/api/health", (req, res) => res.json({ ok: true, app: "esda-qolsin" }));
-app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB }));
+app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB, ai: AI_ON, telegram: !!TG_TOKEN }));
 
 /* ── accounts ── */
 app.post("/api/auth/register", wrap(async (req, res) => {
@@ -162,7 +181,7 @@ app.get("/api/me", auth, (req, res) => res.json(publicUser(req.user)));
    The client sends the records it changed (each carries "u", its last-edit time) and the cursor it holds.
    A stored record is replaced only by a newer "u". Every write takes a new revision from one sequence,
    so the reply is simply everything of this user with a revision above the cursor, plus the new cursor. */
-const KINDS = new Set(["b", "i", "c", "g"]);
+const KINDS = new Set(["b", "i", "c", "g", "s"]);   // source, note, settings, goal, study session
 app.post("/api/sync", auth, wrap(async (req, res) => {
   const since = Math.max(0, +req.body.since || 0);
   const incoming = Array.isArray(req.body.recs) ? req.body.recs : [];
@@ -191,10 +210,13 @@ app.post("/api/sync", auth, wrap(async (req, res) => {
   const top = rows.length ? Math.max(...rows.map(r => +r.rev)) : since;
   res.json({ recs: rows.map(r => r.data), since: top });
 }));
+async function backupOf(userId) {
+  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND NOT (data ? 'del')", [userId]);
+  return { app: "esda-qolsin", v: 2, saved: new Date().toISOString(), recs: Object.fromEntries(rows.map(r => [r.data.id, r.data])) };
+}
 app.get("/api/export", auth, wrap(async (req, res) => {
-  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND NOT (data ? 'del')", [req.user.id]);
-  res.setHeader("Content-Disposition", `attachment; filename="esda-qolsin-${new Date().toISOString().slice(0, 10)}.json"`);
-  res.json({ app: "esda-qolsin", v: 2, saved: new Date().toISOString(), recs: Object.fromEntries(rows.map(r => [r.data.id, r.data])) });
+  res.setHeader("Content-Disposition", `attachment; filename="memori-${new Date().toISOString().slice(0, 10)}.json"`);
+  res.json(await backupOf(req.user.id));
 }));
 
 /* ── files attached to notes ── */
@@ -284,9 +306,10 @@ async function remind() {
       await pool.query("UPDATE push_subs SET last_day = $1 WHERE endpoint = $2", [now.day, s.endpoint]);
       const n = await dueCount(s.user_id, now.day);
       if (!n) continue;
-      if (await sendTo(s, { title: "Esda qolsin", body: `Bugun ${n} ta yozuvni eslash vaqti keldi. Bir necha daqiqa yetadi.`, url: "/#takror", tag: "esda-due" })) sent++;
+      if (await sendTo(s, { title: APP(), body: `Bugun ${n} ta yozuvni eslash vaqti keldi. Bir necha daqiqa yetadi.`, url: "/#takror", tag: "esda-due" })) sent++;
     }
   } catch (e) { console.error("remind:", e.message); } finally { reminding = false; }
+  await telegramRound().catch(e => console.error("telegram:", e.message));
   return sent;
 }
 app.get("/api/push/key", (req, res) => vapid ? res.json({ key: vapid.publicKey }) : fail(res, 503, "Eslatmalar hali tayyor emas."));
@@ -315,7 +338,7 @@ app.post("/api/push/test", auth, wrap(async (req, res) => {
   if (!rows.length) return fail(res, 400, "Avval eslatmani yoqing.");
   const n = await dueCount(req.user.id, localNow(rows[0].tz).day);
   let ok = 0;
-  for (const s of rows) if (await sendTo(s, { title: "Esda qolsin", body: n ? `Sinov: bugun ${n} ta takror bor.` : "Sinov: eslatmalar ishlayapti.", url: "/#takror", tag: "esda-test" })) ok++;
+  for (const s of rows) if (await sendTo(s, { title: APP(), body: n ? `Sinov: bugun ${n} ta takror bor.` : "Sinov: eslatmalar ishlayapti.", url: "/#takror", tag: "esda-test" })) ok++;
   res.json({ sent: ok });
 }));
 // Render's free plan sleeps after 15 idle minutes; an outside pinger (cron-job.org) calling this
@@ -325,6 +348,330 @@ app.get("/api/cron", wrap(async (req, res) => {
   res.json({ sent: await remind() });
 }));
 
+/* ── one place that turns "what I learned" into records ──
+   Used by the Telegram bot and by other apps (Vaqt Banki, Mo'min). A message like
+   «O'tkan kunlar 40-65 bet 30 daq: Otabek Marg'ilonga keldi» becomes a note on that
+   source, a study session (25 bet, 30 daqiqa) and the source's new place. */
+const UNIT_OF_KIND = { badiiy: "bet", ilmiy: "bet", sher: "bet", diniy: "bet", kurs: "dars", til: "dars", video: "daqiqa", podkast: "daqiqa" };
+const fold = s => String(s || "").toLowerCase().replace(/[ʻʼ‘’`´]/g, "'").replace(/\s+/g, " ").trim();
+const rid = () => crypto.randomBytes(8).toString("hex");
+function addDay(day, n) { const [y, m, d] = day.split("-").map(Number); const t = new Date(Date.UTC(y, m - 1, d + n)); return t.toISOString().slice(0, 10); }
+async function recordsOf(userId, kinds) {
+  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND k = ANY($2) AND NOT (data ? 'del')", [userId, kinds]);
+  return rows.map(r => r.data);
+}
+async function saveRecords(userId, list) {
+  for (const r of list) {
+    await pool.query(`
+      INSERT INTO records (user_id, id, k, u, data) VALUES ($1, $2, $3, $4, $5::jsonb)
+      ON CONFLICT (user_id, id) DO UPDATE SET k = EXCLUDED.k, u = EXCLUDED.u, data = EXCLUDED.data, rev = nextval('rec_rev')
+      WHERE records.u < EXCLUDED.u`, [userId, r.id, r.k, r.u, JSON.stringify(r)]);
+  }
+}
+// Reads «<source title> <amount> <unit> <minutes>: <text>»; every part is optional.
+function parseEntry(text, sources) {
+  let t = String(text || "").trim(), src = null;
+  const ft = fold(t);
+  for (const b of [...sources].sort((x, y) => y.title.length - x.title.length)) {
+    const ftl = fold(b.title);
+    if (ftl && ft.startsWith(ftl)) { src = b; t = t.slice(b.title.length); break; }
+  }
+  if (!src) { const m = t.match(/^#(\S+)/); if (m) { const k = fold(m[1]).replace(/_/g, " "); src = sources.find(b => fold(b.title).startsWith(k)) || null; if (src) t = t.slice(m[0].length); } }
+  // «Sapiens 30 bet: …» with no such source yet: the words before the amount name a new one.
+  let title = "", unit = "";
+  if (!src) { const m = t.match(/^(\D{2,80}?)\s+(?=\d{1,5}(?:\s*[-–—]\s*\d{1,5})?\s*(bet|dars|daqiqa|daq|min|soat)\b)/i); if (m) { title = m[1].replace(/[\s,.:;—–-]+$/, ""); unit = /^bet$/i.test(m[2]) ? "bet" : /^dars$/i.test(m[2]) ? "dars" : ""; t = t.slice(m[0].length); } }
+  t = t.replace(/^[\s,.:;—–-]+/, "");
+  let from = 0, to = 0, qty = 0, minutes = 0;
+  const am = t.match(/^(\d{1,5})(?:\s*[-–—]\s*(\d{1,5}))?\s*(bet|b\b|dars|daqiqa|daq|min|soat)?(?=[\s,.:;—–-]|$)[\s,.:;—–-]*/i);
+  if (am) {
+    const a = +am[1], b = am[2] ? +am[2] : 0, w = (am[3] || "").toLowerCase();
+    if (/^(daqiqa|daq|min)$/.test(w)) minutes = a;
+    else if (w === "soat") minutes = a * 60;
+    else if (b) { from = a; to = b; qty = Math.max(0, b - a + 1); }
+    else qty = a;
+    t = t.slice(am[0].length);
+  }
+  const mm = t.match(/^(\d{1,4})\s*(daqiqa|daq|min|soat)\b[\s,.:;—–-]*/i);
+  if (mm) { minutes = /soat/i.test(mm[2]) ? +mm[1] * 60 : +mm[1]; t = t.slice(mm[0].length); }
+  return { src, title, unit, from, to, qty, minutes, text: t.trim() };
+}
+async function sourceFor(userId, title, kind) {
+  title = String(title).slice(0, 160);
+  const found = (await recordsOf(userId, ["b"])).find(x => fold(x.title) === fold(title));
+  if (found) return found;
+  const now = Date.now(), b = { id: rid(), k: "b", title, author: "", kind: kind && UNIT_OF_KIND[kind] !== undefined ? kind : "boshqa", pages: 0, cur: 0, status: "reading", c: now, fin: 0, u: now };
+  await saveRecords(userId, [b]);
+  return b;
+}
+async function logEntry(userId, e) {
+  const sources = (await recordsOf(userId, ["b"])).filter(b => b.status !== "done" || e.title);
+  const p = e.parsed || parseEntry(e.raw || "", sources);
+  let b = p.src;
+  if (!b && !e.title && p.title) { e = { ...e, title: p.title, unit: e.unit || p.unit }; b = sources.find(x => fold(x.title) === fold(p.title)) || null; }
+  if (!b && e.title) b = sources.find(x => fold(x.title) === fold(e.title)) || null;
+  if (!b) b = await sourceFor(userId, e.title || "Telegram yozuvlari", e.kind || { bet: "ilmiy", dars: "kurs", daqiqa: "video" }[e.unit]);
+  const now = Math.max(Date.now(), (b.u || 0) + 1), day = localNow("Asia/Tashkent").day, out = [];
+  const unit = UNIT_OF_KIND[b.kind] || "";
+  let { from, to, qty, minutes, text } = { from: +e.from || p.from, to: +e.to || p.to, qty: +e.qty || p.qty, minutes: +e.minutes || p.minutes, text: e.text != null ? String(e.text).trim() : p.text };
+  if (unit && qty && !from && !to && unit !== "daqiqa") { from = (b.cur || 0) + 1; to = (b.cur || 0) + qty; }
+  if (unit === "daqiqa" && !qty && minutes) qty = minutes;
+  const range = unit && from ? (to > from ? `${from}–${to}-${unit === "bet" ? "betlar" : unit === "dars" ? "darslar" : "daqiqalar"}` : `${from}-${unit}`) : "";
+  const ref = [range, e.via || ""].filter(Boolean).join(" · ") || "Tez yozuv";
+  if (text) out.push({ id: rid(), k: "i", b: b.id, t: "recall", q: "", a: text.slice(0, 4000), r: ref, f: from, e: to, c: now + 1, s: 0, d: addDay(day, 1), n: 0, l: 0, h: [], via: e.via || "", u: now });
+  if (qty || minutes) out.push({ id: rid(), k: "s", b: b.id, day, qty: unit ? qty : 0, unit, min: minutes, from, to, c: now + 2, via: e.via || "", u: now });
+  if (to > (b.cur || 0) && unit) out.push({ ...b, cur: b.pages ? Math.min(b.pages, to) : to, u: now + 3 });
+  if (!out.length) return null;
+  await saveRecords(userId, out);
+  return { title: b.title, unit, qty, minutes, note: !!text, from, to };
+}
+const UNIT_WORD = { bet: "bet", dars: "dars", daqiqa: "daqiqa" };
+const entryLine = r => [r.qty && r.unit ? `+${r.qty} ${UNIT_WORD[r.unit]}` : "", r.minutes && r.unit !== "daqiqa" ? `${r.minutes} daqiqa` : "", r.note ? "yozuv saqlandi, ertaga so'raladi" : ""].filter(Boolean).join(" · ");
+
+// A month and a lifetime in one glance: notes, pages, lessons, minutes, words, finished sources.
+async function ledger(userId) {
+  const recs = await recordsOf(userId, ["b", "i", "s"]);
+  const books = new Map(recs.filter(r => r.k === "b").map(b => [b.id, b]));
+  const day = localNow("Asia/Tashkent").day, month = day.slice(0, 7);
+  const L = () => ({ notes: 0, bet: 0, dars: 0, daqiqa: 0, min: 0, words: 0, done: 0, forgot: 0, hard: 0, good: 0, easy: 0 });
+  const m = L(), all = L();
+  const dayOf = c => new Date(c + 5 * 3600e3).toISOString().slice(0, 10);
+  for (const r of recs) {
+    if (r.k === "i" && !r.rev && books.has(r.b)) {
+      const d = dayOf(r.c || 0), w = r.t === "card" && books.get(r.b).kind === "til";
+      for (const x of d.startsWith(month) ? [m, all] : [all]) { x.notes++; if (w) x.words++; }
+    }
+    if (r.k === "i" && books.has(r.b)) for (const [d, g] of r.h || []) for (const x of String(d).startsWith(month) ? [m, all] : [all]) x[["forgot", "hard", "good", "easy"][g] || "good"]++;
+    if (r.k === "s") for (const x of String(r.day).startsWith(month) ? [m, all] : [all]) { if (r.unit && UNIT_WORD[r.unit]) x[r.unit] += +r.qty || 0; x.min += (+r.min || 0) || (r.unit === "daqiqa" ? +r.qty || 0 : 0); }
+    if (r.k === "b" && r.status === "done" && r.fin) for (const x of dayOf(r.fin).startsWith(month) ? [m, all] : [all]) x.done++;
+  }
+  for (const x of [m, all]) { x.kirim = x.notes * 10 + x.bet + x.dars * 10 + Math.floor(x.min / 10) * 2 + x.good * 3 + x.easy * 4 + x.hard + x.done * 50; x.chiqim = x.forgot * 5; x.xotir = x.kirim - x.chiqim; }
+  return { day, month: m, all, due: await dueCount(userId, day) };
+}
+const ledgerText = (L, head) => [`${head} ${L.xotir} XOTIR (+${L.kirim} / −${L.chiqim})`, `• ${L.notes} ta yangi yozuv`, L.bet ? `• ${L.bet} bet o'qildi` : "", L.dars ? `• ${L.dars} ta dars` : "", L.min ? `• ${Math.floor(L.min / 60)} soat ${L.min % 60} daqiqa` : "", L.words ? `• ${L.words} ta yangi so'z` : "", L.done ? `• ${L.done} ta manba tugatildi` : ""].filter(Boolean).join("\n");
+
+/* ── cards from a photo or text, by Gemini (free tier) or Claude ── */
+const AI_RULES = "You make retrieval-practice flashcards for a learner. From the material below, write 3 to 10 short question-answer pairs that test its most important facts, terms, names, dates and ideas. For foreign-language vocabulary, make pairs of «word or phrase» and its Uzbek translation. Otherwise write in Uzbek, Latin script. Use only what is in the material. Questions must need real recall, not yes or no. Reply with only a JSON array like [{\"q\":\"...\",\"a\":\"...\"}].";
+function pairsFrom(text) {
+  const m = String(text || "").match(/\[[\s\S]*\]/);
+  let arr = [];
+  try { arr = JSON.parse(m ? m[0] : text); } catch (e) { arr = []; }
+  return (Array.isArray(arr) ? arr : []).map(x => ({ q: String((x && x.q) || "").trim().slice(0, 300), a: String((x && x.a) || "").trim().slice(0, 600) })).filter(x => x.q && x.a).slice(0, 12);
+}
+async function aiAsk(prompt, media, json) {
+  if (GEMINI_KEY) {
+    const parts = [{ text: prompt }];
+    if (media) parts.push({ inline_data: { mime_type: media.mime, data: media.data } });
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
+      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": GEMINI_KEY },
+      body: JSON.stringify({ contents: [{ role: "user", parts }], generationConfig: json ? { responseMimeType: "application/json", temperature: 0.3 } : { temperature: 0.2 } }),
+    });
+    const j = await r.json().catch(() => null);
+    if (!r.ok) throw new Error((j && j.error && j.error.message) || `Gemini ${r.status}`);
+    return ((j.candidates || [])[0] || { content: { parts: [] } }).content.parts.map(p => p.text || "").join("");
+  }
+  const content = [];
+  if (media) content.push({ type: "image", source: { type: "base64", media_type: media.mime, data: media.data } });
+  content.push({ type: "text", text: prompt });
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST", headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01" },
+    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: 2000, messages: [{ role: "user", content }] }),
+  });
+  const j = await r.json().catch(() => null);
+  if (!r.ok) throw new Error((j && j.error && j.error.message) || `Claude ${r.status}`);
+  return (j.content || []).map(c => c.text || "").join("");
+}
+async function aiCards({ text, image, title }) {
+  const head = `${AI_RULES}\n\n${title ? `Source: ${title}\n` : ""}`;
+  if (image) return pairsFrom(await aiAsk(`${head}The material is the photographed page in the image.`, image, true));
+  return pairsFrom(await aiAsk(`${head}Material:\n${String(text).slice(0, 12000)}`, null, true));
+}
+app.post("/api/ai/cards", auth, wrap(async (req, res) => {
+  if (!AI_ON) return fail(res, 400, "Serverda GEMINI_API_KEY yoki ANTHROPIC_API_KEY sozlanmagan.");
+  const img = req.body.image, text = String(req.body.text || "").trim();
+  let image = null;
+  if (img) {
+    const m = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(String(img));
+    if (!m) return fail(res, 400, "Rasm o'qilmadi. JPG yoki PNG tanlang.");
+    image = { mime: m[1], data: m[2] };
+  } else if (!text) return fail(res, 400, "Matn yoki rasm yuboring.");
+  try { res.json({ cards: await aiCards({ text, image, title: String(req.body.title || "").slice(0, 160) }) }); }
+  catch (e) { console.error("ai:", e.message); fail(res, 502, "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
+}));
+
+/* ── other apps: Vaqt Banki, Mo'min ──
+   Each account can make one key. With it another app reads today's summary or logs study time.
+   GET  /api/ext/summary?key=…          → due reviews, this month and lifetime totals
+   POST /api/ext/log?key=…  {title, text, qty, unit, from, to, minutes, kind} → saved like a quick entry
+   unit is bet, dars or daqiqa; it picks the kind of a source that does not exist yet. */
+app.get("/api/key", auth, (req, res) => res.json({ key: req.user.api_key || "" }));
+app.post("/api/key", auth, wrap(async (req, res) => {
+  const key = "eq_" + crypto.randomBytes(18).toString("hex");
+  await pool.query("UPDATE users SET api_key = $1 WHERE id = $2", [key, req.user.id]);
+  res.json({ key });
+}));
+app.delete("/api/key", auth, wrap(async (req, res) => { await pool.query("UPDATE users SET api_key = NULL WHERE id = $1", [req.user.id]); res.json({ key: "" }); }));
+app.use("/api/ext", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Esda-Key");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+const keyUser = wrap(async (req, res, next) => {
+  const key = String(req.get("X-Esda-Key") || req.query.key || "");
+  if (!/^eq_[0-9a-f]{36}$/.test(key)) return fail(res, 401, "Kalit noto'g'ri.");
+  const { rows } = await pool.query("SELECT * FROM users WHERE api_key = $1", [key]);
+  if (!rows[0]) return fail(res, 401, "Kalit noto'g'ri.");
+  req.user = rows[0]; next();
+});
+app.get("/api/ext/summary", keyUser, wrap(async (req, res) => res.json({ app: "esda-qolsin", ...(await ledger(req.user.id)), url: PUBLIC_URL || "" })));
+app.post("/api/ext/log", keyUser, wrap(async (req, res) => {
+  const b = req.body || {};
+  if (!b.title && !b.text && !b.minutes) return fail(res, 400, "title, text yoki minutes kerak.");
+  const r = await logEntry(req.user.id, { title: b.title, text: b.text || "", qty: b.qty, from: b.from, to: b.to, minutes: b.minutes, kind: b.kind, unit: b.unit, via: String(b.via || "Boshqa ilova").slice(0, 40), parsed: { src: null, from: 0, to: 0, qty: 0, minutes: 0, text: "" } });
+  res.json({ ok: !!r, ...(r || {}) });
+}));
+
+/* ── Telegram bot: write from the chat, get reminders and a weekly backup ── */
+const TG_SECRET = crypto.createHash("sha256").update(JWT_SECRET + ":tg").digest("hex").slice(0, 32);
+let tgBot = "";
+async function tg(method, body) {
+  const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/${method}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body || {}) });
+  const j = await r.json().catch(() => null);
+  if (!j || !j.ok) throw new Error((j && j.description) || `telegram ${r.status}`);
+  return j.result;
+}
+const say = (chat, text) => tg("sendMessage", { chat_id: chat, text, disable_web_page_preview: true }).catch(e => console.error("tg send:", e.message));
+async function tgFile(fileId) {
+  const f = await tg("getFile", { file_id: fileId });
+  const r = await fetch(`https://api.telegram.org/file/bot${TG_TOKEN}/${f.file_path}`);
+  return Buffer.from(await r.arrayBuffer());
+}
+async function sendBackup(userId, chat) {
+  const data = await backupOf(userId), n = Object.values(data.recs).filter(r => r.k === "i").length;
+  const fd = new FormData();
+  fd.append("chat_id", String(chat));
+  fd.append("caption", `${APP()} zaxirasi: ${n} ta yozuv, ${Object.values(data.recs).filter(r => r.k === "b").length} ta manba. Ilovada Sozlamalar → «Zaxiradan tiklash» bilan qayta tiklanadi.`);
+  fd.append("document", new Blob([JSON.stringify(data)], { type: "application/json" }), `memori-${new Date().toISOString().slice(0, 10)}.json`);
+  const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendDocument`, { method: "POST", body: fd });
+  const j = await r.json().catch(() => null);
+  if (!j || !j.ok) throw new Error((j && j.description) || "sendDocument");
+  await pool.query("UPDATE tg_links SET last_backup = now() WHERE user_id = $1", [userId]);
+  return n;
+}
+const HELP = `Menga o'rganganingizni yozing, hisobingizga tushadi.
+
+Namunalar:
+• O'tkan kunlar 40-65 bet: Otabek Marg'ilonga keldi
+• Atomic Habits 30 bet 25 daq: odat 1% yaxshilanishdan boshlanadi
+• Ingliz tili 2 dars
+• Python kursi 45 daqiqa
+
+Manba nomi ilovadagidek boshida yoziladi. Topilmasa, «Telegram yozuvlari»ga tushadi.
+Kitob sahifasini rasmga olib yuborsangiz, undan kartochkalar tuzaman (izohga manba nomini yozing).
+
+/bugun — bugungi takror va oy hisobi
+/manbalar — manbalar ro'yxati
+/zaxira — hozir zaxira fayli
+/soat 7 — takror eslatmasi soati`;
+async function onTelegram(msg) {
+  const chat = msg.chat && msg.chat.id, text = String(msg.text || msg.caption || "").trim();
+  if (!chat) return;
+  const start = /^\/start(?:\s+(\S+))?/.exec(text);
+  if (start && start[1]) {
+    const { rows } = await pool.query("DELETE FROM tg_codes WHERE code = $1 AND exp > now() RETURNING user_id", [start[1]]);
+    if (!rows[0]) return say(chat, "Bu havola eskirgan. Ilovada Sozlamalar → Telegram → «Ulash»ni qayta bosing.");
+    const name = [msg.from && msg.from.first_name, msg.from && msg.from.username ? "@" + msg.from.username : ""].filter(Boolean).join(" ");
+    await pool.query("DELETE FROM tg_links WHERE chat_id = $1", [chat]);
+    await pool.query("INSERT INTO tg_links (user_id, chat_id, name) VALUES ($1, $2, $3) ON CONFLICT (user_id) DO UPDATE SET chat_id = EXCLUDED.chat_id, name = EXCLUDED.name", [rows[0].user_id, chat, name.slice(0, 80)]);
+    return say(chat, `Ulandi ✅\n\n${HELP}`);
+  }
+  const { rows: [link] } = await pool.query("SELECT * FROM tg_links WHERE chat_id = $1", [chat]);
+  if (!link) return say(chat, "Avval hisobingizni ulang: ME'MORI ilovasida Sozlamalar → Telegram → «Ulash».");
+  const uid = link.user_id;
+  if (/^\/(start|yordam|help)\b/.test(text)) return say(chat, HELP);
+  if (/^\/bugun\b/.test(text)) { const L = await ledger(uid); return say(chat, `Bugun ${L.due} ta takror bor.${L.due ? " Ilovani ochib takrorlang." : ""}\n\n${ledgerText(L.month, "Shu oy:")}\n\n${ledgerText(L.all, "Xotira balansi:")}`); }
+  if (/^\/manbalar\b/.test(text)) { const bs = (await recordsOf(uid, ["b"])).filter(b => b.status !== "done"); return say(chat, bs.length ? "O'rganilayotgan manbalar:\n" + bs.map(b => "• " + b.title).join("\n") : "Hali manba yo'q."); }
+  if (/^\/zaxira\b/.test(text)) { try { await sendBackup(uid, chat); } catch (e) { say(chat, "Zaxira yuborilmadi, birozdan keyin qayta urining."); } return; }
+  const hr = /^\/soat\s+(\d{1,2})/.exec(text);
+  if (hr) { const h = Math.min(23, +hr[1]); await pool.query("UPDATE tg_links SET hour = $1 WHERE user_id = $2", [h, uid]); return say(chat, `Takror eslatmasi har kuni soat ${String(h).padStart(2, "0")}:00 da keladi.`); }
+  if (text.startsWith("/")) return say(chat, HELP);
+  if (msg.photo && msg.photo.length) {
+    if (!AI_ON) return say(chat, "Rasmdan karta tuzish serverda sozlanmagan (GEMINI_API_KEY).");
+    await tg("sendChatAction", { chat_id: chat, action: "typing" }).catch(() => {});
+    try {
+      const buf = await tgFile(msg.photo[msg.photo.length - 1].file_id);
+      const cards = await aiCards({ image: { mime: "image/jpeg", data: buf.toString("base64") }, title: text });
+      if (!cards.length) return say(chat, "Rasmdan savol tuzib bo'lmadi. Aniqroq suratga olib ko'ring.");
+      const sources = await recordsOf(uid, ["b"]), p = parseEntry(text, sources);
+      const b = p.src || await sourceFor(uid, text || "Telegram yozuvlari");
+      const now = Date.now(), day = localNow("Asia/Tashkent").day;
+      await saveRecords(uid, cards.map((c, k) => ({ id: rid(), k: "i", b: b.id, t: "card", q: c.q, a: c.a, r: "Rasmdan", f: 0, e: 0, c: now + k, s: 0, d: addDay(day, 1), n: 0, l: 0, h: [], via: "Telegram rasm", u: now })));
+      return say(chat, `«${b.title}»ga ${cards.length} ta kartochka qo'shildi:\n\n${cards.map(c => `• ${c.q} — ${c.a}`).join("\n")}`);
+    } catch (e) { console.error("tg photo:", e.message); return say(chat, "Rasmni o'qib bo'lmadi, birozdan keyin qayta urining."); }
+  }
+  let body = text;
+  if (!body && (msg.voice || msg.audio)) {
+    if (!GEMINI_KEY) return say(chat, "Ovozli xabarni matnga aylantirish uchun serverda GEMINI_API_KEY kerak. Hozircha matn bilan yozing.");
+    try {
+      const v = msg.voice || msg.audio, buf = await tgFile(v.file_id);
+      body = (await aiAsk("Transcribe this audio verbatim in its own language (usually Uzbek, Latin script). Reply with only the text.", { mime: v.mime_type || "audio/ogg", data: buf.toString("base64") }, false)).trim();
+      if (!body) return say(chat, "Ovozni tushunib bo'lmadi. Qayta yozib ko'ring.");
+    } catch (e) { console.error("tg voice:", e.message); return say(chat, "Ovozni matnga aylantirib bo'lmadi."); }
+  }
+  if (!body) return say(chat, HELP);
+  const r = await logEntry(uid, { raw: body, via: "Telegram" });
+  if (!r) return say(chat, "Hech narsa topilmadi. Namuna: «O'tkan kunlar 40-65 bet: …»");
+  return say(chat, `✅ ${r.title}\n${entryLine(r) || "saqlandi"}${msg.voice ? `\n\n«${body.slice(0, 300)}»` : ""}`);
+}
+app.post("/api/tg/hook/:secret", wrap(async (req, res) => {
+  if (!TG_TOKEN || req.params.secret !== TG_SECRET) return fail(res, 403, "no");
+  res.json({ ok: true });
+  const m = req.body && (req.body.message || req.body.edited_message);
+  if (m) onTelegram(m).catch(e => console.error("tg:", e.message));
+}));
+app.get("/api/tg", auth, wrap(async (req, res) => {
+  const { rows } = await pool.query("SELECT name, hour, last_backup FROM tg_links WHERE user_id = $1", [req.user.id]);
+  res.json({ configured: !!TG_TOKEN, bot: tgBot, linked: !!rows[0], name: rows[0] ? rows[0].name : "", hour: rows[0] ? rows[0].hour : 7, lastBackup: rows[0] && rows[0].last_backup });
+}));
+app.post("/api/tg/code", auth, wrap(async (req, res) => {
+  if (!TG_TOKEN || !tgBot) return fail(res, 400, "Telegram bot serverda sozlanmagan (TELEGRAM_BOT_TOKEN).");
+  const code = crypto.randomBytes(9).toString("base64url");
+  await pool.query("DELETE FROM tg_codes WHERE user_id = $1 OR exp < now()", [req.user.id]);
+  await pool.query("INSERT INTO tg_codes (code, user_id, exp) VALUES ($1, $2, now() + interval '30 minutes')", [code, req.user.id]);
+  res.json({ url: `https://t.me/${tgBot}?start=${code}` });
+}));
+app.post("/api/tg/unlink", auth, wrap(async (req, res) => { await pool.query("DELETE FROM tg_links WHERE user_id = $1", [req.user.id]); res.json({ linked: false }); }));
+app.post("/api/tg/backup", auth, wrap(async (req, res) => {
+  const { rows: [l] } = await pool.query("SELECT chat_id FROM tg_links WHERE user_id = $1", [req.user.id]);
+  if (!l) return fail(res, 400, "Avval Telegram'ni ulang.");
+  try { res.json({ notes: await sendBackup(req.user.id, l.chat_id) }); } catch (e) { fail(res, 502, "Telegram'ga yuborib bo'lmadi."); }
+}));
+// Called with the push reminders: a daily review message at the chosen hour and a backup every 7 days.
+async function telegramRound() {
+  if (!TG_TOKEN) return;
+  const { rows } = await pool.query("SELECT * FROM tg_links");
+  for (const l of rows) {
+    try {
+      const now = localNow("Asia/Tashkent");
+      if (now.hour >= l.hour && l.last_day !== now.day) {
+        await pool.query("UPDATE tg_links SET last_day = $1 WHERE user_id = $2", [now.day, l.user_id]);
+        const n = await dueCount(l.user_id, now.day);
+        if (n) await say(l.chat_id, `Bugun ${n} ta yozuvni eslash vaqti keldi. Bir necha daqiqa yetadi.${PUBLIC_URL ? `\n${PUBLIC_URL}/#takror` : ""}`);
+      }
+      if (!l.last_backup || Date.now() - new Date(l.last_backup).getTime() > 7 * 864e5) await sendBackup(l.user_id, l.chat_id);
+    } catch (e) { console.error("tg round:", e.message); }
+  }
+}
+async function setupTelegram() {
+  if (!TG_TOKEN) return;
+  try {
+    tgBot = (await tg("getMe")).username || "";
+    if (PUBLIC_URL) await tg("setWebhook", { url: `${PUBLIC_URL}/api/tg/hook/${TG_SECRET}`, allowed_updates: ["message", "edited_message"] });
+    else console.warn("PUBLIC_URL is not set, so the Telegram webhook was not registered.");
+  } catch (e) { console.error("telegram setup:", e.message); }
+}
+
 /* ── the app itself ── */
 app.use("/api", (req, res) => fail(res, 404, "Bunday manzil yo'q."));
 app.use(express.static(path.join(__dirname, "public"), {
@@ -333,8 +680,8 @@ app.use(express.static(path.join(__dirname, "public"), {
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 app.use((err, req, res, next) => { console.error(err); fail(res, 500, "Serverda xato yuz berdi. Birozdan keyin qayta urining."); });
 
-migrate().then(loadVapid).then(() => {
+migrate().then(loadVapid).then(setupTelegram).then(() => {
   setInterval(remind, 5 * 60 * 1000);
   setTimeout(remind, 15000);
-  app.listen(PORT, () => console.log(`Esda qolsin is listening on ${PORT}`));
+  app.listen(PORT, () => console.log(`ME'MORI is listening on ${PORT}`));
 }).catch(e => { console.error("Database setup failed:", e.message); process.exit(1); });

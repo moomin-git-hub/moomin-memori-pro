@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: esda-qolsin
+    name: memori
     runtime: node
     plan: free
     buildCommand: npm install
@@ -21,3 +21,7 @@ services:
         value: "10"
       - key: USER_QUOTA_MB
         value: "300"
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

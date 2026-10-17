@@ -1,15 +1,15 @@
 {
-  "name": "esda-qolsin",
+  "name": "memori",
   "version": "1.0.0",
   "private": true,
-  "description": "Esda qolsin: o'rgangan va bilganlaringiz hisobi. Server: Express + PostgreSQL (Neon), Render'da.",
+  "description": "ME'MORI: o'rgangan va bilganlaringiz hisobi (XOTIR). Server: Express + PostgreSQL (Neon), Render'da.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "build": "node build.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
