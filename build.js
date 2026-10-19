@@ -1,6 +1,12 @@
-// Wraps app.html (the same page that runs inside Claude) into public/index.html for the server.
+// Wraps app.html (the same page that runs inside Claude/Canvas) into public/index.html and index.html for the server.
 const fs = require("fs");
-const body = fs.readFileSync(__dirname + "/app.html", "utf8");
+const path = require("path");
+
+const body = fs.readFileSync(path.join(__dirname, "app.html"), "utf8");
+const pushJs = fs.existsSync(path.join(__dirname, "push.js"))
+  ? fs.readFileSync(path.join(__dirname, "push.js"), "utf8")
+  : "";
+
 const head = `<!doctype html>
 <html lang="uz" data-skin="dark">
 <head>
@@ -17,10 +23,20 @@ const head = `<!doctype html>
 <body>
 `;
 const tail = `
-<script src="/push.js" defer></script>
-<script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));</script>
+<script>
+${pushJs}
+</script>
+<script>if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));</script>
 </body>
 </html>
 `;
-fs.writeFileSync(__dirname + "/public/index.html", head + body + tail);
-console.log("public/index.html written", (head + body + tail).length, "bytes");
+
+const full = head + body + tail;
+fs.mkdirSync(path.join(__dirname, "public"), { recursive: true });
+fs.writeFileSync(path.join(__dirname, "public/index.html"), full);
+fs.writeFileSync(path.join(__dirname, "index.html"), full);
+for (const asset of ["manifest.json", "push.js", "sw.js", "icon-192.png", "icon-512.png"]) {
+  const src = path.join(__dirname, asset);
+  if (fs.existsSync(src)) fs.copyFileSync(src, path.join(__dirname, "public", asset));
+}
+console.log("public/index.html and index.html written:", full.length, "bytes");

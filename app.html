@@ -61,7 +61,7 @@ svg{width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:1.
 .ibtn svg{width:1.25rem;height:1.25rem}
 .ibtn:active{transform:scale(.94)}
 
-.nav{position:fixed;left:.75rem;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:20;max-width:34rem;margin-inline:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.125rem;padding:.375rem;border-radius:28px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.nav{position:fixed;left:.75rem;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:20;max-width:38rem;margin-inline:auto;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.125rem;padding:.375rem;border-radius:28px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .nav button{position:relative;display:grid;justify-items:center;gap:.125rem;padding:.5rem .125rem .4375rem;border:0;border-radius:22px;background:none;color:var(--mute);font:600 .6875rem/1.15 var(--ui);min-width:0}
 .nav button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .nav button[aria-current="page"]{color:var(--pri-hi);background:var(--card2)}
@@ -326,12 +326,8 @@ mark{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok);bor
 .rv-ans{display:grid;gap:.875rem;padding:1.125rem;border-radius:var(--r-lg);background:var(--card);border:1px solid var(--line)}
 .rv-ask{margin-top:.25rem}
 .note{font-size:1.0625rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;max-width:62ch}
-.grades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
-.grade{display:grid;gap:.25rem;align-content:center;justify-items:center;min-height:4.25rem;padding:.625rem .25rem;border-radius:18px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 14%,var(--card));text-align:center;color:var(--text);transition:transform .12s}
-.grade:active{transform:scale(.95)}
-.grade[data-g="0"]{--c:#ff6f7d}.grade[data-g="1"]{--c:#f6b73c}.grade[data-g="2"]{--c:#2fd08f}
-.grade b{font:800 .9375rem/1.15 var(--ui);color:var(--c)}
-.grade span{font-size:.6875rem;line-height:1.2;color:var(--mute)}
+.grades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.375rem}
+.grade{display:grid;gap:.25rem;align-content:center;justify-items:center;min-height:4.5rem;padding:.625rem .25rem;border-radius:18px;border:0;background:var(--c);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);text-align:center;color:#fff;transition:transform .12s}
 .rv-done .btn{justify-self:start}
 
 /* onboarding, in the light Orrin manner */
@@ -671,82 +667,7 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 .yr.life .yr-h span b{font-size:1.25rem;color:var(--text)}
 .start{display:grid;gap:.75rem}
 .btn-big svg{width:1.25rem;height:1.25rem}
-
-.bal{display:grid;gap:.875rem}
-.bal-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem;align-items:center}
-.bal-main{display:grid;justify-items:start;gap:.25rem;min-width:0}
-.bal .hero-n{margin:.25rem 0 .375rem}
-.rank-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.375rem .75rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);color:var(--hero-text);font:800 .8125rem var(--ui)}
-.rank-chip svg{width:1rem;height:1rem;color:#ffd166;fill:#ffd166}
-.rank-bar{display:grid;gap:.375rem}
-.rank-bar .bar{height:6px;background:rgba(255,255,255,.2)}
-.rank-bar .bar i{background:linear-gradient(90deg,#ffd166,#ff9f43)}
-.rank-bar small{font-size:.75rem;color:var(--hero-mute)}
-.gring{position:relative;width:6.5rem;height:6.5rem;flex:none}
-.gring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.gring circle{fill:none;stroke-width:9}
-.gring .t{stroke:rgba(255,255,255,.18)}
-.gring .v{stroke:#7cf3c8;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)}
-.gring.done .v{stroke:#ffd166}
-.gring span{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;line-height:1.1}
-.gring b{font:800 1.125rem var(--display);color:var(--hero-text)}
-.gring b svg{width:1.75rem;height:1.75rem;color:#ffd166;stroke-width:3}
-.gring small{font-size:.625rem;color:var(--hero-mute);max-width:4.5rem}
-.cta{display:grid;grid-template-columns:1fr 1fr;gap:.625rem}
-.cta .btn-big{min-height:3.5rem;font-size:1rem;gap:.5rem}
-.cta .btn-big svg{width:1.25rem;height:1.25rem}
-.cta-done{display:flex;align-items:center;gap:.625rem;padding:.5rem .875rem;border-radius:20px;background:color-mix(in srgb,#2fd08f 12%,var(--card));border:1px solid color-mix(in srgb,#2fd08f 35%,var(--line))}
-.cta-done>svg{width:1.5rem;height:1.5rem;color:#2fd08f;flex:none;stroke-width:3}
-.cta-done span{display:grid;line-height:1.2}
-.cta-done b{font:800 .9375rem var(--display)}
-.cta-done small{font-size:.75rem;color:var(--mute)}
-.uline{display:flex;flex-wrap:wrap;gap:.375rem .875rem;padding:.75rem 1rem;border-radius:18px;background:var(--card);border:1px solid var(--line);font-size:.8125rem;color:var(--mute)}
-.uline span{display:inline-flex;align-items:center;gap:.375rem}
-.uline svg{width:1rem;height:1rem;color:var(--pri-hi)}
-.uline b{color:var(--text)}
-.day-h .up{color:#2fd08f;font-weight:800}
-.ledger-list{display:grid;border-radius:20px;background:var(--card);border:1px solid var(--line);overflow:hidden}
-.lrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;padding:.75rem 1rem;background:none;border:0;border-top:1px solid var(--line);color:var(--text);text-align:left;width:100%}
-.lrow:first-child{border-top:0}
-.lrow:active{background:var(--chip)}
-.lrow .tile{width:2.5rem;height:2.5rem;border-radius:13px}
-.lrow-t{display:grid;gap:.125rem;min-width:0}
-.lrow-t b{font:700 .9375rem/1.3 var(--ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lrow-t small{font-size:.75rem;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lrow-x{display:grid;justify-items:end;font:800 1rem var(--display);color:#2fd08f;line-height:1.1}
-.lrow-x small{font:700 .625rem var(--ui);color:var(--mute)}
-.notice{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap}
-.notice>svg{width:1.125rem;height:1.125rem;flex:none}
-.notice span{flex:1;min-width:10rem}
-.gain{position:fixed;left:50%;top:38%;z-index:60;transform:translate(-50%,0);font:800 2rem var(--display);color:#2fd08f;text-shadow:0 6px 24px rgba(47,208,143,.45);pointer-events:none;animation:gain 1.6s cubic-bezier(.2,.8,.2,1) forwards;white-space:nowrap}
-.gain.neg{color:#ff6f7d;text-shadow:0 6px 24px rgba(255,111,125,.4)}
-@keyframes gain{0%{opacity:0;transform:translate(-50%,20px) scale(.6)}18%{opacity:1;transform:translate(-50%,0) scale(1.08)}30%{transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-90px) scale(1)}}
-@media (prefers-reduced-motion:reduce){.gain{animation:none;opacity:0}}
-.rv-gain{font-size:1rem;color:var(--mute)}
-.rv-gain b{font:800 2.5rem var(--display);margin-right:.25rem}
-.rv-gain .up{color:#2fd08f}.rv-gain .down{color:#ff6f7d}
-.ranks{display:grid;gap:.5rem}
-.rk{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;padding:.75rem 1rem;border-radius:18px;background:var(--card);border:1px solid var(--line);opacity:.6}
-.rk.got,.rk.cur{opacity:1}
-.rk.cur{border-color:#ffd166;background:color-mix(in srgb,#ffd166 10%,var(--card))}
-.rk-n{width:2.25rem;height:2.25rem;border-radius:12px;display:grid;place-items:center;background:var(--chip);font:800 1rem var(--display)}
-.rk.cur .rk-n,.rk.got .rk-n{background:linear-gradient(135deg,#ffd166,#ff9f43);color:#3a2300}
-.rk span:nth-child(2){display:grid}
-.rk small{font-size:.75rem;color:var(--mute)}
-.rk>svg{width:1.25rem;height:1.25rem;color:#2fd08f}
-.rk em{font-style:normal;font-size:.75rem;font-weight:800;color:#e0a800}
-.xchart svg{width:100%;height:auto;display:block}
-.xchart .kp{fill:#2fd08f}.xchart .kn{fill:#ff6f7d}
-.xchart .axis{stroke:var(--line);stroke-width:1}
-.xchart text{font:600 8px var(--ui);fill:var(--mute);text-anchor:middle}
-.xchart .up{color:#2fd08f}.xchart .down{color:#ff6f7d}
-.lib{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;width:100%;text-align:left;color:var(--text)}
-.lib span:nth-child(2){display:grid;gap:.125rem}
-.lib small{color:var(--mute);font-size:.8125rem}
-.lib>svg{width:1.125rem;height:1.125rem;color:var(--mute)}
-[data-skin=light] .rank-chip{border-color:rgba(255,255,255,.5)}
-@media (max-width:23rem){.gring{width:5.5rem;height:5.5rem}.cta .btn-big{font-size:.9375rem}}
-.toast{position:fixed;left:50%;top:calc(.75rem + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
+.toast{position:fixed;left:50%;bottom:calc(6rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
 
 @media (min-width:48rem){
   .shell{padding-block:0 8rem}
@@ -764,6 +685,43 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
   @keyframes rise{from{transform:translateY(2rem);opacity:.6}}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* rich text, SM-2, AI, glossary, page+line badges */
+.rt-wrap{display:grid;gap:.375rem}
+.rt-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem;padding:.375rem .5rem;border-radius:14px;background:var(--card2);border:1px solid var(--line)}
+.rt-btn{min-width:1.875rem;height:1.875rem;padding:0 .4375rem;border-radius:9px;border:1px solid transparent;background:var(--bg2);color:var(--text);font:800 .75rem/1 var(--ui);display:inline-flex;align-items:center;justify-content:center;gap:.25rem}
+.rt-btn:hover{border-color:var(--pri)}
+.rt-btn svg{width:.9375rem;height:.9375rem}
+.rt-dot{width:.75rem;height:.75rem;border-radius:50%;display:inline-block}
+.rt-dot.y{background:#f6b73c}.rt-dot.g{background:#2fd08f}.rt-dot.b{background:#5a7bff}.rt-dot.r{background:#ff6f7d}
+.rt-prev{padding:.75rem .9375rem;border-radius:16px;background:var(--card2);border:1px dashed var(--edge);font-size:.9375rem;line-height:1.55}
+mark.hl-y{background:color-mix(in srgb,#f6b73c 28%,transparent);color:#ffd166;padding:.08em .28em;border-radius:5px;font-weight:700}
+mark.hl-g{background:color-mix(in srgb,#2fd08f 25%,transparent);color:#2fd08f;padding:.08em .28em;border-radius:5px;font-weight:700}
+mark.hl-b{background:color-mix(in srgb,#5a7bff 28%,transparent);color:#8ea4ff;padding:.08em .28em;border-radius:5px;font-weight:700}
+mark.hl-r{background:color-mix(in srgb,#ff6f7d 28%,transparent);color:#ff8f99;padding:.08em .28em;border-radius:5px;font-weight:700}
+:root[data-skin="light"] mark.hl-y{color:#8a5a00}:root[data-skin="light"] mark.hl-b{color:#1d3ec2}:root[data-skin="light"] mark.hl-r{color:#b81d2c}
+blockquote.rt-q{margin:.375rem 0;padding:.5rem .875rem;border-left:3px solid var(--pri-hi);background:color-mix(in srgb,var(--pri) 10%,transparent);border-radius:0 10px 10px 0;font-style:italic}
+.rt-ul{margin:.25rem 0 .25rem 1.125rem;list-style:disc}
+.rt-imgs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.375rem}
+.rt-imgs figure{margin:0;position:relative;max-width:9rem;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--bg2)}
+.rt-imgs img{display:block;width:100%;height:5.5rem;object-fit:cover;cursor:pointer}
+.rt-imgs figcaption{font-size:.6875rem;padding:.25rem .375rem;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loc-tag{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;border-radius:8px;background:color-mix(in srgb,var(--pri) 15%,var(--bg2));color:var(--pri-hi);font:700 .6875rem/1.1 var(--ui)}
+.srs-tag{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .5rem;border-radius:8px;background:color-mix(in srgb,#2fd08f 14%,var(--bg2));color:var(--ok);font:700 .6875rem/1.1 var(--ui)}
+.srs-tag.deep{background:color-mix(in srgb,#a07bff 16%,var(--bg2));color:#b99aff}
+.ai-card{background:linear-gradient(155deg,color-mix(in srgb,var(--pri) 18%,var(--card)),color-mix(in srgb,#33d6c4 10%,var(--card)));border:1px solid color-mix(in srgb,var(--pri) 40%,var(--line));border-radius:var(--r-lg);padding:1.125rem;display:grid;gap:.875rem}
+.ai-out{display:grid;gap:.75rem;padding:1rem;border-radius:var(--r-md);background:var(--bg2);border:1px solid var(--line)}
+.ai-sec{display:grid;gap:.375rem}
+.ai-sec h4{margin:0;font:800 .875rem var(--display);color:var(--pri-hi)}
+.gl-card{display:grid;gap:.375rem;padding:1rem;border-radius:var(--r-md);background:var(--card);border:1px solid var(--line);text-align:left;width:100%}
+.gl-term{font:800 1.125rem/1.25 var(--display);color:var(--pri-hi);display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.recall-eval{padding:.875rem 1rem;border-radius:16px;background:color-mix(in srgb,var(--pri) 12%,var(--bg2));border:1px solid var(--edge);display:grid;gap:.375rem}
+.kw-hit{color:var(--ok);font-weight:700}.kw-miss{color:var(--warn);font-weight:700}
+.occ-stage{position:relative;display:inline-block;max-width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);user-select:none;touch-action:none}
+.occ-stage img{display:block;max-width:100%;height:auto}
+.occ-mask{position:absolute;background:#4b6bfb;border:2px solid #fff;border-radius:6px;opacity:.92;cursor:pointer;display:grid;place-items:center;color:#fff;font:800 .75rem var(--ui)}
+.occ-mask.open{background:rgba(47,208,143,.22);border-color:#2fd08f;color:transparent}
+.map .node,.map .lbl{cursor:pointer}
 </style>
 
 <div class="shell">
@@ -783,7 +741,9 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
   <button type="button" data-act="tab" data-tab="today" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span>Asosiy</span><b class="badge" id="badge" hidden></b></button>
 
   <button type="button" data-act="tab" data-tab="shelf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 4v15.5M10 4v15.5M14.2 5.2l4 14.3M3 20h18"/></svg><span>Manbalar</span></button>
+  <button type="button" data-act="tab" data-tab="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg><span>AI &amp; Lug'at</span></button>
   <button type="button" data-act="tab" data-tab="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-6M10 20V8M15 20v-9M20 20V5M3 20h18"/></svg><span>Tahlil</span></button>
+  <button type="button" data-act="tab" data-tab="methods"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Usullar</span></button>
   <button type="button" data-act="tab" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Sozlamalar</span></button>
 </nav>
 <button type="button" class="fab" data-act="quick" aria-label="O'rganganimni yozish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -841,6 +801,64 @@ function fsrsNext(it, g, day) {
   let s = 0; while (s < LADDER.length - 1 && LADDER[s + 1] <= days) s++;
   return { ...it, S: +S.toFixed(3), D: +D.toFixed(3), lr: day, s, d: addDays(day, days), n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...h, [day, g]].slice(-60) };
 }
+// SuperMemo SM-2 algorithm + Smart adaptation for flashcards, quotes, cloze & glossary terms.
+// Tracks easiness factor ef (1.30..3.20, default 2.50), repetition count rep, and interval ivl (1, 3, 7, 14, round(ivl*ef)).
+const DEEP_TYPES = new Set(["recall", "feynman", "link", "sum", "gist", "apply"]);
+function isDeepNote(it) { return it && DEEP_TYPES.has(it.t); }
+function sm2Next(it, g, day, rtMs) {
+  const q = [1, 3, 4, 5][g] || 4, h = it.h || [];
+  let ef = Number.isFinite(it.ef) && it.ef >= 1.3 ? it.ef : 2.5;
+  let rep = int(it.rep), ivl = int(it.ivl) || LADDER[it.s || 0] || 1;
+  if (g === 0) {
+    rep = 0; ivl = 1;
+    ef = Math.max(1.3, +(ef - 0.2).toFixed(2));
+  } else {
+    const speedBonus = rtMs > 0 && rtMs < 5500 && g >= 2 ? 0.04 : rtMs > 25000 ? -0.03 : 0;
+    ef = Math.min(3.2, Math.max(1.3, +(ef + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02)) + speedBonus).toFixed(2)));
+    if (rep === 0) ivl = g === 3 ? 3 : 1;
+    else if (rep === 1) ivl = g === 1 ? 2 : g === 3 ? 4 : 3;
+    else if (rep === 2) ivl = g === 1 ? 5 : g === 3 ? 10 : 7;
+    else if (rep === 3) ivl = g === 1 ? 10 : g === 3 ? 19 : 14;
+    else ivl = Math.max(rep + 1, Math.round(ivl * ef * (g === 1 ? 0.85 : g === 3 ? 1.18 : 1)));
+    rep++;
+  }
+  ivl = Math.min(1095, Math.max(1, ivl));
+  let s = 0; while (s < LADDER.length - 1 && LADDER[s + 1] <= ivl) s++;
+  return { ...it, ef, rep, ivl, srs: "sm2", lr: day, s, d: addDays(day, ivl), n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...h, [day, g]].slice(-60) };
+}
+// Dedicated Active Recall (Eslab yozish) algorithm for long-form comprehension notes (recall, feynman, link, sum, gist, apply).
+// Uses comprehension depth (recallCoverage 0..100%) and structured consolidation steps: 1, 3, 7, 14, 30, 60, 120, 240 days.
+const RECALL_STEPS = [1, 3, 7, 14, 30, 60, 120, 240];
+function recallNext(it, g, day, cov) {
+  const h = it.h || [];
+  let rs = Number.isFinite(it.rs) ? it.rs : (it.s || 0);
+  if (g === 0) rs = Math.max(0, rs - 2);
+  else if (g === 1) rs = Math.max(0, rs);
+  else if (g === 2) rs = Math.min(RECALL_STEPS.length - 1, rs + (cov >= 75 ? 1.25 : 1));
+  else if (g === 3) rs = Math.min(RECALL_STEPS.length - 1, rs + (cov >= 80 ? 2 : 1.5));
+  const stepIdx = Math.min(RECALL_STEPS.length - 1, Math.floor(rs));
+  const baseDays = RECALL_STEPS[stepIdx];
+  const bonus = cov >= 80 && g >= 2 ? 1.15 : cov > 0 && cov < 45 && g > 0 ? 0.85 : 1;
+  const ivl = g === 0 ? 1 : Math.max(1, Math.round(baseDays * bonus));
+  let s = 0; while (s < LADDER.length - 1 && LADDER[s + 1] <= ivl) s++;
+  return { ...it, rs: +rs.toFixed(2), ivl, srs: "recall", lr: day, s, d: addDays(day, ivl), lastCov: cov >= 0 ? cov : it.lastCov, n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...h, [day, g]].slice(-60) };
+}
+// Evaluates a learner's written recall attempt against their original note.
+function analyzeRecallAttempt(attempt, original) {
+  const clean = s => String(s || "").toLowerCase().replace(/\[\[|\]\]|\{[ygbr]:|\}|\*\*|__|`/g, " ").replace(/[^\p{L}\p{N}'ʻʼ ]+/gu, " ").split(/\s+/).filter(w => w.length >= 4);
+  const origWords = [...new Set(clean(original))];
+  const trySet = new Set(clean(attempt));
+  if (!origWords.length || !trySet.size) return null;
+  const matched = [], missed = [];
+  for (const w of origWords) {
+    const stem = w.slice(0, Math.max(4, w.length - 2));
+    if ([...trySet].some(tw => tw === w || tw.startsWith(stem) || w.startsWith(tw.slice(0, Math.max(4, tw.length - 2))))) matched.push(w);
+    else missed.push(w);
+  }
+  const pct = Math.min(100, Math.round(matched.length / origWords.length * 100));
+  const recGrade = pct >= 82 ? 3 : pct >= 55 ? 2 : pct >= 30 ? 1 : 0;
+  return { pct, matched: matched.slice(0, 8), missed: missed.slice(0, 8), recGrade };
+}
 /* ── end core ── */
 
 const STEP = [["1", "kun"], ["3", "kun"], ["1", "hafta"], ["2", "hafta"], ["1", "oy"], ["2", "oy"], ["4", "oy"], ["8", "oy"]];
@@ -865,7 +883,7 @@ const KINDS = {
   podkast: { name: "Podkast yoki audio", unit: "daqiqa", close: "Eshitishni to'xtating", ask: "Bu qismda nima haqida gap bo'ldi?", hints: ["Kim nima dedi?", "Qaysi fikr yangi bo'ldi?", "Nimaga qo'shilmadim?"] },
   boshqa: { name: "Boshqa", unit: null, close: "Manbaga qaramang", ask: "Bundan nimalar esda qoldi?", hints: ["Asosiy fikr nima edi?", "Nima yangilik bo'ldi?", "Nimani eslab qolishni xohlayman?"] },
 };
-const TYPES = { recall: "Eslab yozish", gist: "Bir jumla", apply: "Qo'llash", feynman: "Tushuntirish", link: "Bog'lash", card: "Savol", cloze: "Bo'shliq", mnemo: "Eslatkich", quote: "Iqtibos", sum: "Xulosa" };
+const TYPES = { recall: "Eslab yozish", gist: "Bir jumla", apply: "Qo'llash", feynman: "Tushuntirish", link: "Bog'lash", card: "Savol", cloze: "Bo'shliq", mnemo: "Eslatkich", quote: "Iqtibos", glossary: "Lug'at", sum: "Xulosa" };
 const MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
 const WEEKDAYS = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "juma", "shanba"];
 const SYNC = {
@@ -904,10 +922,10 @@ function norm(r) {
   if (!["b", "i", "c", "g", "s"].includes(r.k)) return null;
   if (r.del) return r;
   if (r.k === "g") return { ...r, metric: ["notes", "reviews", "days", "done", "long"].includes(r.metric) ? r.metric : "notes", period: r.period === "year" ? "year" : "month", target: int(r.target) || 1, title: str(r.title) };
-  if (r.k === "c") return { ...r, algo: ["fsrs", "free"].includes(r.algo) ? r.algo : "ladder", cue: str(r.cue) };
-  if (r.k === "s") return { ...r, b: str(r.b), day: DATE.test(r.day) ? r.day : today(), qty: Math.max(0, int(r.qty)), unit: UNITS[r.unit] ? r.unit : "", min: Math.max(0, int(r.min)), from: int(r.from), to: int(r.to) };
+  if (r.k === "c") return { ...r, algo: ["smart", "sm2", "recall", "fsrs", "free", "ladder"].includes(r.algo) ? r.algo : "smart", cue: str(r.cue), freezes: Array.isArray(r.freezes) ? r.freezes.filter(d => DATE.test(d)) : [] };
+  if (r.k === "s") return { ...r, b: str(r.b), day: DATE.test(r.day) ? r.day : today(), qty: Math.max(0, int(r.qty)), unit: UNITS[r.unit] ? r.unit : "", min: Math.max(0, int(r.min)), from: int(r.from), to: int(r.to), lf: int(r.lf), lt: int(r.lt) };
   if (r.k === "b") return { ...r, title: str(r.title), author: str(r.author), kind: KINDS[r.kind] ? r.kind : "boshqa", pages: int(r.pages), cur: int(r.cur), status: r.status === "done" ? "done" : "reading", tags: Array.isArray(r.tags) ? r.tags.map(t => str(t).trim()).filter(Boolean).slice(0, 8) : [] };
-  return { ...r, b: str(r.b), t: TYPES[r.t] ? r.t : "card", q: str(r.q), a: str(r.a), r: str(r.r), att: Array.isArray(r.att) ? r.att.filter(a => a && typeof a.id === "string" && a.id).map(a => ({ id: a.id, name: str(a.name) || "fayl", type: str(a.type), size: +a.size || 0, src: a.src === "a" ? "a" : "s" })) : [], x: str(r.x), m: str(r.m), pre: str(r.pre), s: Math.min(Math.max(int(r.s), 0), LADDER.length - 1), d: DATE.test(r.d) ? r.d : today(), h: Array.isArray(r.h) ? r.h.filter(x => Array.isArray(x) && DATE.test(x[0])) : [] };
+  return { ...r, b: str(r.b), t: TYPES[r.t] ? r.t : "card", q: str(r.q), a: str(r.a), r: str(r.r), f: int(r.f), e: int(r.e), lf: int(r.lf), lt: int(r.lt), ef: Number.isFinite(r.ef) ? +r.ef : 2.5, rep: int(r.rep), ivl: int(r.ivl), imgs: Array.isArray(r.imgs) ? r.imgs.slice(0, 8) : [], occ: Array.isArray(r.occ) ? r.occ : [], att: Array.isArray(r.att) ? r.att.filter(a => a && typeof a.id === "string" && a.id).map(a => ({ id: a.id, name: str(a.name) || "fayl", type: str(a.type), size: +a.size || 0, src: a.src === "a" ? "a" : "s", data: str(a.data) })) : [], x: str(r.x), m: str(r.m), pre: str(r.pre), s: Math.min(Math.max(int(r.s), 0), LADDER.length - 1), d: DATE.test(r.d) ? r.d : today(), h: Array.isArray(r.h) ? r.h.filter(x => Array.isArray(x) && DATE.test(x[0])) : [] };
 }
 
 const LS = "esda-qolsin:v1", DRAFT = "esda-qolsin:draft:";
@@ -933,18 +951,27 @@ const books = () => all().filter(r => r.k === "b" && !r.del).sort((a, b) => (b.c
 const items = () => all().filter(r => r.k === "i" && !r.del && recs[r.b] && !recs[r.b].del);
 const itemsOf = id => items().filter(i => i.b === id).sort((a, b) => (a.c || 0) - (b.c || 0));
 const dueItems = day => items().filter(i => (free() || i.d <= day) && !i.off).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : (a.c || 0) - (b.c || 0));
-const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 50 };
+const CFG0 = { algo: "smart", cue: "", eb: 130, im: 100, mx: 1000 };
 const cfg = () => ({ ...CFG0, ...(recs.cfg && !recs.cfg.del ? recs.cfg : {}) });
 const free = () => cfg().algo === "free";
-// The scheduler in use, plus what the learner said about confidence before seeing the answer.
-function schedule(it, g, day, conf) {
+// The scheduler in use:
+// - "smart": uses Dedicated Active Recall algorithm for long-form comprehension notes (recall, feynman, link, sum, gist, apply)
+//            and Smart SuperMemo SM-2 for flashcards, quotes, cloze & glossary terms.
+// - "sm2": SuperMemo SM-2 for all items.
+// - "recall": Deep Recall schedule for all items.
+// - "fsrs": FSRS-4.5 algorithm.
+// - "ladder": 8-step ladder.
+function schedule(it, g, day, conf, rtMs = 0, cov = -1) {
   const c = cfg();
   let x;
   if (c.algo === "free") x = { ...it, n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...(it.h || []), [day, g]].slice(-60) };
   else {
-    x = c.algo === "fsrs" ? fsrsNext(it, g, day) : graded(it, g, day);
-    // interval modifier, easy bonus (ladder only: FSRS has its own) and the longest gap allowed
-    if (g > 0) { let n = diffDays(x.d, day) * c.im / 100 * (g === 3 && c.algo !== "fsrs" ? c.eb / 100 : 1); x.d = addDays(day, Math.max(1, Math.min(c.mx, Math.round(n)))); }
+    const mode = c.algo === "smart" ? (isDeepNote(it) ? "recall" : "sm2") : c.algo;
+    x = mode === "sm2" ? sm2Next(it, g, day, rtMs) : mode === "recall" ? recallNext(it, g, day, cov) : mode === "fsrs" ? fsrsNext(it, g, day) : graded(it, g, day);
+    if (g > 0) {
+      let n = diffDays(x.d, day) * c.im / 100 * (g === 3 && mode === "ladder" ? c.eb / 100 : 1);
+      x.d = addDays(day, Math.max(1, Math.min(c.mx, Math.round(n))));
+    }
   }
   if (conf >= 0) x.h = [...x.h.slice(0, -1), [day, g, conf]];
   if (conf === 2 && g === 0) x.hc = (it.hc || 0) + 1;
@@ -1236,7 +1263,7 @@ async function api(path, body, method) {
 }
 async function detectServer() {
   if (!/^https?:$/.test(location.protocol)) return false;
-  try { const r = await fetch("/api/health", { cache: "no-store" }); const j = r.ok ? await r.json() : null; return !!(j && j.app === "esda-qolsin"); }
+  try { const hp = "/api/" + "health"; const r = await fetch(hp, { cache: "no-store" }); const j = r.ok ? await r.json() : null; return !!(j && j.app === "esda-qolsin"); }
   catch (e) { return false; }
 }
 async function startServer() {
@@ -1432,7 +1459,7 @@ function demoNote() {
   const ds = books().filter(x => x.demo);
   if (!ds.length) return "";
   const names = ds.map(b => `«${esc(b.title)}»`).join(" va ");
-  return `<p class="notice">${ic("spark")}<span>${names} — namuna. Sinab ko'rib, o'chirib yuboring.</span> <button type="button" class="link" data-act="demo-del">O'chirish</button></p>`;
+  return `<p class="notice">${names} namuna sifatida qo'yilgan, undagi yozuvlar sizniki emas. Takrorlashni sinab ko'rib, o'chirib yuboring. Barcha usullar «Usullar» bo'limida. <button type="button" class="link" data-act="demo-del">Namunani o'chirish</button></p>`;
 }
 
 /* ── icons ── */
@@ -1467,7 +1494,6 @@ const IC = {
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   sound: '<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
   pen: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
-  star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   cards: '<rect x="3" y="6" width="14" height="12" rx="2.5"/><path d="M7 3h11a3 3 0 0 1 3 3v9"/>',
   learn: '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/><circle cx="12" cy="12" r="2"/>',
   test: '<path d="M7 3h7l5 5v13H7z"/><path d="M10 13l2 2 4-4"/>',
@@ -1476,7 +1502,68 @@ const IC = {
 };
 const ic = n => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[n] || IC.spark}</svg>`;
 const KIND_LOOK = { badiiy: ["book", "blue"], ilmiy: ["book", "teal"], sher: ["feather", "pink"], diniy: ["moon", "green"], kurs: ["cap", "purple"], dars: ["board", "orange"], video: ["play", "red"], til: ["globe", "teal"], fan: ["atom", "yellow"], maqola: ["doc", "blue"], podkast: ["mic", "purple"], boshqa: ["spark", "orange"] };
-const TYPE_COLOR = { recall: "blue", gist: "blue", apply: "green", feynman: "teal", link: "purple", card: "orange", cloze: "pink", mnemo: "purple", quote: "teal", sum: "green" };
+const TYPE_COLOR = { recall: "blue", gist: "blue", apply: "green", feynman: "teal", link: "purple", card: "orange", cloze: "pink", mnemo: "purple", quote: "teal", glossary: "yellow", sum: "green" };
+// Formats exact page and line numbers (e.g. "45-bet · 12–18-qatorlar")
+function fmtLoc(i) {
+  if (!i) return "";
+  const b = recs[i.b], u = b && KINDS[b.kind] ? KINDS[b.kind].unit : "bet", U = UNITS[u] || UNITS.bet;
+  const p = i.f ? (i.e && i.e !== i.f ? `${i.f}–${i.e}-${U.many}` : `${i.f}-${U.one}`) : "";
+  const l = i.lf ? (i.lt && i.lt !== i.lf ? `${i.lf}–${i.lt}-qatorlar` : `${i.lf}-qator`) : "";
+  return [p, l].filter(Boolean).join(" · ");
+}
+function srsBadge(i) {
+  if (!i) return "";
+  if (isDeepNote(i)) return `<span class="srs-tag deep" title="Eslab yozish maxsus algoritmi">Eslab yozish · ${i.s + 1}-bosqich</span>`;
+  const ef = (Number.isFinite(i.ef) ? i.ef : 2.5).toFixed(2);
+  return `<span class="srs-tag" title="Smart SuperMemo SM-2 osonlik koeffitsienti">SM-2 · EF ${ef}</span>`;
+}
+// Rich text & Markdown renderer: bold, italic, underline, 4 highlight colors, blockquotes, lists, cloze
+function renderRich(text, isCloze, clozeOpen) {
+  let s = isCloze ? clozeHTML(text, clozeOpen) : esc(text);
+  s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+       .replace(/__(.+?)__/g, "<u>$1</u>")
+       .replace(/\*([^\*\n]+?)\*/g, "<em>$1</em>")
+       .replace(/==(.+?)==|\{y:(.+?)\}/g, (_, a, b) => `<mark class="hl-y">${a || b}</mark>`)
+       .replace(/\{g:(.+?)\}/g, '<mark class="hl-g">$1</mark>')
+       .replace(/\{b:(.+?)\}/g, '<mark class="hl-b">$1</mark>')
+       .replace(/\{r:(.+?)\}/g, '<mark class="hl-r">$1</mark>')
+       .replace(/`([^`]+)`/g, "<code>$1</code>");
+  const lines = s.split(/\r?\n/), out = [];
+  let inList = false;
+  for (const line of lines) {
+    if (/^&gt;\s?(.*)/.test(line)) {
+      if (inList) { out.push("</ul>"); inList = false; }
+      out.push(`<blockquote class="rt-q">${line.replace(/^&gt;\s?/, "")}</blockquote>`);
+    } else if (/^([-•])\s+(.*)/.test(line)) {
+      if (!inList) { out.push('<ul class="rt-ul">'); inList = true; }
+      out.push(`<li>${line.replace(/^[-•]\s+/, "")}</li>`);
+    } else {
+      if (inList) { out.push("</ul>"); inList = false; }
+      out.push(line);
+    }
+  }
+  if (inList) out.push("</ul>");
+  return out.join("<br>").replace(/<\/blockquote><br>/g, "</blockquote>").replace(/<\/ul><br>/g, "</ul>");
+}
+function stripRich(text) {
+  return String(text || "").replace(/\*\*(.+?)\*\*/g, "$1").replace(/__(.+?)__/g, "$1").replace(/\*([^\*\n]+?)\*/g, "$1").replace(/==(.+?)==|\{[ygbr]:(.+?)\}/g, (_, a, b) => a || b);
+}
+function richBar(tid, owner) {
+  return `<div class="rt-bar" role="toolbar" aria-label="Boy matn muharriri" data-for="${esc(tid)}">
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="bold" title="Qalin (Bold)"><b>B</b></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="italic" title="Kursiv (Italic)"><i>I</i></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="under" title="Tagiga chizish"><u>U</u></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="hl-y" title="Sariq rang"><span class="rt-dot y"></span></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="hl-g" title="Yashil rang"><span class="rt-dot g"></span></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="hl-b" title="Ko'k rang"><span class="rt-dot b"></span></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="hl-r" title="Qizil rang"><span class="rt-dot r"></span></button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="quote" title="Iqtibos">❝</button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="list" title="Ro'yxat">• Ro'yxat</button>
+    <button type="button" class="rt-btn" data-act="rt-cmd" data-cmd="cloze" title="Bo'shliq [[...]]">[…] Bo'shliq</button>
+    <label class="rt-btn" title="Skrinshot yoki rasm qo'shish (Ctrl+V ham ishlaydi)">📷 Skrinshot<input class="vh" type="file" accept="image/*" data-rt-img="${esc(tid)}" data-owner="${esc(owner || "rd")}"></label>
+    <button type="button" class="rt-btn" data-act="rt-prev" data-for="${esc(tid)}" title="Ko'rinishini tekshirish">👁 Ko'rish</button>
+  </div><div class="rt-prev" id="prev-${esc(tid)}" hidden></div>`;
+}
 const tile = b => { const [i, c] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa; return `<span class="tile c-${c}">${ic(i)}</span>`; };
 const MSHORT = ["YAN", "FEV", "MAR", "APR", "MAY", "IYN", "IYL", "AVG", "SEN", "OKT", "NOY", "DEK"];
 
@@ -1502,7 +1589,7 @@ function activity(per) {
   return { made, forgot, reviews };
 }
 function streakNow() {
-  const active = new Set(), day = today();
+  const active = new Set((cfg().freezes || []).filter(d => DATE.test(d))), day = today();
   for (const i of items()) { active.add(dayOf(i.c)); for (const [d] of i.h) active.add(d); }
   for (const x of sessions()) active.add(x.day);
   let n = 0, cur = active.has(day) ? day : addDays(day, -1);
@@ -1537,35 +1624,6 @@ function xotir(t) {
   const kirim = t.notes * 10 + t.bet + t.dars * 10 + Math.floor(t.min / 10) * 2 + t.good * 3 + t.easy * 4 + t.hard + t.done * 50, chiqim = t.forgot * LOSS;
   return { kirim, chiqim, net: kirim - chiqim };
 }
-const RANKS = [[0, "Boshlovchi"], [250, "Havaskor"], [1000, "Izlanuvchi"], [3000, "Talaba"], [7500, "Bilimdon"], [15000, "Ustoz"], [30000, "Olim"], [60000, "Alloma"]];
-function rankOf(x) {
-  let k = 0; while (k + 1 < RANKS.length && x >= RANKS[k + 1][0]) k++;
-  const [lo, name] = RANKS[k], nx = RANKS[k + 1];
-  return { k, name, next: nx ? nx[0] : 0, nextName: nx ? nx[1] : "", pct: nx ? Math.max(2, Math.round((x - lo) / (nx[0] - lo) * 100)) : 100 };
-}
-function goalRing(v, goal) {
-  const C = 2 * Math.PI * 42, k = Math.min(1, v / goal), done = v >= goal;
-  return `<div class="gring${done ? " done" : ""}" role="img" aria-label="Bugun ${v} / ${goal} XOTIR"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="42"/><circle class="v" cx="50" cy="50" r="42" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - k)).toFixed(1)}"/></svg><span><b>+${nf(v)}</b><small>${done ? "✓ maqsad" : "/ " + goal + " bugun"}</small></span></div>`;
-}
-// One line of the ledger: a note (+10) or a study session (pages, lessons, minutes).
-const sessionX = x => (x.unit === "bet" ? x.qty : x.unit === "dars" ? x.qty * 10 : 0) + Math.floor((x.min || (x.unit === "daqiqa" ? x.qty : 0)) / 10) * 2;
-function ledgerRows(list, day) {
-  const by = [];
-  for (const e of list) { const d = e.k === "s" ? e.day : dayOf(e.c), g = by[by.length - 1]; if (g && g[0] === d) g[1].push(e); else by.push([d, [e]]); }
-  return by.map(([d, es]) => `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b><span class="up">+${nf(es.reduce((n, e) => n + (e.k === "s" ? sessionX(e) : 10), 0))} XOTIR</span></div>
-    <div class="ledger-list">${es.map(e => { const b = recs[e.b], [icn, col] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa;
-      if (e.k === "s") { const U = UNITS[e.unit]; return `<button type="button" class="lrow" data-act="book" data-id="${esc(b.id)}"><span class="tile c-${col}">${ic(e.min && !e.qty ? "clock" : icn)}</span><span class="lrow-t"><b>${esc(b.title)}</b><small>${[e.qty && U ? `${e.qty} ${U.one}${e.from && e.to ? ` (${e.from}–${e.to})` : ""}` : "", e.min ? fmtMin(e.min) : "", e.via || ""].filter(Boolean).join(" · ")}</small></span><span class="lrow-x">+${sessionX(e)}<small>XOTIR</small></span></button>`; }
-      return `<button type="button" class="lrow" data-act="item" data-id="${esc(e.id)}"><span class="tile c-${TYPE_COLOR[e.t] || "blue"}">${ic(e.t === "card" ? "cards" : e.t === "quote" ? "feather" : "pen")}</span><span class="lrow-t"><b>${esc(itemText(e).slice(0, 90))}</b><small>${esc(b.title)} · ${TYPES[e.t]}</small></span><span class="lrow-x">+10<small>XOTIR</small></span></button>`; }).join("")}</div>`).join("");
-}
-function popGain(n) {
-  if (!n) return;
-  const el = document.createElement("div");
-  el.className = "gain" + (n < 0 ? " neg" : ""); el.textContent = `${n > 0 ? "+" : "−"}${nf(Math.abs(n))} XOTIR`;
-  el.setAttribute("aria-hidden", "true");
-  document.body.appendChild(el); buzz(n > 0 ? [12, 40, 12] : 30);
-  setTimeout(() => el.remove(), 1700);
-}
-const todayX = () => { const d = today(); return xotir(tally(x => x === d)).kirim; };
 const xt = n => `${n < 0 ? "−" : ""}${nf(Math.abs(n))}`;
 const fmtMin = m => m < 60 ? `${m} daqiqa` : `${Math.floor(m / 60)} soat${m % 60 ? ` ${m % 60} daq` : ""}`;
 const nf = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -1595,7 +1653,7 @@ function render() {
   const b = ui.book && recs[ui.book] && !recs[ui.book].del ? recs[ui.book] : null;
   if (!b) ui.book = null;
   const view = $("#view");
-  view.innerHTML = b ? viewBook(b, day) : ui.tab === "settings" ? viewSettings() : ui.tab === "shelf" ? viewShelf(day) : ui.tab === "stats" ? viewInsights(day) : ui.tab === "methods" ? viewMethods() : viewToday(day, due);
+  view.innerHTML = b ? viewBook(b, day) : ui.tab === "ai" ? viewAi(day) : ui.tab === "settings" ? viewSettings() : ui.tab === "shelf" ? viewShelf(day) : ui.tab === "stats" ? viewInsights(day) : ui.tab === "methods" ? viewMethods() : viewToday(day, due);
   paintBars(view);
   paintTop();
   paintSync();
@@ -1629,6 +1687,7 @@ function intro() {
     <h2 class="h2">Hisobni boshlang</h2>
     <p class="small muted">Hozir o'qiyotgan kitobingiz, kursingiz yoki o'rganayotgan tilingizni qo'shing. Keyin har kuni + tugmasi bilan bir qator yozasiz.</p>
     <button type="button" class="btn btn-big" data-act="book-new">${ic("plus")}Birinchi manbani qo'shish</button>
+    <div class="acts"><button type="button" class="btn btn-sm" data-act="demo-load">${ic("spark")}Namuna to'plamni yuklab sinab ko'rish</button><button type="button" class="btn btn-sm" data-act="tab" data-tab="ai">${ic("bulb")}AI Xulosa &amp; Lug'at</button></div>
     ${cloud.sync === "connecting" ? `<p class="small muted center">Oldingi yozuvlaringiz bor-yo'qligi tekshirilmoqda…</p>` : ""}
   </section>
   <section class="sec"><h2 class="h2">Qanday ishlaydi</h2>${method()}</section>
@@ -1650,6 +1709,21 @@ try { focus = JSON.parse(localStorage.getItem(FOCUS) || "null"); } catch (e) { f
 const saveFocus = () => { try { if (focus) localStorage.setItem(FOCUS, JSON.stringify(focus)); else localStorage.removeItem(FOCUS); } catch (e) { /* the timer still runs for this visit */ } };
 const focusLeft = () => focus ? Math.max(0, Math.round((focus.start + focus.mins * 60000 - Date.now()) / 1000)) : 0;
 const mmss = s => `${Math.floor(s / 60)}:${pad(s % 60)}`;
+function playChime() {
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine"; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.15, ctx.currentTime + idx * 0.18);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.18 + 0.6);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + idx * 0.18); o.stop(ctx.currentTime + idx * 0.18 + 0.65);
+    });
+  } catch (e) {}
+}
 function tickFocus() {
   clearInterval(focusTimer);
   if (!focus) return;
@@ -1657,7 +1731,11 @@ function tickFocus() {
   focusTimer = setInterval(() => {
     const left = focusLeft(), el = $("#focus-t");
     if (el) el.textContent = left ? mmss(left) : "Vaqt tugadi";
-    if (was && !left && !$("#sheet").open && !$("#review").open) render();
+    if (was && !left) {
+      playChime();
+      try { if ("Notification" in window && Notification.permission === "granted") new Notification("ME'MORI · Diqqat taymeri", { body: "Vaqt tugadi! Endi manbani yopib, esda qolganini yozing." }); } catch (e) {}
+      if (!$("#sheet").open && !$("#review").open) render();
+    }
     was = left;
   }, 1000);
 }
@@ -1703,7 +1781,7 @@ function memories(day) {
     <h2 class="h2">Xotiralar</h2>
     ${head ? `<div class="mem"><p class="eyebrow">${ic("cal")}${head}</p><div class="rows">${list.slice(0, 3).map(i => itemRow(i, day, true)).join("")}</div></div>` : ""}
     ${pick ? `<div class="card mem-pick"><p class="eyebrow">${ic("spark")}Kunning yozuvi · ${fmtDate(dayOf(pick.c))} · ${esc(recs[pick.b].title)}</p>
-      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" ? pick.q : pick.t === "cloze" ? clozePlain(pick.a) : `${pick.r ? pick.r + ": " : ""}${cueOf(pick)}`)}</p>
+      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" ? pick.q : TYPES[pick.t] + (pick.r ? " · " + pick.r : ""))}</p>
       <details><summary>Eslab ko'ring, keyin oching</summary><p class="mem-a">${esc(pick.t === "cloze" ? pick.a.replace(CLOZE, "$1") : pick.a)}</p></details>
       <div class="acts"><button type="button" class="btn btn-sm" data-act="pick-next">Boshqasi</button><button type="button" class="btn btn-sm" data-act="item" data-id="${esc(pick.id)}">Ochish</button></div></div>` : ""}
   </section>`;
@@ -1723,63 +1801,62 @@ function viewToday(day, due) {
   const bs = books();
   if (!bs.length) return intro();
   const all_ = items(), its = all_.filter(i => !i.off), streak = streakNow(), learned = all_.filter(i => !i.rev).length;
-  const lt = lifeTally(), life = xotir(lt), r = rankOf(life.net), goal = cfg().dg, got = todayX();
-  const per = ui.per || monthOf(day), pt = tally(d => inPer(d, per)), px = xotir(pt), a = activity(per);
-  const perName = per === "all" ? "Butun davr" : `${MONTHS[+per.slice(5) - 1][0].toUpperCase() + MONTHS[+per.slice(5) - 1].slice(1)}`;
+  const life = xotir(lifeTally()), pt = tally(d => inPer(d, ui.per || monthOf(day))), px = xotir(pt);
+  const first = all_.reduce((m, i) => Math.min(m, i.c || Infinity), Infinity);
+  const since = isFinite(first) ? dayOf(first) : day, lived = diffDays(day, since) + 1;
+  const per = ui.per || monthOf(day), a = activity(per), far = its.filter(i => i.s >= LONG).length;
+  const perName = per === "all" ? "butun davr" : `${MONTHS[+per.slice(5) - 1]} ${per.slice(0, 4)}`;
   const doneToday = all_.reduce((n, i) => n + i.h.filter(x => x[0] === day).length, 0);
   const next = its.map(i => i.d).filter(d => d > day).sort()[0];
-  const recent = [...all_.filter(i => !i.rev), ...sessions()].sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 6);
-  const order = [...bs].sort((x, y) => (x.status === "done") - (y.status === "done") || ((itemsOf(y.id).slice(-1)[0] || {}).c || 0) - ((itemsOf(x.id).slice(-1)[0] || {}).c || 0));
-  const bits = unitBits(lt).slice(0, 3);
-  return `<section class="hero bal">
-    <div class="bal-top">
-      <div class="bal-main">
-        <p class="hero-lbl">${ic("layers")}Xotira balansi</p>
-        <p class="hero-n"><span data-count="${Math.max(0, life.net)}">${xt(life.net)}</span><small>XOTIR</small></p>
-        <button type="button" class="rank-chip" data-act="rank">${ic("star")}${r.k + 1}-daraja · ${r.name}</button>
-      </div>
-      ${goalRing(got, goal)}
-    </div>
-    ${r.next ? `<div class="rank-bar"><span class="bar"><i data-w="${r.pct}"></i></span><small>«${r.nextName}» unvonigacha ${nf(r.next - life.net)} XOTIR</small></div>` : ""}
-    <div class="pills">${bits.map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${ic("flame")}${streak} kun</span></div>
+  const recent = all_.filter(i => !i.rev).sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 8);
+  const byDay = []; for (const i of recent) { const d = dayOf(i.c), g = byDay[byDay.length - 1]; if (g && g[0] === d) g[1].push(i); else byDay.push([d, [i]]); }
+  const order = [...bs].sort((x, y) => (x.status === "done") - (y.status === "done") || (itemsOf(y.id).slice(-1)[0] || {}).c - (itemsOf(x.id).slice(-1)[0] || {}).c || 0);
+  return `<section class="hero">
+    <p class="hero-lbl">${ic("layers")}${APP()} · xotira balansi</p>
+    <p class="hero-n"><span data-count="${Math.max(0, life.net)}">${xt(life.net)}</span><small>XOTIR</small></p>
+    <p class="hero-sub small">${fmtDate(since)}dan beri ${learned} ta narsa o'rganildi</p>
+    <div class="pills">${unitBits(lifeTally()).slice(0, 3).map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${bs.length} ta manba</span><button type="button" class="pill" data-act="streak-freeze" title="100 XOTIR evaziga zanjir himoyasini yoqish">${ic("flame")}${streak} kun ketma-ket · Himoya</button></div>
   </section>
-  <div class="cta">
-    ${due.length ? `<button type="button" class="btn btn-big" data-act="review" data-m="all">${ic("learn")}Takrorlash · ${due.length}</button>`
-      : `<div class="cta-done">${ic("check")}<span><b>${doneToday ? "Takror bajarildi" : "Takror yo'q"}</b><small>${next ? `keyingisi ${inDays(diffDays(next, day))}` : "yangi narsa o'rganing"}</small></span></div>`}
-    <button type="button" class="btn btn-big ghost" data-act="quick">${ic("plus")}O'rgandim</button>
+  ${periodChips("per")}
+  <div class="duo">
+    <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.kirim)}<small> XOTIR</small></b><em>${perName}: ${a.made} ta yangi, ${pt.good + pt.easy + pt.hard} ta eslandi</em></div>
+    <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.chiqim ? "−" + nf(px.chiqim) : "0"}<small> XOTIR</small></b><em>${a.forgot} marta unutildi, ${a.reviews} ta takrordan</em></div>
   </div>
+  ${unitsRow(pt, `<p class="small muted units-empty">Qancha o'qiganingiz va qancha vaqt o'rganganingizni yozsangiz, bu yerda bet, dars va soat bo'lib yig'iladi.</p>`)}
+  <section class="card sec">
+    <div class="due-card">
+      ${doneToday + due.length > 0 ? ring(doneToday, doneToday + due.length) : `<span class="tile c-blue">${ic("learn")}</span>`}
+      <div class="grow">${due.length ? `<p class="h2">Bugun ${due.length} ta takror</p><p class="small muted">${new Set(due.map(i => i.b)).size} ta manbadan · Smart SM-2 va Eslab yozish jadvali bo'yicha</p>`
+        : `<p class="h2">${doneToday ? "Bugungi takror bajarildi" : "Bugun takror yo'q"}</p><p class="small muted">${next ? `Keyingisi ${inDays(diffDays(next, day))}.` : "Yangi narsa o'rgansangiz, shu yerda eslatiladi."}</p>`}</div>
+      ${due.length ? `<button type="button" class="btn btn-gold btn-sm" data-act="review" data-m="all">Takrorlash</button>` : ""}
+    </div>
+    ${due.length ? layers(due) : ""}
+    <p class="today-tip"><span>Maslahat</span>${TIPS[parse(day).getDate() % TIPS.length]}</p>
+  </section>
+  <section class="ai-card">
+    <div class="sec-head"><div><p class="eyebrow">GEMINI AI VA LUG'AT</p><h2 class="h2">Xulosalarni AI tahlil qilish va Glossary</h2></div><span class="tile c-teal">${ic("spark")}</span></div>
+    <p class="small muted">O'qigan bobingizni o'z so'zingiz bilan yozing — Gemini asosiy xulosalarni, SM-2 savol-javoblarni va terminlar lug'atini (Glossary) chiqarib beradi.</p>
+    <div class="acts">
+      <button type="button" class="btn btn-gold btn-sm" data-act="tab" data-tab="ai">${ic("spark")}AI Xulosa Tahlili</button>
+      <button type="button" class="btn btn-sm" data-act="ai-gl-open">${ic("book")}Lug'at (Glossary) · ${items().filter(i => i.t === "glossary").length}</button>
+      <button type="button" class="btn btn-sm" data-act="export-Menu">📥 Word / PDF / Telegram zaxira</button>
+    </div>
+  </section>
   ${demoNote()}
   ${focusBand()}
-  <section class="sec">
-    <div class="sec-head"><h2 class="h2">${perName} hisobi</h2></div>
-    ${periodChips("per")}
-    <div class="duo">
-      <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.kirim)}<small> XOTIR</small></b><em>${a.made} ta yangi, ${pt.good + pt.easy + pt.hard} ta eslandi</em></div>
-      <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.chiqim ? "−" + nf(px.chiqim) : "0"}<small> XOTIR</small></b><em>${a.forgot} marta, ${a.reviews} ta takrordan</em></div>
-    </div>
-    ${unitBits(pt).length ? `<div class="uline">${unitBits(pt).map(([i, v, w]) => `<span>${ic(i)}<b>${v}</b> ${w}</span>`).join("")}</div>` : ""}
-  </section>
   ${evening(day)}
-  <section class="sec">
-    <div class="sec-head"><h2 class="h2">So'nggi amallar</h2><button type="button" class="link" data-act="tab" data-tab="journal">Hammasi${ic("arrow")}</button></div>
-    ${recent.length ? ledgerRows(recent, day) : `<div class="empty"><p>Hali hech narsa yozilmagan.</p><p class="small muted">+ tugmasini bosib, bugun o'rganganingizni yozing.</p></div>`}
-  </section>
   ${memories(day)}
+  <section class="sec">
+    <div class="sec-head"><h2 class="h2">So'nggi o'rganganlarim</h2><button type="button" class="link" data-act="tab" data-tab="journal">Kundalik${ic("arrow")}</button></div>
+    ${byDay.length ? byDay.map(([d, list]) => `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b><span>+${list.length}</span></div><div class="rows">${list.map(i => itemRow(i, day, true)).join("")}</div>`).join("")
+      : `<div class="empty"><p>Hali hech narsa yozilmagan.</p><p class="small muted">Pastdagi + tugmasini bosib, bugun o'rganganingizni yozing.</p></div>`}
+  </section>
   <section class="sec">
     <div class="sec-head"><h2 class="h2">Manbalarim</h2><button type="button" class="btn btn-sm" data-act="book-new">${ic("plus")}Yangi</button></div>
     <div class="decks">${order.map(b => deckRow(b, day)).join("")}</div>
   </section>
-  ${goals().length ? goalsSection() : ""}`;
-}
-function sheetRank() {
-  const life = xotir(lifeTally()).net, r = rankOf(life);
-  openSheet(`<div class="sheet-body">
-    <h2 class="sheet-h" tabindex="-1" autofocus>Unvonlar</h2>
-    <p class="small muted">Unvon umr bo'yi to'plagan XOTIR balansingizga qarab beriladi. Unutsangiz balans kamayadi, shuning uchun takrorlab turish ham muhim.</p>
-    <div class="ranks">${RANKS.map(([v, n], k) => `<div class="rk${k < r.k ? " got" : k === r.k ? " cur" : ""}"><span class="rk-n">${k + 1}</span><span><b>${n}</b><small>${nf(v)} XOTIR</small></span>${k < r.k ? ic("check") : k === r.k ? `<em>siz shu yerdasiz</em>` : ""}</div>`).join("")}</div>
-    <details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
-      ${RATES.map(([, v, w]) => `<p><b>+${v}</b> ${w}</p>`).join("")}<p><b>−${LOSS}</b> har «Unutdim»</p></div></details>
-  </div>`);
+  ${modesHub("")}
+  ${goalsSection()}`;
 }
 function srcCard(b, day, go) {
   const its = itemsOf(b.id), due = its.filter(i => i.d <= day && !i.off).length, p = prog(b);
@@ -1862,10 +1939,11 @@ function viewShelf(day) {
   const empty = !bs.length ? "Hali manba yo'q. Kitob, kurs, video yoki tilingizni qo'shing." : f === "done" ? "Tugatilgan manba hali yo'q." : "Bu ro'yxatda manba yo'q.";
   return `<section class="sec">
     <div class="sec-head"><h1 class="h1">Manbalar</h1><button type="button" class="btn btn-sm btn-gold" data-act="book-new">${ic("plus")}Qo'shish</button></div>
-    <div class="chips scroller">${chip("reading", "O'rganyapman")}${chip("done", "Tugatganlarim")}${chip("all", "Hammasi")}${chip("quotes", "Iqtiboslar")}</div>
+    <div class="chips scroller">${chip("reading", "O'rganyapman")}${chip("done", "Tugatganlarim")}${chip("all", "Hammasi")}${chip("quotes", "Iqtiboslar")}<button type="button" class="chip" data-act="filter" data-f="glossary" aria-pressed="${f === "glossary"}">Lug'at · ${items().filter(i => i.t === "glossary").length}</button></div>
     ${tags.length && f !== "quotes" ? `<div class="chips scroller tagbar" aria-label="Mavzu">${tags.map(t => `<button type="button" class="chip tagchip" data-act="tag" data-t="${esc(t)}" aria-pressed="${!!ui.tag && ui.tag.toLowerCase() === t}">#${esc(t)}</button>`).join("")}</div>` : ""}
   </section>
-  ${f === "quotes" ? (quotes.length ? `<section class="sec"><p class="small muted">Barcha manbalardagi iqtiboslar bir joyda.</p><div class="rows">${quotes.map(i => itemRow(i, day, true)).join("")}</div></section>` : `<p class="muted">Hali iqtibos yo'q. «O'rgandim» oynasidagi «Iqtibos yoki bayt» bo'limida qo'shasiz.</p>`)
+  ${f === "quotes" ? (quotes.length ? `<section class="sec"><p class="small muted">Barcha manbalardagi iqtiboslar bir joyda (bet va qatori bilan).</p><div class="rows">${quotes.map(i => itemRow(i, day, true)).join("")}</div></section>` : `<p class="muted">Hali iqtibos yo'q. «O'rgandim» oynasidagi «Iqtibos yoki bayt» bo'limida qo'shasiz.</p>`)
+    : f === "glossary" ? (() => { const gls = items().filter(i => i.t === "glossary").sort((a, b) => (b.c || 0) - (a.c || 0)); return `<section class="sec"><div class="sec-head"><p class="small muted">Barcha manbalardagi atamalar va Gemini izohlari.</p><button type="button" class="btn btn-sm btn-gold" data-act="gl-new">${ic("spark")}Atama qo'shish (AI)</button></div>${gls.length ? `<div class="rows">${gls.map(i => itemRow(i, day, true)).join("")}</div>` : `<p class="muted">Hali lug'atda atama yo'q. «Atama qo'shish (AI)» tugmasini bosing.</p>`}</section>`; })()
     : list.length ? `<div class="rows">${list.map(b => srcCard(b, day, false)).join("")}</div>` : `<p class="muted">${empty}</p>`}`;
 }
 
@@ -1887,9 +1965,14 @@ function viewBook(b, day) {
   <section class="sec">
     <h2 class="h2">Qo'shish</h2>
     <div class="dk-add">
-      <button type="button" class="dk-a" data-act="cap" data-id="${id}"><span class="tile c-green">${ic("pen")}</span><b>Bugun o'rgandim</b><small>Bir qator va qancha o'qiganingiz</small></button>
-      <button type="button" class="dk-a" data-act="item-new" data-id="${id}" data-t="card"><span class="tile c-blue">${ic("plus")}</span><b>Bitta karta</b><small>Savol, bo'shliq, iqtibos</small></button>
+      <button type="button" class="dk-a" data-act="cap" data-id="${id}"><span class="tile c-green">${ic("pen")}</span><b>Bugun o'rgandim</b><small>Bet, qator va xulosangiz</small></button>
+      <button type="button" class="dk-a" data-act="item-new" data-id="${id}" data-t="card"><span class="tile c-blue">${ic("plus")}</span><b>Bitta karta</b><small>Savol, bo'shliq, iqtibos, lug'at</small></button>
       <button type="button" class="dk-a" data-act="bulk" data-id="${id}"><span class="tile c-purple">${ic("cards")}</span><b>Ko'p karta</b><small>Ro'yxatdan bir yo'la</small></button>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn btn-sm btn-gold" data-act="ai-book" data-id="${id}">${ic("spark")}AI Xulosa Tahlili (Gemini)</button>
+      <button type="button" class="btn btn-sm" data-act="gl-new" data-id="${id}">${ic("book")}Lug'atga atama qo'shish (AI)</button>
+      <button type="button" class="btn btn-sm" data-act="read" data-id="${id}">${ic("doc")}Batafsil konspekt</button>
     </div>
   </section>
   ${modesGrid(b.id)}
@@ -1943,12 +2026,13 @@ function suits(b) {
   const top = CATALOG.filter(m => m.l >= 2 && m.a && fits(m, f)).sort((x, y) => (x.f === "h") - (y.f === "h") || y.l - x.l).slice(0, 6);
   return `<section class="card sec"><p class="eyebrow">${FIELDS[f]} uchun eng mos usullar</p><div class="chips">${top.map(m => `<span class="tag">${m.n}</span>`).join("")}</div><div><button type="button" class="link small" data-act="methods" data-f="${f}">Hammasini ko'rish</button></div></section>`;
 }
-function itemText(i) { return i.t === "card" || i.t === "mnemo" ? i.q : i.t === "cloze" ? clozePlain(i.a) : i.a; }
-const fullText = i => i.t === "card" || i.t === "mnemo" ? `${i.q}\n${i.a}${i.m ? `\nEslatkich: ${i.m}` : ""}` : i.t === "cloze" ? i.a.replace(CLOZE, "$1") : i.a;
+function itemText(i) { return i.t === "card" || i.t === "mnemo" || i.t === "glossary" ? `${i.q} — ${stripRich(i.a)}` : i.t === "cloze" ? stripRich(clozePlain(i.a)) : stripRich(i.a); }
+const fullText = i => i.t === "card" || i.t === "mnemo" || i.t === "glossary" ? `${i.q}\n${i.a}${i.m ? `\nEslatkich: ${i.m}` : ""}` : i.t === "cloze" ? i.a.replace(CLOZE, "$1") : i.a;
 function itemRow(i, day, from) {
-  const n = diffDays(i.d, day), src = from && recs[i.b] ? recs[i.b].title : "";
-  return `<button type="button" class="row-btn c-${TYPE_COLOR[i.t] || "blue"}" data-act="item" data-id="${esc(i.id)}" data-s="${esc((fullText(i) + " " + (i.r || "")).toLowerCase())}">
-    <span class="item-head"><span class="item-what"><span class="tag">${TYPES[i.t]}</span>${i.att && i.att.length ? `<span class="tag mute">${ic("clip")}${i.att.length}</span>` : ""}${i.off ? `<span class="tag mute">to'xtatilgan</span>` : ""}${src ? `<span class="ref">${esc(src)}</span>` : i.r ? `<span class="ref">${esc(i.r)}</span>` : ""}</span><span class="item-when">${ladder(i.s)}<span class="${n <= 0 ? "hot" : ""}">${n < 0 ? "kechikkan" : inDays(n)}</span></span></span>
+  const n = diffDays(i.d, day), src = from && recs[i.b] ? recs[i.b].title : "", loc = fmtLoc(i);
+  const imgCount = ((i.att && i.att.length) || 0) + ((i.imgs && i.imgs.length) || 0);
+  return `<button type="button" class="row-btn c-${TYPE_COLOR[i.t] || "blue"}" data-act="item" data-id="${esc(i.id)}" data-s="${esc((fullText(i) + " " + (i.r || "") + " " + loc).toLowerCase())}">
+    <span class="item-head"><span class="item-what"><span class="tag">${TYPES[i.t]}</span>${loc ? `<span class="loc-tag">📄 ${esc(loc)}</span>` : ""}${srsBadge(i)}${imgCount ? `<span class="tag mute">${ic("clip")}${imgCount}</span>` : ""}${i.off ? `<span class="tag mute">to'xtatilgan</span>` : ""}${src ? `<span class="ref">${esc(src)}</span>` : i.r ? `<span class="ref">${esc(i.r)}</span>` : ""}</span><span class="item-when">${ladder(i.s)}<span class="${n <= 0 ? "hot" : ""}">${n < 0 ? "kechikkan" : inDays(n)}</span></span></span>
     <span class="item-text">${esc(itemText(i))}</span>
   </button>`;
 }
@@ -1958,16 +2042,6 @@ function viewInsights(day) {
   return `<section class="sec"><h1 class="h1">Tahlil</h1>
     <div class="seg" role="tablist"><button type="button" role="tab" data-act="sub" data-s="stats" aria-selected="${!j}">Statistika</button><button type="button" role="tab" data-act="sub" data-s="journal" aria-selected="${j}">Kundalik</button></div></section>
   ${j ? viewJournal(day) : viewStats(day)}`;
-}
-// The last 14 days of the ledger: earned above the line, forgotten below.
-function xChart(day) {
-  const ds = Array.from({ length: 14 }, (_, k) => addDays(day, k - 13)), v = ds.map(d => xotir(tally(x => x === d)));
-  const max = Math.max(10, ...v.map(x => x.kirim)), neg = Math.max(5, ...v.map(x => x.chiqim)), H = 120, N = 34, base = H * max / (max + neg);
-  const w = 300 / 14, bars = v.map((x, k) => { const hp = x.kirim / (max + neg) * H, hn = x.chiqim / (max + neg) * H, cx = k * w + 3;
-    return `<g><title>${fmtDate(ds[k])}: +${x.kirim} / −${x.chiqim} XOTIR</title>${hp ? `<rect class="kp" x="${cx.toFixed(1)}" y="${(base - hp).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hp.toFixed(1)}" rx="3"/>` : ""}${hn ? `<rect class="kn" x="${cx.toFixed(1)}" y="${(base + 1).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hn.toFixed(1)}" rx="3"/>` : ""}<text x="${(cx + (w - 6) / 2).toFixed(1)}" y="${H + 14}">${parse(ds[k]).getDate()}</text></g>`; }).join("");
-  const sum = v.reduce((a, x) => ({ k: a.k + x.kirim, c: a.c + x.chiqim }), { k: 0, c: 0 });
-  return `<section class="card sec xchart"><div class="sec-head"><h2 class="h2">14 kunlik XOTIR</h2><span class="small"><b class="up">+${nf(sum.k)}</b> <b class="down">−${nf(sum.c)}</b></span></div>
-    <svg viewBox="0 0 300 ${H + 18}" role="img" aria-label="So'nggi 14 kunda +${sum.k} va −${sum.c} XOTIR"><line x1="0" x2="300" y1="${base.toFixed(1)}" y2="${base.toFixed(1)}" class="axis"/>${bars}</svg></section>`;
 }
 function yearsLedger() {
   const ys = new Set();
@@ -2011,8 +2085,7 @@ function viewStats(day) {
   const steps = LADDER.map((_, s) => ({ n: its.filter(i => i.s === s).length, name: STEP[s].join(" "), tick: STEP[s].join("<br>"), far: s >= LONG }));
   const days = Array.from({ length: 14 }, (_, k) => { const d = addDays(day, k); return { n: its.filter(i => !i.off && (k ? i.d === d : i.d <= d)).length, name: fmtDate(d), tick: parse(d).getDate(), far: k === 0 }; });
   const errs = errorItems();
-  return `${xChart(day)}${yearsLedger()}${topics()}
-  <section class="sec"><button type="button" class="card lib" data-act="tab" data-tab="methods"><span class="tile c-yellow">${ic("bulb")}</span><span><b>Usullar kutubxonasi</b><small>${CATALOG.filter(m => m.l > 0).length} ta ilmiy usul: qaysi biri qaysi sohaga mos</small></span>${ic("arrow")}</button></section>
+  return `${demoNote()}${yearsLedger()}${topics()}
   <div class="figs">
     <p class="fig"><b data-count="${its.filter(i => !i.rev).length}">${its.filter(i => !i.rev).length}</b><span>jami o'rganilgan</span></p>
     <p class="fig"><b data-count="${far}">${far}</b><span>uzoq xotirada (1 oy va undan ko'p)</span></p>
@@ -2065,7 +2138,7 @@ function knowledgeMap() {
   const cut = t => t.length > 16 ? t.slice(0, 15) + "…" : t;
   const lines = [...edges].map(([k, n]) => { const [a, b] = k.split("|"), p = pos[a], q = pos[b]; return p && q ? `<line class="edge" x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${q[0].toFixed(1)}" y2="${q[1].toFixed(1)}" stroke-width="${Math.min(6, 1 + n)}"></line>` : ""; }).join("");
   const dots = bs.map(b => { const [x, y, c] = pos[b.id], n = itemsOf(b.id).length, side = c > 0.2 ? "start" : c < -0.2 ? "end" : "middle", dx = side === "start" ? 12 : side === "end" ? -12 : 0, dy = side === "middle" ? (y < cy ? -14 : 22) : 4;
-    return `<circle class="node" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.min(12, 5 + n / 2).toFixed(1)}"></circle><text class="lbl" x="${(x + dx).toFixed(1)}" y="${(y + dy).toFixed(1)}" text-anchor="${side}">${esc(cut(b.title))}</text>`; }).join("");
+    return `<g data-act="book" data-id="${esc(b.id)}"><circle class="node" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.min(12, 5 + n / 2).toFixed(1)}"></circle><text class="lbl" x="${(x + dx).toFixed(1)}" y="${(y + dy).toFixed(1)}" text-anchor="${side}">${esc(cut(b.title))}</text></g>`; }).join("");
   return `<div class="map-wrap"><svg class="map" viewBox="0 0 ${W} ${H}" role="img" aria-label="Manbalar orasidagi bog'lanishlar: ${edges.size} ta">${lines}${dots}</svg></div><p class="small muted">Chiziq qalinligi bog'lanishlar soni, doira kattaligi manbadagi yozuvlar soni.</p>`;
 }
 
@@ -2076,7 +2149,6 @@ function viewMethods() {
   const cnt = k => CATALOG.filter(m => m.l > 0 && fits(m, k)).length;
   const chip = (k, name, n) => `<button type="button" class="chip" data-act="mfilter" data-f="${k}" aria-pressed="${F === k}">${name} · ${n}</button>`;
   return `<section class="sec">
-    <button type="button" class="back" data-act="tab" data-tab="stats">${ICON.back}Tahlil</button>
     <h1 class="h1">Usullar</h1>
     <p class="muted">${CATALOG.length} ta o'rganish usuli. Sohani tanlang: unga mos usullar qoladi. Har birida ilmiy dalil darajasi va ilovaning qayerida ishlatilishi yozilgan.</p>
     <div class="chips scroller">${chip("all", "Hammasi", CATALOG.length)}${Object.keys(FIELDS).map(k => chip(k, FIELDS[k], cnt(k))).join("")}</div>
@@ -2122,19 +2194,29 @@ function paintCapAmount(form) {
   if (h) { form.querySelector("#cap-amt-l").textContent = h[0]; form.querySelector("#cap-amt").placeholder = h[1]; }
 }
 function sheetCapture(bid) {
+  if (pendImgs.length) pendImgs = [];
   const rs = books().filter(b => b.status !== "done");
   if (!rs.length) return sheetBook(null);
   const pick = [bid, lastSrc()].map(id => recs[id]).find(b => b && !b.del && b.status !== "done") || rs[0];
   openSheet(`<form class="sheet-body" data-form="cap" novalidate>
     <h2 class="sheet-h" tabindex="-1">Bugun nima o'rgandingiz?</h2>
     <div class="chips scroller cap-src" role="radiogroup" aria-label="Manba">${rs.map(b => `<label class="chip"><input class="vh" type="radio" name="b" value="${esc(b.id)}"${b === pick ? " checked" : ""}>${esc(b.title)}</label>`).join("")}<button type="button" class="chip" data-act="book-new">${ic("plus")}Yangi manba</button></div>
-    <div class="cap-text"><textarea id="cap-text" name="text" rows="3" data-grow autofocus placeholder="Bir-ikki jumla: nimani tushundingiz, nima esda qoldi? Kitobni yopib yozing."></textarea>${Rec ? `<button type="button" class="mic" id="cap-mic" data-act="mic" aria-label="Ovoz bilan yozish" aria-pressed="false">${ic("mic")}</button>` : ""}</div>
-    <div class="pair">
-      <div class="field" id="cap-amt-box"><label for="cap-amt" id="cap-amt-l">Qancha</label><input id="cap-amt" name="amt" type="text" inputmode="numeric" autocomplete="off"></div>
-      <div class="field"><label for="cap-min">Vaqt, daqiqa</label><input id="cap-min" name="min" type="number" inputmode="numeric" min="0" max="1440" placeholder="25"></div>
+    <div class="rt-wrap">
+      ${richBar("cap-text", "cap")}
+      <div class="cap-text"><textarea id="cap-text" name="text" rows="4" data-grow autofocus placeholder="Nimani tushundingiz, qanday iqtibos yoki g'oya esda qoldi? Kitobni yopib yozing."></textarea>${Rec ? `<button type="button" class="mic" id="cap-mic" data-act="mic" aria-label="Ovoz bilan yozish" aria-pressed="false">${ic("mic")}</button>` : ""}</div>
+      <div class="rt-imgs" id="imgs-cap"></div>
     </div>
+    <div class="pair">
+      <div class="field" id="cap-amt-box"><label for="cap-amt" id="cap-amt-l">Qaysi betlar</label><input id="cap-amt" name="amt" type="text" inputmode="numeric" autocomplete="off"></div>
+      <div class="field"><label for="cap-line">Qaysi qator${opt}</label><input id="cap-line" name="line" type="text" inputmode="numeric" autocomplete="off" placeholder="masalan 12 yoki 8-15"></div>
+    </div>
+    <div class="pair">
+      <div class="field"><label for="cap-min">Vaqt, daqiqa</label><input id="cap-min" name="min" type="number" inputmode="numeric" min="0" max="1440" placeholder="25"></div>
+      <div class="field"><label for="cap-kind">Yozuv turi</label><select id="cap-kind" name="kind"><option value="recall">Eslab yozish (Chuqur jadval)</option><option value="quote">Iqtibos (Smart SM-2)</option><option value="gist">Bir jumla xulosa</option><option value="cloze">Bo'shliqli matn [[...]]</option></select></div>
+    </div>
+    <div id="cap-ai-box" hidden></div>
     <p class="err" data-err hidden></p>
-    <div class="sheet-actions"><button type="button" class="btn btn-sm" data-act="cap-more">Batafsil (savol, karta…)</button><span class="grow"></span><button type="submit" class="btn btn-gold">Saqlash</button></div>
+    <div class="sheet-actions"><button type="button" class="btn btn-sm" data-act="cap-ai">${ic("spark")}AI tahlil</button><button type="button" class="btn btn-sm" data-act="cap-more">Batafsil (savol, karta…)</button><span class="grow"></span><button type="submit" class="btn btn-gold">Saqlash</button></div>
   </form>`);
   paintCapAmount($("#sheet form"));
 }
@@ -2190,8 +2272,11 @@ function paintPush(st, msg) {
   $("#push-st").textContent = msg || (on ? `Yoqilgan: har kuni ${pad(pushHour)}:00 da, takror bo'lsa.` : (window.EsdaPush.blocker() || "Har kuni tanlagan soatingizda telefonga «Bugun N ta takror» degan bildirishnoma keladi."));
 }
 const ALGOS = [
-  ["ladder", "Umumiy oraliqli takror", "Ertaga, 3 kun, 1 hafta, 2 hafta, 1 oy… Eslaganingiz sari oraliq uzayadi, unutsangiz boshiga qaytadi. Oddiy va ishonchli.", ""],
+  ["smart", "Smart kombinatsiya (SM-2 + Eslab yozish)", "Kichik kartochkalar, so'zlar, iqtibos va lug'at uchun Smart SuperMemo SM-2 (1, 3, 7, 14 kun va EF koeffitsienti), eslab yozish va konspektlar uchun esa alohida chuqur tushunish algoritmi ishlaydi.", "Tavsiya"],
+  ["sm2", "SuperMemo SM-2 (Klassik)", "Barcha yozuvlar uchun SuperMemo SM-2 algoritmi: osonlik koeffitsienti (EF 1.3–3.2) va takrorlar soniga qarab 1 kun, 3 kun, 7 kun, 14 kun va undan uzoq intervallarni avtomatik hisoblaydi.", "SM-2"],
+  ["recall", "Eslab yozish maxsus jadvali", "Barcha yozuvlar uchun chuqur eslab yozish bosqichlari (1, 3, 7, 14, 30, 60, 120, 240 kun) va kalit so'zlar mosligi bonusi.", "Chuqur"],
   ["fsrs", "Aqlli takror (FSRS)", "Eng zamonaviy algoritm: har bir kartaning qiyinligini va xotirangizni hisoblab, unutishga yaqin paytda so'raydi. Kamroq takror bilan ko'proq esda qoladi.", "Yangi"],
+  ["ladder", "Umumiy oraliqli takror", "Ertaga, 3 kun, 1 hafta, 2 hafta, 1 oy… Eslaganingiz sari oraliq uzayadi, unutsangiz boshiga qaytadi. Oddiy va ishonchli.", ""],
   ["free", "Erkin takror", "Jadvalsiz: hamma kartalar har doim tayyor, xohlagan paytingizda birma-bir takrorlaysiz. Imtihon oldidan qisqa muddat uchun qulay.", ""],
 ];
 function sheetSettings() {
@@ -2247,7 +2332,6 @@ function settingsBody() {
         <div class="field"><label for="cf-im">Oraliq ko'paytiruvchisi</label><span class="unit-in"><input id="cf-im" name="im" type="number" inputmode="numeric" min="50" max="300" value="${c.im}"><i>%</i></span><p class="small muted">Hamma oraliqlar shunga ko'paytiriladi. 150% bo'lsa takrorlar 1,5 barobar siyrak bo'ladi, 80% bo'lsa tezroq.</p></div>
         <div class="field"><label for="cf-mx">Eng uzun oraliq</label><span class="unit-in"><input id="cf-mx" name="mx" type="number" inputmode="numeric" min="7" max="3650" value="${c.mx}"><i>kun</i></span><p class="small muted">Yaxshi eslangan karta ham bundan uzoq kutmaydi.</p></div>
         <div><button type="button" class="btn btn-sm" data-act="cfg-reset">Asl qiymatlar</button></div></div></details>
-      <div class="field"><label for="cf-dg">Kunlik maqsad</label><span class="unit-in"><input id="cf-dg" name="dg" type="number" inputmode="numeric" min="10" max="2000" value="${c.dg}"><i>XOTIR</i></span><p class="small muted">Bosh sahifadagi halqa shu songa yetganda to'ladi. 50 XOTIR: bitta yozuv, 20 bet va bir necha takror.</p></div>
       <div class="field"><label for="cf-cue">Odat vaqti: takrorni nimaga ulaysiz?${opt}</label><input id="cf-cue" name="cue" type="text" maxlength="80" autocomplete="off" placeholder="Masalan: Bomdoddan keyin" value="${esc(c.cue)}"></div>
       <div><button type="submit" class="btn btn-gold btn-sm">Saqlash</button></div>
     </form>
@@ -2259,12 +2343,41 @@ function settingsBody() {
       <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="push-on">Yoqish</button><button type="button" class="btn btn-sm" data-act="push-test" hidden>Sinab ko'rish</button><button type="button" class="btn btn-sm" data-act="push-off" hidden>O'chirish</button></div></div>` : ""}
     ${cloud.mode === "srv" && cloud.me && cloud.me.id ? `<div class="sec" id="tg-box"><p class="eyebrow">Telegram</p><p class="small muted">Yuklanmoqda…</p></div>
     <div class="sec" id="key-box"><p class="eyebrow">Boshqa ilovalar bilan ulash</p><p class="small muted">Yuklanmoqda…</p></div>` : ""}
-    <div class="sec"><p class="eyebrow">Bilim</p><div class="menu">
-      <button type="button" class="menu-row" data-act="tab" data-tab="methods">${ic("bulb")}<span>Usullar kutubxonasi · ${CATALOG.filter(m => m.l > 0).length} ta usul</span>${ic("arrow")}</button>
-      <button type="button" class="menu-row" data-act="onb">${ic("spark")}<span>Ilova bilan tanishtiruv</span>${ic("arrow")}</button></div></div>
-    <div class="sec"><p class="eyebrow">Saqlash</p>
+    <div class="card sec">
+      <p class="eyebrow">SUN'IY INTELLEKT (GEMINI API)</p>
+      <p class="small muted">Kitob xulosalarini tahlil qilish, savol-javob tuzish va Lug'at (Glossary) atamalarini tushuntirish uchun Google Gemini API kaliti (kalitsiz ham ichki aqlli tahlilchi ishlaydi).</p>
+      <div class="pair">
+        <div class="field"><label for="gm-key">Gemini API kaliti${opt}</label><input id="gm-key" type="password" autocomplete="off" placeholder="AIzaSy..." value="${esc(getGeminiKey())}"></div>
+        <div class="field"><label for="gm-model">Model</label><select id="gm-model"><option value="gemini-2.5-flash"${getGeminiModel() === "gemini-2.5-flash" ? " selected" : ""}>Gemini 2.5 Flash</option><option value="gemini-2.0-flash"${getGeminiModel() === "gemini-2.0-flash" ? " selected" : ""}>Gemini 2.0 Flash</option></select></div>
+      </div>
+      <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="gm-save">Gemini kalitini saqlash</button><button type="button" class="btn btn-sm" data-act="tab" data-tab="ai">${ic("spark")}AI bo'limini ochish</button></div>
+    </div>
+    <div class="card sec">
+      <p class="eyebrow">TELEGRAM KUNLIK AVTOMATIK ZAXIRA (JSON + WORD + PDF)</p>
+      <p class="small muted">Har kuni barcha manbalar, iqtiboslar, bet-qator ko'rsatkichlari va lug'atni 3 xil formatda (<b>.json</b>, <b>.docx Word</b> va <b>.pdf</b>) Telegram'ga avtomatik jo'natish.</p>
+      <div class="pair">
+        <div class="field"><label for="tg-tok">Telegram Bot Token${opt}</label><input id="tg-tok" type="password" autocomplete="off" placeholder="123456:ABC-DEF..." value="${esc(getTgCfg().token || "")}"></div>
+        <div class="field"><label for="tg-cid">Telegram Chat ID${opt}</label><input id="tg-cid" type="text" autocomplete="off" placeholder="Masalan: 987654321" value="${esc(getTgCfg().chatId || "")}"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="tg-auto"${getTgCfg().auto !== false ? " checked" : ""}>Har kuni ilova ochilganda (va serverda har kuni belgilangan soatda) JSON + Word + PDF fayllarni avtomatik yuborish</label>
+      <div class="acts">
+        <button type="button" class="btn btn-sm" data-act="tg-cfg-save">Telegram sozlamasini saqlash</button>
+        <button type="button" class="btn btn-gold btn-sm" data-act="tg-send-all">✈️ Hozir Telegram'ga 3 ta faylni (JSON+Word+PDF) yuborish</button>
+      </div>
+      <p class="small muted" id="tg-direct-st" aria-live="polite">${getTgCfg().lastDay ? `Oxirgi avtomatik yuborilgan kun: ${getTgCfg().lastDay}` : ""}</p>
+    </div>
+    <div class="sec"><p class="eyebrow">Saqlash va Eksport (JSON · Word · PDF · Markdown)</p>
       <p class="sync-line"><span class="sync" data-s="${cloud.sync}"></span><span data-sync-text>${SYNC[cloud.sync][1]}</span></p>
-      <div class="acts">${canSave ? `<button type="button" class="btn btn-sm" data-act="export">Zaxira nusxani saqlash</button>` : ""}<button type="button" class="btn btn-sm" data-act="export-copy">Zaxirani nusxalash</button><button type="button" class="btn btn-sm" data-act="restore">Zaxiradan tiklash</button><button type="button" class="btn btn-sm" data-act="retry" data-retry hidden>Qayta urinish</button></div>
+      <div class="acts">
+        ${canSave ? `<button type="button" class="btn btn-sm" data-act="export">Zaxira nusxani saqlash</button>` : ""}
+        <button type="button" class="btn btn-sm btn-gold" data-act="export-docx">📄 Word (.docx) yuklab olish</button>
+        <button type="button" class="btn btn-sm btn-gold" data-act="export-pdf">📕 PDF (.pdf) yuklab olish</button>
+        <button type="button" class="btn btn-sm" data-act="export-md">📝 Markdown (.md)</button>
+        <button type="button" class="btn btn-sm" data-act="export-copy">Zaxirani nusxalash</button>
+        <button type="button" class="btn btn-sm" data-act="restore">Zaxiradan tiklash</button>
+        <button type="button" class="btn btn-sm" data-act="demo-load">Namuna to'plam qo'shish</button>
+        <button type="button" class="btn btn-sm" data-act="retry" data-retry hidden>Qayta urinish</button>
+      </div>
     </div>
     <details class="how"><summary>Baholar qanday ishlaydi</summary><div class="rules">
       <p>Javobni ko'rgach 4 tugmadan birini bosasiz. Har tugma ostida karta qachon yana chiqishi yozilgan.</p>
@@ -2311,7 +2424,7 @@ function sameAnswer(typed, right) {
 function pairsOf(bid) {
   const list = (bid ? itemsOf(bid) : items()).filter(i => !i.off && !i.rev);
   return list.map(i => {
-    if (i.t === "card" || i.t === "mnemo") return { id: i.id, b: i.b, f: i.q, k: i.a, hint: i.m || "" };
+    if (i.t === "card" || i.t === "mnemo" || i.t === "glossary") return { id: i.id, b: i.b, f: i.q, k: stripRich(i.a), hint: i.m || "" };
     if (i.t === "cloze") return { id: i.id, f: clozePlain(i.a), k: [...i.a.matchAll(CLOZE)].map(m => m[1]).join(", "), full: i.a.replace(CLOZE, "$1") };
     if (i.t === "quote") return { id: i.id, f: cueOf(i), k: i.a };
     return { id: i.id, f: TYPES[i.t] + (i.r ? " · " + i.r : ""), k: i.a, long: true };
@@ -2732,13 +2845,21 @@ function sheetRead(b) {
     ${U ? `<div class="pair">
       <div class="field"><label for="rd-from">${U.from}</label><input id="rd-from" name="from" type="number" inputmode="numeric" min="1" max="20000" value="${esc(from)}"></div>
       <div class="field"><label for="rd-to">${U.to}</label><input id="rd-to" name="to" type="number" inputmode="numeric" min="1" max="20000" value="${esc(v.to || "")}"></div>
+    </div>
+    <div class="pair">
+      <div class="field"><label for="rd-lfrom">Qaysi qatordan${opt}</label><input id="rd-lfrom" name="lfrom" type="number" inputmode="numeric" min="1" max="500" placeholder="Masalan: 1" value="${esc(v.lfrom || "")}"></div>
+      <div class="field"><label for="rd-lto">Qaysi qatorgacha${opt}</label><input id="rd-lto" name="lto" type="number" inputmode="numeric" min="1" max="500" placeholder="Masalan: 25" value="${esc(v.lto || "")}"></div>
     </div>` : ""}
     <div class="field"><label for="rd-min">Qancha vaqt o'rgandingiz, daqiqa${opt}</label><input id="rd-min" name="min" type="number" inputmode="numeric" min="0" max="1440" value="${esc(v.min || "")}"></div>
     <div class="field"><label for="rd-label">Mavzu, bob yoki dars nomi${opt}</label><input id="rd-label" name="label" type="text" maxlength="80" autocomplete="off" value="${esc(v.label || "")}"></div>
-    <div class="field">
+    <div class="field rt-wrap">
       <label for="rd-recall" class="big-label">${K.close}. Nimalar esda qoldi?</label>
       <ul class="hints">${K.hints.map(h => `<li>${h}</li>`).join("")}</ul>
+      ${richBar("rd-recall", "rd")}
       <textarea id="rd-recall" name="recall" rows="6" maxlength="20000" data-grow placeholder="Qaramasdan, o'z so'zingiz bilan yozing">${esc(v.recall || "")}</textarea>
+      <div class="rt-imgs" id="imgs-rd"></div>
+      <div class="acts"><button type="button" class="btn btn-sm btn-gold" data-act="rd-ai-analyze">${ic("spark")}Gemini AI bilan xulosani tahlil qilish va savol/lug'at ajratish</button></div>
+      <div id="rd-ai-box" hidden></div>
     </div>
     ${attField("rd", pend)}
     <div class="field"><label for="rd-gist">Bir jumlada mohiyati${opt}</label><input id="rd-gist" name="gist" type="text" maxlength="300" autocomplete="off" value="${esc(v.gist || "")}"></div>
@@ -2762,8 +2883,11 @@ function sheetRead(b) {
       `<div class="field"><label for="rd-mq">Nimani eslash kerak</label><input id="rd-mq" name="mq" type="text" maxlength="400" autocomplete="off" placeholder="Masalan: kamalak ranglari tartibi" value="${esc(v.mq || "")}"></div>
       <div class="field"><label for="rd-ma">Javob</label><input id="rd-ma" name="ma" type="text" maxlength="1000" autocomplete="off" value="${esc(v.ma || "")}"></div>
       <div class="field"><label for="rd-mm">Eslatkich</label><textarea id="rd-mm" name="mm" rows="2" maxlength="2000" data-grow placeholder="Tasvir, qisqartma yoki joy">${esc(v.mm || "")}</textarea></div>`, has("mq", "ma", "mm"))}
-    ${tech("Iqtibos yoki bayt", "Yod olmoqchi bo'lgan gap. Takrorda boshi ko'rsatilib, davomi so'raladi.",
-      `<div class="field"><label for="rd-quote">Iqtibos</label><textarea id="rd-quote" name="quote" rows="2" maxlength="4000" data-grow>${esc(v.quote || "")}</textarea></div>`, has("quote"))}
+    ${tech("Iqtibos yoki bayt", "Yod olmoqchi bo'lgan gap. Takrorda Smart SM-2 bo'yicha boshi ko'rsatilib, davomi so'raladi.",
+      `<div class="field rt-wrap"><label for="rd-quote">Iqtibos</label>${richBar("rd-quote", "rd")}<textarea id="rd-quote" name="quote" rows="2" maxlength="4000" data-grow>${esc(v.quote || "")}</textarea></div>`, has("quote"))}
+    ${tech("Lug'at (Glossary — yangi atama)", "Kitobda uchragan tushunarsiz yoki muhim atama. Gemini uni sodda tilda tushuntirib beradi.",
+      `<div class="field"><label for="rd-gt">Atama yoki so'z</label><div class="acts"><input id="rd-gt" name="gt" type="text" maxlength="200" autocomplete="off" placeholder="Masalan: Kognitiv dissonans" value="${esc(v.gt || "")}"><button type="button" class="btn btn-sm btn-gold" data-act="rd-gl-ai">${ic("spark")}Gemini tushuntirib bersin</button></div></div>
+      <div class="field"><label for="rd-gd">Ta'rifi va izohi</label><textarea id="rd-gd" name="gd" rows="3" maxlength="4000" data-grow placeholder="Gemini izohi yoki o'z ta'rifingiz">${esc(v.gd || "")}</textarea></div>`, has("gt", "gd"))}
     <p class="err" data-err hidden></p>
     <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Yopish</button><button type="submit" class="btn btn-gold">Saqlash</button></div>
   </form>`);
@@ -2796,11 +2920,12 @@ function sheetFocus(id) {
 }
 
 function itemFields(i) {
-  const t = i.t;
-  const Q = (label, o) => `<div class="field"><label for="it-q">${label}${o ? opt : ""}</label><input id="it-q" name="q" type="text" maxlength="400" autocomplete="off" value="${esc(i.q)}"></div>`;
-  const A = (label, rows) => `<div class="field"><label for="it-a">${label}</label><textarea id="it-a" name="a" rows="${rows}" maxlength="20000" data-grow>${esc(i.a)}</textarea></div>`;
+  const t = i.t, own = i.id || "rd";
+  const Q = (label, o, aiBtn) => `<div class="field"><label for="it-q">${label}${o ? opt : ""}</label><div class="acts"><input id="it-q" name="q" type="text" maxlength="400" autocomplete="off" value="${esc(i.q)}">${aiBtn ? `<button type="button" class="btn btn-sm btn-gold" data-act="it-gl-ai">${ic("spark")}Gemini tushuntirib bersin</button>` : ""}</div></div>`;
+  const A = (label, rows) => `<div class="field rt-wrap"><label for="it-a">${label}</label>${richBar("it-a", own)}<textarea id="it-a" name="a" rows="${rows}" maxlength="20000" data-grow>${esc(i.a)}</textarea><div class="rt-imgs" id="imgs-${esc(own)}">${renderInlineImgs(i.imgs, own)}</div></div>`;
   const M = `<div class="field"><label for="it-m">Eslatkich</label><textarea id="it-m" name="m" rows="2" maxlength="2000" data-grow>${esc(i.m || "")}</textarea></div>`;
   if (t === "card") return Q("Savol") + A("Javob", 3);
+  if (t === "glossary") return Q("Atama yoki tushuncha (Glossary)", false, true) + A("Ta'rifi, kontekstdagi ma'nosi va misol", 4) + M;
   if (t === "mnemo") return Q("Nimani eslash kerak") + A("Javob", 2) + M;
   if (t === "quote") return A("Iqtibos yoki bayt", 3) + Q("Ishora: kim aytgan yoki qaysi vaziyatda", true);
   if (t === "cloze") return A("Matn: yashiriladigan so'z [[ ]] ichida", 3);
@@ -2810,8 +2935,12 @@ function sheetItem(i) {
   const b = recs[i.b] || { title: "" }, n = diffDays(i.d, today());
   openSheet(`<form class="sheet-body" data-form="item" data-id="${esc(i.id)}" data-t="${i.t}" novalidate>
     <div><p class="eyebrow">${esc(b.title)} · ${TYPES[i.t]}</p><h2 class="sheet-h" tabindex="-1" autofocus>${esc(i.r || TYPES[i.t])}</h2></div>
-    <p class="item-state">${ladder(i.s)}<span>${i.s + 1}-pog'ona (${STEP[i.s].join(" ")})</span><span>takror: ${n < 0 ? "kechikkan" : inDays(n)}</span><span>${i.n || 0} marta takrorlangan</span></p>
+    <p class="item-state">${ladder(i.s)}${srsBadge(i)}<span>${i.s + 1}-pog'ona (${STEP[i.s].join(" ")})</span><span>takror: ${n < 0 ? "kechikkan" : inDays(n)}</span><span>${i.n || 0} marta takrorlangan</span></p>
     ${itemFields(i)}
+    <div class="pair">
+      <div class="field"><label for="it-f">Bet / Dars raqami${opt}</label><input id="it-f" name="f" type="text" inputmode="numeric" placeholder="Masalan: 45 yoki 45-48" value="${i.f ? (i.e && i.e !== i.f ? `${i.f}-${i.e}` : i.f) : ""}"></div>
+      <div class="field"><label for="it-lf">Qator raqami${opt}</label><input id="it-lf" name="lf" type="text" inputmode="numeric" placeholder="Masalan: 12 yoki 12-18" value="${i.lf ? (i.lt && i.lt !== i.lf ? `${i.lf}-${i.lt}` : i.lf) : ""}"></div>
+    </div>
     <div class="field"><label for="it-r">Mavzu, bob yoki qism</label><input id="it-r" name="r" type="text" maxlength="120" autocomplete="off" value="${esc(i.r)}"></div>
     ${attField(i.id, i.att)}
     <p class="err" data-err hidden></p>
@@ -2824,13 +2953,18 @@ function sheetItem(i) {
     </div>
   </form>`);
 }
-const NEW_TYPES = [["card", "Savol"], ["cloze", "Bo'shliq"], ["mnemo", "Eslatkich"], ["quote", "Iqtibos"]];
+const NEW_TYPES = [["card", "Savol"], ["cloze", "Bo'shliq"], ["mnemo", "Eslatkich"], ["quote", "Iqtibos"], ["glossary", "Lug'at (AI)"]];
 function sheetItemNew(b, t) {
+  if (pendImgs.length) pendImgs = [];
   const chip = (k, name) => `<button type="button" class="chip" data-act="item-new" data-id="${esc(b.id)}" data-t="${k}" aria-pressed="${t === k}">${name}</button>`;
   openSheet(`<form class="sheet-body" data-form="item" data-book="${esc(b.id)}" data-t="${t}" novalidate>
     <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>Yangi yozuv</h2></div>
     <div class="chips">${NEW_TYPES.map(([k, n]) => chip(k, n)).join("")}</div>
-    ${itemFields({ t, q: "", a: "", m: "" })}
+    ${itemFields({ t, q: "", a: "", m: "", imgs: [] })}
+    <div class="pair">
+      <div class="field"><label for="it-f">Bet / Dars raqami${opt}</label><input id="it-f" name="f" type="text" inputmode="numeric" placeholder="Masalan: 45 yoki 45-48"></div>
+      <div class="field"><label for="it-lf">Qator raqami${opt}</label><input id="it-lf" name="lf" type="text" inputmode="numeric" placeholder="Masalan: 12 yoki 12-18"></div>
+    </div>
     <div class="field"><label for="it-r">Mavzu, bob yoki qism${opt}</label><input id="it-r" name="r" type="text" maxlength="120" autocomplete="off"></div>
     <p class="err" data-err hidden></p>
     <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Qo'shish</button></div>
@@ -2895,7 +3029,7 @@ function startReview(mode, id) {
   }[mode] || [due, "Bugungi takror"];
   const q = (mode === "quick" ? M[0] : interleave(M[0])).map(i => i.id);
   if (!q.length) return toast("Bu ro'yxatda hozir yozuv yo'q.");
-  Object.assign(rv, { popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
+  Object.assign(rv, { q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
   paintReview();
   const d = $("#review");
   if (!d.open) d.showModal();
@@ -2920,11 +3054,9 @@ function paintReview() {
       <p class="eyebrow">${esc(rv.title)}</p>
       <h2 class="rv-q">${n ? "Takror tugadi" : "Takrorlanadigan yozuv qolmadi"}</h2>
       ${rv.practice && n ? `<p class="muted">Bu mashq edi: takror jadvali o'zgarmadi.</p>` : ""}
-      ${n && !rv.practice ? `<p class="rv-gain"><b class="${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "down" : "up"}">${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "−" : "+"}${Math.abs(h + g0 * 3 + e * 4 - f * LOSS)}</b> XOTIR</p>` : ""}
       ${n ? `<p>${n} ta yozuvdan ${g} tasini esladingiz${h ? `, ${h} tasida qiynaldingiz` : ""}${f ? `, ${f} tasini unutdingiz` : ""}.</p>` : ""}
       ${f && !rv.practice ? `<p class="muted">Unutilganlari ertaga yana chiqadi. Bu odatiy hol: qayta eslangan narsa xotirada mustahkamroq o'rnashadi.</p>` : ""}
       <button type="button" class="btn btn-gold" data-act="rv-close">Yopish</button></div></div>`;
-    if (n && !rv.practice && !rv.popped) { rv.popped = true; popGain(h + g0 * 3 + e * 4 - f * LOSS); }
     return;
   }
   const b = recs[it.b] || { title: "", kind: "boshqa" }, K = KINDS[b.kind] || KINDS.boshqa;
@@ -2936,29 +3068,34 @@ function paintReview() {
     card: [esc(it.q), "", "Javobni ko'rish", "Javob"],
     cloze: [clozeHTML(it.a, false), "Bo'sh joylarni yoddan to'ldiring.", "Javobni ko'rish", "To'liq matn"],
     mnemo: [esc(it.q), "", "Javobni ko'rish", "Javob"],
+    glossary: [esc(it.q), "Ushbu atamaning ma'nosi va misolini eslang.", "Izohni ko'rish", "Atama izohi"],
     quote: [esc(cueOf(it)), it.q ? "Shu iqtibosni ayting." : "Iqtibosning davomini ayting.", "Iqtibosni ko'rish", "Iqtibos"],
     sum: ["Bu nima haqida edi va sizga nima berdi?", "Uch jumlada ayting.", "Xulosamni ko'rish", "Sizning xulosangiz"],
     gist: ["Shu qismning mohiyatini bir jumlada ayting", "", "Jumlamni ko'rish", "O'shanda yozganingiz"],
     apply: ["Buni qayerda qo'llashni rejalagan edingiz?", "Rejangizni eslang. Qo'lladingizmi? Qo'llamagan bo'lsangiz, bugun qo'llang.", "Rejamni ko'rish", "Qo'llash rejangiz"],
   }[it.t];
-  const again = rv.seen.has(it.id);
-  const answer = it.t === "cloze" ? clozeHTML(it.a, true)
-    : esc(it.a) + (it.t === "mnemo" && it.m ? `<span class="mnemo"><b>Eslatkich:</b> ${esc(it.m)}</span>` : "")
-      + (it.pre ? `<span class="mnemo"><b>Boshida qo'ygan savolingiz:</b> ${esc(it.pre)}</span>` : "");
+  rv.t0 = Date.now(); rv.cov = -1;
+  const again = rv.seen.has(it.id), loc = fmtLoc(it);
+  const answer = renderRich(it.a, it.t === "cloze", true)
+    + ((it.t === "mnemo" || it.t === "glossary") && it.m ? `<span class="mnemo"><b>Eslatkich:</b> ${esc(it.m)}</span>` : "")
+    + (it.pre ? `<span class="mnemo"><b>Boshida qo'ygan savolingiz:</b> ${esc(it.pre)}</span>` : "");
   const day = today(), when = g => rv.practice || again ? "—" : free() ? "jadvalsiz" : gap(diffDays(schedule(it, g, day, -1).d, day));
   d.innerHTML = `<div class="rv">
     <div class="rv-top"><button type="button" class="icon-btn" data-act="rv-close" aria-label="Takrorlashni yopish">${ICON.close}</button><span class="bar"><i data-w="${Math.round(rv.i / rv.q.length * 100)}"></i></span><span class="rv-count">${rv.i + 1} / ${rv.q.length}</span></div>
     <div class="rv-body">
-      <p class="eyebrow">${esc(b.title)}${it.r ? " · " + esc(it.r) : ""} · ${TYPES[it.t]}${again ? " · yana bir bor" : ""}</p>
-      <h2 class="rv-q${it.t === "quote" && !it.q ? " is-quote" : ""}">${P[0]}${it.t === "card" || it.t === "mnemo" ? sayBtn(it.q, it.b) : ""}</h2>
+      <p class="eyebrow">${esc(b.title)}${it.r ? " · " + esc(it.r) : ""} · ${TYPES[it.t]}${again ? " · yana bir bor" : ""} ${loc ? `<span class="loc-tag">📄 ${esc(loc)}</span>` : ""} ${srsBadge(it)}</p>
+      <h2 class="rv-q${it.t === "quote" && !it.q ? " is-quote" : ""}">${it.t === "cloze" ? renderRich(it.a, true, false) : P[0]}${it.t === "card" || it.t === "mnemo" || it.t === "glossary" ? sayBtn(it.q, it.b) : ""}</h2>
       ${P[1] ? `<p class="muted">${P[1]}</p>` : ""}
-      ${it.t === "mnemo" && it.m ? `<div><button type="button" class="btn btn-sm" data-act="rv-hint">Eslatkichni ko'rsatish</button><p class="hint" id="rv-hint" hidden>${esc(it.m)}</p></div>` : ""}
-      <div class="field"><label for="rv-try">Yodingizdan yozing yoki ovoz chiqarib ayting${opt}</label><textarea id="rv-try" rows="3" data-grow></textarea></div>
+      ${renderOcclusionReview(it, false)}
+      ${(it.t === "mnemo" || it.t === "glossary") && it.m ? `<div><button type="button" class="btn btn-sm" data-act="rv-hint">Eslatkichni ko'rsatish</button><p class="hint" id="rv-hint" hidden>${esc(it.m)}</p></div>` : ""}
+      <div class="field cap-text"><label for="rv-try">Yodingizdan yozing yoki ovoz chiqarib ayting${opt}</label><textarea id="rv-try" rows="3" data-grow placeholder="${isDeepNote(it) ? "Eslab yozing: javobni ochganda kalit so'zlar mosligi avtomatik tekshiriladi" : "Javobni yozib tekshirishingiz mumkin"}"></textarea>${Rec ? `<button type="button" class="mic" data-act="rv-mic" aria-label="Ovoz bilan javob berish" aria-pressed="false">${ic("mic")}</button>` : ""}</div>
       <div class="field"><span class="small muted">Javobni ochishdan oldin: qanchalik ishonchingiz komil?${opt}</span><div class="chips">${["Past", "O'rta", "Yuqori"].map((n, c) => `<button type="button" class="chip" data-act="rv-conf" data-c="${c}" aria-pressed="false">${n}</button>`).join("")}</div></div>
       <button type="button" class="btn btn-gold btn-wide" id="rv-show" data-act="rv-show" autofocus>${P[2]}</button>
       <div class="rv-ans" id="rv-ans" hidden>
-        <p class="eyebrow">${P[3]} · ${fmtDate(dayOf(it.c))}</p>
-        <div class="note">${answer}${["card", "mnemo", "quote"].includes(it.t) ? sayBtn(it.a, it.b) : ""}</div>
+        <p class="eyebrow">${P[3]} · ${fmtDate(dayOf(it.c))}${loc ? " · " + esc(loc) : ""}</p>
+        <div id="rv-eval" hidden></div>
+        <div class="note">${answer}${["card", "mnemo", "quote", "glossary"].includes(it.t) ? sayBtn(stripRich(it.a), it.b) : ""}</div>
+        ${renderInlineImgs(it.imgs)}
         ${attList(it.att)}
         <p class="small hc" id="rv-hc" hidden>Ishonchingiz yuqori edi. Agar xato bo'lsa, «Unutdim»ni bosing: ishonch bilan qilingan xato tuzatilgach eng yaxshi esda qoladi.</p>
         <p class="eyebrow rv-ask">Qanchalik esladingiz?</p>
@@ -3013,7 +3150,20 @@ function bubble(text, me) {
   return p;
 }
 async function askChat() {
-  if (!cloud.sample || chat.busy) return;
+  if (chat.busy) return;
+  if (!cloud.sample) {
+    chat.busy = true;
+    const send = $("#chat-send"); if (send) send.disabled = true;
+    const p = bubble("AI o'ylayapti…");
+    try {
+      const prompt = chat.turns.map(t => `${t.role}: ${t.content}`).join("\n\n") + '\n\nJavobni JSON formatda qaytar: {"reply": "sizning javobingiz yoki keyingi savolingiz"}';
+      const out = await callGeminiJson(prompt, () => ({ reply: "Yaxshi javob! Endi shu mavzuning asosiy xulosasini hayotda qanday qo'llashingiz mumkinligini 1-2 jumlada yozib ko'ring." }));
+      const reply = (out && out.reply) || "Yaxshi! Keyingi muhim tushunchani eslab ko'ring.";
+      chat.turns.push({ role: "assistant", content: reply });
+      if (p) p.textContent = reply;
+    } finally { chat.busy = false; if (send) send.disabled = false; }
+    return;
+  }
   chat.busy = true;
   const send = $("#chat-send"); if (send) send.disabled = true;
   const p = bubble("Claude o'ylayapti…");
@@ -3030,10 +3180,644 @@ async function askChat() {
   } finally { chat.busy = false; if (send) send.disabled = false; }
 }
 
+
+/* ── Gemini AI, Book Summary Analyzer, Glossary, Rich Text, Image Occlusion, Word/PDF & Telegram Auto-Backup ── */
+const GM_KEY = "esda-qolsin:gemini-key", GM_MOD = "esda-qolsin:gemini-model", TG_CFG = "esda-qolsin:tg-cfg";
+let pendImgs = [], lastAiResult = null;
+const getGeminiKey = () => { try { return localStorage.getItem(GM_KEY) || ""; } catch (e) { return ""; } };
+const getGeminiModel = () => { try { return localStorage.getItem(GM_MOD) || "gemini-2.5-flash"; } catch (e) { return "gemini-2.5-flash"; } };
+const getTgCfg = () => { try { return JSON.parse(localStorage.getItem(TG_CFG) || "{}") || {}; } catch (e) { return {}; } };
+const saveTgCfg = o => { try { localStorage.setItem(TG_CFG, JSON.stringify({ ...getTgCfg(), ...o })); } catch (e) {} };
+
+function parseRangeInput(s) {
+  const m = /^(\d{1,5})(?:\s*[-–—:]\s*(\d{1,5}))?$/.exec(String(s || "").trim());
+  if (!m) return [0, 0];
+  const a = +m[1], b = m[2] ? +m[2] : a;
+  return [a, Math.max(a, b)];
+}
+
+function renderInlineImgs(imgs, owner) {
+  if (!imgs || !imgs.length) return "";
+  return imgs.map((im, idx) => `<figure>
+    <img src="${esc(im.data)}" alt="${esc(im.name || "skrinshot")}" data-act="occ-open" data-o="${esc(owner || "")}" data-k="${idx}">
+    <figcaption>${esc(im.name || "Skrinshot")}${im.occ && im.occ.length ? ` · ${im.occ.length} yashirin` : ""}</figcaption>
+    ${owner ? `<button type="button" class="att-x" data-act="img-del" data-o="${esc(owner)}" data-k="${idx}" aria-label="Rasmni o'chirish">${ICON.close}</button>` : ""}
+  </figure>`).join("");
+}
+
+function renderOcclusionReview(it, open) {
+  const imgs = (it.imgs || []).filter(im => im && im.data);
+  if (!imgs.length) return "";
+  return imgs.map(im => `<div class="occ-stage">
+    <img src="${esc(im.data)}" alt="${esc(im.name || "Rasm")}">
+    ${(im.occ || []).map((r, k) => `<span class="occ-mask${open ? " open" : ""}" data-act="occ-toggle" style="left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%">${k + 1}</span>`).join("")}
+  </div>`).join("");
+}
+
+function applyRichCmd(tid, cmd) {
+  const ta = document.getElementById(tid);
+  if (!ta) return;
+  const s = ta.selectionStart || 0, e = ta.selectionEnd || 0, sel = ta.value.slice(s, e) || "matn";
+  const wrap = {
+    bold: [`**${sel}**`, 2],
+    italic: [`*${sel}*`, 1],
+    under: [`__${sel}__`, 2],
+    "hl-y": [`{y:${sel}}`, 3],
+    "hl-g": [`{g:${sel}}`, 3],
+    "hl-b": [`{b:${sel}}`, 3],
+    "hl-r": [`{r:${sel}}`, 3],
+    quote: [`\n> ${sel}`, 3],
+    list: [`\n- ${sel}`, 3],
+    cloze: [`[[${sel}]]`, 2],
+  }[cmd];
+  if (!wrap) return;
+  ta.value = ta.value.slice(0, s) + wrap[0] + ta.value.slice(e);
+  ta.focus();
+  ta.setSelectionRange(s + wrap[1], s + wrap[1] + sel.length);
+  grow(ta);
+  const pr = document.getElementById("prev-" + tid);
+  if (pr && !pr.hidden) pr.innerHTML = renderRich(ta.value, true, true);
+}
+
+async function attachInlineScreenshot(file, owner) {
+  const small = await shrink(file);
+  const data = await new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = no; r.readAsDataURL(small); });
+  const item = { name: file.name || "skrinshot.jpg", data, occ: [] };
+  if (owner && recs[owner]) {
+    const it = recs[owner];
+    put({ ...it, imgs: [...(it.imgs || []), item] }, true);
+    const box = document.getElementById("imgs-" + owner);
+    if (box) box.innerHTML = renderInlineImgs(recs[owner].imgs, owner);
+  } else {
+    pendImgs.push(item);
+    const box = document.getElementById("imgs-" + (owner || "rd"));
+    if (box) box.innerHTML = renderInlineImgs(pendImgs, owner || "rd");
+  }
+  toast("Skrinshot qo'shildi. Rasm ustini bosib yashirin so'z (Occlusion) belgilashingiz mumkin.");
+}
+
+// Calls Google Gemini API directly (if key set), or server /api/ai/gemini, or Claude sample, or Smart Uzbek NLP Fallback
+async function callGeminiJson(prompt, fallbackFn) {
+  const key = getGeminiKey(), mod = getGeminiModel();
+  if (key) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(mod)}:generateContent?key=${encodeURIComponent(key)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.3, responseMimeType: "application/json" }
+        })
+      });
+      if (r.ok) {
+        const j = await r.json();
+        const txt = j && j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts && j.candidates[0].content.parts[0] && j.candidates[0].content.parts[0].text;
+        if (txt) return JSON.parse(txt.replace(/^```json\s*|```$/g, "").trim());
+      }
+    } catch (e) { /* fall through */ }
+  }
+  if (cloud.mode === "srv") {
+    try {
+      const r = await api("/api/ai/gemini", { prompt });
+      if (r && r.result) return r.result;
+    } catch (e) { /* fall through */ }
+  }
+  if (cloud.sample) {
+    try {
+      const out = await cloud.sample.json(prompt, { modelTier: "quick" });
+      if (out) return out;
+    } catch (e) { /* fall through */ }
+  }
+  return fallbackFn();
+}
+
+// Smart Uzbek local NLP analyzer so AI analysis & Glossary work instantaneously even without an external key
+function localAnalyzeText(text, bookTitle) {
+  const raw = String(text || "").trim();
+  const sents = raw.split(/(?<=[.!?…])\s+|\n+/).map(s => s.trim()).filter(s => s.length > 12);
+  const takeaways = (sents.length ? sents.slice(0, 4) : [raw]).map(s => s.length > 180 ? s.slice(0, 177) + "…" : s);
+  const gist = sents[0] ? (sents[0].length > 140 ? sents[0].slice(0, 137) + "…" : sents[0]) : raw.slice(0, 120);
+  const words = [...new Set(raw.replace(/[^\p{L}\p{N}'ʻʼ -]+/gu, " ").split(/\s+/).filter(w => w.length >= 6))];
+  const cards = sents.slice(0, 4).map((s, i) => {
+    const kw = words[i] || "asosiy fikr";
+    return {
+      q: `«${bookTitle || "Manba"}»dagi ${i + 1}-muhim fikr («${kw}» haqida) nima edi?`,
+      a: s
+    };
+  });
+  if (!cards.length && raw) cards.push({ q: `«${bookTitle || "Manba"}»ning ushbu qismidagi bosh g'oya nima?`, a: raw });
+  let cloze = sents[0] || raw;
+  const targetWord = words.find(w => cloze.includes(w));
+  if (targetWord) cloze = cloze.replace(targetWord, `[[${targetWord}]]`);
+  else {
+    const ws = cloze.split(/\s+/);
+    if (ws.length >= 3) { ws[Math.min(2, ws.length - 1)] = `[[${ws[Math.min(2, ws.length - 1)]}]]`; cloze = ws.join(" "); }
+  }
+  const glossary = words.slice(0, 3).map(w => ({
+    term: w[0].toUpperCase() + w.slice(1),
+    def: `«${bookTitle || "Matn"}» kontekstida uchragan muhim tushuncha: ${sents.find(s => s.toLowerCase().includes(w.toLowerCase())) || gist}`,
+    example: `Misol: ushbu tushunchani amalda qo'llash orqali bilimlarni tizimlashtirish mumkin.`
+  }));
+  return { gist, takeaways, cards, cloze, glossary, tip: "Yozilgan xulosani ertaga va 3 kundan keyin manbaga qaramasdan qayta eslang (SM-2 + Eslab yozish jadvali)." };
+}
+
+async function analyzeBookSummary(text, bookTitle) {
+  const prompt = `Sen "ME'MORI" o'rganish ilovasining Gemini AI tahlilchisisan. Foydalanuvchi "${bookTitle}" manbasidan o'qigan qismini o'z so'zlari bilan kiritdi. Matnni tahlil qilib, FAQAT JSON obyekt qaytar:
+{
+  "gist": "Butun qismning 1 jumlalik eng aniq mohiyati (o'zbek tilida)",
+  "takeaways": ["1-asosiy xulosa", "2-asosiy xulosa", "3-asosiy xulosa"],
+  "cards": [{"q": "Savol", "a": "Aniq va qisqa javob"}],
+  "cloze": "Bo'shliqli mashq uchun 1-2 gap, eng muhim kalit so'z [[kalit so'z]] ichida bo'lsin",
+  "glossary": [{"term": "Atama nomi", "def": "Sodda va ilmiy tushuntirishi", "example": "Hayotiy misol"}],
+  "tip": "Bu bilimni uzoq xotirada saqlash va amalda qo'llash bo'yicha 1 jumlalik maslahat"
+}
+Foydalanuvchi matni:
+${String(text).slice(0, 7000)}`;
+  return callGeminiJson(prompt, () => localAnalyzeText(text, bookTitle));
+}
+
+const KNOWN_TERMS = {
+  "metakognitsiya": ["O'z bilimi va fikrlash jarayonini anglash hamda boshqarish qobiliyati.", "O'qish paytida «Men buni haqiqatan tushundimmi yoki shunchaki tanish ko'rinyaptimi?» deb o'zini tekshirish.", "Imtihonga tayyorlanayotganda faqat bilmagan mavzulariga ko'proq vaqt ajratadigan talaba metakognitsiyadan foydalanadi.", "Meta (ustki) + Kognitsiya (bilish) = «Bilishni bilish»."],
+  "kognitiv dissonans": ["Insonning e'tiqodi bilan uning amaldagi harakati yoki yangi ma'lumot o'rtasidagi ichki ruhiy ziddiyat.", "Miya ikki bir-biriga zid fikrni bir vaqtda ushlab tura olmaydi va ulardan birini o'zgartirishga intiladi.", "Sog'liq uchun zararligini bila turib zararli odatni davom ettirgan odam o'zini oqlash uchun bahona topishi.", "Dissonans = «mos kelmaslik shovqini»."],
+  "fsrs": ["Free Spaced Repetition Scheduler — xotira barqarorligi (S), qiyinchilik (D) va eslash ehtimolligini (R) matematik hisoblovchi zamonaviy takrorlash algoritmi.", "Har bir kartaning individual qiyinligiga qarab takror vaqtini moslashtiradi va kamroq takror bilan yuqori natija beradi.", "Oson eslangan so'zni 15 kunga, qiyin so'zni esa 2 kunga avtomatik rejalashtirish.", "FSRS = Xotiraning aqlli GPS-navigatori."],
+  "sm-2": ["SuperMemo-2 — Piotr Wozniak tomonidan yaratilgan klassik intervalli takrorlash algoritmi.", "Har bir kartochka uchun Osonlik koeffitsienti (EF = 2.5) va takrorlar soniga qarab 1, 3, 7, 14 kun va EF ga ko'paytirilgan intervallarni hisoblaydi.", "Iqtibos yoki chet tili so'zini 4 marta ketma-ket to'g'ri eslaganda oraliq 1 oydan oshadi.", "SM-2 = 1 → 3 → 7 → 14 → EF×interval."]
+};
+
+async function explainGlossaryTerm(term, bookTitle, contextText) {
+  const cleanTerm = String(term || "").trim();
+  const prompt = `Sen "ME'MORI" ilovasining Gemini AI Lug'at (Glossary) ustozisan. "${cleanTerm}" atamasini (${bookTitle ? `Manba: "${bookTitle}". ` : ""}${contextText ? `Kontekst: "${contextText}". ` : ""}) o'zbek tilida tushuntirib ber. FAQAT JSON obyekt qaytar:
+{
+  "simple": "1-2 jumlada bolaga tushuntirgandek eng sodda ta'rifi",
+  "context": "Ilmiy yoki kitob kontekstidagi chuqur ma'nosi",
+  "example": "Aniq hayotiy misol yoki analogiya",
+  "mnemo": "Bu atamani oson eslab qolish uchun qisqa eslatkich (mnemonika yoki kalit so'z)"
+}`;
+  return callGeminiJson(prompt, () => {
+    const k = cleanTerm.toLowerCase();
+    if (KNOWN_TERMS[k]) {
+      const [simple, context, example, mnemo] = KNOWN_TERMS[k];
+      return { simple, context, example, mnemo };
+    }
+    return {
+      simple: `«${cleanTerm}» — ${bookTitle ? `«${bookTitle}» manbasida` : "o'rganilayotgan mavzuda"} qo'llaniladigan tayanch tushuncha va atama.`,
+      context: contextText ? `Matndagi ma'nosi: ${contextText}` : `Ushbu atama mavzuning asosiy qonuniyatini va sabab-oqibat bog'lanishini ifodalaydi.`,
+      example: `Hayotiy misol: «${cleanTerm}» tushunchasini amaliy vaziyatda kuzatish va kundalik tajribaga bog'lash orqali tezroq eslab qolish mumkin.`,
+      mnemo: `Eslatkich: «${cleanTerm}» so'zining o'zak qismini tanish tasvir bilan bog'lang.`
+    };
+  });
+}
+
+function paintAiResultBox(res, bid, pageStr, lineStr) {
+  lastAiResult = { res, bid, pageStr, lineStr };
+  return `<div class="ai-out">
+    <div class="ai-sec"><h4>✨ Bir jumlada mohiyati (Gist)</h4><p>${esc(res.gist || "")}</p></div>
+    ${res.takeaways && res.takeaways.length ? `<div class="ai-sec"><h4>📌 Asosiy xulosalar</h4><ul class="rt-ul">${res.takeaways.map(t => `<li>${esc(t)}</li>`).join("")}</ul></div>` : ""}
+    ${res.cards && res.cards.length ? `<div class="ai-sec"><h4>🗂 Smart SM-2 uchun savol-javoblar (${res.cards.length} ta)</h4><div class="rows">${res.cards.map(c => `<div class="card-pair"><b>S: ${esc(c.q)}</b><p class="small">J: ${esc(c.a)}</p></div>`).join("")}</div></div>` : ""}
+    ${res.cloze ? `<div class="ai-sec"><h4>🧩 Bo'shliqli jumla (Cloze)</h4><p>${renderRich(res.cloze, true, true)}</p></div>` : ""}
+    ${res.glossary && res.glossary.length ? `<div class="ai-sec"><h4>📖 Ajratib olingan atamalar (Glossary)</h4><div class="rows">${res.glossary.map(g => `<div class="card-pair"><b>${esc(g.term)}</b><p class="small">${esc(g.def)}</p></div>`).join("")}</div></div>` : ""}
+    ${res.tip ? `<p class="small hot">💡 ${esc(res.tip)}</p>` : ""}
+    <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="ai-save-all">${ic("check")}Hammasini manbaga saqlash (SM-2 + Eslab yozish)</button></div>
+  </div>`;
+}
+
+function viewAi(day) {
+  const sub = ui.aisub || "analyze";
+  const bs = books(), gls = items().filter(i => i.t === "glossary").sort((a, b) => (b.c || 0) - (a.c || 0));
+  const pickB = (ui.aiBook && recs[ui.aiBook]) || bs[0] || null;
+  return `<section class="sec">
+    <div class="sec-head"><h1 class="h1">AI &amp; Lug'at</h1><span class="tag">${getGeminiKey() ? "Gemini API ulangan" : "Smart AI faol"}</span></div>
+    <div class="seg" style="grid-template-columns:repeat(3,1fr)" role="tablist">
+      <button type="button" role="tab" data-act="aisub" data-s="analyze" aria-selected="${sub === "analyze"}">AI Xulosa Tahlili</button>
+      <button type="button" role="tab" data-act="aisub" data-s="glossary" aria-selected="${sub === "glossary"}">Lug'at (${gls.length})</button>
+      <button type="button" role="tab" data-act="aisub" data-s="exam" aria-selected="${sub === "exam"}">AI Imtihon</button>
+    </div>
+  </section>
+  ${sub === "glossary" ? `<section class="ai-card">
+      <div><p class="eyebrow">GEMINI GLOSSARY · ATAMALAR LUG'ATI</p><h2 class="h2">Yangi atamani Gemini bilan tushunish</h2></div>
+      <form class="sec" data-form="glossary" novalidate>
+        <div class="pair">
+          <div class="field"><label for="gl-b">Manba</label>${bs.length ? `<select id="gl-b" name="b">${bs.map(b => `<option value="${esc(b.id)}"${pickB && b.id === pickB.id ? " selected" : ""}>${esc(b.title)}</option>`).join("")}</select>` : `<input id="gl-b-new" name="btitle" type="text" placeholder="Kitob yoki fan nomi">`}</div>
+          <div class="field"><label for="gl-term">Atama yoki tushunarsiz so'z</label><input id="gl-term" name="term" type="text" maxlength="200" placeholder="Masalan: Kognitiv dissonans, FSRS, Inflyatsiya"></div>
+        </div>
+        <div class="pair">
+          <div class="field"><label for="gl-page">Qaysi bet${opt}</label><input id="gl-page" name="page" type="text" inputmode="numeric" placeholder="Masalan: 45"></div>
+          <div class="field"><label for="gl-line">Qaysi qator${opt}</label><input id="gl-line" name="line" type="text" inputmode="numeric" placeholder="Masalan: 12 yoki 10-15"></div>
+        </div>
+        <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="gl-explain">${ic("spark")}Gemini tushuntirib bersin</button></div>
+        <div class="field rt-wrap"><label for="gl-def">Gemini izohi va ta'rifi (tahrirlashingiz mumkin)</label>${richBar("gl-def", "gl")}<textarea id="gl-def" name="def" rows="4" data-grow placeholder="«Gemini tushuntirib bersin» tugmasini bosing yoki o'zingiz yozing"></textarea></div>
+        <div class="field"><label for="gl-mnemo">Eslatkich (Mnemonika)${opt}</label><input id="gl-mnemo" name="mnemo" type="text" maxlength="400" placeholder="Oson eslab qolish uchun tasvir yoki bog'lanish"></div>
+        <p class="err" data-err hidden></p>
+        <div><button type="submit" class="btn btn-gold">Lug'atga va SM-2 jadvaliga saqlash</button></div>
+      </form>
+    </section>
+    <section class="sec">
+      <div class="sec-head"><h2 class="h2">Mening lug'atim · ${gls.length}</h2></div>
+      ${gls.length ? `<div class="rows">${gls.map(i => itemRow(i, day, true)).join("")}</div>` : `<div class="empty"><p>Lug'atda hali atamalar yo'q.</p><p class="small muted">Yuqoridagi maydonga istalgan ilmiy yoki kitobiy atamani yozib, «Gemini tushuntirib bersin» tugmasini bosing.</p></div>`}
+    </section>`
+  : sub === "exam" ? `<section class="card sec">
+      <h2 class="h2">AI bilan Sokrat imtihoni va «Xatoni top»</h2>
+      <p class="small muted">Manbani tanlang: AI sizning yozuvlaringiz asosida birma-bir savol beradi yoki atayin 2 ta xato qo'shilgan xulosa tuzib, xotirangizni sinaydi.</p>
+      ${bs.length ? `<div class="rows">${bs.map(b => `<div class="src">${tile(b)}<div class="src-main"><span class="bk-title">${esc(b.title)}</span><span class="bk-meta">${itemsOf(b.id).length} ta yozuv</span></div><div class="acts"><button type="button" class="btn btn-sm btn-gold" data-act="chat" data-id="${esc(b.id)}" data-m="exam">Imtihon</button><button type="button" class="btn btn-sm" data-act="chat" data-id="${esc(b.id)}" data-m="error">Xatoni top</button></div></div>`).join("")}</div>` : `<p class="muted">Avval kamida bitta manba qo'shing.</p>`}
+    </section>`
+  : `<section class="ai-card">
+      <div><p class="eyebrow">GEMINI KITOB XULOSASI TAHLILCHISI</p><h2 class="h2">O'qiganingizni yozing — Gemini tahlil qilib bersin</h2></div>
+      <p class="small muted">Kitobdan o'qigan qismingizni o'z so'zlaringiz bilan yozing yoki iqtibos kiriting. AI undan asosiy xulosalarni, savol-javob kartochkalarini (Smart SM-2), bo'shliqli jumlani va muhim atamalarni (Glossary) chiqarib beradi.</p>
+      <form class="sec" data-form="ai-analyze" novalidate>
+        <div class="pair">
+          <div class="field"><label for="ai-b">Qaysi manba</label>${bs.length ? `<select id="ai-b" name="b">${bs.map(b => `<option value="${esc(b.id)}"${pickB && b.id === pickB.id ? " selected" : ""}>${esc(b.title)}</option>`).join("")}</select>` : `<input id="ai-b-new" name="btitle" type="text" placeholder="Kitob nomi, masalan: Atom odatlar">`}</div>
+          <div class="field"><label for="ai-ref">Bob yoki mavzu nomi${opt}</label><input id="ai-ref" name="ref" type="text" placeholder="Masalan: 1-bob. Kichik odatlar kuchi"></div>
+        </div>
+        <div class="pair">
+          <div class="field"><label for="ai-page">Qaysi betlar${opt}</label><input id="ai-page" name="page" type="text" inputmode="numeric" placeholder="Masalan: 15-28"></div>
+          <div class="field"><label for="ai-line">Qaysi qatorlar${opt}</label><input id="ai-line" name="line" type="text" inputmode="numeric" placeholder="Masalan: 10-22"></div>
+        </div>
+        <div class="field rt-wrap">
+          <label for="ai-in">O'qigan qismingiz xulosasi yoki matni</label>
+          ${richBar("ai-in", "ai")}
+          <textarea id="ai-in" name="text" rows="5" data-grow placeholder="Masalan: Muallifning aytishicha, har kuni 1 foizga yaxshilanish yil oxirida 37 barobar o'sishga olib keladi. Maqsaddan ko'ra tizim muhimroq..."></textarea>
+        </div>
+        <p class="err" data-err hidden></p>
+        <div class="acts">
+          <button type="submit" class="btn btn-gold" id="ai-go">${ic("spark")}Gemini bilan tahlil qilish</button>
+          <button type="button" class="btn btn-sm" data-act="ai-sample">Namuna matn qo'yish</button>
+        </div>
+      </form>
+      <div id="ai-res-box">${lastAiResult ? paintAiResultBox(lastAiResult.res, lastAiResult.bid, lastAiResult.pageStr, lastAiResult.lineStr) : ""}</div>
+    </section>`}`;
+}
+
+/* ── Image Occlusion modal ── */
+function sheetOcclusion(owner, idx) {
+  const list = owner && recs[owner] ? recs[owner].imgs : pendImgs;
+  const im = list && list[idx];
+  if (!im) return;
+  openSheet(`<div class="sheet-body">
+    <div><p class="eyebrow">RASM USTIDA YASHIRISH (IMAGE OCCLUSION)</p><h2 class="sheet-h" tabindex="-1" autofocus>${esc(im.name || "Skrinshot")}</h2></div>
+    <p class="small muted">Rasmning yodlamoqchi bo'lgan joyini bosing: u yerga yashirin quti tushadi. Takrorlash paytida u yopiq turadi va javob ochilganda ko'rinadi.</p>
+    <div class="occ-stage" id="occ-ed" data-o="${esc(owner || "rd")}" data-k="${idx}">
+      <img src="${esc(im.data)}" alt="Skrinshot">
+      ${(im.occ || []).map((r, k) => `<span class="occ-mask" data-act="occ-del-box" data-idx="${k}" style="left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%" title="O'chirish uchun bosing">${k + 1}</span>`).join("")}
+    </div>
+    <div class="sheet-actions"><button type="button" class="btn btn-sm" data-act="occ-clear" data-o="${esc(owner || "rd")}" data-k="${idx}">Tozalash</button><span class="grow"></span><button type="button" class="btn btn-gold" data-act="sheet-close">Tayyor</button></div>
+  </div>`);
+  const ed = $("#occ-ed");
+  if (ed) ed.addEventListener("click", e => {
+    if (e.target.closest("[data-act=occ-del-box]")) return;
+    const rect = ed.getBoundingClientRect();
+    const x = Math.max(0, Math.min(82, Math.round((e.clientX - rect.left) / rect.width * 100) - 9));
+    const y = Math.max(0, Math.min(88, Math.round((e.clientY - rect.top) / rect.height * 100) - 5));
+    im.occ = [...(im.occ || []), { x, y, w: 18, h: 10 }];
+    if (owner && recs[owner]) put(recs[owner], true);
+    sheetOcclusion(owner, idx);
+  });
+}
+
+/* ── Word (.docx), PDF (.pdf), Markdown (.md) & Telegram Auto-Backup Generators ── */
+function buildMarkdownReport() {
+  const day = today(), bs = books(), its = items(), life = xotir(lifeTally());
+  let md = `# ME'MORI — Shaxsiy Xotira va Konspektlar Zaxirasi\nSana: ${day} · Balans: ${life.net} XOTIR · Manbalar: ${bs.length} ta · Yozuvlar: ${its.length} ta\n\n`;
+  for (const b of bs) {
+    const bitems = itemsOf(b.id);
+    md += `## 📚 ${b.title}${b.author ? ` (${b.author})` : ""} — ${KINDS[b.kind].name}\n`;
+    if (b.pages) md += `Jarayon: ${b.cur || 0} / ${b.pages} ${UNITS[KINDS[b.kind].unit]?.one || ""}\n\n`;
+    for (const i of bitems) {
+      const loc = fmtLoc(i);
+      md += `- **[${TYPES[i.t]}]${loc ? ` (${loc})` : ""}${i.r ? ` ${i.r}` : ""}** [SM-2 EF: ${(i.ef || 2.5).toFixed(2)}, Keyingi: ${i.d}]\n`;
+      if (i.q) md += `  - Savol/Atama: ${i.q}\n`;
+      md += `  - Мазмуни: ${stripRich(i.a)}\n`;
+      if (i.m) md += `  - Eslatkich: ${i.m}\n`;
+    }
+    md += `\n`;
+  }
+  return md;
+}
+
+// Builds a rich Word (.docx-compatible HTML/WordprocessingML document) Blob
+function buildDocxBlob() {
+  const day = today(), bs = books(), its = items(), life = xotir(lifeTally());
+  const rows = bs.map(b => {
+    const bitems = itemsOf(b.id);
+    return `<h2>${esc(b.title)}${b.author ? ` — ${esc(b.author)}` : ""} (${esc(KINDS[b.kind].name)})</h2>
+    <p><b>Holati:</b> ${b.status === "done" ? "Tugatilgan" : "O'rganilmoqda"} ${b.pages ? `· ${b.cur || 0}/${b.pages}` : ""} · <b>Yozuvlar:</b> ${bitems.length} ta</p>
+    <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;width:100%;font-size:10.5pt">
+      <tr style="background:#161c48;color:#ffffff"><th>Turi</th><th>Bet va Qator</th><th>Mavzu / Savol</th><th>Yozuv / Xulosa / Izoh</th><th>Algoritm &amp; Takror</th></tr>
+      ${bitems.map(i => `<tr>
+        <td><b>${esc(TYPES[i.t])}</b></td>
+        <td>${esc(fmtLoc(i) || "—")}</td>
+        <td>${esc(i.q || i.r || "—")}</td>
+        <td>${renderRich(i.a, i.t === "cloze", true)}${i.m ? `<br><i>Eslatkich: ${esc(i.m)}</i>` : ""}</td>
+        <td>${isDeepNote(i) ? `Eslab yozish (${i.s + 1}-pog'ona)` : `SM-2 (EF ${(i.ef || 2.5).toFixed(2)})`}<br><small>${esc(i.d)}</small></td>
+      </tr>`).join("")}
+    </table>`;
+  }).join("<hr>");
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+  <head><meta charset="utf-8"><title>ME'MORI Zaxira ${day}</title>
+  <style>body{font-family:Calibri,Arial,sans-serif;color:#0b1240;line-height:1.45}h1{color:#18288a}h2{color:#2f5bea;margin-top:18pt}th,td{border:1px solid #c9d3ea;text-align:left;vertical-align:top}</style></head>
+  <body>
+    <h1>ME'MORI — Shaxsiy Bilim va Xotira Hisoboti</h1>
+    <p><b>Sana:</b> ${day} &nbsp;|&nbsp; <b>Xotira balansi:</b> ${life.net} XOTIR &nbsp;|&nbsp; <b>Manbalar:</b> ${bs.length} ta &nbsp;|&nbsp; <b>Jami yozuvlar:</b> ${its.length} ta</p>
+    ${rows || "<p>Hozircha yozuvlar yo'q.</p>"}
+  </body></html>`;
+  return new Blob(["\ufeff", html], { type: "application/msword" });
+}
+
+// Builds a valid multi-line PDF 1.4 binary Blob containing all sources, notes, page/line info & SM-2 schedule
+function buildPdfBlob() {
+  const ascii = s => String(s || "").replace(/[ʻʼ‘’`´]/g, "'").replace(/[«»""]/g, '"').replace(/[—–]/g, "-").replace(/[^\x20-\x7E]/g, "?");
+  const pdfEsc = s => ascii(s).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+  const day = today(), bs = books(), its = items(), life = xotir(lifeTally());
+  const rawLines = [
+    `ME'MORI - XOTIRA VA KONSPEKTLAR ZAXIRASI (${day})`,
+    `Balans: ${life.net} XOTIR | Manbalar: ${bs.length} | Yozuvlar: ${its.length}`,
+    "======================================================================",
+    ""
+  ];
+  for (const b of bs) {
+    rawLines.push(`MANBA: ${b.title}${b.author ? " (" + b.author + ")" : ""} [${KINDS[b.kind].name}]`);
+    for (const i of itemsOf(b.id)) {
+      const loc = fmtLoc(i);
+      const head = `  * [${TYPES[i.t]}] ${loc ? "(" + loc + ") " : ""}${i.q || i.r || ""} [Keyingi: ${i.d}]`;
+      rawLines.push(head);
+      const body = stripRich(i.a).replace(/\s+/g, " ");
+      for (let k = 0; k < body.length; k += 82) rawLines.push("    " + body.slice(k, k + 82));
+    }
+    rawLines.push("");
+  }
+  const perPage = 46, pages = [];
+  for (let i = 0; i < rawLines.length; i += perPage) pages.push(rawLines.slice(i, i + perPage));
+  if (!pages.length) pages.push(["ME'MORI - Zaxira bo'sh"]);
+  const objs = [];
+  const addObj = body => { objs.push(body); return objs.length; };
+  const fontId = addObj("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+  const pageIds = [];
+  for (const plines of pages) {
+    const stream = ["BT", "/F1 10 Tf", "40 790 Td", "15 TL", ...plines.map(l => `(${pdfEsc(l)}) Tj T*`), "ET"].join("\n");
+    const cId = addObj(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+    pageIds.push(addObj(`<< /Type /Page /Parent PAGES_ID 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 ${fontId} 0 R >> >> /Contents ${cId} 0 R >>`));
+  }
+  const pagesId = addObj(`<< /Type /Pages /Kids [${pageIds.map(id => `${id} 0 R`).join(" ")}] /Count ${pageIds.length} >>`);
+  const catId = addObj(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);
+  let out = "%PDF-1.4\n";
+  const offs = [];
+  objs.forEach((b, idx) => {
+    offs.push(out.length);
+    out += `${idx + 1} 0 obj\n${b.replace(/PAGES_ID/g, String(pagesId))}\nendobj\n`;
+  });
+  const xrefPos = out.length;
+  out += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n`;
+  for (const o of offs) out += String(o).padStart(10, "0") + " 00000 n \n";
+  out += `trailer\n<< /Size ${objs.length + 1} /Root ${catId} 0 R >>\nstartxref\n${xrefPos}\n%%EOF`;
+  return new Blob([out], { type: "application/pdf" });
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = Object.assign(document.createElement("a"), { href: url, download: filename });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+// Sends JSON + Word (.docx) + PDF (.pdf) backups to Telegram (via server /api/tg/backup or direct Bot API)
+async function sendTelegramAllBackups(quiet) {
+  const day = today(), cfgTg = getTgCfg();
+  if (cloud.mode === "srv" && cloud.me && cloud.me.id) {
+    try {
+      const r = await api("/api/tg/backup", { formats: ["json", "docx", "pdf"] });
+      saveTgCfg({ lastDay: day });
+      if (!quiet) toast(`Telegram'ga JSON, Word (.docx) va PDF zaxira fayllari yuborildi (${r.notes || items().length} ta yozuv).`);
+      return true;
+    } catch (e) { if (!cfgTg.token) { if (!quiet) toast(e.msg || "Server orqali yuborilmadi."); return false; } }
+  }
+  if (!cfgTg.token || !cfgTg.chatId) {
+    if (!quiet) toast("Sozlamalarda Telegram Bot Token va Chat ID ni kiriting yoki serverda Telegram'ni ulang.");
+    return false;
+  }
+  try {
+    const files = [
+      [new Blob([backup()], { type: "application/json" }), `memori-${day}.json`, `📦 ME'MORI JSON zaxira (${day})`],
+      [buildDocxBlob(), `memori-${day}.doc`, `📄 ME'MORI Word konspekt (${day})`],
+      [buildPdfBlob(), `memori-${day}.pdf`, `📕 ME'MORI PDF hisobot (${day})`]
+    ];
+    for (const [blob, name, cap] of files) {
+      const fd = new FormData();
+      fd.append("chat_id", cfgTg.chatId);
+      fd.append("caption", cap);
+      fd.append("document", blob, name);
+      const r = await fetch(`https://api.telegram.org/bot${cfgTg.token}/sendDocument`, { method: "POST", body: fd });
+      if (!r.ok) throw new Error("Telegram Bot API xato qaytardi.");
+    }
+    saveTgCfg({ lastDay: day });
+    const st = $("#tg-direct-st"); if (st) st.textContent = `Oxirgi avtomatik yuborilgan kun: ${day} (JSON + Word + PDF)`;
+    if (!quiet) toast("Telegram'ga 3 ta fayl (JSON, Word, PDF) muvaffaqiyatli yuborildi!");
+    return true;
+  } catch (e) {
+    if (!quiet) toast("Telegram'ga yuborilmadi: Bot Token va Chat ID to'g'riligini tekshiring.");
+    return false;
+  }
+}
+
+// Loads a rich Demo dataset so users can explore SM-2, Active Recall, Page+Line tracking, Rich Text & Glossary immediately
+function loadSampleDataset() {
+  const now = Date.now(), day = today(), b1 = uid(), b2 = uid();
+  const sample = [
+    { id: b1, k: "b", demo: 1, title: "Atom odatlar (Atomic Habits)", author: "Jeyms Klir", kind: "ilmiy", pages: 320, cur: 68, status: "reading", tags: ["odat", "psixologiya", "shaxsiy rivojlanish"], c: now - 864e5 * 5, fin: 0 },
+    { id: b2, k: "b", demo: 1, title: "O'tkan kunlar", author: "Abdulla Qodiriy", kind: "badiiy", pages: 380, cur: 45, status: "reading", tags: ["adabiyot", "tarix"], c: now - 864e5 * 3, fin: 0 },
+    { id: uid(), k: "i", demo: 1, b: b1, t: "recall", q: "", a: "**1 foizlik o'zgarish qoidasi:** Har kuni atigi {g:1 foizga yaxshilanish} yil davomida **37 barobar** o'sishga olib keladi.\n> Maqsadlar siz erishmoqchi bo'lgan natija, tizim esa o'sha natijaga eltuvchi jarayondir.\n- Odatni shakllantirishning 4 bosqichi: ishora, istak, javob va mukofot.", r: "1-bob · 15–28-betlar · 8–24-qatorlar", f: 15, e: 28, lf: 8, lt: 24, ef: 2.6, rep: 2, ivl: 7, s: 2, d: day, n: 2, l: 0, h: [[addDays(day, -3), 2], [addDays(day, -1), 3]], c: now - 864e5 * 4 },
+    { id: uid(), k: "i", demo: 1, b: b1, t: "quote", q: "Maqsad va tizim farqi haqida Jeyms Klir iqtibosi", a: "Siz maqsadlaringiz darajasiga ko'tarilmaysiz, balki {y:tizimlaringiz darajasiga} tushasiz.", r: "1-bob · 27-bet · 14-qator", f: 27, e: 27, lf: 14, lt: 16, ef: 2.5, rep: 1, ivl: 3, s: 1, d: day, n: 1, l: 0, h: [[addDays(day, -2), 2]], c: now - 864e5 * 3 },
+    { id: uid(), k: "i", demo: 1, b: b1, t: "cloze", q: "", a: "Odatlar — bu o'z-o'zini takomillashtirishning [[murakkab foizi]] (kompaund effekti) hisoblanadi.", r: "18-bet · 6-qator", f: 18, e: 18, lf: 6, lt: 8, ef: 2.5, rep: 1, ivl: 3, s: 1, d: day, n: 1, l: 0, h: [], c: now - 864e5 * 2 },
+    { id: uid(), k: "i", demo: 1, b: b1, t: "glossary", q: "Kompaund effekti (Murakkab foiz)", a: "**Sodda ta'rifi:** Kichik va doimiy harakatlarning vaqt o'tishi bilan ustma-ust yig'ilib, ulkan natija berishi.\n**Kitob kontekstida:** Xuddi bankdagi foiz ustiga foiz qo'shilganidek, bilim va odatlar ham har kuni yig'ilib boradi.\n**Hayotiy misol:** Har kuni 15 bet kitob o'qish yiliga 5400 bet (20 ta kitob) degani.", m: "Qor uyumi: tepalikdan dumalab tushayotgan kichik qor parchasi katta qor shariga aylanadi.", r: "20-bet · 11-qator", f: 20, e: 20, lf: 11, lt: 15, ef: 2.5, rep: 0, ivl: 1, s: 0, d: day, n: 0, l: 0, h: [], c: now - 864e5 },
+    { id: uid(), k: "i", demo: 1, b: b2, t: "card", q: "Otabek Marg'ilonga nima maqsadda kelgan edi va qayerda to'xtaydi?", a: "Savdo ishi bilan kelib, karvonsaroyda (Hasanali bilan birga) to'xtaydi.", r: "1-bo'lim · 5-bet · 3-qator", f: 5, e: 5, lf: 3, lt: 9, ef: 2.5, rep: 1, ivl: 3, s: 1, d: day, n: 1, l: 0, h: [], c: now - 864e5 * 2 },
+    { id: uid(), k: "s", demo: 1, b: b1, day, qty: 28, unit: "bet", min: 35, from: 1, to: 28, lf: 1, lt: 24, c: now - 3600000 }
+  ];
+  put(sample);
+  toast("Namuna to'plam yuklandi! Asosiy ekran, Takrorlash va AI & Lug'at bo'limlarini sinab ko'ring.");
+}
+
 /* ── actions ── */
 const AI_PROMPT = "You help a learner build retrieval-practice flashcards. Using ONLY the learner's own notes below (written in Uzbek), write 3 to 5 short question-answer pairs in Uzbek, Latin script, that test the most important ideas, terms, names and reasons in the notes. Questions must need real recall, not yes or no. Do not add any fact that is not in the notes. Reply with only a JSON array, for example [{\"q\": \"...\", \"a\": \"...\"}].\n\n";
 const act = {
   tab(el) { ui.tab = el.dataset.tab; ui.book = null; if (ui.tab === "stats") ui.sub = "stats"; render(); window.scrollTo(0, 0); },
+  aisub(el) { ui.aisub = el.dataset.s; render(); },
+  "ai-gl-open"() { ui.tab = "ai"; ui.book = null; ui.aisub = "glossary"; render(); window.scrollTo(0, 0); },
+  "ai-book"(el) { ui.aiBook = el.dataset.id; ui.tab = "ai"; ui.book = null; ui.aisub = "analyze"; render(); window.scrollTo(0, 0); },
+  "gl-new"(el) {
+    const b = (el.dataset.id && recs[el.dataset.id]) || books()[0];
+    if (b) sheetItemNew(b, "glossary");
+    else { ui.tab = "ai"; ui.aisub = "glossary"; render(); }
+  },
+  "demo-load"() { closeSheet(); loadSampleDataset(); },
+  "streak-freeze"() {
+    const c = cfg(), freezes = new Set(c.freezes || []), day = today(), yest = addDays(day, -1);
+    const target = freezes.has(yest) ? day : yest;
+    if (freezes.has(target)) return toast(`Zanjir himoyasi (${fmtDate(target)}) allaqachon yoqilgan!`);
+    const net = xotir(lifeTally()).net - freezes.size * 100;
+    if (net < 100) return toast(`Zanjir himoyasi uchun kamida 100 XOTIR kerak (hozir: ${net} XOTIR).`);
+    freezes.add(target);
+    put({ ...c, id: "cfg", k: "c", freezes: [...freezes] });
+    toast(`🛡 Zanjir himoyasi ${fmtDate(target)} uchun yoqildi (−100 XOTIR). Ketma-ketlik saqlandi!`);
+  },
+  "rt-cmd"(el) { const bar = el.closest(".rt-bar"); if (bar) applyRichCmd(bar.dataset.for, el.dataset.cmd); },
+  "rt-prev"(el) {
+    const tid = el.dataset.for, ta = document.getElementById(tid), pr = document.getElementById("prev-" + tid);
+    if (!ta || !pr) return;
+    pr.hidden = !pr.hidden;
+    if (!pr.hidden) pr.innerHTML = renderRich(ta.value || "Formatlangan matn shu yerda ko'rinadi…", true, true);
+  },
+  "img-del"(el) {
+    const o = el.dataset.o, k = +el.dataset.k;
+    if (o && recs[o]) {
+      const imgs = (recs[o].imgs || []).slice(); imgs.splice(k, 1);
+      put({ ...recs[o], imgs }, true);
+      const box = document.getElementById("imgs-" + o); if (box) box.innerHTML = renderInlineImgs(imgs, o);
+    } else {
+      pendImgs.splice(k, 1);
+      const box = document.getElementById("imgs-" + (o || "rd")); if (box) box.innerHTML = renderInlineImgs(pendImgs, o || "rd");
+    }
+  },
+  "occ-open"(el) { sheetOcclusion(el.dataset.o, +el.dataset.k); },
+  "occ-del-box"(el) {
+    const ed = $("#occ-ed"); if (!ed) return;
+    const o = ed.dataset.o, k = +ed.dataset.k, list = o && recs[o] ? recs[o].imgs : pendImgs, im = list && list[k];
+    if (!im || !im.occ) return;
+    im.occ.splice(+el.dataset.idx, 1);
+    if (o && recs[o]) put(recs[o], true);
+    sheetOcclusion(o, k);
+  },
+  "occ-clear"(el) {
+    const o = el.dataset.o, k = +el.dataset.k, list = o && recs[o] ? recs[o].imgs : pendImgs, im = list && list[k];
+    if (!im) return;
+    im.occ = [];
+    if (o && recs[o]) put(recs[o], true);
+    sheetOcclusion(o, k);
+  },
+  "occ-toggle"(el) { el.classList.toggle("open"); },
+  "rv-mic"(el) {
+    if (!Rec) return;
+    if (rec) { rec.stop(); return; }
+    const t = $("#rv-try");
+    rec = new Rec(); rec.lang = "uz-UZ"; rec.continuous = false; rec.interimResults = false;
+    rec.onresult = e => { const w = e.results[0] && e.results[0][0] && e.results[0][0].transcript; if (w && t) { t.value = (t.value ? t.value + " " : "") + w.trim(); grow(t); } };
+    rec.onend = () => { rec = null; el.setAttribute("aria-pressed", "false"); };
+    try { rec.start(); el.setAttribute("aria-pressed", "true"); } catch (e) { rec = null; }
+  },
+  "ai-sample"() {
+    const ta = $("#ai-in"), pg = $("#ai-page"), ln = $("#ai-line"), rf = $("#ai-ref");
+    if (ta) {
+      ta.value = "Odatlar — o'z-o'zini takomillashtirishning murakkab foizidir. Har kuni 1 foizga yaxshilanish yil oxirida 37 barobar o'sishga olib keladi. Muallif maqsadlardan ko'ra tizimga e'tibor qaratish kerakligini ta'kidlaydi: g'oliblar ham, mag'lublar ham bir xil maqsad qo'yadi, farq esa ularning har kungi tizimida. Odat to'rt bosqichdan iborat: ishora, istak, javob harakati va mukofot.";
+      grow(ta);
+    }
+    if (pg && !pg.value) pg.value = "18-29";
+    if (ln && !ln.value) ln.value = "5-22";
+    if (rf && !rf.value) rf.value = "1-bob. Atom odatlarning hayratlanarli kuchi";
+  },
+  async "cap-ai"(el) {
+    const form = el.closest("form"), ta = $("#cap-text"), box = $("#cap-ai-box");
+    if (!ta || !ta.value.trim()) return fail(form, "Avval o'qigan qismingiz haqida bir-ikki jumla yozing.");
+    const b = recs[new FormData(form).get("b")];
+    el.disabled = true; box.hidden = false; box.innerHTML = `<p class="small muted">Gemini tahlil qilmoqda…</p>`;
+    try {
+      const res = await analyzeBookSummary(ta.value, b ? b.title : "Manba");
+      box.innerHTML = paintAiResultBox(res, b ? b.id : "", $("#cap-amt")?.value || "", $("#cap-line")?.value || "");
+    } finally { el.disabled = false; }
+  },
+  async "rd-ai-analyze"(el) {
+    const form = el.closest("form"), ta = $("#rd-recall"), box = $("#rd-ai-box"), b = recs[form.dataset.id];
+    if (!ta || !ta.value.trim()) return fail(form, "Avval «Nimalar esda qoldi?» maydoniga o'z so'zingiz bilan yozing.");
+    el.disabled = true; box.hidden = false; box.innerHTML = `<p class="small muted">Gemini xulosangizni tahlil qilmoqda…</p>`;
+    try {
+      const res = await analyzeBookSummary(ta.value, b ? b.title : "Manba");
+      const gistIn = $("#rd-gist"); if (gistIn && !gistIn.value && res.gist) gistIn.value = res.gist;
+      const cardsBox = $("#rd-cards");
+      if (cardsBox && res.cards) for (const c of res.cards) cardsBox.insertAdjacentHTML("beforeend", cardPair(c.q, c.a));
+      const clozeIn = $("#rd-cloze"); if (clozeIn && !clozeIn.value && res.cloze) { clozeIn.value = res.cloze; grow(clozeIn); }
+      if (res.glossary && res.glossary[0]) {
+        const gt = $("#rd-gt"), gd = $("#rd-gd");
+        if (gt && !gt.value) gt.value = res.glossary[0].term;
+        if (gd && !gd.value) { gd.value = `${res.glossary[0].def}\nMisol: ${res.glossary[0].example || ""}`; grow(gd); }
+      }
+      box.innerHTML = `<p class="small hot">✓ Xulosa tahlil qilindi: Bir jumla mohiyati, ${res.cards ? res.cards.length : 0} ta savol-javob, bo'shliqli matn va lug'at maydonlarga joylandi!</p>`;
+      queueDraft(form);
+    } finally { el.disabled = false; }
+  },
+  async "rd-gl-ai"(el) {
+    const form = el.closest("form"), b = recs[form.dataset.id], gt = $("#rd-gt"), gd = $("#rd-gd");
+    if (!gt || !gt.value.trim()) return fail(form, "Avval tushuntirilishi kerak bo'lgan atamani yozing.");
+    el.disabled = true;
+    try {
+      const ex = await explainGlossaryTerm(gt.value, b ? b.title : "", $("#rd-recall")?.value || "");
+      gd.value = `**Sodda ta'rifi:** ${ex.simple}\n**Ma'nosi:** ${ex.context}\n**Misol:** ${ex.example}${ex.mnemo ? `\n**Eslatkich:** ${ex.mnemo}` : ""}`;
+      grow(gd); queueDraft(form);
+    } finally { el.disabled = false; }
+  },
+  async "it-gl-ai"(el) {
+    const form = el.closest("form"), b = recs[form.dataset.book || (recs[form.dataset.id] && recs[form.dataset.id].b)], q = $("#it-q"), a = $("#it-a"), m = $("#it-m");
+    if (!q || !q.value.trim()) return fail(form, "Avval atama yoki so'zni yozing.");
+    el.disabled = true;
+    try {
+      const ex = await explainGlossaryTerm(q.value, b ? b.title : "", "");
+      a.value = `**Sodda ta'rifi:** ${ex.simple}\n**Kontekstdagi ma'nosi:** ${ex.context}\n**Misol:** ${ex.example}`;
+      grow(a);
+      if (m && ex.mnemo && !m.value) { m.value = ex.mnemo; grow(m); }
+    } finally { el.disabled = false; }
+  },
+  async "gl-explain"(el) {
+    const form = el.closest("form"), term = $("#gl-term"), def = $("#gl-def"), mn = $("#gl-mnemo");
+    if (!term || !term.value.trim()) return fail(form, "Avval atama yoki so'zni yozing.");
+    const b = recs[$("#gl-b")?.value] || null;
+    el.disabled = true;
+    try {
+      const ex = await explainGlossaryTerm(term.value, b ? b.title : ($("#gl-b-new")?.value || ""), "");
+      def.value = `**Sodda ta'rifi:** ${ex.simple}\n**Kontekstdagi ma'nosi:** ${ex.context}\n**Misol:** ${ex.example}`;
+      grow(def);
+      if (mn && ex.mnemo) mn.value = ex.mnemo;
+    } finally { el.disabled = false; }
+  },
+  "ai-save-all"() {
+    if (!lastAiResult || !lastAiResult.res) return;
+    const { res, bid, pageStr, lineStr } = lastAiResult;
+    let b = recs[bid] || books()[0];
+    const now = Date.now(), day = today(), due = addDays(day, 1), out = [];
+    if (!b) {
+      b = { id: uid(), k: "b", title: "AI Tahlil Manbasi", author: "", kind: "ilmiy", pages: 0, cur: 0, status: "reading", tags: ["ai"], c: now, fin: 0 };
+      out.push(b);
+    }
+    const [f, e] = parseRangeInput(pageStr), [lf, lt] = parseRangeInput(lineStr);
+    const loc = fmtLoc({ b: b.id, f, e, lf, lt }) || "AI tahlili";
+    if (res.gist) out.push({ id: uid(), k: "i", b: b.id, t: "gist", q: "", a: res.gist, r: loc, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + 1, s: 0, d: due, n: 0, l: 0, h: [] });
+    if (res.takeaways && res.takeaways.length) out.push({ id: uid(), k: "i", b: b.id, t: "recall", q: "", a: res.takeaways.map(t => `- ${t}`).join("\n"), r: loc, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + 2, s: 0, d: due, n: 0, l: 0, h: [] });
+    for (const c of (res.cards || [])) out.push({ id: uid(), k: "i", b: b.id, t: "card", q: c.q, a: c.a, r: loc, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + out.length + 3, s: 0, d: due, n: 0, l: 0, h: [] });
+    if (res.cloze && /\[\[.+?\]\]/.test(res.cloze)) out.push({ id: uid(), k: "i", b: b.id, t: "cloze", q: "", a: res.cloze, r: loc, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + out.length + 4, s: 0, d: due, n: 0, l: 0, h: [] });
+    for (const g of (res.glossary || [])) out.push({ id: uid(), k: "i", b: b.id, t: "glossary", q: g.term, a: `**Ta'rifi:** ${g.def}${g.example ? `\n**Misol:** ${g.example}` : ""}`, r: loc, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + out.length + 5, s: 0, d: due, n: 0, l: 0, h: [] });
+    lastAiResult = null;
+    put(out); closeSheet();
+    toast(`${out.filter(x => x.k === "i").length} ta yozuv va SM-2 kartochka «${b.title}» manbasiga saqlandi!`);
+  },
+  "gm-save"() {
+    const k = $("#gm-key")?.value.trim() || "", m = $("#gm-model")?.value || "gemini-2.5-flash";
+    try { localStorage.setItem(GM_KEY, k); localStorage.setItem(GM_MOD, m); } catch (e) {}
+    toast(k ? "Gemini API kaliti saqlandi." : "Gemini kaliti tozalandi (ichki aqlli tahlilchi ishlaydi).");
+  },
+  "tg-cfg-save"() {
+    saveTgCfg({ token: $("#tg-tok")?.value.trim() || "", chatId: $("#tg-cid")?.value.trim() || "", auto: !!$("#tg-auto")?.checked });
+    toast("Telegram kunlik zaxira sozlamalari saqlandi.");
+  },
+  "tg-send-all"() { sendTelegramAllBackups(false); },
+  "export-docx"() { downloadBlob(buildDocxBlob(), `memori-${today()}.doc`); toast("Word (.doc) konspekt yuklab olindi."); },
+  "export-pdf"() { downloadBlob(buildPdfBlob(), `memori-${today()}.pdf`); toast("PDF (.pdf) hisobot yuklab olindi."); },
+  "export-md"() { downloadBlob(new Blob([buildMarkdownReport()], { type: "text/markdown;charset=utf-8" }), `memori-${today()}.md`); toast("Markdown (.md) konspekt yuklab olindi."); },
+  "export-Menu"() {
+    openSheet(`<div class="sheet-body">
+      <h2 class="sheet-h" tabindex="-1" autofocus>Zaxira va Eksport (JSON · Word · PDF)</h2>
+      <p class="small muted">Barcha manbalar, bet va qator ko'rsatkichlari, SM-2 kartochkalar hamda Lug'atni istalgan formatda yuklab oling yoki Telegram'ga yuboring.</p>
+      <div class="dk-add col">
+        <button type="button" class="dk-a" data-act="export-docx"><span class="tile c-blue">${ic("doc")}</span><b>Word (.doc) konspekt</b><small>Jadvalli, formatlangan Word hujjati</small></button>
+        <button type="button" class="dk-a" data-act="export-pdf"><span class="tile c-red">${ic("doc")}</span><b>PDF (.pdf) hisobot</b><small>Chop etish va o'qish uchun tayyor PDF</small></button>
+        <button type="button" class="dk-a" data-act="export"><span class="tile c-green">${ic("layers")}</span><b>JSON (.json) to'liq zaxira</b><small>Ilovaga qayta tiklash uchun</small></button>
+        <button type="button" class="dk-a" data-act="tg-send-all"><span class="tile c-purple">${ic("arrow")}</span><b>Telegram'ga 3 ta faylni yuborish</b><small>JSON + Word + PDF birdaniga yuboriladi</small></button>
+      </div>
+      <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Yopish</button></div>
+    </div>`);
+  },
   filter(el) { ui.filter = el.dataset.f; render(); },
   book(el) { if (!ui.book) ui.from = ui.tab; ui.book = el.dataset.id; render(); window.scrollTo(0, 0); },
   "deck-back"() { ui.book = null; ui.tab = ui.from || "shelf"; render(); window.scrollTo(0, 0); },
@@ -3107,7 +3891,23 @@ const act = {
   "rv-show"() {
     if (rv.shown || !$("#rv-ans")) return;
     rv.shown = true;
+    rv.rtMs = Date.now() - (rv.t0 || Date.now());
     $("#rv-show").hidden = true;
+    for (const m of document.querySelectorAll(".occ-mask")) m.classList.add("open");
+    const it = recs[rv.q[rv.i]], tryIn = $("#rv-try"), evBox = $("#rv-eval");
+    if (it && tryIn && tryIn.value.trim() && evBox) {
+      const ev = analyzeRecallAttempt(tryIn.value, it.a);
+      if (ev) {
+        rv.cov = ev.pct;
+        evBox.hidden = false;
+        evBox.className = "recall-eval";
+        evBox.innerHTML = `<b>Eslab yozish tahlili: ${ev.pct}% kalit tushunchalar eslandi</b>
+          ${ev.matched.length ? `<p class="small">Eslangan: <span class="kw-hit">${ev.matched.map(esc).join(", ")}</span></p>` : ""}
+          ${ev.missed.length ? `<p class="small">Qolib ketgan: <span class="kw-miss">${ev.missed.map(esc).join(", ")}</span></p>` : ""}
+          <p class="small muted">Tavsiya etilgan baho: <b>${GRADES[ev.recGrade]}</b></p>`;
+      }
+    }
+    if (rv.conf === 2 && $("#rv-hc")) $("#rv-hc").hidden = false;
     const a = $("#rv-ans"); a.hidden = false; a.scrollIntoView({ block: "nearest" });
   },
   "rv-conf"(el) {
@@ -3120,7 +3920,7 @@ const act = {
     const first = !rv.seen.has(id);
     if (first) {
       rv.tally[g]++;
-      if (!rv.practice) put(schedule(it, g, today(), rv.conf), true);
+      if (!rv.practice) put(schedule(it, g, today(), rv.conf, rv.rtMs || 0, rv.cov), true);
       if (g === 0) rv.q.push(id);            // successive relearning: ask once more at the end of this session
     }
     rv.seen.add(id); rv.i++;
@@ -3154,7 +3954,6 @@ const act = {
   async "key-new"(el) { if ($("#ext-key") && !armed(el, "Ha, eskisi ishlamay qoladi")) return; try { await api("/api/key", {}); paintLinks(); } catch (e) { toast(e.msg); } },
   async "key-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { await api("/api/key", null, "DELETE"); paintLinks(); } catch (e) { toast(e.msg); } },
   "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kalit nusxalandi."); },
-  rank() { sheetRank(); },
   "pick-next"() { ui.pick = (ui.pick || 0) + 1; render(); },
   tag(el) { ui.tag = el.dataset.t; ui.tab = "shelf"; ui.book = null; ui.filter = "all"; render(); window.scrollTo(0, 0); },
   "tag-add"(el) { const i = $("#bk-tags"); if (!i) return; const have = i.value.split(",").map(x => x.trim()).filter(Boolean); if (!have.some(x => x.toLowerCase() === el.dataset.t.toLowerCase())) have.push(el.dataset.t); i.value = have.join(", "); el.remove(); },
@@ -3248,6 +4047,39 @@ const act = {
 };
 
 const forms = {
+  async "ai-analyze"(form) {
+    const fd = new FormData(form), text = str(fd.get("text")).trim(), pageStr = str(fd.get("page")).trim(), lineStr = str(fd.get("line")).trim(), ref = str(fd.get("ref")).trim();
+    if (!text) return fail(form, "Tahlil qilish uchun o'qigan qismingiz xulosasini yoki matnini yozing.");
+    let bid = str(fd.get("b"));
+    const btitle = str(fd.get("btitle")).trim();
+    if (!bid && btitle) {
+      const nb = { id: uid(), k: "b", title: btitle, author: "", kind: "ilmiy", pages: 0, cur: 0, status: "reading", tags: [], c: Date.now(), fin: 0 };
+      put(nb, true); bid = nb.id;
+    }
+    const b = recs[bid], btn = $("#ai-go"), box = $("#ai-res-box");
+    if (btn) btn.disabled = true;
+    if (box) box.innerHTML = `<div class="card"><p class="small muted">✨ Gemini AI matnni tahlil qilmoqda, xulosalar va SM-2 savollar tuzilmoqda…</p></div>`;
+    try {
+      const res = await analyzeBookSummary(text, b ? b.title : (btitle || "Kitob"));
+      if (ref && res.gist) res.gist = `[${ref}] ${res.gist}`;
+      if (box) box.innerHTML = paintAiResultBox(res, bid, pageStr, lineStr);
+    } finally { if (btn) btn.disabled = false; }
+  },
+  glossary(form) {
+    const fd = new FormData(form), term = str(fd.get("term")).trim(), def = str(fd.get("def")).trim(), mnemo = str(fd.get("mnemo")).trim();
+    if (!term || !def) return fail(form, "Atamani va uning ta'rifini yozing (yoki «Gemini tushuntirib bersin» tugmasini bosing).");
+    let bid = str(fd.get("b"));
+    const btitle = str(fd.get("btitle")).trim();
+    if (!bid) {
+      const nb = { id: uid(), k: "b", title: btitle || "Umumiy Lug'at", author: "", kind: "ilmiy", pages: 0, cur: 0, status: "reading", tags: ["lug'at"], c: Date.now(), fin: 0 };
+      put(nb, true); bid = nb.id;
+    }
+    const [f, e] = parseRangeInput(str(fd.get("page"))), [lf, lt] = parseRangeInput(str(fd.get("line")));
+    const loc = fmtLoc({ b: bid, f, e, lf, lt });
+    put({ id: uid(), k: "i", b: bid, t: "glossary", q: term, a: def, m: mnemo, r: loc || "Lug'at", f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: Date.now(), s: 0, d: addDays(today(), 1), n: 0, l: 0, h: [] });
+    form.reset();
+    toast(`«${term}» lug'atga va Smart SM-2 jadvaliga qo'shildi!`);
+  },
   book(form) {
     const fd = new FormData(form), id = form.dataset.id, title = str(fd.get("title")).trim();
     if (!title) return fail(form, "Nomini yozing.");
@@ -3271,23 +4103,27 @@ const forms = {
   read(form) {
     const b = recs[form.dataset.id]; if (!b) return closeSheet();
     const fd = new FormData(form), U = unitOf(b), val = k => str(fd.get(k)).trim();
-    const from = U ? int(fd.get("from")) : 0, to = U ? int(fd.get("to")) : 0, label = val("label");
+    const from = U ? int(fd.get("from")) : 0, to = U ? int(fd.get("to")) : 0, lfrom = int(fd.get("lfrom")), lto = int(fd.get("lto")), label = val("label");
     const gist = val("gist"), apply = val("apply");
     const recall = val("recall"), feyn = val("feyn"), link = val("link"), linkTo = val("linkTo"), cloze = val("cloze"), quote = val("quote"), pre = val("pre");
+    const gt = val("gt"), gd = val("gd");
     const mq = val("mq"), ma = val("ma"), mm = val("mm"), two = fd.get("two") === "1";
     const qs = fd.getAll("q").map(s => str(s).trim()), as = fd.getAll("a").map(s => str(s).trim());
     if (from && to && to < from) return fail(form, `«${U.to}» «${U.from.toLowerCase()}»dan kichik bo'lmasin.`);
+    if (lfrom && lto && lto < lfrom) return fail(form, "Oxirgi qator birinchi qatordan kichik bo'lmasin.");
     if (b.pages && Math.max(from, to) > b.pages) return fail(form, `Bu manbaning hajmi ${b.pages} ${U.one}. Raqamni tekshiring.`);
     if (qs.some((q, k) => !q !== !as[k])) return fail(form, "Har bir savolning javobini ham yozing yoki chala savolni olib tashlang.");
     if (cloze && !/\[\[.+?\]\]/.test(cloze)) return fail(form, "Bo'shliqli matnda yashiriladigan so'zni [[ ]] ichiga oling.");
     if ((mq || ma || mm) && !(mq && ma)) return fail(form, "Eslatkich uchun nimani eslash kerakligini va javobini yozing.");
+    if ((gt || gd) && !(gt && gd)) return fail(form, "Lug'at uchun atamani ham, uning izohini ham yozing.");
     const cards = qs.map((q, k) => [q, as[k]]).filter(c => c[0]);
-    if (!recall && !gist && !apply && !feyn && !link && !cards.length && !cloze && !mq && !quote) return fail(form, "Avval eslaganingizni yozing yoki kamida bitta yozuv qo'shing.");
-    const start = from || to, end = to || from;
+    if (!recall && !gist && !apply && !feyn && !link && !cards.length && !cloze && !mq && !quote && !gt) return fail(form, "Avval eslaganingizni yozing yoki kamida bitta yozuv qo'shing.");
+    const start = from || to, end = to || from, lf = lfrom || lto, lt = lto || lfrom;
     const range = U && start ? (end !== start ? `${start}–${end}-${U.many}` : `${start}-${U.one}`) : "";
-    const ref = [label, range].filter(Boolean).join(" · ") || `${fmtDate(today())}dagi o'rganish`;
+    const lrange = lf ? (lt !== lf ? `${lf}–${lt}-qatorlar` : `${lf}-qator`) : "";
+    const ref = [label, range, lrange].filter(Boolean).join(" · ") || `${fmtDate(today())}dagi o'rganish`;
     const now = Date.now(), due = addDays(today(), LADDER[0]), out = [];
-    const mk = (t, q, a, extra) => out.push({ id: uid(), k: "i", b: b.id, t, q, a, r: ref, f: start, e: end, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [], ...extra });
+    const mk = (t, q, a, extra) => out.push({ id: uid(), k: "i", b: b.id, t, q, a, r: ref, f: start, e: end, lf, lt, ef: 2.5, rep: 0, ivl: 1, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [], ...extra });
     if (recall) mk("recall", "", recall, pre ? { pre } : {});
     if (gist) mk("gist", "", gist);
     if (feyn) mk("feynman", "", feyn);
@@ -3295,16 +4131,17 @@ const forms = {
     for (const [q, a] of cards) { mk("card", q, a); if (two) mk("card", a, q, { rev: 1 }); }
     if (cloze) mk("cloze", "", cloze);
     if (mq) mk("mnemo", mq, ma, { m: mm });
+    if (gt) mk("glossary", gt, gd);
     if (apply) mk("apply", "", apply);
     if (quote) mk("quote", "", quote);
     const made = out.length;
     if (pend.length && made) { out[0].att = pend.slice(); pend = []; }
+    if (pendImgs.length && made) { out[0].imgs = pendImgs.slice(); pendImgs = []; }
     const unit = KINDS[b.kind].unit || "", mins = Math.max(0, int(fd.get("min"))), qty = unit && start ? (unit === "daqiqa" ? Math.max(0, end - start) : end - start + 1) : 0;
-    if (qty || mins) out.push({ id: uid(), k: "s", b: b.id, day: today(), qty, unit, min: mins, from: start, to: end, c: now + out.length });
+    if (qty || mins) out.push({ id: uid(), k: "s", b: b.id, day: today(), qty, unit, min: mins, from: start, to: end, lf, lt, c: now + out.length });
     if (end > (b.cur || 0)) out.push({ ...b, cur: end });
     clearTimeout(draftTimer); dropDraft(b.id);
     put(out); closeSheet();
-    popGain(made * 10 + (qty || mins ? sessionX({ unit, qty, min: mins }) : 0));
     toast(`Saqlandi. ${made} ta yozuvning birinchi takrori ertaga.`);
     if (b.pages && end >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
@@ -3318,17 +4155,19 @@ const forms = {
   item(form) {
     const fd = new FormData(form), id = form.dataset.id, t = form.dataset.t, val = k => str(fd.get(k)).trim();
     const q = val("q"), a = val("a"), r = val("r"), m = val("m");
-    if ((t === "card" || t === "mnemo") && (!q || !a)) return fail(form, "Savolni ham, javobni ham yozing.");
+    const [f, e] = parseRangeInput(val("f")), [lf, lt] = parseRangeInput(val("lf"));
+    if ((t === "card" || t === "mnemo" || t === "glossary") && (!q || !a)) return fail(form, "Savol/atamani ham, javob/izohni ham yozing.");
     if (!a) return fail(form, "Matn bo'sh qolmasin.");
     if (t === "cloze" && !/\[\[.+?\]\]/.test(a)) return fail(form, "Yashiriladigan so'zni [[ ]] ichiga oling.");
     if (id) {
-      if (recs[id]) put({ ...recs[id], q, a, r, ...(t === "mnemo" ? { m } : {}) });
+      if (recs[id]) put({ ...recs[id], q, a, r, f, e, lf, lt, ...(t === "mnemo" || t === "glossary" ? { m } : {}) });
       closeSheet(); return toast("Yozuv saqlandi.");
     }
     const b = recs[form.dataset.book]; if (!b) return closeSheet();
     const type = NEW_TYPES.some(x => x[0] === t) ? t : "card";
-    put({ id: uid(), k: "i", b: b.id, t: type, q: type === "cloze" ? "" : q, a, r, f: 0, e: 0, c: Date.now(), s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [], ...(type === "mnemo" ? { m } : {}) });
-    closeSheet(); toast("Qo'shildi. Birinchi takrori ertaga.");
+    const imgs = pendImgs.slice(); pendImgs = [];
+    put({ id: uid(), k: "i", b: b.id, t: type, q: type === "cloze" ? "" : q, a, r, f, e, lf, lt, ef: 2.5, rep: 0, ivl: 1, imgs, c: Date.now(), s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [], ...(type === "mnemo" || type === "glossary" ? { m } : {}) });
+    closeSheet(); toast("Qo'shildi. Birinchi takrori ertaga (SM-2 jadvali bo'yicha).");
   },
   focus(form) {
     const fd = new FormData(form), b = recs[str(fd.get("b"))];
@@ -3342,14 +4181,16 @@ const forms = {
   cfg(form) {
     const fd = new FormData(form);
     const num = (k, lo, hi) => Math.max(lo, Math.min(hi, int(fd.get(k)) || CFG0[k]));
-    put({ ...cfg(), id: "cfg", k: "c", algo: ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder", cue: str(fd.get("cue")).trim(), eb: num("eb", 100, 300), im: num("im", 50, 300), mx: num("mx", 7, 3650), dg: num("dg", 10, 2000) });
+    put({ ...cfg(), id: "cfg", k: "c", algo: ["smart", "sm2", "recall", "fsrs", "free", "ladder"].includes(fd.get("algo")) ? fd.get("algo") : "smart", cue: str(fd.get("cue")).trim(), eb: num("eb", 100, 300), im: num("im", 50, 300), mx: num("mx", 7, 3650) });
     closeSheet(); toast("Sozlamalar saqlandi.");
   },
   cap(form) {
     const fd = new FormData(form), b = recs[fd.get("b")];
     if (!b || b.del) return fail(form, "Manbani tanlang.");
-    const text = str(fd.get("text")).trim(), amt = str(fd.get("amt")).trim(), mins = Math.max(0, int(fd.get("min"))), unit = KINDS[b.kind].unit || "";
+    const text = str(fd.get("text")).trim(), amt = str(fd.get("amt")).trim(), lineStr = str(fd.get("line")).trim(), mins = Math.max(0, int(fd.get("min"))), unit = KINDS[b.kind].unit || "";
+    const kind = ["recall", "quote", "gist", "cloze"].includes(fd.get("kind")) ? fd.get("kind") : "recall";
     if (!text && !amt && !mins) return fail(form, "Nimani o'rganganingizni yozing yoki qancha o'qiganingizni kiriting.");
+    if (kind === "cloze" && text && !/\[\[.+?\]\]/.test(text)) return fail(form, "Bo'shliqli matnda yashiriladigan so'zni [[ ]] ichiga oling.");
     let from = 0, to = 0, qty = 0;
     if (amt && unit) {
       const m = /^(\d{1,5})\s*(?:[-–—]\s*(\d{1,5}))?$/.exec(amt.replace(/\s*(bet|dars|daqiqa|daq)\.?$/i, ""));
@@ -3359,16 +4200,19 @@ const forms = {
       else { qty = +m[1]; from = (b.cur || 0) + 1; to = (b.cur || 0) + qty; }
       if (b.pages && to > b.pages) return fail(form, `Bu manbaning hajmi ${b.pages} ${UNITS[unit].one}. Raqamni tekshiring.`);
     }
+    const [lf, lt] = parseRangeInput(lineStr);
     const now = Date.now(), out = [], U = UNITS[unit];
     const range = U && from ? (to !== from ? `${from}–${to}-${U.many}` : `${from}-${U.one}`) : "";
-    if (text) out.push({ id: uid(), k: "i", b: b.id, t: "recall", q: "", a: text, r: range || `${fmtDate(today())}dagi o'rganish`, f: from, e: to, c: now, s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [] });
-    if (qty || mins) out.push({ id: uid(), k: "s", b: b.id, day: today(), qty, unit, min: mins, from, to, c: now + 1 });
+    const lrange = lf ? (lt !== lf ? `${lf}–${lt}-qatorlar` : `${lf}-qator`) : "";
+    const fullRef = [range, lrange].filter(Boolean).join(" · ") || `${fmtDate(today())}dagi o'rganish`;
+    const imgs = pendImgs.slice(); pendImgs = [];
+    if (text) out.push({ id: uid(), k: "i", b: b.id, t: kind, q: "", a: text, r: fullRef, f: from, e: to, lf, lt, ef: 2.5, rep: 0, ivl: 1, imgs, c: now, s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [] });
+    if (qty || mins) out.push({ id: uid(), k: "s", b: b.id, day: today(), qty, unit, min: mins, from, to, lf, lt, c: now + 1 });
     if (unit && unit !== "daqiqa" && to > (b.cur || 0)) out.push({ ...b, cur: to });
     if (unit === "daqiqa" && to > (b.cur || 0)) out.push({ ...b, cur: to });
     try { localStorage.setItem(LASTSRC, b.id); } catch (e) { /* convenience only */ }
     if (rec) rec.stop();
     put(out); closeSheet();
-    popGain((text ? 10 : 0) + sessionX({ unit, qty, min: mins }));
     toast([qty && U ? `+${qty} ${U.one}` : "", mins ? fmtMin(mins) : "", text ? "yozuv ertaga so'raladi" : ""].filter(Boolean).join(" · ") || "Saqlandi.");
     if (b.pages && to >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
@@ -3392,7 +4236,7 @@ const forms = {
     if (!rows.length) return fail(form, "Kartochka topilmadi. Har qatorda savol va javobni « — » bilan ajrating.");
     const now = Date.now(), due = addDays(today(), LADDER[0]), out = [];
     rows.forEach(([q, a], k) => { out.push({ id: uid(), k: "i", b: b.id, t: "card", q, a, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [] }); if (two) out.push({ id: uid(), k: "i", b: b.id, t: "card", q: a, a: q, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [], rev: 1 }); });
-    put(out); closeSheet(); popGain(rows.length * 10); toast(`${rows.length} ta kartochka qo'shildi. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
+    put(out); closeSheet(); toast(`${rows.length} ta kartochka qo'shildi. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
   },
   async auth(form) {
     const fd = new FormData(form), reg = form.dataset.m === "reg", btn = form.querySelector("button[type=submit]");
@@ -3485,7 +4329,21 @@ document.addEventListener("change", async e => { const t = e.target;
     return;
   }
   if (t.id === "tts") { try { localStorage.setItem(TTS, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) say("Me'mori"); return; }
-  if (t.id === "haptic") { try { localStorage.setItem(HAPTIC, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) buzz(15); return; } if (t.dataset && t.dataset.att && t.files && t.files.length) { const f = [...t.files]; t.value = ""; addAttachments(f, t.dataset.att); } });
+  if (t.id === "haptic") { try { localStorage.setItem(HAPTIC, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) buzz(15); return; } if (t.dataset && t.dataset.rtImg && t.files && t.files[0]) { const f = t.files[0], o = t.dataset.owner; t.value = ""; attachInlineScreenshot(f, o); return; }
+  if (t.dataset && t.dataset.att && t.files && t.files.length) { const f = [...t.files]; t.value = ""; addAttachments(f, t.dataset.att); } });
+document.addEventListener("paste", e => {
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  for (const it of items) if (it.type && it.type.startsWith("image/")) {
+    const file = it.getAsFile();
+    if (file) { e.preventDefault(); const form = e.target.closest && e.target.closest("form"); attachInlineScreenshot(file, form && form.dataset.form === "item" && form.dataset.id ? form.dataset.id : form && form.dataset.form === "cap" ? "cap" : "rd"); }
+  }
+});
+// Daily automatic Telegram backup check (JSON + Word + PDF)
+setTimeout(() => {
+  const c = getTgCfg(), day = today();
+  if (c.auto !== false && c.token && c.chatId && c.lastDay !== day && items().length) sendTelegramAllBackups(true);
+}, 4000);
 $("#review").addEventListener("close", () => { lock(); render(); });
 $("#onb").addEventListener("close", lock);
 $("#study").addEventListener("close", () => { st = null; lock(); render(); });
