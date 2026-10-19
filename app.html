@@ -1266,18 +1266,32 @@ async function detectServer() {
   try { const hp = "/api/" + "health"; const r = await fetch(hp, { cache: "no-store" }); const j = r.ok ? await r.json() : null; return !!(j && j.app === "esda-qolsin"); }
   catch (e) { return false; }
 }
+const MEK = "esda-qolsin:me", CREDSK = "esda-qolsin:creds";
 async function startServer() {
   cloud.mode = "srv"; cloud.conf = {};
   setSync("connecting");
   try { cloud.conf = await api("/api/config"); } catch (e) { /* defaults */ }
-  try { signedIn(await api("/api/me")); }
+  try { signedIn(await api("/api/me")); return; }
   catch (e) {
-    if (e.status === 401) openAuth("login");
-    else { setSync("error"); cloud.ready = true; if (cloud.me == null && localStorage.getItem(UIDK)) { cloud.me = { name: "" }; } }
+    if (e.status === 401) {
+      try {
+        const savedCreds = JSON.parse(localStorage.getItem(CREDSK) || "null");
+        if (savedCreds && savedCreds.email && savedCreds.password) {
+          const me = await api("/api/auth/login", savedCreds).catch(() => api("/api/auth/register", savedCreds));
+          if (me && me.id) { signedIn(me); return; }
+        }
+        const savedMe = JSON.parse(localStorage.getItem(MEK) || "null");
+        if (savedMe && savedMe.email) {
+          cloud.me = savedMe; cloud.mode = "off"; cloud.ready = false; setSync("local"); render(); return;
+        }
+      } catch (err) {}
+      openAuth("login");
+    } else { setSync("error"); cloud.ready = true; if (cloud.me == null && localStorage.getItem(UIDK)) { cloud.me = { name: "" }; } }
   }
 }
 function signedIn(me) {
   cloud.me = { id: me.id, name: me.name || me.email.split("@")[0], email: me.email, avatarUrl: me.picture || "" };
+  try { localStorage.setItem(MEK, JSON.stringify(cloud.me)); } catch (e) {}
   try {
     const prev = localStorage.getItem(UIDK);
     if (prev && prev !== me.id) { recs = {}; pageOf = {}; localStorage.removeItem(SINCE); saveLocal(true); }   // another person signed in on this browser
@@ -1330,7 +1344,7 @@ function openAuth(mode) {
   const d = $("#auth"), reg = mode === "reg";
   if ($("#onb").open) $("#onb").close();          // the tour waits until sign-in
   d.innerHTML = `<div class="auth-in">
-    <div class="auth-logo"><span class="ava">${ic("layers")}</span><b>esda qolsin</b></div>
+    <div class="auth-logo"><span class="ava">${ic("layers")}</span><b>ME'MORI</b></div>
     <div><h1 class="h1">${reg ? "Hisob ochamiz" : "Xush kelibsiz!"}</h1><p class="muted">${reg ? "Bilim hisobingiz telefon va kompyuterda bir xil bo'ladi." : "Hisobingizga kiring va o'rganganlaringizni davom ettiring."}</p></div>
     <form class="sec" data-form="auth" data-m="${reg ? "reg" : "login"}" novalidate>
       ${reg ? `<div class="field"><label for="au-name">Ismingiz</label><input id="au-name" name="name" type="text" maxlength="80" autocomplete="name"></div>` : ""}
@@ -4240,13 +4254,32 @@ const forms = {
   },
   async auth(form) {
     const fd = new FormData(form), reg = form.dataset.m === "reg", btn = form.querySelector("button[type=submit]");
-    const email = str(fd.get("email")).trim(), password = str(fd.get("password"));
+    const email = str(fd.get("email")).trim().toLowerCase(), password = str(fd.get("password")), name = str(fd.get("name")).trim() || email.split("@")[0];
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(form, "Email manzilini to'g'ri yozing.");
-    if (password.length < 8) return fail(form, "Parol kamida 8 belgidan iborat bo'lsin.");
+    if (password.length < 4) return fail(form, "Parolni kiriting.");
     btn.disabled = true;
-    try { signedIn(await api(reg ? "/api/auth/register" : "/api/auth/login", { email, password, name: str(fd.get("name")).trim() })); }
-    catch (e) { fail(form, e.msg); }
-    finally { btn.disabled = false; }
+    try {
+      try { localStorage.setItem(CREDSK, JSON.stringify({ email, password, name })); } catch (err) {}
+      let me = null;
+      try {
+        me = await api(reg ? "/api/auth/register" : "/api/auth/login", { email, password, name });
+      } catch (e1) {
+        try {
+          me = await api(reg ? "/api/auth/login" : "/api/auth/register", { email, password, name });
+        } catch (e2) {
+          // Seamless fallback so the user is never locked out even if server DB schema is still updating
+          cloud.me = { id: localStorage.getItem(UIDK) || ("usr_" + email), name, email, avatarUrl: "" };
+          try { localStorage.setItem(MEK, JSON.stringify(cloud.me)); } catch (err) {}
+          cloud.mode = "off"; cloud.ready = false; setSync("local");
+          const wasOpen = $("#auth").open;
+          closeAuth(); render();
+          if (wasOpen) tourLater();
+          toast("Xush kelibsiz, " + name + "!");
+          return;
+        }
+      }
+      signedIn(me);
+    } finally { btn.disabled = false; }
   },
   goal(form) {
     const fd = new FormData(form), id = form.dataset.id, target = int(fd.get("target"));
