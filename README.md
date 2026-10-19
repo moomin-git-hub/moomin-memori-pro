@@ -14,6 +14,8 @@ Hisob birligi **XOTIR**. Hisob ilovasida pul so'mda, Vaqt Banki'da vaqt soatda o
 | +50 | tugatilgan manba |
 | −5 | har «Unutdim» |
 
+Unvonlar umr bo'yi to'plangan XOTIR'ga qarab beriladi: Boshlovchi (0), Havaskor (250), Izlanuvchi (1 000), Talaba (3 000), Bilimdon (7 500), Ustoz (15 000), Olim (30 000), Alloma (60 000). Kunlik maqsad (asli 50 XOTIR) Sozlamalarda o'zgartiriladi.
+
 - **Server:** Node.js + Express, `server.js`
 - **Baza:** PostgreSQL (Neon)
 - **Hosting:** Render (bepul tarif)
