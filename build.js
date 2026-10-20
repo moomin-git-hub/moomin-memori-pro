@@ -15,8 +15,8 @@ const head = `<!doctype html>
 <meta name="theme-color" content="#05060f">
 <meta name="description" content="O'rgangan va bilganlaringiz hisobi: kitob, kurs, video va tilni uzoq xotirada saqlash.">
 <link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/icon-192.png?v=2">
+<link rel="apple-touch-icon" href="/icon-192.png?v=2">
 <style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>try{if(localStorage.getItem("esda-qolsin:skin")!=="light")document.documentElement.dataset.skin="dark";else document.documentElement.dataset.skin="light"}catch(e){}</script>
 </head>
