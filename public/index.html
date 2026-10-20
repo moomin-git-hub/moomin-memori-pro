@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="uz">
+<html lang="uz" data-skin="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#05060f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ME'MORI">
-<meta name="description" content="Kitob, kurs, video va darsdan o'rganganingizni uzoq xotirada saqlash ilovasi.">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="description" content="O'rgangan va bilganlaringiz hisobi: kitob, kurs, video va tilni uzoq xotirada saqlash.">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/icon-192.png">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>try{if(localStorage.getItem("esda-qolsin:skin")!=="light")document.documentElement.dataset.skin="dark";else document.documentElement.dataset.skin="light"}catch(e){}</script>
+</head>
+<body>
 <title>ME'MORI</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Urbanist:wght@500..800&display=swap">
 <style>
@@ -74,7 +75,7 @@ svg{width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:1.
 .ibtn svg{width:1.25rem;height:1.25rem}
 .ibtn:active{transform:scale(.94)}
 
-.nav{position:fixed;left:.75rem;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:20;max-width:34rem;margin-inline:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.125rem;padding:.375rem;border-radius:28px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.nav{position:fixed;left:.75rem;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:20;max-width:34rem;margin-inline:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.125rem;padding:.375rem;border-radius:28px;background:var(--nav);border:1px solid var(--line);box-shadow:var(--shadow);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .nav button{position:relative;display:grid;justify-items:center;gap:.125rem;padding:.5rem .125rem .4375rem;border:0;border-radius:22px;background:none;color:var(--mute);font:600 .6875rem/1.15 var(--ui);min-width:0}
 .nav button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .nav button[aria-current="page"]{color:var(--pri-hi);background:var(--card2)}
@@ -386,14 +387,6 @@ dialog.onb{width:100%;height:100%;margin:0;overflow:auto;background:linear-gradi
 .att small{font-size:.625rem;color:var(--mute)}
 .att-x{position:absolute;top:.25rem;right:.25rem;width:1.75rem;height:1.75rem;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(5,6,15,.72);color:#fff}
 .att-x svg{width:.875rem;height:.875rem}
-.att-btn{display:grid;gap:.25rem;align-content:center;justify-items:center;text-align:center;aspect-ratio:1;width:100%;max-width:100%;border-radius:14px;overflow:hidden;background:var(--bg2);border:1px solid var(--line);color:var(--text);text-decoration:none;padding:.5rem;cursor:pointer}
-.att.img .att-btn{padding:0}
-.att-btn img{width:100%;height:100%;object-fit:cover;display:block}
-.att-btn.broken{padding:.5rem;border-style:dashed;border-color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--bg2))}
-.att-btn.broken img{display:none}
-.att-broken-msg{display:none;gap:.2rem;justify-items:center;text-align:center;font:700 .65rem/1.2 var(--ui);color:var(--warn)}
-.att-btn.broken .att-broken-msg{display:grid}
-.att-view-img{display:block;max-width:100%;max-height:65vh;margin-inline:auto;border-radius:16px;border:1px solid var(--line);background:var(--bg2);object-fit:contain}
 .tag svg{width:.8125rem;height:.8125rem}
 dialog.auth{width:100%;height:100%;margin:0;overflow:auto;color:#f4f6ff;background:radial-gradient(90% 60% at 80% 0%,rgba(52,214,196,.35),transparent 60%),radial-gradient(90% 70% at 10% 15%,#1d2f9e 0%,#0b1033 55%,#05060f 100%)}
 dialog.auth::backdrop{background:#05060f}
@@ -692,7 +685,82 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 .yr.life .yr-h span b{font-size:1.25rem;color:var(--text)}
 .start{display:grid;gap:.75rem}
 .btn-big svg{width:1.25rem;height:1.25rem}
-.toast{position:fixed;left:50%;bottom:calc(6rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
+
+.bal{display:grid;gap:.875rem}
+.bal-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem;align-items:center}
+.bal-main{display:grid;justify-items:start;gap:.25rem;min-width:0}
+.bal .hero-n{margin:.25rem 0 .375rem}
+.rank-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.375rem .75rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);color:var(--hero-text);font:800 .8125rem var(--ui)}
+.rank-chip svg{width:1rem;height:1rem;color:#ffd166;fill:#ffd166}
+.rank-bar{display:grid;gap:.375rem}
+.rank-bar .bar{height:6px;background:rgba(255,255,255,.2)}
+.rank-bar .bar i{background:linear-gradient(90deg,#ffd166,#ff9f43)}
+.rank-bar small{font-size:.75rem;color:var(--hero-mute)}
+.gring{position:relative;width:6.5rem;height:6.5rem;flex:none}
+.gring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gring circle{fill:none;stroke-width:9}
+.gring .t{stroke:rgba(255,255,255,.18)}
+.gring .v{stroke:#7cf3c8;stroke-linecap:round;transition:stroke-dashoffset 1s cubic-bezier(.2,.7,.2,1)}
+.gring.done .v{stroke:#ffd166}
+.gring span{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;line-height:1.1}
+.gring b{font:800 1.125rem var(--display);color:var(--hero-text)}
+.gring b svg{width:1.75rem;height:1.75rem;color:#ffd166;stroke-width:3}
+.gring small{font-size:.625rem;color:var(--hero-mute);max-width:4.5rem}
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:.625rem}
+.cta .btn-big{min-height:3.5rem;font-size:1rem;gap:.5rem}
+.cta .btn-big svg{width:1.25rem;height:1.25rem}
+.cta-done{display:flex;align-items:center;gap:.625rem;padding:.5rem .875rem;border-radius:20px;background:color-mix(in srgb,#2fd08f 12%,var(--card));border:1px solid color-mix(in srgb,#2fd08f 35%,var(--line))}
+.cta-done>svg{width:1.5rem;height:1.5rem;color:#2fd08f;flex:none;stroke-width:3}
+.cta-done span{display:grid;line-height:1.2}
+.cta-done b{font:800 .9375rem var(--display)}
+.cta-done small{font-size:.75rem;color:var(--mute)}
+.uline{display:flex;flex-wrap:wrap;gap:.375rem .875rem;padding:.75rem 1rem;border-radius:18px;background:var(--card);border:1px solid var(--line);font-size:.8125rem;color:var(--mute)}
+.uline span{display:inline-flex;align-items:center;gap:.375rem}
+.uline svg{width:1rem;height:1rem;color:var(--pri-hi)}
+.uline b{color:var(--text)}
+.day-h .up{color:#2fd08f;font-weight:800}
+.ledger-list{display:grid;border-radius:20px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.lrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;padding:.75rem 1rem;background:none;border:0;border-top:1px solid var(--line);color:var(--text);text-align:left;width:100%}
+.lrow:first-child{border-top:0}
+.lrow:active{background:var(--chip)}
+.lrow .tile{width:2.5rem;height:2.5rem;border-radius:13px}
+.lrow-t{display:grid;gap:.125rem;min-width:0}
+.lrow-t b{font:700 .9375rem/1.3 var(--ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow-t small{font-size:.75rem;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow-x{display:grid;justify-items:end;font:800 1rem var(--display);color:#2fd08f;line-height:1.1}
+.lrow-x small{font:700 .625rem var(--ui);color:var(--mute)}
+.notice{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap}
+.notice>svg{width:1.125rem;height:1.125rem;flex:none}
+.notice span{flex:1;min-width:10rem}
+.gain{position:fixed;left:50%;top:38%;z-index:60;transform:translate(-50%,0);font:800 2rem var(--display);color:#2fd08f;text-shadow:0 6px 24px rgba(47,208,143,.45);pointer-events:none;animation:gain 1.6s cubic-bezier(.2,.8,.2,1) forwards;white-space:nowrap}
+.gain.neg{color:#ff6f7d;text-shadow:0 6px 24px rgba(255,111,125,.4)}
+@keyframes gain{0%{opacity:0;transform:translate(-50%,20px) scale(.6)}18%{opacity:1;transform:translate(-50%,0) scale(1.08)}30%{transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-90px) scale(1)}}
+@media (prefers-reduced-motion:reduce){.gain{animation:none;opacity:0}}
+.rv-gain{font-size:1rem;color:var(--mute)}
+.rv-gain b{font:800 2.5rem var(--display);margin-right:.25rem}
+.rv-gain .up{color:#2fd08f}.rv-gain .down{color:#ff6f7d}
+.ranks{display:grid;gap:.5rem}
+.rk{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;padding:.75rem 1rem;border-radius:18px;background:var(--card);border:1px solid var(--line);opacity:.6}
+.rk.got,.rk.cur{opacity:1}
+.rk.cur{border-color:#ffd166;background:color-mix(in srgb,#ffd166 10%,var(--card))}
+.rk-n{width:2.25rem;height:2.25rem;border-radius:12px;display:grid;place-items:center;background:var(--chip);font:800 1rem var(--display)}
+.rk.cur .rk-n,.rk.got .rk-n{background:linear-gradient(135deg,#ffd166,#ff9f43);color:#3a2300}
+.rk span:nth-child(2){display:grid}
+.rk small{font-size:.75rem;color:var(--mute)}
+.rk>svg{width:1.25rem;height:1.25rem;color:#2fd08f}
+.rk em{font-style:normal;font-size:.75rem;font-weight:800;color:#e0a800}
+.xchart svg{width:100%;height:auto;display:block}
+.xchart .kp{fill:#2fd08f}.xchart .kn{fill:#ff6f7d}
+.xchart .axis{stroke:var(--line);stroke-width:1}
+.xchart text{font:600 8px var(--ui);fill:var(--mute);text-anchor:middle}
+.xchart .up{color:#2fd08f}.xchart .down{color:#ff6f7d}
+.lib{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;width:100%;text-align:left;color:var(--text)}
+.lib span:nth-child(2){display:grid;gap:.125rem}
+.lib small{color:var(--mute);font-size:.8125rem}
+.lib>svg{width:1.125rem;height:1.125rem;color:var(--mute)}
+[data-skin=light] .rank-chip{border-color:rgba(255,255,255,.5)}
+@media (max-width:23rem){.gring{width:5.5rem;height:5.5rem}.cta .btn-big{font-size:.9375rem}}
+.toast{position:fixed;left:50%;top:calc(.75rem + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
 
 @media (min-width:48rem){
   .shell{padding-block:0 8rem}
@@ -711,8 +779,6 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-</head>
-<body>
 
 <div class="shell">
   <header class="top" id="top">
@@ -732,7 +798,6 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 
   <button type="button" data-act="tab" data-tab="shelf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 4v15.5M10 4v15.5M14.2 5.2l4 14.3M3 20h18"/></svg><span>Manbalar</span></button>
   <button type="button" data-act="tab" data-tab="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-6M10 20V8M15 20v-9M20 20V5M3 20h18"/></svg><span>Tahlil</span></button>
-  <button type="button" data-act="tab" data-tab="methods"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span>Usullar</span></button>
   <button type="button" data-act="tab" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Sozlamalar</span></button>
 </nav>
 <button type="button" class="fab" data-act="quick" aria-label="O'rganganimni yozish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -882,7 +947,7 @@ const books = () => all().filter(r => r.k === "b" && !r.del).sort((a, b) => (b.c
 const items = () => all().filter(r => r.k === "i" && !r.del && recs[r.b] && !recs[r.b].del);
 const itemsOf = id => items().filter(i => i.b === id).sort((a, b) => (a.c || 0) - (b.c || 0));
 const dueItems = day => items().filter(i => (free() || i.d <= day) && !i.off).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : (a.c || 0) - (b.c || 0));
-const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000 };
+const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 50 };
 const cfg = () => ({ ...CFG0, ...(recs.cfg && !recs.cfg.del ? recs.cfg : {}) });
 const free = () => cfg().algo === "free";
 // The scheduler in use, plus what the learner said about confidence before seeing the answer.
@@ -1292,48 +1357,35 @@ const MB = 1048576;
 const canAttach = () => (cloud.mode === "srv" && cloud.me && cloud.me.id) || !!cloud.assets;
 const maxAtt = () => cloud.mode === "srv" ? ((cloud.conf && cloud.conf.maxFileMb) || 10) * MB : 20 * MB;
 const attAccept = () => cloud.mode === "srv" ? "image/*,application/pdf,audio/*,video/mp4,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.md,.csv,.zip" : "image/*,video/*,application/pdf,.txt,.md,.csv,.json";
-const attUrl = a => (a && a.data) ? a.data : (a && a.src === "a" ? "/_blob/" + encodeURIComponent(a.id) : "/api/files/" + encodeURIComponent(a ? a.id : ""));
+const attUrl = a => a.src === "a" ? "/_blob/" + encodeURIComponent(a.id) : "/api/files/" + encodeURIComponent(a.id);
 const mbText = n => n >= MB ? `${(n / MB).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`;
 let pend = [];
-// Photos from a phone camera are large: shrink them to 1400 px JPEG before upload so they also fit inline in records JSONB.
+// Photos from a phone camera are large: shrink them to 1600 px JPEG before upload.
 async function shrink(file) {
-  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || typeof createImageBitmap !== "function") return file;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size < 350 * 1024 || typeof createImageBitmap !== "function") return file;
   try {
-    const bmp = await createImageBitmap(file), k = Math.min(1, 1400 / Math.max(bmp.width, bmp.height));
+    const bmp = await createImageBitmap(file), k = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
     const c = document.createElement("canvas");
-    c.width = Math.max(1, Math.round(bmp.width * k)); c.height = Math.max(1, Math.round(bmp.height * k));
+    c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
     c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
-    const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.80));
+    const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.82));
     return blob && blob.size < file.size ? new File([blob], file.name.replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" }) : file;
   } catch (e) { return file; }
 }
-function fileToDataUrl(file) {
-  return new Promise(resolve => {
-    if (!file || file.size > 4 * MB) return resolve("");
-    const r = new FileReader();
-    r.onload = () => resolve(typeof r.result === "string" ? r.result : "");
-    r.onerror = () => resolve("");
-    r.readAsDataURL(file);
-  });
-}
 async function uploadFile(file, name) {
-  const inlineData = await fileToDataUrl(file);
   if (cloud.mode === "srv") {
     const fd = new FormData(); fd.append("name", name); fd.append("file", file, name);
-    try {
-      const r = await fetch("/api/files", { method: "POST", body: fd, credentials: "same-origin" });
-      const j = await r.json().catch(() => null);
-      if (r.ok && j && j.id) return { id: j.id, name, type: j.type || file.type, size: j.size || file.size, src: "s", data: inlineData };
-    } catch (e) { /* fall back to inline data URL if offline or server upload fails */ }
+    let r;
+    try { r = await fetch("/api/files", { method: "POST", body: fd, credentials: "same-origin" }); } catch (e) { throw { msg: "Internet yoki server bilan aloqa yo'q." }; }
+    const j = await r.json().catch(() => null);
+    if (!r.ok) throw { msg: (j && j.error) || "Fayl yuklanmadi." };
+    return { id: j.id, name, type: j.type, size: j.size, src: "s" };
   }
   if (cloud.assets) {
-    try { const r = await cloud.assets.upload(file); return { id: r.id, name, type: r.contentType || file.type, size: r.sizeBytes || file.size, src: "a", data: inlineData }; }
-    catch (e) { if (!inlineData) throw { msg: e && e.code === "quota_exceeded" ? "Fayllar uchun joy tugadi." : "Bu turdagi fayl qabul qilinmadi yoki yuklanmadi." }; }
+    try { const r = await cloud.assets.upload(file); return { id: r.id, name, type: r.contentType || file.type, size: r.sizeBytes || file.size, src: "a" }; }
+    catch (e) { throw { msg: e && e.code === "quota_exceeded" ? "Fayllar uchun joy tugadi." : "Bu turdagi fayl qabul qilinmadi yoki yuklanmadi." }; }
   }
-  if (inlineData) {
-    return { id: uid(), name, type: file.type || "application/octet-stream", size: file.size || 0, src: "s", data: inlineData };
-  }
-  throw { msg: "Fayl hajmi katta yoki server bilan aloqa yo'q." };
+  throw { msg: "Fayl biriktirish uchun hisobga kiring." };
 }
 function forgetFile(a) {
   if (a.src === "s" && cloud.mode === "srv") fetch("/api/files/" + encodeURIComponent(a.id), { method: "DELETE", credentials: "same-origin" }).catch(() => {});
@@ -1341,18 +1393,15 @@ function forgetFile(a) {
 }
 function attList(list, owner) {
   if (!list || !list.length) return "";
-  return `<div class="atts">${list.map((a, k) => {
-    const isImg = /^image\//.test(a.type) || (a.data && a.data.startsWith("data:image/"));
-    const u = attUrl(a);
-    return `<div class="att${isImg ? " img" : ""}">
-    <button type="button" class="att-btn" data-act="att-open" data-o="${esc(owner || "")}" data-id="${esc(a.id)}" data-k="${k}">${isImg ? `<img src="${esc(u)}" alt="${esc(a.name)}" loading="lazy" onerror="this.closest('.att-btn').classList.add('broken')"><span class="att-broken-msg">${ic("clip")}<span>Rasmni tiklash</span></span>` : `${ic("doc")}<span>${esc(a.name)}</span><small>${mbText(a.size)}</small>`}</button>
-    ${owner ? `<button type="button" class="att-x" data-act="att-del" data-o="${esc(owner)}" data-k="${k}" aria-label="${esc(a.name)} faylini olib tashlash">${ICON.close}</button>` : ""}</div>`;
-  }).join("")}</div>`;
+  return `<div class="atts">${list.map((a, k) => `<div class="att${/^image\//.test(a.type) ? " img" : ""}">
+    <a href="${attUrl(a)}" target="_blank" rel="noopener">${/^image\//.test(a.type) ? `<img src="${attUrl(a)}" alt="${esc(a.name)}" loading="lazy">` : `${ic("doc")}<span>${esc(a.name)}</span><small>${mbText(a.size)}</small>`}</a>
+    ${owner ? `<button type="button" class="att-x" data-act="att-del" data-o="${esc(owner)}" data-k="${k}" aria-label="${esc(a.name)} faylini olib tashlash">${ICON.close}</button>` : ""}</div>`).join("")}</div>`;
 }
 function attField(owner, list) {
+  if (!canAttach()) return cloud.mode === "srv" || cloud.inViewer ? "" : `<p class="small muted">Rasm va fayl biriktirish uchun ilovani o'z saytidan oching va hisobga kiring.</p>`;
   return `<div class="sec att-field"><p class="eyebrow">Rasm va fayllar</p><div id="atts-${esc(owner)}">${attList(list, owner)}</div>
     <div class="acts"><label class="btn btn-sm" for="file-${esc(owner)}">${ic("clip")}Rasm yoki fayl biriktirish</label><input class="vh" id="file-${esc(owner)}" type="file" multiple accept="${attAccept()}" data-att="${esc(owner)}"></div>
-    <p class="small muted" id="att-st-${esc(owner)}" aria-live="polite">Darslik sahifasi, slayd, doska rasmi, PDF yoki audio. Rasmlar bazada doimiy saqlanadi (404 bo'lmaydi).</p></div>`;
+    <p class="small muted" id="att-st-${esc(owner)}" aria-live="polite">Darslik sahifasi, slayd, doska rasmi, PDF yoki audio. Har biri ${mbText(maxAtt())} gacha.</p></div>`;
 }
 const attsOf = owner => owner === "rd" ? pend : ((recs[owner] && recs[owner].att) || []);
 async function addAttachments(files, owner) {
@@ -1397,7 +1446,7 @@ function demoNote() {
   const ds = books().filter(x => x.demo);
   if (!ds.length) return "";
   const names = ds.map(b => `«${esc(b.title)}»`).join(" va ");
-  return `<p class="notice">${names} namuna sifatida qo'yilgan, undagi yozuvlar sizniki emas. Takrorlashni sinab ko'rib, o'chirib yuboring. Barcha usullar «Usullar» bo'limida. <button type="button" class="link" data-act="demo-del">Namunani o'chirish</button></p>`;
+  return `<p class="notice">${ic("spark")}<span>${names} — namuna. Sinab ko'rib, o'chirib yuboring.</span> <button type="button" class="link" data-act="demo-del">O'chirish</button></p>`;
 }
 
 /* ── icons ── */
@@ -1432,6 +1481,7 @@ const IC = {
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   sound: '<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
   pen: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   cards: '<rect x="3" y="6" width="14" height="12" rx="2.5"/><path d="M7 3h11a3 3 0 0 1 3 3v9"/>',
   learn: '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/><circle cx="12" cy="12" r="2"/>',
   test: '<path d="M7 3h7l5 5v13H7z"/><path d="M10 13l2 2 4-4"/>',
@@ -1501,6 +1551,35 @@ function xotir(t) {
   const kirim = t.notes * 10 + t.bet + t.dars * 10 + Math.floor(t.min / 10) * 2 + t.good * 3 + t.easy * 4 + t.hard + t.done * 50, chiqim = t.forgot * LOSS;
   return { kirim, chiqim, net: kirim - chiqim };
 }
+const RANKS = [[0, "Boshlovchi"], [250, "Havaskor"], [1000, "Izlanuvchi"], [3000, "Talaba"], [7500, "Bilimdon"], [15000, "Ustoz"], [30000, "Olim"], [60000, "Alloma"]];
+function rankOf(x) {
+  let k = 0; while (k + 1 < RANKS.length && x >= RANKS[k + 1][0]) k++;
+  const [lo, name] = RANKS[k], nx = RANKS[k + 1];
+  return { k, name, next: nx ? nx[0] : 0, nextName: nx ? nx[1] : "", pct: nx ? Math.max(2, Math.round((x - lo) / (nx[0] - lo) * 100)) : 100 };
+}
+function goalRing(v, goal) {
+  const C = 2 * Math.PI * 42, k = Math.min(1, v / goal), done = v >= goal;
+  return `<div class="gring${done ? " done" : ""}" role="img" aria-label="Bugun ${v} / ${goal} XOTIR"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="42"/><circle class="v" cx="50" cy="50" r="42" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - k)).toFixed(1)}"/></svg><span><b>+${nf(v)}</b><small>${done ? "✓ maqsad" : "/ " + goal + " bugun"}</small></span></div>`;
+}
+// One line of the ledger: a note (+10) or a study session (pages, lessons, minutes).
+const sessionX = x => (x.unit === "bet" ? x.qty : x.unit === "dars" ? x.qty * 10 : 0) + Math.floor((x.min || (x.unit === "daqiqa" ? x.qty : 0)) / 10) * 2;
+function ledgerRows(list, day) {
+  const by = [];
+  for (const e of list) { const d = e.k === "s" ? e.day : dayOf(e.c), g = by[by.length - 1]; if (g && g[0] === d) g[1].push(e); else by.push([d, [e]]); }
+  return by.map(([d, es]) => `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b><span class="up">+${nf(es.reduce((n, e) => n + (e.k === "s" ? sessionX(e) : 10), 0))} XOTIR</span></div>
+    <div class="ledger-list">${es.map(e => { const b = recs[e.b], [icn, col] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa;
+      if (e.k === "s") { const U = UNITS[e.unit]; return `<button type="button" class="lrow" data-act="book" data-id="${esc(b.id)}"><span class="tile c-${col}">${ic(e.min && !e.qty ? "clock" : icn)}</span><span class="lrow-t"><b>${esc(b.title)}</b><small>${[e.qty && U ? `${e.qty} ${U.one}${e.from && e.to ? ` (${e.from}–${e.to})` : ""}` : "", e.min ? fmtMin(e.min) : "", e.via || ""].filter(Boolean).join(" · ")}</small></span><span class="lrow-x">+${sessionX(e)}<small>XOTIR</small></span></button>`; }
+      return `<button type="button" class="lrow" data-act="item" data-id="${esc(e.id)}"><span class="tile c-${TYPE_COLOR[e.t] || "blue"}">${ic(e.t === "card" ? "cards" : e.t === "quote" ? "feather" : "pen")}</span><span class="lrow-t"><b>${esc(itemText(e).slice(0, 90))}</b><small>${esc(b.title)} · ${TYPES[e.t]}</small></span><span class="lrow-x">+10<small>XOTIR</small></span></button>`; }).join("")}</div>`).join("");
+}
+function popGain(n) {
+  if (!n) return;
+  const el = document.createElement("div");
+  el.className = "gain" + (n < 0 ? " neg" : ""); el.textContent = `${n > 0 ? "+" : "−"}${nf(Math.abs(n))} XOTIR`;
+  el.setAttribute("aria-hidden", "true");
+  document.body.appendChild(el); buzz(n > 0 ? [12, 40, 12] : 30);
+  setTimeout(() => el.remove(), 1700);
+}
+const todayX = () => { const d = today(); return xotir(tally(x => x === d)).kirim; };
 const xt = n => `${n < 0 ? "−" : ""}${nf(Math.abs(n))}`;
 const fmtMin = m => m < 60 ? `${m} daqiqa` : `${Math.floor(m / 60)} soat${m % 60 ? ` ${m % 60} daq` : ""}`;
 const nf = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -1638,7 +1717,7 @@ function memories(day) {
     <h2 class="h2">Xotiralar</h2>
     ${head ? `<div class="mem"><p class="eyebrow">${ic("cal")}${head}</p><div class="rows">${list.slice(0, 3).map(i => itemRow(i, day, true)).join("")}</div></div>` : ""}
     ${pick ? `<div class="card mem-pick"><p class="eyebrow">${ic("spark")}Kunning yozuvi · ${fmtDate(dayOf(pick.c))} · ${esc(recs[pick.b].title)}</p>
-      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" ? pick.q : TYPES[pick.t] + (pick.r ? " · " + pick.r : ""))}</p>
+      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" ? pick.q : pick.t === "cloze" ? clozePlain(pick.a) : `${pick.r ? pick.r + ": " : ""}${cueOf(pick)}`)}</p>
       <details><summary>Eslab ko'ring, keyin oching</summary><p class="mem-a">${esc(pick.t === "cloze" ? pick.a.replace(CLOZE, "$1") : pick.a)}</p></details>
       <div class="acts"><button type="button" class="btn btn-sm" data-act="pick-next">Boshqasi</button><button type="button" class="btn btn-sm" data-act="item" data-id="${esc(pick.id)}">Ochish</button></div></div>` : ""}
   </section>`;
@@ -1658,48 +1737,63 @@ function viewToday(day, due) {
   const bs = books();
   if (!bs.length) return intro();
   const all_ = items(), its = all_.filter(i => !i.off), streak = streakNow(), learned = all_.filter(i => !i.rev).length;
-  const life = xotir(lifeTally()), pt = tally(d => inPer(d, ui.per || monthOf(day))), px = xotir(pt);
-  const first = all_.reduce((m, i) => Math.min(m, i.c || Infinity), Infinity);
-  const since = isFinite(first) ? dayOf(first) : day, lived = diffDays(day, since) + 1;
-  const per = ui.per || monthOf(day), a = activity(per), far = its.filter(i => i.s >= LONG).length;
-  const perName = per === "all" ? "butun davr" : `${MONTHS[+per.slice(5) - 1]} ${per.slice(0, 4)}`;
+  const lt = lifeTally(), life = xotir(lt), r = rankOf(life.net), goal = cfg().dg, got = todayX();
+  const per = ui.per || monthOf(day), pt = tally(d => inPer(d, per)), px = xotir(pt), a = activity(per);
+  const perName = per === "all" ? "Butun davr" : `${MONTHS[+per.slice(5) - 1][0].toUpperCase() + MONTHS[+per.slice(5) - 1].slice(1)}`;
   const doneToday = all_.reduce((n, i) => n + i.h.filter(x => x[0] === day).length, 0);
   const next = its.map(i => i.d).filter(d => d > day).sort()[0];
-  const recent = all_.filter(i => !i.rev).sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 8);
-  const byDay = []; for (const i of recent) { const d = dayOf(i.c), g = byDay[byDay.length - 1]; if (g && g[0] === d) g[1].push(i); else byDay.push([d, [i]]); }
-  const order = [...bs].sort((x, y) => (x.status === "done") - (y.status === "done") || (itemsOf(y.id).slice(-1)[0] || {}).c - (itemsOf(x.id).slice(-1)[0] || {}).c || 0);
-  return `<section class="hero">
-    <p class="hero-lbl">${ic("layers")}${APP()} · xotira balansi</p>
-    <p class="hero-n"><span data-count="${Math.max(0, life.net)}">${xt(life.net)}</span><small>XOTIR</small></p>
-    <p class="hero-sub small">${fmtDate(since)}dan beri ${learned} ta narsa o'rganildi</p>
-    <div class="pills">${unitBits(lifeTally()).slice(0, 3).map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${bs.length} ta manba</span><span class="pill">${ic("flame")}${streak} kun ketma-ket</span></div>
+  const recent = [...all_.filter(i => !i.rev), ...sessions()].sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 6);
+  const order = [...bs].sort((x, y) => (x.status === "done") - (y.status === "done") || ((itemsOf(y.id).slice(-1)[0] || {}).c || 0) - ((itemsOf(x.id).slice(-1)[0] || {}).c || 0));
+  const bits = unitBits(lt).slice(0, 3);
+  return `<section class="hero bal">
+    <div class="bal-top">
+      <div class="bal-main">
+        <p class="hero-lbl">${ic("layers")}Xotira balansi</p>
+        <p class="hero-n"><span data-count="${Math.max(0, life.net)}">${xt(life.net)}</span><small>XOTIR</small></p>
+        <button type="button" class="rank-chip" data-act="rank">${ic("star")}${r.k + 1}-daraja · ${r.name}</button>
+      </div>
+      ${goalRing(got, goal)}
+    </div>
+    ${r.next ? `<div class="rank-bar"><span class="bar"><i data-w="${r.pct}"></i></span><small>«${r.nextName}» unvonigacha ${nf(r.next - life.net)} XOTIR</small></div>` : ""}
+    <div class="pills">${bits.map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${ic("flame")}${streak} kun</span></div>
   </section>
-  ${periodChips("per")}
-  <div class="duo">
-    <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.kirim)}<small> XOTIR</small></b><em>${perName}: ${a.made} ta yangi, ${pt.good + pt.easy + pt.hard} ta eslandi</em></div>
-    <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.chiqim ? "−" + nf(px.chiqim) : "0"}<small> XOTIR</small></b><em>${a.forgot} marta unutildi, ${a.reviews} ta takrordan</em></div>
+  <div class="cta">
+    ${due.length ? `<button type="button" class="btn btn-big" data-act="review" data-m="all">${ic("learn")}Takrorlash · ${due.length}</button>`
+      : `<div class="cta-done">${ic("check")}<span><b>${doneToday ? "Takror bajarildi" : "Takror yo'q"}</b><small>${next ? `keyingisi ${inDays(diffDays(next, day))}` : "yangi narsa o'rganing"}</small></span></div>`}
+    <button type="button" class="btn btn-big ghost" data-act="quick">${ic("plus")}O'rgandim</button>
   </div>
-  ${unitsRow(pt, `<p class="small muted units-empty">Qancha o'qiganingiz va qancha vaqt o'rganganingizni yozsangiz, bu yerda bet, dars va soat bo'lib yig'iladi.</p>`)}
-  <section class="card due-card">
-    <span class="tile c-blue">${ic("learn")}</span>
-    <div class="grow">${due.length ? `<p class="h2">Bugun ${due.length} ta takror</p><p class="small muted">${new Set(due.map(i => i.b)).size} ta manbadan · eslab turmasangiz, hisobdan «unutildi» bo'lib chiqadi</p>`
-      : `<p class="h2">${doneToday ? "Bugungi takror bajarildi" : "Bugun takror yo'q"}</p><p class="small muted">${next ? `Keyingisi ${inDays(diffDays(next, day))}.` : "Yangi narsa o'rgansangiz, shu yerda eslatiladi."}</p>`}</div>
-    ${due.length ? `<button type="button" class="btn btn-gold btn-sm" data-act="review" data-m="all">Takrorlash</button>` : ""}
-  </section>
   ${demoNote()}
   ${focusBand()}
-  ${evening(day)}
-  ${memories(day)}
   <section class="sec">
-    <div class="sec-head"><h2 class="h2">So'nggi o'rganganlarim</h2><button type="button" class="link" data-act="tab" data-tab="journal">Kundalik${ic("arrow")}</button></div>
-    ${byDay.length ? byDay.map(([d, list]) => `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b><span>+${list.length}</span></div><div class="rows">${list.map(i => itemRow(i, day, true)).join("")}</div>`).join("")
-      : `<div class="empty"><p>Hali hech narsa yozilmagan.</p><p class="small muted">Pastdagi + tugmasini bosib, bugun o'rganganingizni yozing.</p></div>`}
+    <div class="sec-head"><h2 class="h2">${perName} hisobi</h2></div>
+    ${periodChips("per")}
+    <div class="duo">
+      <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.kirim)}<small> XOTIR</small></b><em>${a.made} ta yangi, ${pt.good + pt.easy + pt.hard} ta eslandi</em></div>
+      <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.chiqim ? "−" + nf(px.chiqim) : "0"}<small> XOTIR</small></b><em>${a.forgot} marta, ${a.reviews} ta takrordan</em></div>
+    </div>
+    ${unitBits(pt).length ? `<div class="uline">${unitBits(pt).map(([i, v, w]) => `<span>${ic(i)}<b>${v}</b> ${w}</span>`).join("")}</div>` : ""}
   </section>
+  ${evening(day)}
+  <section class="sec">
+    <div class="sec-head"><h2 class="h2">So'nggi amallar</h2><button type="button" class="link" data-act="tab" data-tab="journal">Hammasi${ic("arrow")}</button></div>
+    ${recent.length ? ledgerRows(recent, day) : `<div class="empty"><p>Hali hech narsa yozilmagan.</p><p class="small muted">+ tugmasini bosib, bugun o'rganganingizni yozing.</p></div>`}
+  </section>
+  ${memories(day)}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">Manbalarim</h2><button type="button" class="btn btn-sm" data-act="book-new">${ic("plus")}Yangi</button></div>
     <div class="decks">${order.map(b => deckRow(b, day)).join("")}</div>
   </section>
-  ${goalsSection()}`;
+  ${goals().length ? goalsSection() : ""}`;
+}
+function sheetRank() {
+  const life = xotir(lifeTally()).net, r = rankOf(life);
+  openSheet(`<div class="sheet-body">
+    <h2 class="sheet-h" tabindex="-1" autofocus>Unvonlar</h2>
+    <p class="small muted">Unvon umr bo'yi to'plagan XOTIR balansingizga qarab beriladi. Unutsangiz balans kamayadi, shuning uchun takrorlab turish ham muhim.</p>
+    <div class="ranks">${RANKS.map(([v, n], k) => `<div class="rk${k < r.k ? " got" : k === r.k ? " cur" : ""}"><span class="rk-n">${k + 1}</span><span><b>${n}</b><small>${nf(v)} XOTIR</small></span>${k < r.k ? ic("check") : k === r.k ? `<em>siz shu yerdasiz</em>` : ""}</div>`).join("")}</div>
+    <details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
+      ${RATES.map(([, v, w]) => `<p><b>+${v}</b> ${w}</p>`).join("")}<p><b>−${LOSS}</b> har «Unutdim»</p></div></details>
+  </div>`);
 }
 function srcCard(b, day, go) {
   const its = itemsOf(b.id), due = its.filter(i => i.d <= day && !i.off).length, p = prog(b);
@@ -1879,6 +1973,16 @@ function viewInsights(day) {
     <div class="seg" role="tablist"><button type="button" role="tab" data-act="sub" data-s="stats" aria-selected="${!j}">Statistika</button><button type="button" role="tab" data-act="sub" data-s="journal" aria-selected="${j}">Kundalik</button></div></section>
   ${j ? viewJournal(day) : viewStats(day)}`;
 }
+// The last 14 days of the ledger: earned above the line, forgotten below.
+function xChart(day) {
+  const ds = Array.from({ length: 14 }, (_, k) => addDays(day, k - 13)), v = ds.map(d => xotir(tally(x => x === d)));
+  const max = Math.max(10, ...v.map(x => x.kirim)), neg = Math.max(5, ...v.map(x => x.chiqim)), H = 120, N = 34, base = H * max / (max + neg);
+  const w = 300 / 14, bars = v.map((x, k) => { const hp = x.kirim / (max + neg) * H, hn = x.chiqim / (max + neg) * H, cx = k * w + 3;
+    return `<g><title>${fmtDate(ds[k])}: +${x.kirim} / −${x.chiqim} XOTIR</title>${hp ? `<rect class="kp" x="${cx.toFixed(1)}" y="${(base - hp).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hp.toFixed(1)}" rx="3"/>` : ""}${hn ? `<rect class="kn" x="${cx.toFixed(1)}" y="${(base + 1).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hn.toFixed(1)}" rx="3"/>` : ""}<text x="${(cx + (w - 6) / 2).toFixed(1)}" y="${H + 14}">${parse(ds[k]).getDate()}</text></g>`; }).join("");
+  const sum = v.reduce((a, x) => ({ k: a.k + x.kirim, c: a.c + x.chiqim }), { k: 0, c: 0 });
+  return `<section class="card sec xchart"><div class="sec-head"><h2 class="h2">14 kunlik XOTIR</h2><span class="small"><b class="up">+${nf(sum.k)}</b> <b class="down">−${nf(sum.c)}</b></span></div>
+    <svg viewBox="0 0 300 ${H + 18}" role="img" aria-label="So'nggi 14 kunda +${sum.k} va −${sum.c} XOTIR"><line x1="0" x2="300" y1="${base.toFixed(1)}" y2="${base.toFixed(1)}" class="axis"/>${bars}</svg></section>`;
+}
 function yearsLedger() {
   const ys = new Set();
   for (const i of items()) { ys.add(dayOf(i.c).slice(0, 4)); for (const [d] of i.h) ys.add(d.slice(0, 4)); }
@@ -1921,7 +2025,8 @@ function viewStats(day) {
   const steps = LADDER.map((_, s) => ({ n: its.filter(i => i.s === s).length, name: STEP[s].join(" "), tick: STEP[s].join("<br>"), far: s >= LONG }));
   const days = Array.from({ length: 14 }, (_, k) => { const d = addDays(day, k); return { n: its.filter(i => !i.off && (k ? i.d === d : i.d <= d)).length, name: fmtDate(d), tick: parse(d).getDate(), far: k === 0 }; });
   const errs = errorItems();
-  return `${demoNote()}${yearsLedger()}${topics()}
+  return `${xChart(day)}${yearsLedger()}${topics()}
+  <section class="sec"><button type="button" class="card lib" data-act="tab" data-tab="methods"><span class="tile c-yellow">${ic("bulb")}</span><span><b>Usullar kutubxonasi</b><small>${CATALOG.filter(m => m.l > 0).length} ta ilmiy usul: qaysi biri qaysi sohaga mos</small></span>${ic("arrow")}</button></section>
   <div class="figs">
     <p class="fig"><b data-count="${its.filter(i => !i.rev).length}">${its.filter(i => !i.rev).length}</b><span>jami o'rganilgan</span></p>
     <p class="fig"><b data-count="${far}">${far}</b><span>uzoq xotirada (1 oy va undan ko'p)</span></p>
@@ -1985,6 +2090,7 @@ function viewMethods() {
   const cnt = k => CATALOG.filter(m => m.l > 0 && fits(m, k)).length;
   const chip = (k, name, n) => `<button type="button" class="chip" data-act="mfilter" data-f="${k}" aria-pressed="${F === k}">${name} · ${n}</button>`;
   return `<section class="sec">
+    <button type="button" class="back" data-act="tab" data-tab="stats">${ICON.back}Tahlil</button>
     <h1 class="h1">Usullar</h1>
     <p class="muted">${CATALOG.length} ta o'rganish usuli. Sohani tanlang: unga mos usullar qoladi. Har birida ilmiy dalil darajasi va ilovaning qayerida ishlatilishi yozilgan.</p>
     <div class="chips scroller">${chip("all", "Hammasi", CATALOG.length)}${Object.keys(FIELDS).map(k => chip(k, FIELDS[k], cnt(k))).join("")}</div>
@@ -2155,6 +2261,7 @@ function settingsBody() {
         <div class="field"><label for="cf-im">Oraliq ko'paytiruvchisi</label><span class="unit-in"><input id="cf-im" name="im" type="number" inputmode="numeric" min="50" max="300" value="${c.im}"><i>%</i></span><p class="small muted">Hamma oraliqlar shunga ko'paytiriladi. 150% bo'lsa takrorlar 1,5 barobar siyrak bo'ladi, 80% bo'lsa tezroq.</p></div>
         <div class="field"><label for="cf-mx">Eng uzun oraliq</label><span class="unit-in"><input id="cf-mx" name="mx" type="number" inputmode="numeric" min="7" max="3650" value="${c.mx}"><i>kun</i></span><p class="small muted">Yaxshi eslangan karta ham bundan uzoq kutmaydi.</p></div>
         <div><button type="button" class="btn btn-sm" data-act="cfg-reset">Asl qiymatlar</button></div></div></details>
+      <div class="field"><label for="cf-dg">Kunlik maqsad</label><span class="unit-in"><input id="cf-dg" name="dg" type="number" inputmode="numeric" min="10" max="2000" value="${c.dg}"><i>XOTIR</i></span><p class="small muted">Bosh sahifadagi halqa shu songa yetganda to'ladi. 50 XOTIR: bitta yozuv, 20 bet va bir necha takror.</p></div>
       <div class="field"><label for="cf-cue">Odat vaqti: takrorni nimaga ulaysiz?${opt}</label><input id="cf-cue" name="cue" type="text" maxlength="80" autocomplete="off" placeholder="Masalan: Bomdoddan keyin" value="${esc(c.cue)}"></div>
       <div><button type="submit" class="btn btn-gold btn-sm">Saqlash</button></div>
     </form>
@@ -2166,6 +2273,9 @@ function settingsBody() {
       <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="push-on">Yoqish</button><button type="button" class="btn btn-sm" data-act="push-test" hidden>Sinab ko'rish</button><button type="button" class="btn btn-sm" data-act="push-off" hidden>O'chirish</button></div></div>` : ""}
     ${cloud.mode === "srv" && cloud.me && cloud.me.id ? `<div class="sec" id="tg-box"><p class="eyebrow">Telegram</p><p class="small muted">Yuklanmoqda…</p></div>
     <div class="sec" id="key-box"><p class="eyebrow">Boshqa ilovalar bilan ulash</p><p class="small muted">Yuklanmoqda…</p></div>` : ""}
+    <div class="sec"><p class="eyebrow">Bilim</p><div class="menu">
+      <button type="button" class="menu-row" data-act="tab" data-tab="methods">${ic("bulb")}<span>Usullar kutubxonasi · ${CATALOG.filter(m => m.l > 0).length} ta usul</span>${ic("arrow")}</button>
+      <button type="button" class="menu-row" data-act="onb">${ic("spark")}<span>Ilova bilan tanishtiruv</span>${ic("arrow")}</button></div></div>
     <div class="sec"><p class="eyebrow">Saqlash</p>
       <p class="sync-line"><span class="sync" data-s="${cloud.sync}"></span><span data-sync-text>${SYNC[cloud.sync][1]}</span></p>
       <div class="acts">${canSave ? `<button type="button" class="btn btn-sm" data-act="export">Zaxira nusxani saqlash</button>` : ""}<button type="button" class="btn btn-sm" data-act="export-copy">Zaxirani nusxalash</button><button type="button" class="btn btn-sm" data-act="restore">Zaxiradan tiklash</button><button type="button" class="btn btn-sm" data-act="retry" data-retry hidden>Qayta urinish</button></div>
@@ -2799,7 +2909,7 @@ function startReview(mode, id) {
   }[mode] || [due, "Bugungi takror"];
   const q = (mode === "quick" ? M[0] : interleave(M[0])).map(i => i.id);
   if (!q.length) return toast("Bu ro'yxatda hozir yozuv yo'q.");
-  Object.assign(rv, { q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
+  Object.assign(rv, { popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
   paintReview();
   const d = $("#review");
   if (!d.open) d.showModal();
@@ -2824,9 +2934,11 @@ function paintReview() {
       <p class="eyebrow">${esc(rv.title)}</p>
       <h2 class="rv-q">${n ? "Takror tugadi" : "Takrorlanadigan yozuv qolmadi"}</h2>
       ${rv.practice && n ? `<p class="muted">Bu mashq edi: takror jadvali o'zgarmadi.</p>` : ""}
+      ${n && !rv.practice ? `<p class="rv-gain"><b class="${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "down" : "up"}">${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "−" : "+"}${Math.abs(h + g0 * 3 + e * 4 - f * LOSS)}</b> XOTIR</p>` : ""}
       ${n ? `<p>${n} ta yozuvdan ${g} tasini esladingiz${h ? `, ${h} tasida qiynaldingiz` : ""}${f ? `, ${f} tasini unutdingiz` : ""}.</p>` : ""}
       ${f && !rv.practice ? `<p class="muted">Unutilganlari ertaga yana chiqadi. Bu odatiy hol: qayta eslangan narsa xotirada mustahkamroq o'rnashadi.</p>` : ""}
       <button type="button" class="btn btn-gold" data-act="rv-close">Yopish</button></div></div>`;
+    if (n && !rv.practice && !rv.popped) { rv.popped = true; popGain(h + g0 * 3 + e * 4 - f * LOSS); }
     return;
   }
   const b = recs[it.b] || { title: "", kind: "boshqa" }, K = KINDS[b.kind] || KINDS.boshqa;
@@ -2861,7 +2973,7 @@ function paintReview() {
       <div class="rv-ans" id="rv-ans" hidden>
         <p class="eyebrow">${P[3]} · ${fmtDate(dayOf(it.c))}</p>
         <div class="note">${answer}${["card", "mnemo", "quote"].includes(it.t) ? sayBtn(it.a, it.b) : ""}</div>
-        ${attList(it.att, it.id)}
+        ${attList(it.att)}
         <p class="small hc" id="rv-hc" hidden>Ishonchingiz yuqori edi. Agar xato bo'lsa, «Unutdim»ni bosing: ishonch bilan qilingan xato tuzatilgach eng yaxshi esda qoladi.</p>
         <p class="eyebrow rv-ask">Qanchalik esladingiz?</p>
         <div class="grades">
@@ -3056,6 +3168,7 @@ const act = {
   async "key-new"(el) { if ($("#ext-key") && !armed(el, "Ha, eskisi ishlamay qoladi")) return; try { await api("/api/key", {}); paintLinks(); } catch (e) { toast(e.msg); } },
   async "key-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { await api("/api/key", null, "DELETE"); paintLinks(); } catch (e) { toast(e.msg); } },
   "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kalit nusxalandi."); },
+  rank() { sheetRank(); },
   "pick-next"() { ui.pick = (ui.pick || 0) + 1; render(); },
   tag(el) { ui.tag = el.dataset.t; ui.tab = "shelf"; ui.book = null; ui.filter = "all"; render(); window.scrollTo(0, 0); },
   "tag-add"(el) { const i = $("#bk-tags"); if (!i) return; const have = i.value.split(",").map(x => x.trim()).filter(Boolean); if (!have.some(x => x.toLowerCase() === el.dataset.t.toLowerCase())) have.push(el.dataset.t); i.value = have.join(", "); el.remove(); },
@@ -3097,36 +3210,6 @@ const act = {
   "auth-open"() { closeSheet(); openAuth("login"); },
   "auth-skip"() { closeAuth(); cloud.ready = false; cloud.me = null; setSync("local"); render(); tourLater(); },
   logout(el) { if (armed(el, "Ha, chiqish")) signOut(); },
-  "att-open"(el) {
-    const o = el.dataset.o, k = +el.dataset.k, id = el.dataset.id;
-    let ownerId = o, list = o ? attsOf(o) : [];
-    let a = list[k];
-    if (!a && id) {
-      for (const it of items()) {
-        const idx = (it.att || []).findIndex(x => x.id === id);
-        if (idx >= 0) { ownerId = it.id; list = it.att; a = it.att[idx]; break; }
-      }
-    }
-    if (!a) return;
-    const isImg = /^image\//.test(a.type) || (a.data && a.data.startsWith("data:image/"));
-    const u = attUrl(a);
-    const broken = el.classList.contains("broken");
-    openSheet(`<div class="sheet-body">
-      <div><p class="eyebrow">Biriktirilgan fayl</p><h2 class="sheet-h" tabindex="-1" autofocus>${esc(a.name || "Rasm")}</h2></div>
-      ${isImg && !broken ? `<img class="att-view-img" src="${esc(u)}" alt="${esc(a.name)}" onerror="this.hidden=true;document.getElementById('att-err-box').hidden=false">` : ""}
-      <div class="notice" id="att-err-box"${!isImg || broken ? "" : " hidden"}>
-        <b>${broken ? "⚠️ Bu eski rasm server xotirasidan o'chib ketgan (HTTP 404)" : "Fayl ma'lumoti"}</b>
-        <p class="small">Render bepul serveri qayta yonganda eski versiyada yuklangan fayllar o'chib ketgan edi. Endi yangi yuklangan har bir rasm to'g'ridan-to'g'ri yozuvning o'zida (Neon bazasida) doimiy saqlanadi va hech qachon yo'qolmaydi.</p>
-        ${ownerId && ownerId !== "rd" ? `<label class="btn btn-gold btn-sm" for="reup-${esc(ownerId)}-${k}">${ic("clip")}Rasmni qayta tanlab tiklash</label><input class="vh" id="reup-${esc(ownerId)}-${k}" type="file" accept="${attAccept()}" data-reup-o="${esc(ownerId)}" data-reup-k="${k}">` : ""}
-      </div>
-      <div class="sheet-actions">
-        ${ownerId && ownerId !== "rd" ? `<label class="btn btn-sm" for="reup2-${esc(ownerId)}-${k}">${ic("clip")}Yangisiga almashtirish</label><input class="vh" id="reup2-${esc(ownerId)}-${k}" type="file" accept="${attAccept()}" data-reup-o="${esc(ownerId)}" data-reup-k="${k}">` : ""}
-        <a class="btn btn-sm" href="${esc(u)}" download="${esc(a.name || "fayl")}">Yuklab olish</a>
-        <span class="grow"></span>
-        ${ownerId && recs[ownerId] ? `<button type="button" class="btn btn-gold" data-act="item" data-id="${esc(ownerId)}">Yozuvga qaytish</button>` : `<button type="button" class="btn btn-gold" data-act="sheet-close">Yopish</button>`}
-      </div>
-    </div>`);
-  },
   "att-del"(el) {
     const o = el.dataset.o, k = +el.dataset.k, list = attsOf(o).slice(), a = list[k];
     if (!a) return;
@@ -3235,6 +3318,7 @@ const forms = {
     if (end > (b.cur || 0)) out.push({ ...b, cur: end });
     clearTimeout(draftTimer); dropDraft(b.id);
     put(out); closeSheet();
+    popGain(made * 10 + (qty || mins ? sessionX({ unit, qty, min: mins }) : 0));
     toast(`Saqlandi. ${made} ta yozuvning birinchi takrori ertaga.`);
     if (b.pages && end >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
@@ -3272,7 +3356,7 @@ const forms = {
   cfg(form) {
     const fd = new FormData(form);
     const num = (k, lo, hi) => Math.max(lo, Math.min(hi, int(fd.get(k)) || CFG0[k]));
-    put({ ...cfg(), id: "cfg", k: "c", algo: ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder", cue: str(fd.get("cue")).trim(), eb: num("eb", 100, 300), im: num("im", 50, 300), mx: num("mx", 7, 3650) });
+    put({ ...cfg(), id: "cfg", k: "c", algo: ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder", cue: str(fd.get("cue")).trim(), eb: num("eb", 100, 300), im: num("im", 50, 300), mx: num("mx", 7, 3650), dg: num("dg", 10, 2000) });
     closeSheet(); toast("Sozlamalar saqlandi.");
   },
   cap(form) {
@@ -3298,6 +3382,7 @@ const forms = {
     try { localStorage.setItem(LASTSRC, b.id); } catch (e) { /* convenience only */ }
     if (rec) rec.stop();
     put(out); closeSheet();
+    popGain((text ? 10 : 0) + sessionX({ unit, qty, min: mins }));
     toast([qty && U ? `+${qty} ${U.one}` : "", mins ? fmtMin(mins) : "", text ? "yozuv ertaga so'raladi" : ""].filter(Boolean).join(" · ") || "Saqlandi.");
     if (b.pages && to >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
@@ -3321,7 +3406,7 @@ const forms = {
     if (!rows.length) return fail(form, "Kartochka topilmadi. Har qatorda savol va javobni « — » bilan ajrating.");
     const now = Date.now(), due = addDays(today(), LADDER[0]), out = [];
     rows.forEach(([q, a], k) => { out.push({ id: uid(), k: "i", b: b.id, t: "card", q, a, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [] }); if (two) out.push({ id: uid(), k: "i", b: b.id, t: "card", q: a, a: q, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [], rev: 1 }); });
-    put(out); closeSheet(); toast(`${rows.length} ta kartochka qo'shildi. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
+    put(out); closeSheet(); popGain(rows.length * 10); toast(`${rows.length} ta kartochka qo'shildi. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
   },
   async auth(form) {
     const fd = new FormData(form), reg = form.dataset.m === "reg", btn = form.querySelector("button[type=submit]");
@@ -3414,20 +3499,7 @@ document.addEventListener("change", async e => { const t = e.target;
     return;
   }
   if (t.id === "tts") { try { localStorage.setItem(TTS, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) say("Me'mori"); return; }
-  if (t.id === "haptic") { try { localStorage.setItem(HAPTIC, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) buzz(15); return; } if (t.dataset && t.dataset.reupO && t.files && t.files[0]) {
-    const o = t.dataset.reupO, k = +t.dataset.reupK, file = t.files[0]; t.value = "";
-    const it = recs[o]; if (!it) return;
-    toast("Rasm tiklanmoqda…");
-    uploadFile(await shrink(file), file.name).then(a => {
-      const list = (it.att || []).slice();
-      list[k] = a;
-      put({ ...it, att: list });
-      sheetItem(recs[o]);
-      toast("Rasm muvaffaqiyatli tiklandi va doimiy saqlandi!");
-    }).catch(err => toast((err && err.msg) || "Tiklab bo'lmadi."));
-    return;
-  }
-  if (t.dataset && t.dataset.att && t.files && t.files.length) { const f = [...t.files]; t.value = ""; addAttachments(f, t.dataset.att); } });
+  if (t.id === "haptic") { try { localStorage.setItem(HAPTIC, t.checked ? "1" : "0"); } catch (err) { /* stays on */ } if (t.checked) buzz(15); return; } if (t.dataset && t.dataset.att && t.files && t.files.length) { const f = [...t.files]; t.value = ""; addAttachments(f, t.dataset.att); } });
 $("#review").addEventListener("close", () => { lock(); render(); });
 $("#onb").addEventListener("close", lock);
 $("#study").addEventListener("close", () => { st = null; lock(); render(); });
@@ -3449,65 +3521,7 @@ try { if (!localStorage.getItem(ONB_KEY)) openOnb(); } catch (e) { /* storage bl
 })();
 </script>
 
-<script>
-(() => {
-  "use strict";
-  if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
-  }
-  const b64 = s => {
-    const p = "=".repeat((4 - s.length % 4) % 4);
-    const r = atob((s + p).replace(/-/g, "+").replace(/_/g, "/"));
-    return Uint8Array.from(r, c => c.charCodeAt(0));
-  };
-  const standalone = () => window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-  const ios = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  async function jfetch(url, body) {
-    const r = await fetch(url, { method: body ? "POST" : "GET", headers: body ? { "Content-Type": "application/json" } : {}, body: body ? JSON.stringify(body) : undefined, credentials: "same-origin" });
-    const j = await r.json().catch(() => null);
-    if (!r.ok) throw new Error((j && j.error) || "Xato");
-    return j;
-  }
-  window.EsdaPush = {
-    supported: () => "serviceWorker" in navigator && "PushManager" in window && "Notification" in window,
-    blocker() {
-      if (ios() && !standalone()) return "iPhone'da eslatma ishlashi uchun avval Ulashish → «Asosiy ekranga qo'shish» orqali ilovani o'rnating va o'sha yerdan oching.";
-      if (!this.supported()) return "Bu brauzer push-bildirishnomani qo'llamaydi.";
-      if (Notification.permission === "denied") return "Bildirishnomaga ruxsat rad etilgan. Brauzer sozlamalaridan shu sayt uchun ruxsat bering.";
-      return "";
-    },
-    async status() {
-      if (!this.supported()) return { on: false };
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.getSubscription();
-      if (!sub) return { on: false };
-      return jfetch("/api/push/status?endpoint=" + encodeURIComponent(sub.endpoint));
-    },
-    async enable(hour) {
-      const why = this.blocker();
-      if (why) throw new Error(why);
-      const perm = await Notification.requestPermission();
-      if (perm !== "granted") throw new Error("Bildirishnomaga ruxsat berilmadi.");
-      const { key } = await jfetch("/api/push/key");
-      const reg = await navigator.serviceWorker.ready;
-      let sub = await reg.pushManager.getSubscription();
-      if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(key) });
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "Asia/Tashkent";
-      return jfetch("/api/push/subscribe", { sub: sub.toJSON(), hour, tz });
-    },
-    async disable() {
-      const reg = await navigator.serviceWorker.ready;
-      const sub = await reg.pushManager.getSubscription();
-      if (sub) {
-        await jfetch("/api/push/unsubscribe", { endpoint: sub.endpoint }).catch(() => {});
-        await sub.unsubscribe().catch(() => {});
-      }
-      return { on: false };
-    },
-    test: () => jfetch("/api/push/test", {}),
-  };
-})();
-</script>
-<!-- build 8ba0c5f2 -->
+<script src="/push.js" defer></script>
+<script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));</script>
 </body>
 </html>
