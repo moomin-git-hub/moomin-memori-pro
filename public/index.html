@@ -593,13 +593,13 @@ dialog.study{background:var(--bg)}
 .dk-stats b{font:800 1.375rem/1 var(--display);color:var(--text)}
 .dk-stats i{width:.5rem;height:.5rem;border-radius:50%}
 .dk-add{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
-.dk-add.col{grid-template-columns:1fr}
+.dk-add.vlist{grid-template-columns:1fr}
 .dk-a{display:grid;justify-items:start;align-content:start;gap:.375rem;padding:.875rem;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--text);text-align:left;transition:transform .12s}
 .dk-a:active{transform:scale(.97)}
 .dk-a b{font:800 .9375rem/1.2 var(--display)}
 .dk-a small{font-size:.75rem;line-height:1.35;color:var(--mute)}
-.dk-add.col .dk-a{grid-template-columns:auto minmax(0,1fr);column-gap:.875rem;align-items:center}
-.dk-add.col .dk-a .tile{grid-row:span 2}
+.dk-add.vlist .dk-a{grid-template-columns:auto minmax(0,1fr);column-gap:.875rem;align-items:center}
+.dk-add.vlist .dk-a .tile{grid-row:span 2}
 .mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.625rem}
 .mg{display:grid;justify-items:start;gap:.625rem;padding:1rem;border-radius:22px;border:1px solid var(--line);background:var(--card);color:var(--text);text-align:left;transition:transform .12s}
 .mg:active{transform:scale(.97)}
@@ -760,6 +760,81 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 .lib>svg{width:1.125rem;height:1.125rem;color:var(--mute)}
 [data-skin=light] .rank-chip{border-color:rgba(255,255,255,.5)}
 @media (max-width:23rem){.gring{width:5.5rem;height:5.5rem}.cta .btn-big{font-size:.9375rem}}
+
+.risk{display:block;margin-top:-.25rem;padding:.625rem .875rem;border-radius:16px;background:color-mix(in srgb,#ff6f7d 10%,var(--card));border:1px solid color-mix(in srgb,#ff6f7d 30%,var(--line));font-size:.8125rem;color:var(--mute)}
+.risk svg{width:1.125rem;height:1.125rem;color:#ff6f7d;vertical-align:-.25rem;margin-right:.375rem}
+.risk b{color:#ff8f99}
+.lrow-x.neg{color:#ff6f7d}
+.lrow-x.eff{color:var(--text)}
+.lrow-x.wait{color:var(--mute)}
+.day-h .down{color:#ff6f7d;font-weight:800}
+.uline em{font-style:normal;font-weight:800;color:var(--text)}
+
+.tipline{display:flex;gap:.5rem;align-items:baseline;font-size:.8125rem;color:var(--mute);margin-top:-.25rem}
+.tipline span{flex:none;padding:.125rem .5rem;border-radius:8px;background:color-mix(in srgb,var(--pri) 18%,transparent);color:var(--pri-hi);font:800 .625rem var(--ui);letter-spacing:.06em;text-transform:uppercase}
+.rv-top .icon-btn svg{width:1.125rem;height:1.125rem}
+.rt{display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.375rem;align-items:center}
+.rt button{min-width:2.125rem;height:2.125rem;padding:0 .5rem;border-radius:10px;border:1px solid var(--line);background:var(--chip);color:var(--text);font:600 .875rem var(--ui);display:grid;place-items:center}
+.rt button:active{transform:scale(.94)}
+.rt-cs{display:inline-flex;gap:.25rem;margin-left:.25rem}
+.rt .rt-c{min-width:1.875rem;padding:0}
+.rt .rt-c i{font:800 .875rem var(--display);font-style:normal}
+.rt-h{display:block;font:800 1.375rem/1.3 var(--display);margin:.25rem 0}
+.rt-q{display:block;border-left:3px solid var(--pri-hi);padding:.125rem 0 .125rem .75rem;font-style:italic;color:var(--mute)}
+.rt-m{background:color-mix(in srgb,#ffd166 45%,transparent);color:inherit;border-radius:4px;padding:0 .125rem}
+.rt-f{font-family:Georgia,"Times New Roman",serif;font-size:1.05em}
+.rt-c-r{color:#ff6f7d}.rt-c-g{color:#2fd08f}.rt-c-b{color:#7c9bff}.rt-c-y{color:#f6b73c}.rt-c-p{color:#b794ff}
+[data-skin=light] .rt-c-r{color:#d93b45}[data-skin=light] .rt-c-g{color:#1f8a5b}[data-skin=light] .rt-c-b{color:#3358d4}[data-skin=light] .rt-c-y{color:#b07d00}[data-skin=light] .rt-c-p{color:#7c3fbf}
+.note a,.mem-a a{color:var(--pri-hi);text-decoration:underline}
+.dk-add{grid-template-columns:repeat(2,minmax(0,1fr))}
+.dk-add.vlist{grid-template-columns:1fr}
+.sk-img{display:block;width:100%;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.sk-img.big{max-height:60vh;object-fit:contain}
+.sk-note{display:block;margin-top:.625rem}
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(8.5rem,1fr));gap:.625rem}
+.sk-tile{display:grid;gap:.375rem;padding:.5rem;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--text);text-align:left}
+.sk-tile .sk-img{aspect-ratio:4/3;object-fit:cover}
+.sk-tile span{font:700 .8125rem/1.3 var(--ui);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.prof{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem;align-items:center}
+.prof .ava{width:3.5rem;height:3.5rem;font-size:1.375rem}
+.prof p{display:grid;gap:.125rem}
+.prof b{font:800 1.125rem var(--display);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prof-sync{display:flex;align-items:center;gap:.375rem;font-size:.75rem;color:var(--mute)}
+.sgroup-h{margin:1.5rem 0 .625rem .5rem;font:800 .8125rem var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.sgroup{display:grid;border-radius:26px;background:var(--card);border:1px solid var(--line);overflow:hidden}
+.srow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:1rem;align-items:center;width:100%;padding:.875rem 1.125rem;background:none;border:0;color:var(--text);text-align:left;cursor:pointer;position:relative}
+.srow+.srow::before{content:"";position:absolute;top:0;left:4.75rem;right:1.125rem;height:1px;background:var(--line)}
+.srow:active{background:var(--chip)}
+.srow .tile{width:3rem;height:3rem;border-radius:16px}
+.srow .tile svg{width:1.375rem;height:1.375rem}
+.srow-t{display:grid;gap:.125rem;min-width:0}
+.srow-t b{font:800 1.0625rem/1.25 var(--display)}
+.srow-t small{font-size:.875rem;color:var(--mute);line-height:1.3}
+.srow-v{font:700 .9375rem var(--ui);color:var(--mute);white-space:nowrap}
+.srow-v.on{color:#2fd08f}
+.srow>svg{width:1.125rem;height:1.125rem;color:var(--mute)}
+label.srow{grid-template-columns:auto minmax(0,1fr) auto}
+.sfoot{text-align:center;font-size:.75rem;color:var(--mute);margin:1.75rem 0 .5rem;line-height:1.6}
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.375rem;padding:.25rem;border-radius:16px;background:var(--chip)}
+.seg3 label{display:flex;align-items:center;justify-content:center;gap:.375rem;padding:.625rem .25rem;border-radius:12px;font:700 .9375rem var(--ui);color:var(--mute);cursor:pointer}
+.seg3 label svg{width:1.125rem;height:1.125rem}
+.seg3 label:has(input:checked){background:var(--card);color:var(--text);box-shadow:var(--shadow)}
+.seg3 label:has(input:focus-visible){outline:2px solid var(--pri-hi)}
+.ideas{display:grid;gap:.625rem}
+.idea{display:grid;gap:.5rem;width:100%;text-align:left;padding:1rem 1.125rem;border-radius:20px;border:1px solid var(--line);border-left:4px solid var(--c);background:var(--card);color:var(--text)}
+.idea-h{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.8125rem}
+.idea-h .tag{display:inline-flex;align-items:center;gap:.25rem;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.idea-h .tag svg{width:.875rem;height:.875rem}
+.idea-h b{font-weight:800}
+.idea-h em{font-style:normal;color:var(--mute)}
+.idea-st{margin-left:auto;font-weight:800;color:#ff9f43}
+.idea-st.ok{color:#2fd08f}
+.idea-quote{display:block;border-left:3px solid var(--line);padding-left:.75rem;font-style:italic;color:var(--mute);white-space:pre-wrap}
+.idea-text{white-space:pre-wrap;overflow-wrap:anywhere;font-size:1rem;line-height:1.5}
+.idea-ans{white-space:pre-wrap;font-size:.9375rem;color:var(--mute)}
+.idea-ans b{color:#2fd08f}
+.idea-src{margin-top:1rem}
 .toast{position:fixed;left:50%;top:calc(.75rem + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
 
 @media (min-width:48rem){
@@ -879,7 +954,9 @@ const KINDS = {
   podkast: { name: "Podkast yoki audio", unit: "daqiqa", close: "Eshitishni to'xtating", ask: "Bu qismda nima haqida gap bo'ldi?", hints: ["Kim nima dedi?", "Qaysi fikr yangi bo'ldi?", "Nimaga qo'shilmadim?"] },
   boshqa: { name: "Boshqa", unit: null, close: "Manbaga qaramang", ask: "Bundan nimalar esda qoldi?", hints: ["Asosiy fikr nima edi?", "Nima yangilik bo'ldi?", "Nimani eslab qolishni xohlayman?"] },
 };
-const TYPES = { recall: "Eslab yozish", gist: "Bir jumla", apply: "Qo'llash", feynman: "Tushuntirish", link: "Bog'lash", card: "Savol", cloze: "Bo'shliq", mnemo: "Eslatkich", quote: "Iqtibos", sum: "Xulosa" };
+// A thought, a question or an idea that came while reading a page; not for memorising, so outside XOTIR.
+const IDEA = { fikr: ["Fikr", "bulb", "blue"], savol: ["Savol", "qmark", "orange"], goya: ["G'oya", "spark", "yellow"] };
+const TYPES = { sketch: "Eskiz", recall: "Eslab yozish", gist: "Bir jumla", apply: "Qo'llash", feynman: "Tushuntirish", link: "Bog'lash", card: "Savol", cloze: "Bo'shliq", mnemo: "Eslatkich", quote: "Iqtibos", sum: "Xulosa" };
 const MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
 const WEEKDAYS = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "juma", "shanba"];
 const SYNC = {
@@ -915,7 +992,8 @@ function ago(ms) {
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 function norm(r) {
   if (!r || typeof r !== "object" || typeof r.id !== "string" || !r.id) return null;
-  if (!["b", "i", "c", "g", "s"].includes(r.k)) return null;
+  if (!["b", "i", "c", "g", "s", "n"].includes(r.k)) return null;
+  if (r.k === "n") return { ...r, b: str(r.b), kind: IDEA[r.kind] ? r.kind : "fikr", page: int(r.page), line: int(r.line), quote: str(r.quote), text: str(r.text), answer: str(r.answer), done: r.done ? 1 : 0 };
   if (r.del) return r;
   if (r.k === "g") return { ...r, metric: ["notes", "reviews", "days", "done", "long"].includes(r.metric) ? r.metric : "notes", period: r.period === "year" ? "year" : "month", target: int(r.target) || 1, title: str(r.title) };
   if (r.k === "c") return { ...r, algo: ["fsrs", "free"].includes(r.algo) ? r.algo : "ladder", cue: str(r.cue) };
@@ -947,7 +1025,7 @@ const books = () => all().filter(r => r.k === "b" && !r.del).sort((a, b) => (b.c
 const items = () => all().filter(r => r.k === "i" && !r.del && recs[r.b] && !recs[r.b].del);
 const itemsOf = id => items().filter(i => i.b === id).sort((a, b) => (a.c || 0) - (b.c || 0));
 const dueItems = day => items().filter(i => (free() || i.d <= day) && !i.off).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : (a.c || 0) - (b.c || 0));
-const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 50 };
+const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 30 };
 const cfg = () => ({ ...CFG0, ...(recs.cfg && !recs.cfg.del ? recs.cfg : {}) });
 const free = () => cfg().algo === "free";
 // The scheduler in use, plus what the learner said about confidence before seeing the answer.
@@ -967,6 +1045,7 @@ function schedule(it, g, day, conf) {
 const tomb = r => r.k === "b" ? { id: r.id, k: "b", del: 1, title: "", author: "" } : { id: r.id, k: "i", del: 1, b: r.b, q: "", a: "", r: "", h: [] };
 
 function put(list, quiet) {
+  XC = null;
   const now = Date.now();
   for (const r of [].concat(list)) { const x = { ...r, u: now }; recs[x.id] = x; if (syncing()) cloud.dirty.add(x.id); }
   saveLocal();
@@ -1440,7 +1519,23 @@ const progText = b => { const U = unitOf(b); return U && b.pages ? `${b.cur || 0
 const prog = b => unitOf(b) && b.pages ? Math.min(100, Math.round((b.cur || 0) / b.pages * 100)) : null;
 const CLOZE = /\[\[(.+?)\]\]/g;
 // Cloze text: the words in [[ ]] are hidden in review and marked once revealed.
-const clozeHTML = (text, open) => esc(text).replace(CLOZE, (_, w) => open ? `<mark>${w}</mark>` : `<span class="gap">…</span>`);
+const clozeHTML = (text, open) => fmt(esc(text).replace(CLOZE, (_, w) => open ? `<mark>${w}</mark>` : `<span class="gap">…</span>`));
+/* Formatting kept as plain text, so cards, search and sync stay simple:
+   **qalin**  __tagiga chizilgan__  ==belgilangan==  `boshqa shrift`  {r|rangli}  [matn](https://…)
+   «# » at a line start is a big heading, «> » a quote. */
+const RT_COLORS = { r: "#e5484d", g: "#2f9e6e", b: "#3e63dd", y: "#d59b00", p: "#8e4ec6" };
+function fmt(html) {
+  return html.split("\n").map(line => {
+    let cls = "";
+    if (/^# /.test(line)) { cls = "rt-h"; line = line.slice(2); } else if (/^&gt; /.test(line)) { cls = "rt-q"; line = line.slice(5); }
+    line = line.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/__(.+?)__/g, "<u>$1</u>").replace(/==(.+?)==/g, '<mark class="rt-m">$1</mark>').replace(/`(.+?)`/g, '<span class="rt-f">$1</span>')
+      .replace(/\{([rgbyp])\|(.+?)\}/g, (_, c, t) => `<span class="rt-c-${c}">${t}</span>`)
+      .replace(/\[([^\]]+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    return cls ? `<span class="${cls}">${line}</span>` : line;
+  }).join("\n");
+}
+const rich = text => fmt(esc(text));
+const plain = text => str(text).replace(/\*\*(.+?)\*\*/g, "$1").replace(/__(.+?)__/g, "$1").replace(/==(.+?)==/g, "$1").replace(/`(.+?)`/g, "$1").replace(/\{[rgbyp]\|(.+?)\}/g, "$1").replace(/\[([^\]]+?)\]\((https?:\/\/[^\s)]+)\)/g, "$1").replace(/^(# |> )/gm, "");
 const clozePlain = text => text.replace(CLOZE, "[…]");
 function demoNote() {
   const ds = books().filter(x => x.demo);
@@ -1482,6 +1577,17 @@ const IC = {
   sound: '<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
   pen: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
   star: '<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
+  undo: '<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>',
+  brush: '<path d="M18.4 3.6a2 2 0 0 1 2.8 2.8L11 16.6 7.4 13z"/><path d="M7 14c-2 0-3.5 1.5-3.5 3.5 0 1-.5 2-1.5 2.5 1 .7 2.4 1 3.5 1C8 21 10 19 10 17z"/>',
+  eraser: '<path d="M7 21h10"/><path d="M5.5 15.5l9-9a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L13 18H8z"/>',
+  chev: '<path d="M9 6l6 6-6 6"/>',
+  bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  send: '<path d="M21 3L3 10.5l7 2.5 2.5 7z"/><path d="M10 13l5-5"/>',
+  link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7L11.5 6.8"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/>',
+  download: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+  upload: '<path d="M12 20V9M7 14l5-5 5 5M5 4h14"/>',
+  phone: '<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M3 9v6M21 9v6"/>',
+  qmark: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/>',
   cards: '<rect x="3" y="6" width="14" height="12" rx="2.5"/><path d="M7 3h11a3 3 0 0 1 3 3v9"/>',
   learn: '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v4h-4"/><circle cx="12" cy="12" r="2"/>',
   test: '<path d="M7 3h7l5 5v13H7z"/><path d="M10 13l2 2 4-4"/>',
@@ -1490,7 +1596,7 @@ const IC = {
 };
 const ic = n => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[n] || IC.spark}</svg>`;
 const KIND_LOOK = { badiiy: ["book", "blue"], ilmiy: ["book", "teal"], sher: ["feather", "pink"], diniy: ["moon", "green"], kurs: ["cap", "purple"], dars: ["board", "orange"], video: ["play", "red"], til: ["globe", "teal"], fan: ["atom", "yellow"], maqola: ["doc", "blue"], podkast: ["mic", "purple"], boshqa: ["spark", "orange"] };
-const TYPE_COLOR = { recall: "blue", gist: "blue", apply: "green", feynman: "teal", link: "purple", card: "orange", cloze: "pink", mnemo: "purple", quote: "teal", sum: "green" };
+const TYPE_COLOR = { sketch: "yellow", recall: "blue", gist: "blue", apply: "green", feynman: "teal", link: "purple", card: "orange", cloze: "pink", mnemo: "purple", quote: "teal", sum: "green" };
 const tile = b => { const [i, c] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa; return `<span class="tile c-${c}">${ic(i)}</span>`; };
 const MSHORT = ["YAN", "FEV", "MAR", "APR", "MAY", "IYN", "IYL", "AVG", "SEN", "OKT", "NOY", "DEK"];
 
@@ -1545,13 +1651,56 @@ function lifeTally() {
 }
 /* XOTIR is the currency of this ledger, as so'm is for Hisob and the hour for Vaqt Banki.
    Learning earns it, forgetting costs it; the balance is what stays in memory. */
-const RATES = [["notes", 10, "har yangi yozuv yoki karta"], ["bet", 1, "har o'qilgan bet"], ["dars", 10, "har o'tilgan dars"], ["min10", 2, "har 10 daqiqa o'rganish"], ["good", 3, "«Esladim» takror"], ["easy", 4, "«Oson» takror"], ["hard", 1, "«Qiynaldim» takror"], ["done", 50, "tugatilgan manba"]];
-const LOSS = 5;   // each «Unutdim»
-function xotir(t) {
-  const kirim = t.notes * 10 + t.bet + t.dars * 10 + Math.floor(t.min / 10) * 2 + t.good * 3 + t.easy * 4 + t.hard + t.done * 50, chiqim = t.forgot * LOSS;
-  return { kirim, chiqim, net: kirim - chiqim };
+/* XOTIR is what is in memory right now, as so'm is what is in the wallet.
+   Every note or card is worth 10 XOTIR once it has been recalled in a review at least once
+   (until then it is «kutilmoqda»). After that it counts by the chance it is still remembered:
+   R = (1 + t / 9S)^-1, t days since the last review, S the gap of its ladder step (FSRS's curve).
+   A review brings it back to 10 and the next decline is slower. «Unutdim» drops it to 0 until it
+   is recalled again, so an honest answer is never punished beyond the truth.
+   Pages, lessons and minutes are effort: they are reported, not counted as XOTIR. */
+const XV = 10;
+const recallP = (t, S) => Math.pow(1 + Math.max(0, t) / (9 * S), -1);
+function tlOf(i) {
+  const steps = [], ev = [];
+  let proven = false, s = 0, last = "";
+  for (const [d, g] of i.h) {
+    const before = proven ? XV * recallP(diffDays(d, last), LADDER[s]) : 0;
+    if (g >= 1) { ev.push([d, XV - before, 0, g]); proven = true; s = g === 3 ? Math.min(s + 2, LADDER.length - 1) : g === 2 ? Math.min(s + 1, LADDER.length - 1) : s; }
+    else { ev.push([d, 0, before, 0]); proven = false; s = 0; }
+    last = d; steps.push([d, proven, s, last]);
+  }
+  return { steps, ev };
 }
-const RANKS = [[0, "Boshlovchi"], [250, "Havaskor"], [1000, "Izlanuvchi"], [3000, "Talaba"], [7500, "Bilimdon"], [15000, "Ustoz"], [30000, "Olim"], [60000, "Alloma"]];
+let XC = null;   // the timelines, rebuilt after every change
+const xbook = () => XC || (XC = items().filter(i => !i.rev).map(i => ({ i, tl: tlOf(i) })));
+function valueOn(tl, D) {
+  let st = null;
+  for (const x of tl.steps) { if (x[0] <= D) st = x; else break; }
+  return st && st[1] ? XV * recallP(diffDays(D, st[3]), LADDER[st[2]]) : 0;
+}
+const balanceOn = D => xbook().reduce((n, x) => n + valueOn(x.tl, D), 0);
+// Earned (reviews), forgotten («Unutdim») and faded (time) over a range of days, both ends included.
+function flows(from, to) {
+  const b0 = balanceOn(addDays(from, -1)), b1 = balanceOn(to);
+  let gain = 0, lost = 0, reviews = 0;
+  for (const x of xbook()) for (const [d, g, l] of x.tl.ev) if (d >= from && d <= to) { gain += g; lost += l; reviews++; }
+  const net = b1 - b0;
+  return { gain: Math.round(gain), lost: Math.round(lost), fade: Math.max(0, Math.round(gain - lost - net)), net: Math.round(net), bal: Math.round(b1), reviews };
+}
+const pendingOf = () => xbook().filter(x => !x.i.off && !(x.tl.steps.length && x.tl.steps[x.tl.steps.length - 1][1]));
+function perRange(per, day) {
+  if (per === "all") { const f = items().reduce((m, i) => Math.min(m, i.c || Infinity), Infinity); return [isFinite(f) ? dayOf(f) : day, day]; }
+  const [y, m] = per.split("-").map(Number), end = `${per}-${pad(new Date(y, m, 0).getDate())}`;
+  return [`${per}-01`, end < day ? end : day];
+}
+function xRules() {
+  return `<details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
+    <p><b>10 XOTIR</b> har bir yozuv yoki karta. U birinchi takrorda eslaganingizda hisobga tushadi, shungacha «kutilmoqda».</p>
+    <p><b>Vaqt o'tishi bilan</b> esda qolish ehtimoli kamayadi, XOTIR ham shunga yarasha kamayadi. Takrorlasangiz, yana 10 ga chiqadi va keyingi safar sekinroq kamayadi.</p>
+    <p><b>«Unutdim»</b> jarima emas: yozuv qayta eslanguncha 0 turadi. Halol baho bersangiz, ilova uni tezroq qaytarib so'raydi.</p>
+    <p><b>Bet, dars va vaqt</b> harakat hisobi: hisobotda ko'rinadi, lekin XOTIR bermaydi. O'qish hali bilish degani emas.</p></div></details>`;
+}
+const RANKS = [[0, "Boshlovchi"], [100, "Havaskor"], [300, "Izlanuvchi"], [700, "Talaba"], [1500, "Bilimdon"], [3000, "Ustoz"], [6000, "Olim"], [12000, "Alloma"]];
 function rankOf(x) {
   let k = 0; while (k + 1 < RANKS.length && x >= RANKS[k + 1][0]) k++;
   const [lo, name] = RANKS[k], nx = RANKS[k + 1];
@@ -1561,15 +1710,40 @@ function goalRing(v, goal) {
   const C = 2 * Math.PI * 42, k = Math.min(1, v / goal), done = v >= goal;
   return `<div class="gring${done ? " done" : ""}" role="img" aria-label="Bugun ${v} / ${goal} XOTIR"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="42"/><circle class="v" cx="50" cy="50" r="42" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - k)).toFixed(1)}"/></svg><span><b>+${nf(v)}</b><small>${done ? "✓ maqsad" : "/ " + goal + " bugun"}</small></span></div>`;
 }
-// One line of the ledger: a note (+10) or a study session (pages, lessons, minutes).
-const sessionX = x => (x.unit === "bet" ? x.qty : x.unit === "dars" ? x.qty * 10 : 0) + Math.floor((x.min || (x.unit === "daqiqa" ? x.qty : 0)) / 10) * 2;
+function sessRow(e) {
+  const b = recs[e.b], [icn, col] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa, U = UNITS[e.unit];
+  return `<button type="button" class="lrow" data-act="sess" data-id="${esc(e.id)}"><span class="tile c-${col}">${ic(e.min && !e.qty ? "clock" : icn)}</span><span class="lrow-t"><b>${esc(b.title)}</b><small>${[e.from && e.to ? `${e.from}–${e.to}` : "", e.min ? fmtMin(e.min) : "", e.via || ""].filter(Boolean).join(" · ") || "o'qildi"}</small></span><span class="lrow-x eff">${e.qty && U ? `${e.qty}<small>${U.one}</small>` : `${e.min}<small>daqiqa</small>`}</span></button>`;
+}
+function sheetSession(x) {
+  const b = recs[x.b], U = UNITS[x.unit];
+  openSheet(`<form class="sheet-body" data-form="sess" data-id="${esc(x.id)}" novalidate>
+    <div><p class="eyebrow">${esc(b.title)} · ${fmtDate(x.day)}</p><h2 class="sheet-h" tabindex="-1" autofocus>O'qish yozuvi</h2></div>
+    <p class="small muted">Adashib kiritilgan bo'lsa, shu yerda tuzating yoki o'chiring. Hisobot darhol to'g'rilanadi.</p>
+    <div class="pair">${U ? `<div class="field"><label for="ss-q">${U.many[0].toUpperCase() + U.many.slice(1)} soni</label><input id="ss-q" name="qty" type="number" inputmode="numeric" min="0" max="20000" value="${x.qty || ""}"></div>` : ""}
+      <div class="field"><label for="ss-m">Vaqt, daqiqa</label><input id="ss-m" name="min" type="number" inputmode="numeric" min="0" max="1440" value="${x.min || ""}"></div></div>
+    <div class="field"><label for="ss-d">Sana</label><input id="ss-d" name="day" type="date" max="${today()}" value="${x.day}"></div>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions"><button type="button" class="btn btn-danger" data-act="sess-del" data-id="${esc(x.id)}">O'chirish</button><span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Saqlash</button></div>
+  </form>`);
+}
+// The ledger: reviews earn XOTIR, notes wait for their first recall, sessions are effort.
+function reviewDays(from) {
+  const m = new Map();
+  for (const x of xbook()) for (const [d, g, l, gr] of x.tl.ev) if (d >= from) { if (!m.has(d)) m.set(d, { k: "r", day: d, n: 0, gain: 0, lost: 0, forgot: 0 }); const r = m.get(d); r.n++; r.gain += g; r.lost += l; if (!gr) r.forgot++; }
+  return [...m.values()].map(r => ({ ...r, c: parse(r.day).getTime() + 22 * 3600e3 }));
+}
 function ledgerRows(list, day) {
-  const by = [];
-  for (const e of list) { const d = e.k === "s" ? e.day : dayOf(e.c), g = by[by.length - 1]; if (g && g[0] === d) g[1].push(e); else by.push([d, [e]]); }
-  return by.map(([d, es]) => `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b><span class="up">+${nf(es.reduce((n, e) => n + (e.k === "s" ? sessionX(e) : 10), 0))} XOTIR</span></div>
-    <div class="ledger-list">${es.map(e => { const b = recs[e.b], [icn, col] = KIND_LOOK[b.kind] || KIND_LOOK.boshqa;
-      if (e.k === "s") { const U = UNITS[e.unit]; return `<button type="button" class="lrow" data-act="book" data-id="${esc(b.id)}"><span class="tile c-${col}">${ic(e.min && !e.qty ? "clock" : icn)}</span><span class="lrow-t"><b>${esc(b.title)}</b><small>${[e.qty && U ? `${e.qty} ${U.one}${e.from && e.to ? ` (${e.from}–${e.to})` : ""}` : "", e.min ? fmtMin(e.min) : "", e.via || ""].filter(Boolean).join(" · ")}</small></span><span class="lrow-x">+${sessionX(e)}<small>XOTIR</small></span></button>`; }
-      return `<button type="button" class="lrow" data-act="item" data-id="${esc(e.id)}"><span class="tile c-${TYPE_COLOR[e.t] || "blue"}">${ic(e.t === "card" ? "cards" : e.t === "quote" ? "feather" : "pen")}</span><span class="lrow-t"><b>${esc(itemText(e).slice(0, 90))}</b><small>${esc(b.title)} · ${TYPES[e.t]}</small></span><span class="lrow-x">+10<small>XOTIR</small></span></button>`; }).join("")}</div>`).join("");
+  const by = [], dayOfE = e => e.k === "s" || e.k === "r" ? e.day : dayOf(e.c);
+  for (const e of list) { const d = dayOfE(e), g = by[by.length - 1]; if (g && g[0] === d) g[1].push(e); else by.push([d, [e]]); }
+  const wt = new Map(xbook().map(x => [x.i.id, x]));
+  return by.map(([d, es]) => { const r = es.find(e => e.k === "r");
+    return `<div class="day-h"><b>${d === day ? "Bugun" : d === addDays(day, -1) ? "Kecha" : fmtDate(d)}, ${WEEKDAYS[parse(d).getDay()]}</b>${r && r.gain - r.lost ? `<span class="${r.gain - r.lost > 0 ? "up" : "down"}">${r.gain - r.lost > 0 ? "+" : "−"}${nf(Math.abs(Math.round(r.gain - r.lost)))} XOTIR</span>` : ""}</div>
+    <div class="ledger-list">${es.map(e => { if (e.k === "r") return `<button type="button" class="lrow" data-act="tab" data-tab="journal"><span class="tile c-green">${ic("learn")}</span><span class="lrow-t"><b>Takror: ${e.n} ta</b><small>${e.forgot ? `${e.forgot} tasi unutildi` : "hammasi eslandi"}</small></span><span class="lrow-x${Math.round(e.gain - e.lost) < 0 ? " neg" : Math.round(e.gain - e.lost) ? "" : " wait"}">${Math.round(e.gain - e.lost) < 0 ? "−" : Math.round(e.gain - e.lost) ? "+" : ""}${nf(Math.abs(Math.round(e.gain - e.lost)))}<small>XOTIR</small></span></button>`;
+      const b = recs[e.b];
+      if (e.k === "s") return sessRow(e);
+      if (e.k === "n") { const [nm, icn, col] = IDEA[e.kind]; return `<button type="button" class="lrow" data-act="idea" data-id="${esc(e.id)}"><span class="tile c-${col}">${ic(icn)}</span><span class="lrow-t"><b>${esc(plain(e.text).slice(0, 90))}</b><small>${esc(b.title)}${ideaWhere(e) ? " · " + ideaWhere(e) : ""}</small></span><span class="lrow-x wait">${nm}<small>${e.kind === "savol" ? (e.done ? "javobli" : "javobsiz") : "daftarda"}</small></span></button>`; }
+      const x = wt.get(e.id), v = x ? valueOn(x.tl, day) : 0, ok = x && x.tl.steps.length && x.tl.steps[x.tl.steps.length - 1][1];
+      return `<button type="button" class="lrow" data-act="item" data-id="${esc(e.id)}"><span class="tile c-${TYPE_COLOR[e.t] || "blue"}">${ic(e.t === "card" ? "cards" : e.t === "quote" ? "feather" : "pen")}</span><span class="lrow-t"><b>${esc(itemText(e).slice(0, 90))}</b><small>${esc(b.title)} · ${TYPES[e.t]}</small></span>${ok ? `<span class="lrow-x">${Math.round(v)}<small>XOTIR</small></span>` : `<span class="lrow-x wait">10<small>kutilmoqda</small></span>`}</button>`; }).join("")}</div>`; }).join("");
 }
 function popGain(n) {
   if (!n) return;
@@ -1579,7 +1753,7 @@ function popGain(n) {
   document.body.appendChild(el); buzz(n > 0 ? [12, 40, 12] : 30);
   setTimeout(() => el.remove(), 1700);
 }
-const todayX = () => { const d = today(); return xotir(tally(x => x === d)).kirim; };
+const todayX = () => { const d = today(); return flows(d, d).gain; };
 const xt = n => `${n < 0 ? "−" : ""}${nf(Math.abs(n))}`;
 const fmtMin = m => m < 60 ? `${m} daqiqa` : `${Math.floor(m / 60)} soat${m % 60 ? ` ${m % 60} daq` : ""}`;
 const nf = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -1602,6 +1776,7 @@ function paintTop() {
 }
 
 function render() {
+  XC = null;
   const day = lastDay = today(), due = dueItems(day);
   if (ui.tab === "journal") { ui.tab = "stats"; ui.sub = "journal"; }
   for (const t of document.querySelectorAll(".nav button")) { if (t.dataset.tab === ui.tab) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current"); }
@@ -1632,22 +1807,22 @@ function intro() {
   return `<section class="hero">
     <p class="hero-lbl">${ic("layers")}${APP()} · xotira balansi</p>
     <p class="hero-n">0<small>XOTIR</small></p>
-    <p class="hero-sub small">O'rgangan va bilganlaringiz hisobi. O'rgansangiz XOTIR ko'payadi, unutsangiz kamayadi.</p>
+    <p class="hero-sub small">Xotirangizda hozir turgan bilim. O'rganib eslasangiz ko'payadi, takrorlamasangiz o'z-o'zidan kamayadi.</p>
     <div class="pills"><span class="pill">${ic("book")}0 bet</span><span class="pill">${ic("cap")}0 dars</span><span class="pill">${ic("clock")}0 daqiqa</span></div>
   </section>
   <div class="duo">
-    <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+0<small> XOTIR</small></b><em>Yangi narsa o'rgansangiz</em></div>
-    <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>0<small> XOTIR</small></b><em>Takrorda unutsangiz</em></div>
+    <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+0<small> XOTIR</small></b><em>Takrorda eslasangiz</em></div>
+    <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>0<small> XOTIR</small></b><em>Unutsangiz yoki eskirsa</em></div>
   </div>
   <section class="card sec start">
     <h2 class="h2">Hisobni boshlang</h2>
     <p class="small muted">Hozir o'qiyotgan kitobingiz, kursingiz yoki o'rganayotgan tilingizni qo'shing. Keyin har kuni + tugmasi bilan bir qator yozasiz.</p>
     <button type="button" class="btn btn-big" data-act="book-new">${ic("plus")}Birinchi manbani qo'shish</button>
+    <button type="button" class="btn btn-wide" data-act="demo-load">${ic("spark")}Namuna bilan sinab ko'rish</button>
     ${cloud.sync === "connecting" ? `<p class="small muted center">Oldingi yozuvlaringiz bor-yo'qligi tekshirilmoqda…</p>` : ""}
   </section>
   <section class="sec"><h2 class="h2">Qanday ishlaydi</h2>${method()}</section>
-  <details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
-    ${RATES.map(([, v, w]) => `<p><b>+${v}</b> ${w}</p>`).join("")}<p><b>−${LOSS}</b> har «Unutdim»</p></div></details>`;
+  ${xRules()}`;
 }
 function method() {
   return `<ol class="steps">
@@ -1697,10 +1872,6 @@ function evening(day) {
   const n = touchedToday(day).length;
   return n ? `<section class="card sec"><div class="sec-head"><span class="tile c-purple">${ic("moon")}</span><div class="grow"><p class="h2">Uxlashdan oldin</p><p class="small muted">Bugungi ${n} ta yozuvni bir ko'rib chiqing: uyqu ularni mustahkamlaydi.</p></div></div><div><button type="button" class="btn btn-sm" data-act="review" data-m="evening">Kechki takror</button></div></section>` : "";
 }
-function ring(done, total) {
-  const C = 2 * Math.PI * 40, k = total ? done / total : 0;
-  return `<div class="ring" role="img" aria-label="Bugun ${done} / ${total}"><svg viewBox="0 0 100 100"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33d6c4"/><stop offset=".55" stop-color="#4b6bfb"/><stop offset="1" stop-color="#5a3ff0"/></linearGradient></defs><circle class="track" cx="50" cy="50" r="40" fill="none"/><circle class="val" cx="50" cy="50" r="40" fill="none" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - k)).toFixed(1)}"/></svg><b>${Math.round(k * 100)}%</b></div>`;
-}
 
 const TIPS = ["Qisqa, lekin har kungi takror eng yaxshi ishlaydi", "Javobni ko'rishdan oldin albatta o'zingiz eslab ko'ring", "Unutganingiz xato emas: aynan shu payt xotira kuchayadi", "Yangi narsani o'z so'zingiz bilan yozing", "Aralash takror bitta mavzuni ketma-ket takrorlashdan kuchliroq", "Uxlashdan oldingi takror ertalabgacha mustahkamlanadi", "Manbani yopib, yoddan yozing"];
 // Old knowledge comes back: the same day in earlier years (or a month ago), and one older note a day.
@@ -1717,8 +1888,8 @@ function memories(day) {
     <h2 class="h2">Xotiralar</h2>
     ${head ? `<div class="mem"><p class="eyebrow">${ic("cal")}${head}</p><div class="rows">${list.slice(0, 3).map(i => itemRow(i, day, true)).join("")}</div></div>` : ""}
     ${pick ? `<div class="card mem-pick"><p class="eyebrow">${ic("spark")}Kunning yozuvi · ${fmtDate(dayOf(pick.c))} · ${esc(recs[pick.b].title)}</p>
-      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" ? pick.q : pick.t === "cloze" ? clozePlain(pick.a) : `${pick.r ? pick.r + ": " : ""}${cueOf(pick)}`)}</p>
-      <details><summary>Eslab ko'ring, keyin oching</summary><p class="mem-a">${esc(pick.t === "cloze" ? pick.a.replace(CLOZE, "$1") : pick.a)}</p></details>
+      <p class="mem-q">${esc(pick.t === "card" || pick.t === "mnemo" || pick.t === "sketch" ? plain(pick.q) : pick.t === "cloze" ? clozePlain(pick.a) : `${pick.r ? pick.r + ": " : ""}${cueOf(pick)}`)}</p>
+      <details><summary>Eslab ko'ring, keyin oching</summary><p class="mem-a">${pick.t === "sketch" ? sketchImg(pick) : rich(pick.t === "cloze" ? pick.a.replace(CLOZE, "$1") : pick.a)}</p></details>
       <div class="acts"><button type="button" class="btn btn-sm" data-act="pick-next">Boshqasi</button><button type="button" class="btn btn-sm" data-act="item" data-id="${esc(pick.id)}">Ochish</button></div></div>` : ""}
   </section>`;
 }
@@ -1737,24 +1908,25 @@ function viewToday(day, due) {
   const bs = books();
   if (!bs.length) return intro();
   const all_ = items(), its = all_.filter(i => !i.off), streak = streakNow(), learned = all_.filter(i => !i.rev).length;
-  const lt = lifeTally(), life = xotir(lt), r = rankOf(life.net), goal = cfg().dg, got = todayX();
-  const per = ui.per || monthOf(day), pt = tally(d => inPer(d, per)), px = xotir(pt), a = activity(per);
+  const lt = lifeTally(), bal = Math.round(balanceOn(day)), r = rankOf(bal), goal = cfg().dg, got = todayX(), pend = pendingOf().length;
+  const risk = Math.round(balanceOn(day) - balanceOn(addDays(day, 1)));
+  const per = ui.per || monthOf(day), pt = tally(d => inPer(d, per)), [pf, pto] = perRange(per, day), px = flows(pf, pto), a = activity(per);
   const perName = per === "all" ? "Butun davr" : `${MONTHS[+per.slice(5) - 1][0].toUpperCase() + MONTHS[+per.slice(5) - 1].slice(1)}`;
   const doneToday = all_.reduce((n, i) => n + i.h.filter(x => x[0] === day).length, 0);
   const next = its.map(i => i.d).filter(d => d > day).sort()[0];
-  const recent = [...all_.filter(i => !i.rev), ...sessions()].sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 6);
+  const recent = [...all_.filter(i => !i.rev), ...sessions(), ...ideas(), ...reviewDays(addDays(day, -14))].sort((x, y) => (y.c || 0) - (x.c || 0)).slice(0, 7);
   const order = [...bs].sort((x, y) => (x.status === "done") - (y.status === "done") || ((itemsOf(y.id).slice(-1)[0] || {}).c || 0) - ((itemsOf(x.id).slice(-1)[0] || {}).c || 0));
   const bits = unitBits(lt).slice(0, 3);
   return `<section class="hero bal">
     <div class="bal-top">
       <div class="bal-main">
         <p class="hero-lbl">${ic("layers")}Xotira balansi</p>
-        <p class="hero-n"><span data-count="${Math.max(0, life.net)}">${xt(life.net)}</span><small>XOTIR</small></p>
+        <p class="hero-n"><span data-count="${bal}">${nf(bal)}</span><small>XOTIR</small></p>
         <button type="button" class="rank-chip" data-act="rank">${ic("star")}${r.k + 1}-daraja · ${r.name}</button>
       </div>
       ${goalRing(got, goal)}
     </div>
-    ${r.next ? `<div class="rank-bar"><span class="bar"><i data-w="${r.pct}"></i></span><small>«${r.nextName}» unvonigacha ${nf(r.next - life.net)} XOTIR</small></div>` : ""}
+    ${r.next ? `<div class="rank-bar"><span class="bar"><i data-w="${r.pct}"></i></span><small>«${r.nextName}» unvonigacha ${nf(r.next - bal)} XOTIR${pend ? ` · ${pend} ta yozuv kutilmoqda (+${nf(pend * XV)})` : ""}</small></div>` : ""}
     <div class="pills">${bits.map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${ic("flame")}${streak} kun</span></div>
   </section>
   <div class="cta">
@@ -1762,22 +1934,26 @@ function viewToday(day, due) {
       : `<div class="cta-done">${ic("check")}<span><b>${doneToday ? "Takror bajarildi" : "Takror yo'q"}</b><small>${next ? `keyingisi ${inDays(diffDays(next, day))}` : "yangi narsa o'rganing"}</small></span></div>`}
     <button type="button" class="btn btn-big ghost" data-act="quick">${ic("plus")}O'rgandim</button>
   </div>
+  ${due.length ? layers(due) : ""}
+  <p class="tipline"><span>${cfg().cue ? "Odat" : "Maslahat"}</span>${esc(cfg().cue ? `Takror vaqti: ${cfg().cue}` : TIPS[(+day.slice(8) + +day.slice(5, 7)) % TIPS.length])}</p>
+  ${due.length && risk > 0 ? `<p class="risk">${ic("down")}Bugun takrorlamasangiz, ertaga balans <b>−${nf(risk)} XOTIR</b> kamayadi.</p>` : ""}
   ${demoNote()}
   ${focusBand()}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">${perName} hisobi</h2></div>
     ${periodChips("per")}
     <div class="duo">
-      <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.kirim)}<small> XOTIR</small></b><em>${a.made} ta yangi, ${pt.good + pt.easy + pt.hard} ta eslandi</em></div>
-      <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.chiqim ? "−" + nf(px.chiqim) : "0"}<small> XOTIR</small></b><em>${a.forgot} marta, ${a.reviews} ta takrordan</em></div>
+      <div class="stat"><span class="tile c-green">${ic("up")}</span><span>O'rgandim</span><b>+${nf(px.gain)}<small> XOTIR</small></b><em>${px.reviews} ta takrordan · ${a.made} ta yangi yozuv</em></div>
+      <div class="stat"><span class="tile c-red">${ic("down")}</span><span>Unutdim</span><b>${px.lost + px.fade ? "−" + nf(px.lost + px.fade) : "0"}<small> XOTIR</small></b><em>${nf(px.lost)} unutildi · ${nf(px.fade)} eskirdi</em></div>
     </div>
-    ${unitBits(pt).length ? `<div class="uline">${unitBits(pt).map(([i, v, w]) => `<span>${ic(i)}<b>${v}</b> ${w}</span>`).join("")}</div>` : ""}
+    ${unitBits(pt).length ? `<div class="uline"><em>Harakat:</em>${unitBits(pt).map(([i, v, w]) => `<span>${ic(i)}<b>${v}</b> ${w}</span>`).join("")}</div>` : ""}
   </section>
   ${evening(day)}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">So'nggi amallar</h2><button type="button" class="link" data-act="tab" data-tab="journal">Hammasi${ic("arrow")}</button></div>
     ${recent.length ? ledgerRows(recent, day) : `<div class="empty"><p>Hali hech narsa yozilmagan.</p><p class="small muted">+ tugmasini bosib, bugun o'rganganingizni yozing.</p></div>`}
   </section>
+  ${modesGrid(null, "Aralash mashq · barcha manbalar")}
   ${memories(day)}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">Manbalarim</h2><button type="button" class="btn btn-sm" data-act="book-new">${ic("plus")}Yangi</button></div>
@@ -1785,14 +1961,85 @@ function viewToday(day, due) {
   </section>
   ${goals().length ? goalsSection() : ""}`;
 }
+// A ready sample: one novel and one word list with notes of several kinds, some already reviewed.
+function loadDemo() {
+  const now = Date.now(), day = today(), ago = n => addDays(day, -n), at = n => parse(ago(n)).getTime() + 9 * 3600e3;
+  const b1 = { id: "demo-b1", k: "b", demo: 1, title: "O'tkan kunlar", author: "Abdulla Qodiriy", kind: "badiiy", pages: 410, cur: 48, status: "reading", c: at(9), fin: 0, tags: ["adabiyot"] };
+  const b2 = { id: "demo-b2", k: "b", demo: 1, title: "Ingliz tili: B2 so'zlar", author: "", kind: "til", pages: 30, cur: 3, status: "reading", c: at(8), fin: 0, tags: ["ingliz tili"] };
+  const N = (id, b, t, q, a, r, made, h, extra) => ({ id, k: "i", demo: 1, b, t, q, a, r, f: 0, e: 0, c: at(made), s: Math.min(h.filter(x => x[1] >= 2).length, 3), d: h.length ? ago(Math.max(0, made - 4)) : addDays(day, 0), n: h.length, l: 0, h, ...extra });
+  const out = [b1, b2,
+    N("demo-i1", "demo-b1", "recall", "", "Otabek Toshkentdan Marg'ilonga **savdo ishi** bilan keladi va saroyda to'xtaydi. Homid bilan uylanish haqida bahslashadi: Otabek er-xotin bir-birini **yoqtirib** turmush qurishi kerak, deb hisoblaydi.", "1-bob", 9, [[ago(8), 2], [ago(5), 2]]),
+    N("demo-i2", "demo-b1", "card", "Otabek Marg'ilonga nima uchun kelgan?", "Savdo ishi bilan.", "1-bob", 9, [[ago(8), 2]]),
+    N("demo-i3", "demo-b1", "cloze", "", "Asar muallifi [[Abdulla Qodiriy]], u o'zbek adabiyotidagi birinchi [[roman]] hisoblanadi.", "Muqaddima", 8, [[ago(7), 3]]),
+    N("demo-i4", "demo-b1", "feynman", "", "Roman eski turmush tarzi va yangi qarashlar to'qnashuvi haqida: > Otabek yangi fikrli, Homid esa eski odatlar tarafdori.", "2-bob", 6, [[ago(5), 1]]),
+    N("demo-i5", "demo-b1", "quote", "", "Ko'ngil qo'ygan narsangga yetishmoq — baxt.", "", 4, []),
+    N("demo-i6", "demo-b2", "card", "reluctant", "istamaydigan, ikkilanib turgan", "1-dars", 8, [[ago(7), 2], [ago(3), 0]]),
+    N("demo-i7", "demo-b2", "card", "thorough", "puxta, sinchkov, boshidan oxirigacha", "1-dars", 8, [[ago(7), 3]]),
+    N("demo-i8", "demo-b2", "mnemo", "ubiquitous", "hamma joyda uchraydigan", "2-dars", 5, [], { m: "«U-bi-kvi» — «ubi» lotincha «qayerda»: hamma qayerda" }),
+    N("demo-i9", "demo-b2", "cloze", "", "She was [[reluctant]] to sign the contract.", "2-dars", 3, []),
+    { id: "demo-s1", k: "s", demo: 1, b: "demo-b1", day: ago(9), qty: 22, unit: "bet", min: 35, from: 1, to: 22, c: at(9) + 1 },
+    { id: "demo-s2", k: "s", demo: 1, b: "demo-b1", day: ago(6), qty: 26, unit: "bet", min: 40, from: 23, to: 48, c: at(6) + 1 },
+    { id: "demo-s3", k: "s", demo: 1, b: "demo-b2", day: ago(3), qty: 2, unit: "dars", min: 30, from: 2, to: 3, c: at(3) + 1 }];
+  put(out.map(r => ({ ...r, u: now })));
+  toast("Namuna yuklandi. Sinab ko'ring, keyin bitta tugma bilan o'chirasiz.");
+}
+/* ── sketches: ideas from a book drawn by hand ── */
+const sketchSrc = it => it.img || (it.att && it.att[0] && /^image\//.test(it.att[0].type) ? attUrl(it.att[0]) : "");
+const sketchImg = (it, cls) => sketchSrc(it) ? `<img class="sk-img ${cls || ""}" src="${esc(sketchSrc(it))}" alt="${esc(it.q || "Eskiz")}" loading="lazy">` : "";
+function sketchGallery_old(bid) {
+  const list = items().filter(i => i.t === "sketch" && (!bid || i.b === bid)).sort((x, y) => (y.c || 0) - (x.c || 0));
+  if (!list.length) return "";
+  return `<section class="sec"><h2 class="h2">Eskizlar · ${list.length}</h2><div class="sk-grid">${list.map(i => `<button type="button" class="sk-tile" data-act="item" data-id="${esc(i.id)}">${sketchImg(i)}<span>${esc(i.q || "Nomsiz")}</span></button>`).join("")}</div></section>`;
+}
+const ideas = bid => all().filter(r => r.k === "n" && !r.del && recs[r.b] && !recs[r.b].del && (!bid || r.b === bid));
+const ideaWhere = n => [n.page ? `${n.page}-bet` : "", n.line ? `${n.line}-qator` : ""].filter(Boolean).join(", ");
+function ideaCard(n, withSource) {
+  const [name, icn, col] = IDEA[n.kind];
+  return `<button type="button" class="idea c-${col}" data-act="idea" data-id="${esc(n.id)}">
+    <span class="idea-h"><span class="tag">${ic(icn)}${name}</span>${ideaWhere(n) ? `<b>${ideaWhere(n)}</b>` : ""}${withSource ? `<em>${esc(recs[n.b].title)}</em>` : ""}${n.kind === "savol" ? `<span class="idea-st${n.done ? " ok" : ""}">${n.done ? "javob topildi" : "javobsiz"}</span>` : ""}</span>
+    ${n.quote ? `<span class="idea-quote">${rich(n.quote)}</span>` : ""}
+    <span class="idea-text">${rich(n.text)}</span>
+    ${n.kind === "savol" && n.answer ? `<span class="idea-ans"><b>Javob:</b> ${rich(n.answer)}</span>` : ""}
+  </button>`;
+}
+function ideasSection(b) {
+  const list = ideas(b.id);
+  if (!list.length) return "";
+  const f = ui.ideaF || "all", n = k => list.filter(x => k === "open" ? x.kind === "savol" && !x.done : x.kind === k).length;
+  const shown = list.filter(x => f === "all" || (f === "open" ? x.kind === "savol" && !x.done : x.kind === f)).sort((x, y) => (x.page || 1e9) - (y.page || 1e9) || (x.line || 0) - (y.line || 0) || (x.c || 0) - (y.c || 0));
+  const chip = (k, name, c) => c || k === "all" ? `<button type="button" class="chip" data-act="idea-f" data-f="${k}" aria-pressed="${f === k}">${name}${k === "all" ? ` · ${list.length}` : ` · ${c}`}</button>` : "";
+  return `<section class="sec"><div class="sec-head"><h2 class="h2">Fikrlar daftari</h2><button type="button" class="btn btn-sm" data-act="idea" data-b="${esc(b.id)}">${ic("plus")}Fikr</button></div>
+    <div class="chips scroller">${chip("all", "Hammasi")}${chip("fikr", "Fikr", n("fikr"))}${chip("savol", "Savol", n("savol"))}${chip("goya", "G'oya", n("goya"))}${chip("open", "Javobsiz", n("open"))}</div>
+    <div class="ideas">${shown.map(x => ideaCard(x)).join("") || `<p class="small muted">Bu ro'yxatda hozircha hech narsa yo'q.</p>`}</div></section>`;
+}
+function sheetIdea(b, n) {
+  const kind = n ? n.kind : ui.ideaKind || "fikr", U = unitOf(b);
+  const page = n ? n.page || "" : U && UNITS[KINDS[b.kind].unit] === UNITS.bet ? (b.cur || "") : "";
+  openSheet(`<form class="sheet-body" data-form="idea" data-b="${esc(b.id)}" data-id="${n ? esc(n.id) : ""}" novalidate>
+    <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1">${n ? "Fikrni tahrirlash" : "O'qiyotganda nima keldi?"}</h2></div>
+    <div class="seg3" role="radiogroup" aria-label="Turi">${Object.entries(IDEA).map(([k, [name, icn]]) => `<label><input class="vh" type="radio" name="kind" value="${k}"${k === kind ? " checked" : ""}>${ic(icn)}${name}</label>`).join("")}</div>
+    <div class="pair">
+      <div class="field"><label for="id-p">${U ? U.one[0].toUpperCase() + U.one.slice(1) : "Bet"}</label><input id="id-p" name="page" type="number" inputmode="numeric" min="0" max="20000" value="${page}" placeholder="45"></div>
+      <div class="field"><label for="id-l">Qator${opt}</label><input id="id-l" name="line" type="number" inputmode="numeric" min="0" max="500" value="${n && n.line ? n.line : ""}" placeholder="12"></div>
+    </div>
+    <div class="field"><label for="id-q">Kitobdagi jumla${opt}</label><textarea id="id-q" name="quote" rows="2" data-grow class="no-rt" placeholder="Fikrga sabab bo'lgan jumlani ko'chirib qo'ying">${n ? esc(n.quote) : ""}</textarea></div>
+    <div class="field"><label for="id-t">${kind === "savol" ? "Savolingiz" : kind === "goya" ? "G'oyangiz" : "Fikringiz"}</label><div class="cap-text"><textarea id="id-t" name="text" rows="4" data-grow placeholder="Nima xayolingizga keldi? O'z so'zingiz bilan.">${n ? esc(n.text) : ""}</textarea>${Rec ? `<button type="button" class="mic" data-act="mic" data-t="id-t" aria-label="Ovoz bilan yozish" aria-pressed="false">${ic("mic")}</button>` : ""}</div></div>
+    <div class="idea-answer"${kind === "savol" ? "" : " hidden"}>
+      <div class="field"><label for="id-a">Javob${opt}</label><textarea id="id-a" name="answer" rows="2" data-grow placeholder="Kitobning keyingi betlarida yoki boshqa joyda topgan javobingiz">${n ? esc(n.answer) : ""}</textarea></div>
+      <label class="check" for="id-d"><input type="checkbox" id="id-d" name="done" value="1"${n && n.done ? " checked" : ""}>Javob topildi</label>
+    </div>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions">${n ? `<button type="button" class="btn btn-danger" data-act="idea-del" data-id="${esc(n.id)}">O'chirish</button><button type="button" class="btn btn-sm" data-act="idea-card" data-id="${esc(n.id)}">${ic("cards")}Kartaga aylantirish</button>` : ""}<span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Saqlash</button></div>
+  </form>`);
+  if (!n) setTimeout(() => { const t = $("#id-t"); if (t) t.focus(); }, 60);
+}
 function sheetRank() {
-  const life = xotir(lifeTally()).net, r = rankOf(life);
+  const life = Math.round(balanceOn(today())), r = rankOf(life);
   openSheet(`<div class="sheet-body">
     <h2 class="sheet-h" tabindex="-1" autofocus>Unvonlar</h2>
-    <p class="small muted">Unvon umr bo'yi to'plagan XOTIR balansingizga qarab beriladi. Unutsangiz balans kamayadi, shuning uchun takrorlab turish ham muhim.</p>
+    <p class="small muted">Unvon hozir xotirangizda turgan XOTIR'ga qarab beriladi. Takrorlamasangiz, balans o'z-o'zidan kamayadi va unvon ham pasayishi mumkin. Yangi narsa o'rganib, eskisini eslab tursangiz, ko'tarilasiz.</p>
     <div class="ranks">${RANKS.map(([v, n], k) => `<div class="rk${k < r.k ? " got" : k === r.k ? " cur" : ""}"><span class="rk-n">${k + 1}</span><span><b>${n}</b><small>${nf(v)} XOTIR</small></span>${k < r.k ? ic("check") : k === r.k ? `<em>siz shu yerdasiz</em>` : ""}</div>`).join("")}</div>
-    <details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
-      ${RATES.map(([, v, w]) => `<p><b>+${v}</b> ${w}</p>`).join("")}<p><b>−${LOSS}</b> har «Unutdim»</p></div></details>
+    ${xRules()}
   </div>`);
 }
 function srcCard(b, day, go) {
@@ -1839,6 +2086,7 @@ function viewJournal(day) {
   const per = ui.per && ui.per !== "all" ? ui.per : monthOf(day);
   const byDay = new Map(), add = (d, k) => { if (!byDay.has(d)) byDay.set(d, { made: [], rev: 0 }); if (k) byDay.get(d).made.push(k); else byDay.get(d).rev++; };
   for (const i of items()) { const d = dayOf(i.c); if (monthOf(d) === per) add(d, i); for (const [x] of i.h) if (monthOf(x) === per) add(x); }
+  for (const x of sessions()) if (monthOf(x.day) === per) { if (!byDay.has(x.day)) byDay.set(x.day, { made: [], rev: 0 }); (byDay.get(x.day).ss = byDay.get(x.day).ss || []).push(x); }
   const [y, m] = per.split("-").map(Number), first = new Date(y, m - 1, 1), n = new Date(y, m, 0).getDate(), lead = (first.getDay() + 6) % 7;
   const cells = [];
   for (let k = 0; k < lead; k++) cells.push(`<i class="blank"></i>`);
@@ -1860,6 +2108,7 @@ function viewJournal(day) {
   <p class="date-pill">${MONTHS[m - 1][0].toUpperCase() + MONTHS[m - 1].slice(1)} ${y}</p>
   ${days.length ? days.map(d => { const v = byDay.get(d), dd = parse(d);
     return `<section class="sec"><div class="day-h"><b>${fmtDate(d)}, ${WEEKDAYS[dd.getDay()]}</b><span>${v.made.length ? `+${v.made.length} yozuv` : ""}${v.made.length && v.rev ? " · " : ""}${v.rev ? `${v.rev} takror` : ""}</span></div>
+      ${v.ss ? `<div class="ledger-list">${v.ss.map(sessRow).join("")}</div>` : ""}
       ${v.made.length ? `<div class="rows">${v.made.map(i => itemRow(i, day, true)).join("")}</div>` : ""}</section>`; }).join("")
     : `<p class="muted">Bu oyda hali yozuv yoki takror yo'q.</p>`}`;
 }
@@ -1868,7 +2117,7 @@ function viewShelf(day) {
   const bs = books(), f = ui.filter;
   const n = { reading: bs.filter(b => b.status !== "done").length, done: bs.filter(b => b.status === "done").length, all: bs.length };
   const quotes = items().filter(i => i.t === "quote").sort((a, b) => (b.c || 0) - (a.c || 0));
-  n.quotes = quotes.length;
+  n.quotes = quotes.length; n.ideas = ideas().length;
   const tags = [...new Set(bs.flatMap(b => (b.tags || []).map(t => t.toLowerCase())))].sort();
   if (ui.tag && !tags.includes(ui.tag.toLowerCase())) ui.tag = "";
   const list = bs.filter(b => (f === "all" || (f === "done") === (b.status === "done")) && (!ui.tag || (b.tags || []).some(t => t.toLowerCase() === ui.tag.toLowerCase())));
@@ -1876,10 +2125,10 @@ function viewShelf(day) {
   const empty = !bs.length ? "Hali manba yo'q. Kitob, kurs, video yoki tilingizni qo'shing." : f === "done" ? "Tugatilgan manba hali yo'q." : "Bu ro'yxatda manba yo'q.";
   return `<section class="sec">
     <div class="sec-head"><h1 class="h1">Manbalar</h1><button type="button" class="btn btn-sm btn-gold" data-act="book-new">${ic("plus")}Qo'shish</button></div>
-    <div class="chips scroller">${chip("reading", "O'rganyapman")}${chip("done", "Tugatganlarim")}${chip("all", "Hammasi")}${chip("quotes", "Iqtiboslar")}</div>
+    <div class="chips scroller">${chip("reading", "O'rganyapman")}${chip("done", "Tugatganlarim")}${chip("all", "Hammasi")}${chip("quotes", "Iqtiboslar")}${n.ideas ? chip("ideas", "Fikrlar") : ""}</div>
     ${tags.length && f !== "quotes" ? `<div class="chips scroller tagbar" aria-label="Mavzu">${tags.map(t => `<button type="button" class="chip tagchip" data-act="tag" data-t="${esc(t)}" aria-pressed="${!!ui.tag && ui.tag.toLowerCase() === t}">#${esc(t)}</button>`).join("")}</div>` : ""}
   </section>
-  ${f === "quotes" ? (quotes.length ? `<section class="sec"><p class="small muted">Barcha manbalardagi iqtiboslar bir joyda.</p><div class="rows">${quotes.map(i => itemRow(i, day, true)).join("")}</div></section>` : `<p class="muted">Hali iqtibos yo'q. «O'rgandim» oynasidagi «Iqtibos yoki bayt» bo'limida qo'shasiz.</p>`)
+  ${f === "ideas" ? `<section class="sec"><p class="small muted">O'qiyotganda kelgan fikr, savol va g'oyalar, bet tartibida.</p>${books().filter(b => ideas(b.id).length).map(b => `<h2 class="h2 idea-src">${esc(b.title)}</h2><div class="ideas">${ideas(b.id).sort((x, y) => (x.page || 1e9) - (y.page || 1e9) || (x.c || 0) - (y.c || 0)).map(x => ideaCard(x)).join("")}</div>`).join("")}</section>` : f === "quotes" ? (quotes.length ? `<section class="sec"><p class="small muted">Barcha manbalardagi iqtiboslar bir joyda.</p><div class="rows">${quotes.map(i => itemRow(i, day, true)).join("")}</div></section>` : `<p class="muted">Hali iqtibos yo'q. «O'rgandim» oynasidagi «Iqtibos yoki bayt» bo'limida qo'shasiz.</p>`)
     : list.length ? `<div class="rows">${list.map(b => srcCard(b, day, false)).join("")}</div>` : `<p class="muted">${empty}</p>`}`;
 }
 
@@ -1904,20 +2153,24 @@ function viewBook(b, day) {
       <button type="button" class="dk-a" data-act="cap" data-id="${id}"><span class="tile c-green">${ic("pen")}</span><b>Bugun o'rgandim</b><small>Bir qator va qancha o'qiganingiz</small></button>
       <button type="button" class="dk-a" data-act="item-new" data-id="${id}" data-t="card"><span class="tile c-blue">${ic("plus")}</span><b>Bitta karta</b><small>Savol, bo'shliq, iqtibos</small></button>
       <button type="button" class="dk-a" data-act="bulk" data-id="${id}"><span class="tile c-purple">${ic("cards")}</span><b>Ko'p karta</b><small>Ro'yxatdan bir yo'la</small></button>
+      <button type="button" class="dk-a" data-act="idea" data-b="${id}"><span class="tile c-yellow">${ic("bulb")}</span><b>Fikr yozish</b><small>Betda kelgan fikr, savol, g'oya</small></button>
     </div>
   </section>
+  ${ideasSection(b)}
   ${modesGrid(b.id)}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">Kartalar${its.length ? ` · ${its.length}` : ""}</h2>${its.length ? `<button type="button" class="link" data-act="item-new" data-id="${id}" data-t="card">${ic("plus")}Karta</button>` : ""}</div>
     ${its.length > 5 ? `<div class="dk-search">${ic("search")}<input type="search" id="dk-q" placeholder="Kartalardan qidirish" autocomplete="off" aria-label="Kartalardan qidirish"></div>` : ""}
     ${its.length ? `<div class="rows dk-list">${its.map(i => itemRow(i, day)).join("")}</div><p class="muted small" id="dk-none" hidden>Hech narsa topilmadi.</p>` : `<div class="empty"><p>Bu to'plamda hali karta yo'q.</p><p class="small muted">Tepada «Bugun o'rgandim» yoki «Bitta karta»ni bosing.</p></div>`}
   </section>
+  ${(() => { const ss = sessions().filter(x => x.b === b.id).sort((x, y) => (y.c || 0) - (x.c || 0)); return ss.length ? `<section class="sec"><h2 class="h2">O'qish yozuvlari · ${ss.length}</h2><div class="ledger-list">${ss.slice(0, ui.allSess ? 500 : 6).map(sessRow).join("")}</div>${ss.length > 6 && !ui.allSess ? `<button type="button" class="link small" data-act="all-sess">Hammasini ko'rsatish</button>` : ""}</section>` : ""; })()}
+  ${sketchGallery_old(b.id)}
   ${linked.length ? `<section class="sec"><h2 class="h2">Boshqa manbalardan bog'langan · ${linked.length}</h2><div class="rows">${linked.map(i => itemRow(i, day, true)).join("")}</div></section>` : ""}`;
 }
-function modesGrid(bid) {
+function modesGrid(bid, title) {
   const ps = pairsOf(bid), sp = shortPairs(ps);
   if (!ps.length) return "";
-  return `<section class="sec"><h2 class="h2">Mashq qilish</h2><div class="mgrid">${MODES.map(([m, n, d, i, c, need]) => { const okk = (m === "cards" ? ps.length : sp.length) >= need;
+  return `<section class="sec"><h2 class="h2">${title || "Mashq qilish"}</h2><div class="mgrid">${MODES.map(([m, n, d, i, c, need]) => { const okk = (m === "cards" ? ps.length : sp.length) >= need;
     return `<button type="button" class="mg" data-act="study" data-m="${m}" data-id="${esc(bid)}"${okk ? "" : ` disabled title="Kamida ${need} ta qisqa savol-javob kerak"`}><span class="mode-ic c-${c}">${ic(i)}</span><b>${n}</b>${okk ? "" : `<small>${need} ta karta kerak</small>`}</button>`; }).join("")}</div></section>`;
 }
 function sheetDeckMenu(b) {
@@ -1932,7 +2185,7 @@ function sheetDeckMenu(b) {
       ${row("focus-new", "clock", "Diqqat taymeri (Pomodoro)")}
     </div>
     ${its.length ? `<div class="menu">
-      ${cloud.sample ? row("chat", "spark", "Claude bilan imtihon", ` data-m="exam"`) + row("chat", "spark", "Xatoni top o'yini", ` data-m="error"`) : ""}
+      ${aiOn() ? row("chat", "spark", "Sokrat imtihoni (AI so'raydi)", ` data-m="exam"`) + row("chat", "spark", "Xatoni top o'yini", ` data-m="error"`) : ""}
       ${row("quiz", "doc", "Do'stga savollar (nusxa)")}
     </div>` : ""}
     <div class="menu">${row("methods", "bulb", `${FIELDS[f]} uchun mos usullar`, ` data-f="${f}"`)}</div>
@@ -1943,11 +2196,12 @@ function sheetAdd(b) {
   const id = esc(b.id);
   openSheet(`<div class="sheet-body">
     <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>Nima qo'shasiz?</h2></div>
-    <div class="dk-add col">
+    <div class="dk-add vlist">
       <button type="button" class="dk-a" data-act="cap" data-id="${id}"><span class="tile c-green">${ic("pen")}</span><b>Bugun o'rgandim</b><small>Bir qator, qancha o'qidingiz va qancha vaqt</small></button>
       <button type="button" class="dk-a" data-act="read" data-id="${id}"><span class="tile c-teal">${ic("doc")}</span><b>Batafsil yozish</b><small>Yoddan yozish, Feynman, bog'lash, savollar</small></button>
       <button type="button" class="dk-a" data-act="item-new" data-id="${id}" data-t="card"><span class="tile c-blue">${ic("plus")}</span><b>Bitta karta</b><small>Savol-javob, bo'shliq, eslatkich yoki iqtibos</small></button>
       <button type="button" class="dk-a" data-act="bulk" data-id="${id}"><span class="tile c-purple">${ic("cards")}</span><b>Ko'p karta</b><small>«so'z — tarjima» ro'yxatini bir yo'la</small></button>
+      <button type="button" class="dk-a" data-act="idea" data-b="${id}"><span class="tile c-yellow">${ic("bulb")}</span><b>Fikr, savol yoki g'oya</b><small>Qaysi bet va qatorda nima xayolingizga keldi</small></button>
     </div>
     <div><button type="button" class="link small" data-act="quick-all">Boshqa manbaga qo'shish</button></div>
   </div>`);
@@ -1957,7 +2211,7 @@ function suits(b) {
   const top = CATALOG.filter(m => m.l >= 2 && m.a && fits(m, f)).sort((x, y) => (x.f === "h") - (y.f === "h") || y.l - x.l).slice(0, 6);
   return `<section class="card sec"><p class="eyebrow">${FIELDS[f]} uchun eng mos usullar</p><div class="chips">${top.map(m => `<span class="tag">${m.n}</span>`).join("")}</div><div><button type="button" class="link small" data-act="methods" data-f="${f}">Hammasini ko'rish</button></div></section>`;
 }
-function itemText(i) { return i.t === "card" || i.t === "mnemo" ? i.q : i.t === "cloze" ? clozePlain(i.a) : i.a; }
+function itemText(i) { return plain(i.t === "card" || i.t === "mnemo" || i.t === "sketch" ? i.q : i.t === "cloze" ? clozePlain(i.a) : i.a); }
 const fullText = i => i.t === "card" || i.t === "mnemo" ? `${i.q}\n${i.a}${i.m ? `\nEslatkich: ${i.m}` : ""}` : i.t === "cloze" ? i.a.replace(CLOZE, "$1") : i.a;
 function itemRow(i, day, from) {
   const n = diffDays(i.d, day), src = from && recs[i.b] ? recs[i.b].title : "";
@@ -1975,7 +2229,7 @@ function viewInsights(day) {
 }
 // The last 14 days of the ledger: earned above the line, forgotten below.
 function xChart(day) {
-  const ds = Array.from({ length: 14 }, (_, k) => addDays(day, k - 13)), v = ds.map(d => xotir(tally(x => x === d)));
+  const ds = Array.from({ length: 14 }, (_, k) => addDays(day, k - 13)), v = ds.map(d => { const f = flows(d, d); return { kirim: f.gain, chiqim: f.lost + f.fade }; });
   const max = Math.max(10, ...v.map(x => x.kirim)), neg = Math.max(5, ...v.map(x => x.chiqim)), H = 120, N = 34, base = H * max / (max + neg);
   const w = 300 / 14, bars = v.map((x, k) => { const hp = x.kirim / (max + neg) * H, hn = x.chiqim / (max + neg) * H, cx = k * w + 3;
     return `<g><title>${fmtDate(ds[k])}: +${x.kirim} / −${x.chiqim} XOTIR</title>${hp ? `<rect class="kp" x="${cx.toFixed(1)}" y="${(base - hp).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hp.toFixed(1)}" rx="3"/>` : ""}${hn ? `<rect class="kn" x="${cx.toFixed(1)}" y="${(base + 1).toFixed(1)}" width="${(w - 6).toFixed(1)}" height="${hn.toFixed(1)}" rx="3"/>` : ""}<text x="${(cx + (w - 6) / 2).toFixed(1)}" y="${H + 14}">${parse(ds[k]).getDate()}</text></g>`; }).join("");
@@ -1993,15 +2247,13 @@ function yearsLedger() {
       for (const i of items()) { if (dayOf(i.c).startsWith(y)) days.add(dayOf(i.c)); for (const [d] of i.h) if (d.startsWith(y)) days.add(d); }
       for (const x of sessions()) if (x.day.startsWith(y)) days.add(x.day);
       const cell = (v, w, cls) => `<p${cls ? ` class="${cls}"` : ""}><b>${v}</b><small>${w}</small></p>`;
-      const x = xotir(t);
+      const now = today(), x = flows(`${y}-01-01`, `${y}-12-31` < now ? `${y}-12-31` : now);
       return `<div class="card yr"><div class="yr-h"><b>${y}</b><span class="small muted">${days.size} faol kun</span></div>
-        <p class="yr-x"><b>${xt(x.net)}</b> XOTIR <span class="up">+${nf(x.kirim)}</span> <span class="down">−${nf(x.chiqim)}</span></p><div class="yr-g">
-        ${cell("+" + t.notes, "o'rganildi", "up")}${cell(t.forgot ? "−" + t.forgot : "0", "unutildi", "down")}${cell(nf(t.bet), "bet")}${cell(t.dars, "dars")}${cell(t.min ? fmtMin(t.min) : "0", "vaqt")}${cell(t.words, "so'z")}${cell(t.books, "kitob")}${cell(t.done, "manba tugadi")}
+        <p class="yr-x">yil oxirida <b>${nf(x.bal)}</b> XOTIR <span class="up">+${nf(x.gain)}</span> <span class="down">−${nf(x.lost + x.fade)}</span></p><div class="yr-g">
+        ${cell("+" + t.notes, "yangi yozuv", "up")}${cell(t.forgot, "marta unutildi", "down")}${cell(nf(t.bet), "bet")}${cell(t.dars, "dars")}${cell(t.min ? fmtMin(t.min) : "0", "vaqt")}${cell(t.words, "so'z")}${cell(t.books, "kitob")}${cell(t.done, "manba tugadi")}
       </div></div>`; }).join("")}
-    <div class="card yr life"><div class="yr-h"><b>Umr bo'yi</b><span><b>${xt(xotir(lifeTally()).net)}</b> XOTIR</span></div>${unitsRow(lifeTally(), `<p class="small muted">Hali hisob yo'q.</p>`)}</div>
-    <details class="how"><summary>XOTIR qanday hisoblanadi</summary><div class="rules">
-      ${RATES.map(([, v, w]) => `<p><b>+${v}</b> ${w}</p>`).join("")}<p><b>−${LOSS}</b> har «Unutdim»</p>
-      <p class="muted">Balans: o'rganib topganingiz minus unutganingiz. Takrorlab tursangiz, balans faqat o'sadi.</p></div></details>
+    <div class="card yr life"><div class="yr-h"><b>Umr bo'yi</b><span>hozir <b>${nf(Math.round(balanceOn(today())))}</b> XOTIR</span></div>${unitsRow(lifeTally(), `<p class="small muted">Hali hisob yo'q.</p>`)}</div>
+    ${xRules()}
   </section>`;
 }
 function topics() {
@@ -2136,6 +2388,7 @@ function paintCapAmount(form) {
   if (h) { form.querySelector("#cap-amt-l").textContent = h[0]; form.querySelector("#cap-amt").placeholder = h[1]; }
 }
 function sheetCapture(bid) {
+  if (pend.length) { pend.forEach(forgetFile); pend = []; }
   const rs = books().filter(b => b.status !== "done");
   if (!rs.length) return sheetBook(null);
   const pick = [bid, lastSrc()].map(id => recs[id]).find(b => b && !b.del && b.status !== "done") || rs[0];
@@ -2147,6 +2400,7 @@ function sheetCapture(bid) {
       <div class="field" id="cap-amt-box"><label for="cap-amt" id="cap-amt-l">Qancha</label><input id="cap-amt" name="amt" type="text" inputmode="numeric" autocomplete="off"></div>
       <div class="field"><label for="cap-min">Vaqt, daqiqa</label><input id="cap-min" name="min" type="number" inputmode="numeric" min="0" max="1440" placeholder="25"></div>
     </div>
+    ${attField("rd", pend)}
     <p class="err" data-err hidden></p>
     <div class="sheet-actions"><button type="button" class="btn btn-sm" data-act="cap-more">Batafsil (savol, karta…)</button><span class="grow"></span><button type="submit" class="btn btn-gold">Saqlash</button></div>
   </form>`);
@@ -2208,12 +2462,6 @@ const ALGOS = [
   ["fsrs", "Aqlli takror (FSRS)", "Eng zamonaviy algoritm: har bir kartaning qiyinligini va xotirangizni hisoblab, unutishga yaqin paytda so'raydi. Kamroq takror bilan ko'proq esda qoladi.", "Yangi"],
   ["free", "Erkin takror", "Jadvalsiz: hamma kartalar har doim tayyor, xohlagan paytingizda birma-bir takrorlaysiz. Imtihon oldidan qisqa muddat uchun qulay.", ""],
 ];
-function sheetSettings() {
-  if (cloud.mode === "srv" && cloud.me && cloud.me.id) setTimeout(paintLinks, 0);
-  if (cloud.mode === "srv" && window.EsdaPush) setTimeout(() => window.EsdaPush.status().then(st => paintPush(st), () => paintPush(null)), 0);
-  openSheet(`<div class="sheet-body">
-    <h2 class="sheet-h" tabindex="-1" autofocus>Sozlamalar</h2>${settingsBody()}</div>`);
-}
 async function paintLinks() {
   const tb = $("#tg-box"), kb = $("#key-box");
   if (tb) {
@@ -2239,52 +2487,108 @@ async function paintLinks() {
       : `<div><button type="button" class="btn btn-sm" data-act="key-new">Kalit yaratish</button></div>`}`;
   }
 }
+// Settings: grouped rows like Hisob; each row opens its own small sheet.
+const srow = (act, icon, col, title, sub, right, extra) => `<button type="button" class="srow" data-act="${act}"${extra || ""}><span class="tile c-${col}">${ic(icon)}</span><span class="srow-t"><b>${title}</b><small>${sub}</small></span>${right != null ? `<span class="srow-v"${right && right.id ? ` id="${right.id}"` : ""}>${right && right.id ? right.text : right}</span>` : ""}${ic("chev")}</button>`;
+const sswitch = (id, icon, col, title, sub, on) => `<label class="srow" for="${id}"><span class="tile c-${col}">${ic(icon)}</span><span class="srow-t"><b>${title}</b><small>${sub}</small></span><input type="checkbox" class="switch" id="${id}"${on ? " checked" : ""}></label>`;
+const sgroup = (title, rows) => rows.filter(Boolean).length ? `<p class="sgroup-h">${title}</p><div class="sgroup">${rows.filter(Boolean).join("")}</div>` : "";
+const ALGO_SHORT = { ladder: "Zinapoya", fsrs: "FSRS", free: "Erkin" };
 function viewSettings() {
-  if (cloud.mode === "srv" && cloud.me && cloud.me.id) setTimeout(paintLinks, 0);
-  if (cloud.mode === "srv" && window.EsdaPush) setTimeout(() => window.EsdaPush.status().then(st => paintPush(st), () => paintPush(null)), 0);
-  const me = cloud.me;
+  const c = cfg(), me = cloud.me, srv = cloud.mode === "srv", signed = srv && me && me.id, canSave = !cloud.inViewer || cloud.downloads;
+  setTimeout(paintSetVals, 0);
   return `<section class="sec"><h1 class="h1">Sozlamalar</h1></section>
-  ${me && me.id ? `<section class="card prof"><span class="ava">${me.avatarUrl ? `<img src="${esc(me.avatarUrl)}" alt="">` : esc((me.name || "E")[0].toUpperCase())}</span><p><b>${esc(me.name || "")}</b><small>${esc(me.email || "")}</small></p></section>` : ""}
-  <div class="set-page">${settingsBody()}</div>`;
+  <section class="card prof">
+    <span class="ava">${me && me.avatarUrl ? `<img src="${esc(me.avatarUrl)}" alt="">` : esc(((me && me.name) || "M")[0].toUpperCase())}</span>
+    <p><b>${esc(signed ? me.name : srv ? "Hisobga kirilmagan" : "Shu qurilmadagi hisob")}</b><small>${signed ? esc(me.email) : srv ? "Kirsangiz, yozuvlar hamma qurilmada bo'ladi" : cloud.mode === "on" ? "Claude hisobingizda saqlanadi" : "Zaxira nusxa olib turing"}</small><span class="prof-sync"><span class="sync" data-s="${cloud.sync}"></span>${SYNC[cloud.sync][0]}</span></p>
+    ${signed ? `<button type="button" class="btn btn-sm" data-act="logout">Chiqish</button>` : srv ? `<button type="button" class="btn btn-gold btn-sm" data-act="auth-open">Kirish</button>` : ""}
+  </section>
+  ${sgroup("Takrorlash", [
+    srow("set-algo", "learn", "blue", "Takror algoritmi", "qachon qayta so'rashni hisoblaydi", ALGO_SHORT[c.algo]),
+    srow("set-goal", "target", "green", "Kunlik maqsad", "bosh sahifadagi halqa", `${c.dg} XOTIR`),
+    srow("set-cue", "clock", "orange", "Odat vaqti", "takrorni kun tartibiga ulash", c.cue ? esc(c.cue.length > 14 ? c.cue.slice(0, 13) + "…" : c.cue) : "yo'q"),
+    signed && window.EsdaPush ? srow("set-push", "bell", "purple", "Takror eslatmasi", "telefonga bildirishnoma", { id: "sv-push", text: "…" }) : "",
+  ])}
+  ${sgroup("Ilova", [
+    srow("skin", skin() === "light" ? "sun" : "moon", "yellow", "Ko'rinish", "qorong'i yoki yorug' rejim", skin() === "light" ? "Yorug'" : "Qorong'i"),
+    sswitch("tts", "sound", "teal", "Ovoz chiqarib o'qish", "kartalarda karnay tugmasi", ttsOn()),
+    sswitch("haptic", "phone", "pink", "Tebranish", "javob berganda yengil titrash", hapticOn()),
+  ])}
+  ${signed ? sgroup("Ulanishlar", [
+    srow("set-tg", "send", "blue", "Telegram bot", "Telegram'dan yozish, eslatma, zaxira", { id: "sv-tg", text: "…" }),
+    srow("set-key", "link", "purple", "Boshqa ilovalar", "Vaqt Banki va Mo'min bilan ulash", { id: "sv-key", text: "…" }),
+  ]) : ""}
+  ${sgroup("Ma'lumotlar", [
+    canSave ? srow("export", "download", "green", "Zaxira nusxani saqlash", "hamma yozuvlar .json faylda", null) : "",
+    srow("export-copy", "doc", "blue", "Zaxirani nusxalash", "matn sifatida, istalgan joyga", null),
+    srow("restore", "upload", "orange", "Zaxiradan tiklash", "faylni yoki matnni qayta yuklash", null),
+    books().some(b => b.demo) ? srow("demo-del", "close", "red", "Namunani o'chirish", "sinov uchun qo'yilgan yozuvlar", null) : "",
+  ])}
+  ${sgroup("Bilim", [
+    srow("tab", "bulb", "yellow", "Usullar kutubxonasi", "qaysi usul qaysi sohaga mos", `${CATALOG.filter(m => m.l > 0).length} ta`, ` data-tab="methods"`),
+    srow("set-rules", "layers", "teal", "XOTIR va baholar", "balans qanday hisoblanadi", null),
+    srow("onb", "spark", "purple", "Ilova bilan tanishtiruv", "4 ta qisqa sahifa", null),
+  ])}
+  <p class="sfoot">${APP()} · O'rgangan va bilganlaringiz hisobi<br>© ${new Date().getFullYear()} Normo'min Boynazarov</p>
+  <button type="button" class="btn btn-sm" data-act="retry" data-retry hidden>Qayta urinish</button>`;
 }
-function settingsBody() {
-  const c = cfg(), canSave = !cloud.inViewer || cloud.downloads;
-  return `
-    <div class="acts"><button type="button" class="btn" data-act="skin">${ic(skin() === "light" ? "moon" : "sun")}${skin() === "light" ? "Qorong'i rejim" : "Yorug' rejim"}</button><button type="button" class="btn" data-act="onb">Tanishtiruvni ko'rish</button></div>
-    <label class="switch-row"><span><b>Ovoz chiqarib o'qish</b><small>Kartalarda karnay tugmasi: so'zni to'g'ri talaffuzda eshitasiz</small></span><input type="checkbox" class="switch" id="tts"${ttsOn() ? " checked" : ""}></label>
-    <label class="switch-row"><span><b>Tebranish</b><small>Javob to'g'ri yoki xato bo'lganda telefon yengil titraydi</small></span><input type="checkbox" class="switch" id="haptic"${hapticOn() ? " checked" : ""}></label>
-    <form class="sec" data-form="cfg" novalidate>
-      <div class="field" role="radiogroup" aria-label="Takror algoritmi"><span class="label">Takror algoritmi</span><input type="hidden" name="algo" value="${esc(c.algo)}">
-        ${ALGOS.map(([a, n, d, tag]) => `<button type="button" class="algo" role="radio" data-act="algo" data-a="${a}" aria-checked="${c.algo === a}"><span class="algo-ic">${ic(a === "free" ? "cards" : "learn")}</span><span class="algo-t"><b>${n}${tag ? ` <em>${tag}</em>` : ""}</b><small>${d}</small></span><span class="algo-box">${ic("check")}</span></button>`).join("")}</div>
-      <details class="how adv"${c.eb !== CFG0.eb || c.im !== CFG0.im || c.mx !== CFG0.mx ? " open" : ""}><summary>Kengaytirilgan sozlamalar</summary><div class="adv-in">
-        <div class="field"><label for="cf-eb">«Oson» bonusi</label><span class="unit-in"><input id="cf-eb" name="eb" type="number" inputmode="numeric" min="100" max="300" value="${c.eb}"><i>%</i></span><p class="small muted">«Oson» bosilganda oraliq yana shuncha ko'paytiriladi (Zinapoyada).</p></div>
-        <div class="field"><label for="cf-im">Oraliq ko'paytiruvchisi</label><span class="unit-in"><input id="cf-im" name="im" type="number" inputmode="numeric" min="50" max="300" value="${c.im}"><i>%</i></span><p class="small muted">Hamma oraliqlar shunga ko'paytiriladi. 150% bo'lsa takrorlar 1,5 barobar siyrak bo'ladi, 80% bo'lsa tezroq.</p></div>
-        <div class="field"><label for="cf-mx">Eng uzun oraliq</label><span class="unit-in"><input id="cf-mx" name="mx" type="number" inputmode="numeric" min="7" max="3650" value="${c.mx}"><i>kun</i></span><p class="small muted">Yaxshi eslangan karta ham bundan uzoq kutmaydi.</p></div>
-        <div><button type="button" class="btn btn-sm" data-act="cfg-reset">Asl qiymatlar</button></div></div></details>
-      <div class="field"><label for="cf-dg">Kunlik maqsad</label><span class="unit-in"><input id="cf-dg" name="dg" type="number" inputmode="numeric" min="10" max="2000" value="${c.dg}"><i>XOTIR</i></span><p class="small muted">Bosh sahifadagi halqa shu songa yetganda to'ladi. 50 XOTIR: bitta yozuv, 20 bet va bir necha takror.</p></div>
-      <div class="field"><label for="cf-cue">Odat vaqti: takrorni nimaga ulaysiz?${opt}</label><input id="cf-cue" name="cue" type="text" maxlength="80" autocomplete="off" placeholder="Masalan: Bomdoddan keyin" value="${esc(c.cue)}"></div>
-      <div><button type="submit" class="btn btn-gold btn-sm">Saqlash</button></div>
-    </form>
-    ${cloud.mode === "srv" && cloud.me && cloud.me.id ? `<div class="sec"><p class="eyebrow">Hisob</p><p>${esc(cloud.me.name)} <span class="muted">· ${esc(cloud.me.email)}</span></p><div><button type="button" class="btn btn-sm" data-act="logout">Hisobdan chiqish</button></div></div>`
-      : cloud.mode === "srv" ? `<div><button type="button" class="btn btn-gold btn-sm" data-act="auth-open">Hisobga kirish</button></div>` : ""}
-    ${cloud.mode === "srv" && cloud.me && cloud.me.id && window.EsdaPush ? `<div class="sec" id="push-box"><p class="eyebrow">Takror eslatmasi</p>
+// Values that need the server fill in after the page shows.
+async function paintSetVals() {
+  if (cloud.mode !== "srv" || !cloud.me || !cloud.me.id) return;
+  const put_ = (id, text, cls) => { const el = $("#" + id); if (el) { el.textContent = text; el.className = "srow-v" + (cls ? " " + cls : ""); } };
+  if ($("#sv-tg")) api("/api/tg").then(t => put_("sv-tg", !t.configured ? "sozlanmagan" : t.linked ? "Ulangan" : "Ulanmagan", t.linked ? "on" : ""), () => put_("sv-tg", "—"));
+  if ($("#sv-key")) api("/api/key").then(k => put_("sv-key", k.key ? "Kalit bor" : "yo'q", k.key ? "on" : ""), () => put_("sv-key", "—"));
+  if ($("#sv-push") && window.EsdaPush) window.EsdaPush.status().then(st => put_("sv-push", st && st.on ? `${pad(st.hour)}:00` : "O'chiq", st && st.on ? "on" : ""), () => put_("sv-push", "—"));
+}
+function cfgSheet(title, lead, body) {
+  openSheet(`<form class="sheet-body" data-form="cfg" novalidate>
+    <h2 class="sheet-h" tabindex="-1" autofocus>${title}</h2>${lead ? `<p class="small muted">${lead}</p>` : ""}
+    ${body}
+    <div class="sheet-actions"><span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Saqlash</button></div>
+  </form>`);
+}
+function sheetAlgo() {
+  const c = cfg();
+  cfgSheet("Takror algoritmi", "Yozuv qachon qayta so'ralishini hal qiladi.", `
+    <div class="field" role="radiogroup" aria-label="Takror algoritmi"><input type="hidden" name="algo" value="${esc(c.algo)}">
+      ${ALGOS.map(([a, n, d, tag]) => `<button type="button" class="algo" role="radio" data-act="algo" data-a="${a}" aria-checked="${c.algo === a}"><span class="algo-ic">${ic(a === "free" ? "cards" : "learn")}</span><span class="algo-t"><b>${n}${tag ? ` <em>${tag}</em>` : ""}</b><small>${d}</small></span><span class="algo-box">${ic("check")}</span></button>`).join("")}</div>
+    <details class="how adv"${c.eb !== CFG0.eb || c.im !== CFG0.im || c.mx !== CFG0.mx ? " open" : ""}><summary>Kengaytirilgan sozlamalar</summary><div class="adv-in">
+      <div class="field"><label for="cf-eb">«Oson» bonusi</label><span class="unit-in"><input id="cf-eb" name="eb" type="number" inputmode="numeric" min="100" max="300" value="${c.eb}"><i>%</i></span><p class="small muted">«Oson» bosilganda oraliq yana shuncha ko'paytiriladi (Zinapoyada).</p></div>
+      <div class="field"><label for="cf-im">Oraliq ko'paytiruvchisi</label><span class="unit-in"><input id="cf-im" name="im" type="number" inputmode="numeric" min="50" max="300" value="${c.im}"><i>%</i></span><p class="small muted">Hamma oraliqlar shunga ko'paytiriladi. 150% bo'lsa takrorlar siyrakroq, 80% bo'lsa tezroq.</p></div>
+      <div class="field"><label for="cf-mx">Eng uzun oraliq</label><span class="unit-in"><input id="cf-mx" name="mx" type="number" inputmode="numeric" min="7" max="3650" value="${c.mx}"><i>kun</i></span><p class="small muted">Yaxshi eslangan karta ham bundan uzoq kutmaydi.</p></div>
+      <div><button type="button" class="btn btn-sm" data-act="cfg-reset">Asl qiymatlar</button></div></div></details>`);
+}
+function sheetGoalCfg() {
+  const c = cfg();
+  cfgSheet("Kunlik maqsad", "Bugun takrorda topilgan XOTIR shu songa yetganda bosh sahifadagi halqa to'ladi.", `
+    <div class="field"><label for="cf-dg">Har kuni</label><span class="unit-in"><input id="cf-dg" name="dg" type="number" inputmode="numeric" min="10" max="2000" value="${c.dg}"><i>XOTIR</i></span></div>
+    <div class="chips">${[[20, "yengil"], [30, "o'rtacha"], [50, "jiddiy"], [100, "kuchli"]].map(([v, w]) => `<button type="button" class="chip" data-act="cfg-pick" data-k="cf-dg" data-v="${v}">${v} · ${w}</button>`).join("")}</div>
+    <p class="small muted">30 XOTIR — taxminan 10–15 ta takror, kuniga 5–10 daqiqa.</p>`);
+}
+function sheetCue() {
+  const c = cfg();
+  cfgSheet("Odat vaqti", "Takrorni har kuni bajariladigan ishga ulasangiz, unutmaysiz. Bosh sahifada eslatib turadi.", `
+    <div class="field"><label for="cf-cue">Takrorni nimaga ulaysiz?</label><input id="cf-cue" name="cue" type="text" maxlength="80" autocomplete="off" placeholder="Masalan: Bomdoddan keyin" value="${esc(c.cue)}"></div>
+    <div class="chips">${["Bomdoddan keyin", "Nonushtadan so'ng", "Yo'lda, avtobusda", "Darsdan keyin", "Uxlashdan oldin"].map(v => `<button type="button" class="chip" data-act="cfg-pick" data-k="cf-cue" data-v="${v}">${v}</button>`).join("")}</div>`);
+}
+function sheetPush() {
+  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>Takror eslatmasi</h2>
+    <div class="sec" id="push-box">
       <p class="small muted" id="push-st">Har kuni tanlagan soatingizda telefonga «Bugun N ta takror» degan bildirishnoma keladi.</p>
       <div class="chips" aria-label="Eslatma soati">${[5, 6, 7, 8, 12, 18, 20, 21, 22].map(h => `<button type="button" class="chip" data-act="push-hour" data-h="${h}" aria-pressed="${h === pushHour}">${pad(h)}:00</button>`).join("")}</div>
-      <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="push-on">Yoqish</button><button type="button" class="btn btn-sm" data-act="push-test" hidden>Sinab ko'rish</button><button type="button" class="btn btn-sm" data-act="push-off" hidden>O'chirish</button></div></div>` : ""}
-    ${cloud.mode === "srv" && cloud.me && cloud.me.id ? `<div class="sec" id="tg-box"><p class="eyebrow">Telegram</p><p class="small muted">Yuklanmoqda…</p></div>
-    <div class="sec" id="key-box"><p class="eyebrow">Boshqa ilovalar bilan ulash</p><p class="small muted">Yuklanmoqda…</p></div>` : ""}
-    <div class="sec"><p class="eyebrow">Bilim</p><div class="menu">
-      <button type="button" class="menu-row" data-act="tab" data-tab="methods">${ic("bulb")}<span>Usullar kutubxonasi · ${CATALOG.filter(m => m.l > 0).length} ta usul</span>${ic("arrow")}</button>
-      <button type="button" class="menu-row" data-act="onb">${ic("spark")}<span>Ilova bilan tanishtiruv</span>${ic("arrow")}</button></div></div>
-    <div class="sec"><p class="eyebrow">Saqlash</p>
-      <p class="sync-line"><span class="sync" data-s="${cloud.sync}"></span><span data-sync-text>${SYNC[cloud.sync][1]}</span></p>
-      <div class="acts">${canSave ? `<button type="button" class="btn btn-sm" data-act="export">Zaxira nusxani saqlash</button>` : ""}<button type="button" class="btn btn-sm" data-act="export-copy">Zaxirani nusxalash</button><button type="button" class="btn btn-sm" data-act="restore">Zaxiradan tiklash</button><button type="button" class="btn btn-sm" data-act="retry" data-retry hidden>Qayta urinish</button></div>
-    </div>
-    <details class="how"><summary>Baholar qanday ishlaydi</summary><div class="rules">
+      <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="push-on">Yoqish</button><button type="button" class="btn btn-sm" data-act="push-test" hidden>Sinab ko'rish</button><button type="button" class="btn btn-sm" data-act="push-off" hidden>O'chirish</button></div></div></div>`);
+  if (window.EsdaPush) window.EsdaPush.status().then(st => paintPush(st), () => paintPush(null));
+}
+function sheetLinks(which) {
+  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>${which === "tg" ? "Telegram bot" : "Boshqa ilovalar"}</h2>
+    <div class="sec" id="${which === "tg" ? "tg-box" : "key-box"}"><p class="small muted">Yuklanmoqda…</p></div></div>`);
+  paintLinks();
+}
+function sheetRules() {
+  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>XOTIR va baholar</h2>
+    ${xRules().replace("<details", "<details open")}
+    <details class="how" open><summary>Baholar qanday ishlaydi</summary><div class="rules">
       <p>Javobni ko'rgach 4 tugmadan birini bosasiz. Har tugma ostida karta qachon yana chiqishi yozilgan.</p>
-      <p><b>Unutdim:</b> boshiga qaytadi, sessiya oxirida va ertaga yana chiqadi.</p><p><b>Qiynaldim:</b> shu pog'onada qoladi.</p><p><b>Esladim:</b> bir pog'ona ko'tariladi.</p><p><b>Oson:</b> ikki pog'ona sakraydi va bonus oladi.</p>
-      <p><b>Ishonch darajasi:</b> ishonch bilan qilingan xato xatolar daftariga tushadi.</p></div></details>
-    ${books().some(b => b.demo) ? `<div><button type="button" class="btn btn-danger" data-act="demo-del">Namunani o'chirish</button></div>` : ""}`;
+      <p><b>Unutdim:</b> boshiga qaytadi, sessiya oxirida va ertaga yana chiqadi.</p><p><b>Qiynaldim:</b> shu pog'onada qoladi.</p><p><b>Esladim:</b> bir pog'ona ko'tariladi.</p><p><b>Oson:</b> ikki pog'ona sakraydi.</p>
+      <p><b>Ishonch darajasi:</b> ishonch bilan qilingan xato xatolar daftariga tushadi.</p></div></details></div>`);
 }
 const ONB = [
   ["O'rganganlaringiz <em>hisobi</em>", "Kitob, kurs, video, til: hayotingizda o'rgangan hamma narsa XOTIR bo'lib yig'iladi. O'rgansangiz ko'payadi, unutsangiz kamayadi.", `<div class="rel"><div class="mock"><div class="mh"><small>Xotira balansi</small>4 820 XOTIR</div><div class="mr">O'rgandim<b>+360</b></div><div class="mr r">Unutdim<b>−20</b></div><div class="mr">Uzoq xotirada<b>112</b></div></div><span class="float f1">12 kun ketma-ket</span></div>`],
@@ -2325,7 +2629,8 @@ function sameAnswer(typed, right) {
 function pairsOf(bid) {
   const list = (bid ? itemsOf(bid) : items()).filter(i => !i.off && !i.rev);
   return list.map(i => {
-    if (i.t === "card" || i.t === "mnemo") return { id: i.id, b: i.b, f: i.q, k: i.a, hint: i.m || "" };
+    if (i.t === "sketch") return { id: i.id, f: "", k: "" };
+    if (i.t === "card" || i.t === "mnemo") return { id: i.id, b: i.b, f: plain(i.q), k: plain(i.a), hint: plain(i.m || "") };
     if (i.t === "cloze") return { id: i.id, f: clozePlain(i.a), k: [...i.a.matchAll(CLOZE)].map(m => m[1]).join(", "), full: i.a.replace(CLOZE, "$1") };
     if (i.t === "quote") return { id: i.id, f: cueOf(i), k: i.a };
     return { id: i.id, f: TYPES[i.t] + (i.r ? " · " + i.r : ""), k: i.a, long: true };
@@ -2343,23 +2648,6 @@ const MODES = [
   ["test", "Test", "Aralash savollar va oxirida baho", "test", "teal", 2],
   ["match", "Moslashtirish", "Juftlarni vaqtga topish o'yini", "match", "orange", 3],
 ];
-function modesHub(bid) {
-  const ps = pairsOf(bid), sp = shortPairs(ps);
-  if (!ps.length) return "";
-  const its = (bid ? itemsOf(bid) : items()).filter(i => !i.off && !i.rev);
-  const fresh = its.filter(i => !i.n).length, far = its.filter(i => i.s >= LONG).length, mid = its.length - fresh - far;
-  const w = n => its.length ? Math.round(n / its.length * 100) : 0;
-  return `<section class="sec">
-    <div class="sec-head"><h2 class="h2">Mashq qilish</h2>${bid ? "" : `<span class="small muted">${ps.length} ta kartochka</span>`}</div>
-    <div class="modes">${MODES.map(([m, n, d, i, c, need]) => { const okk = (m === "cards" ? ps.length : sp.length) >= need;
-      return `<button type="button" class="mode" data-act="study" data-m="${m}" data-id="${esc(bid || "")}"${okk ? "" : " disabled"}><span class="mode-ic c-${c}">${ic(i)}</span><span class="mode-t"><b>${n}</b><small>${okk ? d : `Buning uchun kamida ${need} ta qisqa savol-javob kerak`}</small></span>${ic("arrow")}</button>`; }).join("")}</div>
-    <div class="card sec prog">
-      <p class="h2">Sizning holatingiz</p>
-      <div class="stack" role="img" aria-label="Yangi ${fresh}, o'rganilyapti ${mid}, o'zlashtirilgan ${far}"><i class="s-new" data-w="${w(fresh)}"></i><i class="s-mid" data-w="${w(mid)}"></i><i class="s-far" data-w="${w(far)}"></i></div>
-      <div class="prog-l"><p><i class="s-new"></i>Yangi<b>${fresh}</b></p><p><i class="s-mid"></i>O'rganilyapti<b>${mid}</b></p><p><i class="s-far"></i>O'zlashtirilgan<b>${far}</b></p></div>
-    </div>
-  </section>`;
-}
 
 let st = null;
 function openStudy(mode, bid) {
@@ -2634,6 +2922,11 @@ function parseBulk(text) {
   }
   return out;
 }
+// One way to ask the model: the server's Gemini/Claude on Render, Claude's own sampling inside Claude.
+async function aiText(turns, onText, signal) {
+  if (cloud.mode === "srv") return (await api("/api/ai/chat", { messages: turns })).text || "";
+  return (await cloud.sample(turns, { cache: false, signal, onText: onText ? ({ text }) => onText(text) : undefined })).text;
+}
 const aiOn = () => (cloud.mode === "srv" && cloud.conf && cloud.conf.ai) || !!cloud.sample;
 function addAiCards(list) {
   const t = $("#bl-text"), st = $("#bl-ai");
@@ -2666,9 +2959,39 @@ function sheetBulk(b) {
 /* ── sheets ── */
 function lock() { document.documentElement.classList.toggle("locked", $("#sheet").open || $("#review").open || $("#onb").open || $("#auth").open || $("#study").open); }
 const grow = t => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+const RT_BTNS = [["b", "<b>B</b>", "Qalin", "**", "**"], ["u", "<u>U</u>", "Tagiga chizish", "__", "__"], ["m", '<mark class="rt-m">M</mark>', "Belgilash", "==", "=="], ["f", '<span class="rt-f">Aa</span>', "Boshqa shrift", "`", "`"], ["h", "H", "Katta sarlavha", "# ", ""], ["q", "❝", "Iqtibos", "> ", ""], ["l", "🔗", "Havola", "[", "](https://)"]];
+function rtBar(id) {
+  return `<div class="rt" role="toolbar" aria-label="Matnni bezash">${RT_BTNS.map(([k, h, t]) => `<button type="button" data-act="rt" data-k="${k}" data-t="${id}" title="${t}" aria-label="${t}">${h}</button>`).join("")}<span class="rt-cs">${Object.keys(RT_COLORS).map(c => `<button type="button" class="rt-c" data-act="rt" data-k="c" data-c="${c}" data-t="${id}" aria-label="Rang"><i class="rt-c-${c}">A</i></button>`).join("")}</span></div>`;
+}
+function addRt(root) {
+  let n = 0;
+  for (const t of root.querySelectorAll("textarea[data-grow]:not(.no-rt)")) {
+    if (["chat-in", "bl-text", "cp-text", "rs-text"].includes(t.id) || t.previousElementSibling && t.previousElementSibling.classList.contains("rt")) continue;
+    if (!t.id) t.id = "rt-" + (++n) + "-" + Date.now().toString(36);
+    t.insertAdjacentHTML("beforebegin", rtBar(t.id));
+  }
+}
+function rtApply(el) {
+  const t = $("#" + el.dataset.t); if (!t) return;
+  const k = el.dataset.k, b = RT_BTNS.find(x => x[0] === k), s0 = t.selectionStart, s1 = t.selectionEnd, sel = t.value.slice(s0, s1);
+  let pre, post;
+  if (k === "c") { pre = `{${el.dataset.c}|`; post = "}"; }
+  else { pre = b[3]; post = b[4]; }
+  if (k === "h" || k === "q") {
+    const ls = t.value.lastIndexOf("\n", s0 - 1) + 1;
+    if (t.value.startsWith(pre, ls)) t.setRangeText("", ls, ls + pre.length, "end"); else t.setRangeText(pre, ls, ls, "end");
+  } else {
+    const word = sel || (k === "l" ? "havola" : "matn");
+    t.setRangeText(pre + word + post, s0, s1, "end");
+    if (k === "l") { const p = s0 + pre.length + word.length + 2; t.setSelectionRange(p, p + 8); }
+    else t.setSelectionRange(s0 + pre.length, s0 + pre.length + word.length);   // the word stays selected, so a second style wraps it too
+  }
+  t.focus(); grow(t); t.dispatchEvent(new Event("input", { bubbles: true }));
+}
 function openSheet(html) {
   const d = $("#sheet");
   d.innerHTML = html;
+  addRt(d);
   if (!d.open) d.showModal();
   lock();
   d.scrollTop = 0;
@@ -2765,7 +3088,7 @@ function sheetRead(b) {
     ${tech("Savollar", "O'zini sinash: ertaga o'zingizdan nimani so'ragan bo'lardingiz?",
       `<div class="cards" id="rd-cards">${(v.q || []).map((q, k) => cardPair(q, (v.a || [])[k] || "")).join("")}</div>
       <div class="chips" aria-label="Savol shablonlari (Bloom)">${BLOOM.map(([n, p]) => `<button type="button" class="chip" data-act="rd-bloom" data-p="${esc(p)}">${n}</button>`).join("")}</div>
-      <div class="acts"><button type="button" class="btn btn-sm" data-act="rd-add-card">Savol qo'shish</button>${cloud.sample ? `<button type="button" class="btn btn-sm" data-act="rd-ai">Yozganimdan savol tuzib ber</button>` : ""}</div>
+      <div class="acts"><button type="button" class="btn btn-sm" data-act="rd-add-card">Savol qo'shish</button>${aiOn() ? `<button type="button" class="btn btn-sm" data-act="rd-ai">${ic("spark")}Yozganimdan savol tuzib ber</button>` : ""}</div>
       <p class="small muted" id="rd-ai-st" aria-live="polite"></p>
       <label class="check" for="rd-two"><input type="checkbox" id="rd-two" name="two" value="1"${v.two === "1" || (!d && b.kind === "til") ? " checked" : ""}>Teskari tomondan ham so'ralsin (so'z ↔ ma'no)</label>`, has("q") || b.kind === "til")}
     ${tech("Qo'llash rejasi", "Uzatish: bilim ishlatilmasa so'nadi. Qayerda va qachon qo'llaysiz?",
@@ -2818,6 +3141,7 @@ function itemFields(i) {
   if (t === "mnemo") return Q("Nimani eslash kerak") + A("Javob", 2) + M;
   if (t === "quote") return A("Iqtibos yoki bayt", 3) + Q("Ishora: kim aytgan yoki qaysi vaziyatda", true);
   if (t === "cloze") return A("Matn: yashiriladigan so'z [[ ]] ichida", 3);
+  if (t === "sketch") return Q("Eskiz nima haqida") + A("Izoh", 2);
   return A({ sum: "Xulosa", feynman: "Sodda tushuntirish", link: "Bog'lanish", gist: "Bir jumlada mohiyati", apply: "Qo'llash rejasi" }[t] || "Eslab yozganingiz", 6);
 }
 function sheetItem(i) {
@@ -2825,6 +3149,7 @@ function sheetItem(i) {
   openSheet(`<form class="sheet-body" data-form="item" data-id="${esc(i.id)}" data-t="${i.t}" novalidate>
     <div><p class="eyebrow">${esc(b.title)} · ${TYPES[i.t]}</p><h2 class="sheet-h" tabindex="-1" autofocus>${esc(i.r || TYPES[i.t])}</h2></div>
     <p class="item-state">${ladder(i.s)}<span>${i.s + 1}-pog'ona (${STEP[i.s].join(" ")})</span><span>takror: ${n < 0 ? "kechikkan" : inDays(n)}</span><span>${i.n || 0} marta takrorlangan</span></p>
+    ${i.t === "sketch" ? sketchImg(i, "big") : ""}
     ${itemFields(i)}
     <div class="field"><label for="it-r">Mavzu, bob yoki qism</label><input id="it-r" name="r" type="text" maxlength="120" autocomplete="off" value="${esc(i.r)}"></div>
     ${attField(i.id, i.att)}
@@ -2840,12 +3165,14 @@ function sheetItem(i) {
 }
 const NEW_TYPES = [["card", "Savol"], ["cloze", "Bo'shliq"], ["mnemo", "Eslatkich"], ["quote", "Iqtibos"]];
 function sheetItemNew(b, t) {
+  if (pend.length && !$("#sheet").open) { pend.forEach(forgetFile); pend = []; }
   const chip = (k, name) => `<button type="button" class="chip" data-act="item-new" data-id="${esc(b.id)}" data-t="${k}" aria-pressed="${t === k}">${name}</button>`;
   openSheet(`<form class="sheet-body" data-form="item" data-book="${esc(b.id)}" data-t="${t}" novalidate>
     <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>Yangi yozuv</h2></div>
     <div class="chips">${NEW_TYPES.map(([k, n]) => chip(k, n)).join("")}</div>
     ${itemFields({ t, q: "", a: "", m: "" })}
     <div class="field"><label for="it-r">Mavzu, bob yoki qism${opt}</label><input id="it-r" name="r" type="text" maxlength="120" autocomplete="off"></div>
+    ${attField("rd", pend)}
     <p class="err" data-err hidden></p>
     <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Qo'shish</button></div>
   </form>`);
@@ -2882,8 +3209,8 @@ function restoreFrom(text, form) {
 /* ── review ── */
 const rv = { q: [], i: 0, shown: false, tally: [0, 0, 0, 0], title: "", practice: false, seen: new Set(), conf: -1 };
 function cueOf(it) {
-  if (it.q) return it.q;
-  const w = it.a.trim().split(/\s+/), n = Math.min(6, Math.max(2, Math.round(w.length / 3)));
+  if (it.q) return plain(it.q);
+  const w = plain(it.a).trim().split(/\s+/), n = Math.min(6, Math.max(2, Math.round(w.length / 3)));
   return w.slice(0, n).join(" ") + " …";
 }
 // Interleaving: take one note from each source in turn instead of finishing one source first.
@@ -2909,7 +3236,8 @@ function startReview(mode, id) {
   }[mode] || [due, "Bugungi takror"];
   const q = (mode === "quick" ? M[0] : interleave(M[0])).map(i => i.id);
   if (!q.length) return toast("Bu ro'yxatda hozir yozuv yo'q.");
-  Object.assign(rv, { popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
+  XC = null;
+  Object.assign(rv, { undo: null, b0: balanceOn(today()), popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
   paintReview();
   const d = $("#review");
   if (!d.open) d.showModal();
@@ -2930,15 +3258,16 @@ function paintReview() {
   rv.shown = false; rv.conf = -1;
   if (!it) {
     const [f, h, g0, e] = rv.tally, g = g0 + e, n = f + h + g;
+    XC = null; const dx = Math.round(balanceOn(today()) - rv.b0);
     d.innerHTML = `<div class="rv"><div class="rv-top"></div><div class="rv-body rv-done">
       <p class="eyebrow">${esc(rv.title)}</p>
       <h2 class="rv-q">${n ? "Takror tugadi" : "Takrorlanadigan yozuv qolmadi"}</h2>
       ${rv.practice && n ? `<p class="muted">Bu mashq edi: takror jadvali o'zgarmadi.</p>` : ""}
-      ${n && !rv.practice ? `<p class="rv-gain"><b class="${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "down" : "up"}">${h + g0 * 3 + e * 4 - f * LOSS < 0 ? "−" : "+"}${Math.abs(h + g0 * 3 + e * 4 - f * LOSS)}</b> XOTIR</p>` : ""}
+      ${n && !rv.practice ? `<p class="rv-gain"><b class="${dx < 0 ? "down" : "up"}">${dx < 0 ? "−" : "+"}${Math.abs(dx)}</b> XOTIR</p><p class="small muted">Balans hozir ${nf(Math.round(balanceOn(today())))} XOTIR.</p>` : ""}
       ${n ? `<p>${n} ta yozuvdan ${g} tasini esladingiz${h ? `, ${h} tasida qiynaldingiz` : ""}${f ? `, ${f} tasini unutdingiz` : ""}.</p>` : ""}
       ${f && !rv.practice ? `<p class="muted">Unutilganlari ertaga yana chiqadi. Bu odatiy hol: qayta eslangan narsa xotirada mustahkamroq o'rnashadi.</p>` : ""}
       <button type="button" class="btn btn-gold" data-act="rv-close">Yopish</button></div></div>`;
-    if (n && !rv.practice && !rv.popped) { rv.popped = true; popGain(h + g0 * 3 + e * 4 - f * LOSS); }
+    if (n && !rv.practice && !rv.popped) { rv.popped = true; popGain(dx); }
     return;
   }
   const b = recs[it.b] || { title: "", kind: "boshqa" }, K = KINDS[b.kind] || KINDS.boshqa;
@@ -2953,21 +3282,22 @@ function paintReview() {
     quote: [esc(cueOf(it)), it.q ? "Shu iqtibosni ayting." : "Iqtibosning davomini ayting.", "Iqtibosni ko'rish", "Iqtibos"],
     sum: ["Bu nima haqida edi va sizga nima berdi?", "Uch jumlada ayting.", "Xulosamni ko'rish", "Sizning xulosangiz"],
     gist: ["Shu qismning mohiyatini bir jumlada ayting", "", "Jumlamni ko'rish", "O'shanda yozganingiz"],
+    sketch: [`Eskizni eslang: «${esc(it.q || "nomsiz eskiz")}»`, "Avval ko'z oldingizga keltiring yoki qog'ozga tez chizing, keyin oching.", "Eskizni ko'rish", "Sizning eskizingiz"],
     apply: ["Buni qayerda qo'llashni rejalagan edingiz?", "Rejangizni eslang. Qo'lladingizmi? Qo'llamagan bo'lsangiz, bugun qo'llang.", "Rejamni ko'rish", "Qo'llash rejangiz"],
   }[it.t];
   const again = rv.seen.has(it.id);
-  const answer = it.t === "cloze" ? clozeHTML(it.a, true)
-    : esc(it.a) + (it.t === "mnemo" && it.m ? `<span class="mnemo"><b>Eslatkich:</b> ${esc(it.m)}</span>` : "")
+  const answer = it.t === "sketch" ? `${sketchImg(it, "big")}${it.a ? `<span class="sk-note">${rich(it.a)}</span>` : ""}` : it.t === "cloze" ? clozeHTML(it.a, true)
+    : rich(it.a) + (it.t === "mnemo" && it.m ? `<span class="mnemo"><b>Eslatkich:</b> ${rich(it.m)}</span>` : "")
       + (it.pre ? `<span class="mnemo"><b>Boshida qo'ygan savolingiz:</b> ${esc(it.pre)}</span>` : "");
   const day = today(), when = g => rv.practice || again ? "—" : free() ? "jadvalsiz" : gap(diffDays(schedule(it, g, day, -1).d, day));
   d.innerHTML = `<div class="rv">
-    <div class="rv-top"><button type="button" class="icon-btn" data-act="rv-close" aria-label="Takrorlashni yopish">${ICON.close}</button><span class="bar"><i data-w="${Math.round(rv.i / rv.q.length * 100)}"></i></span><span class="rv-count">${rv.i + 1} / ${rv.q.length}</span></div>
+    <div class="rv-top"><button type="button" class="icon-btn" data-act="rv-close" aria-label="Takrorlashni yopish">${ICON.close}</button>${rv.undo ? `<button type="button" class="icon-btn" data-act="rv-undo" aria-label="Oldingi bahoni bekor qilish" title="Orqaga">${ic("undo")}</button>` : ""}<button type="button" class="icon-btn" data-act="rv-edit" aria-label="Shu yozuvni tahrirlash" title="Tahrirlash">${ic("pen")}</button><span class="bar"><i data-w="${Math.round(rv.i / rv.q.length * 100)}"></i></span><span class="rv-count">${rv.i + 1} / ${rv.q.length}</span></div>
     <div class="rv-body">
       <p class="eyebrow">${esc(b.title)}${it.r ? " · " + esc(it.r) : ""} · ${TYPES[it.t]}${again ? " · yana bir bor" : ""}</p>
       <h2 class="rv-q${it.t === "quote" && !it.q ? " is-quote" : ""}">${P[0]}${it.t === "card" || it.t === "mnemo" ? sayBtn(it.q, it.b) : ""}</h2>
       ${P[1] ? `<p class="muted">${P[1]}</p>` : ""}
       ${it.t === "mnemo" && it.m ? `<div><button type="button" class="btn btn-sm" data-act="rv-hint">Eslatkichni ko'rsatish</button><p class="hint" id="rv-hint" hidden>${esc(it.m)}</p></div>` : ""}
-      <div class="field"><label for="rv-try">Yodingizdan yozing yoki ovoz chiqarib ayting${opt}</label><textarea id="rv-try" rows="3" data-grow></textarea></div>
+      <div class="field"><label for="rv-try">Yodingizdan yozing yoki ovoz chiqarib ayting${opt}</label><div class="cap-text"><textarea id="rv-try" rows="3" data-grow class="no-rt"></textarea>${Rec ? `<button type="button" class="mic" id="rv-mic" data-act="mic" data-t="rv-try" aria-label="Ovoz bilan javob berish" aria-pressed="false">${ic("mic")}</button>` : ""}</div></div>
       <div class="field"><span class="small muted">Javobni ochishdan oldin: qanchalik ishonchingiz komil?${opt}</span><div class="chips">${["Past", "O'rta", "Yuqori"].map((n, c) => `<button type="button" class="chip" data-act="rv-conf" data-c="${c}" aria-pressed="false">${n}</button>`).join("")}</div></div>
       <button type="button" class="btn btn-gold btn-wide" id="rv-show" data-act="rv-show" autofocus>${P[2]}</button>
       <div class="rv-ans" id="rv-ans" hidden>
@@ -3011,8 +3341,8 @@ function sheetChat(b, mode) {
   if (chat.ctl) chat.ctl.abort();
   Object.assign(chat, { turns: [{ role: "user", content: `${CHAT_RULES[mode]}\n\nSource: ${b.title} (${KINDS[b.kind].name})\nLearner's notes:\n${notes}` }], busy: false, ctl: null });
   openSheet(`<div class="sheet-body">
-    <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>${mode === "exam" ? "Claude bilan imtihon" : "Xatoni top"}</h2></div>
-    <p class="small muted">${mode === "exam" ? "Claude faqat sizning yozuvlaringiz asosida so'raydi. Avval yoddan javob bering." : "Claude yozuvlaringizdan xulosa yozadi va unga 2 ta xato qo'shadi. Ularni toping."}</p>
+    <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>${mode === "exam" ? "Sokrat imtihoni" : "Xatoni top"}</h2></div>
+    <p class="small muted">${mode === "exam" ? "Sun'iy intellekt faqat sizning yozuvlaringiz asosida bittadan savol beradi: avval eslash, keyin tushunish va qo'llash. Avval yoddan javob bering." : "Sun'iy intellekt yozuvlaringizdan xulosa yozadi va unga 2 ta xato qo'shadi. Ularni toping."}</p>
     <div class="msgs" id="chat-msgs" aria-live="polite"></div>
     <form class="chat-in" data-form="chat" novalidate>
       <div class="field"><label for="chat-in">Javobingiz</label><textarea id="chat-in" name="m" rows="2" maxlength="4000" data-grow></textarea></div>
@@ -3027,20 +3357,20 @@ function bubble(text, me) {
   return p;
 }
 async function askChat() {
-  if (!cloud.sample || chat.busy) return;
+  if (!aiOn() || chat.busy) return;
   chat.busy = true;
   const send = $("#chat-send"); if (send) send.disabled = true;
-  const p = bubble("Claude o'ylayapti…");
+  const p = bubble("O'ylayapti…");
   const ctl = chat.ctl = new AbortController();
   try {
-    const { text } = await cloud.sample(chat.turns, { cache: false, signal: ctl.signal, onText: ({ text }) => { if (p) p.textContent = text; } });
+    const text = await aiText(chat.turns, t => { if (p) p.textContent = t; }, ctl.signal);
     chat.turns.push({ role: "assistant", content: text });
     if (p) p.textContent = text;
   } catch (e) {
     const code = e && e.code;
     if (code === "cancelled") return;
     if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(code)) cloud.sample = null;
-    if (p) p.textContent = code === "rate_limited" ? "Hozir so'rovlar ko'p. Birozdan keyin qayta yuboring." : cloud.sample ? "Javob kelmadi. Qayta yuborib ko'ring." : "Bu yerda Claude'dan foydalanishga ruxsat berilmagan.";
+    if (p) p.textContent = code === "rate_limited" ? "Hozir so'rovlar ko'p. Birozdan keyin qayta yuboring." : e && e.msg ? e.msg : aiOn() ? "Javob kelmadi. Qayta yuborib ko'ring." : "Bu yerda Claude'dan foydalanishga ruxsat berilmagan.";
   } finally { chat.busy = false; if (send) send.disabled = false; }
 }
 
@@ -3075,11 +3405,10 @@ const act = {
     const form = el.closest("form"), fd = new FormData(form), st = $("#rd-ai-st"), b = recs[form.dataset.id];
     const notes = [str(fd.get("recall")), str(fd.get("feyn")), str(fd.get("link"))].map(s => s.trim()).filter(Boolean).join("\n\n");
     if (!notes) { st.textContent = "Avval eslab yozing: savollar shu matndan tuziladi."; return; }
-    if (!cloud.sample || !b) return;
+    if (!aiOn() || !b) return;
     el.disabled = true; st.textContent = "Savollar tuzilmoqda…";
     try {
-      const out = await cloud.sample.json(`${AI_PROMPT}Source: ${b.title} (${KINDS[b.kind].name})\nNotes:\n${notes.slice(0, 6000)}`, { modelTier: "quick" });
-      const list = (Array.isArray(out) ? out : []).filter(x => x && str(x.q).trim() && str(x.a).trim()).slice(0, 5);
+      const list = (await aiFrom({ text: notes, title: `${b.title} (${KINDS[b.kind].name})` })).slice(0, 6);
       if (!list.length) throw { code: "empty" };
       const box = $("#rd-cards");
       if (!box) return;
@@ -3104,6 +3433,7 @@ const act = {
     put(tomb(i)); closeSheet(); toast("Yozuv o'chirildi.");
   },
   "sheet-close"() { closeSheet(); },
+  "demo-load"() { loadDemo(); },
   "demo-del"(el) {
     if (!armed(el, "Ha, namuna o'chirilsin")) return;
     put(all().filter(r => r.demo && !r.del).map(tomb)); toast("Namuna o'chirildi.");
@@ -3123,7 +3453,41 @@ const act = {
     rv.shown = true;
     $("#rv-show").hidden = true;
     const a = $("#rv-ans"); a.hidden = false; a.scrollIntoView({ block: "nearest" });
+    if (rv.conf === 2) { const hc = $("#rv-hc"); if (hc) hc.hidden = false; }
   },
+  rt(el) { rtApply(el); },
+  "rv-undo"() {
+    const u = rv.undo; if (!u) return;
+    if (u.first) { rv.tally[u.g]--; if (!rv.practice) put({ ...u.prev }, true); }
+    if (u.pushed) { const k = rv.q.lastIndexOf(u.id); if (k > u.i) rv.q.splice(k, 1); }
+    if (!u.seen) rv.seen.delete(u.id);
+    rv.i = u.i; rv.undo = null;
+    paintReview(); act["rv-show"]();
+  },
+  "rv-edit"() { const it = recs[rv.q[rv.i]]; if (it) sheetItem(it); },
+  sess(el) { const x = recs[el.dataset.id]; if (x && !x.del) sheetSession(x); },
+  "sess-del"(el) {
+    const x = recs[el.dataset.id]; if (!x) return closeSheet();
+    if (!armed(el, "Ha, o'chirilsin")) return;
+    const b = recs[x.b], out = [{ id: x.id, k: "s", b: x.b, del: 1 }];
+    if (b && x.to && b.cur === x.to && x.from) out.push({ ...b, cur: Math.max(0, x.from - 1) });
+    put(out); closeSheet(); toast("O'qish yozuvi o'chirildi.");
+  },
+  idea(el) {
+    const n = el.dataset.id && recs[el.dataset.id];
+    if (n && !n.del) return sheetIdea(recs[n.b], n);
+    const b = recs[el.dataset.b] || (ui.book && recs[ui.book]); if (b) sheetIdea(b);
+  },
+  "idea-f"(el) { ui.ideaF = el.dataset.f; render(); },
+  "idea-del"(el) { const n = recs[el.dataset.id]; if (!n) return closeSheet(); if (!armed(el, "Ha, o'chirilsin")) return; put({ id: n.id, k: "n", b: n.b, del: 1 }); closeSheet(); toast("O'chirildi."); },
+  "idea-card"(el) {
+    const n = recs[el.dataset.id]; if (!n) return;
+    const q = n.kind === "savol" ? n.text : n.quote || `${ideaWhere(n) || recs[n.b].title}: qanday fikr kelgan edi?`, a = n.kind === "savol" ? n.answer : n.text;
+    if (!a) return toast("Avval savolning javobini yozing.");
+    put({ id: uid(), k: "i", b: n.b, t: "card", q: plain(q).slice(0, 400), a: plain(a), r: ideaWhere(n), f: 0, e: 0, c: Date.now(), s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [] });
+    closeSheet(); toast(`Karta yaratildi. Ertaga eslasangiz +${XV} XOTIR.`);
+  },
+  "all-sess"() { ui.allSess = true; render(); },
   "rv-conf"(el) {
     rv.conf = +el.dataset.c;
     for (const c of el.parentNode.children) c.setAttribute("aria-pressed", String(c === el));
@@ -3132,6 +3496,8 @@ const act = {
     const id = rv.q[rv.i], it = recs[id], g = +el.dataset.g;
     if (!rv.shown || !it || ![0, 1, 2, 3].includes(g)) return;
     const first = !rv.seen.has(id);
+    if (rec) rec.stop();
+    rv.undo = { id, prev: it, i: rv.i, g, first, pushed: first && g === 0, seen: rv.seen.has(id) };
     if (first) {
       rv.tally[g]++;
       if (!rv.practice) put(schedule(it, g, today(), rv.conf), true);
@@ -3148,10 +3514,10 @@ const act = {
   mic(el) {
     if (!Rec) return;
     if (rec) { rec.stop(); return; }
-    const t = $("#cap-text");
+    const t = $("#" + (el.dataset.t || "cap-text")), btn = el;
     rec = new Rec(); rec.lang = "uz-UZ"; rec.continuous = true; rec.interimResults = false;
     rec.onresult = e => { for (let k = e.resultIndex; k < e.results.length; k++) if (e.results[k].isFinal) { const w = e.results[k][0].transcript.trim(); if (w && t) { t.value = (t.value ? t.value.replace(/\s*$/, " ") : "") + w; grow(t); } } };
-    rec.onend = () => { rec = null; const b = $("#cap-mic"); if (b) b.setAttribute("aria-pressed", "false"); };
+    rec.onend = () => { rec = null; btn.setAttribute("aria-pressed", "false"); };
     rec.onerror = e => { if (e.error === "not-allowed") toast("Mikrofonga ruxsat berilmadi."); else if (e.error === "language-not-supported") toast("Bu brauzer o'zbekcha ovozni tanimaydi. Telefon klaviaturasidagi mikrofonni ishlating."); };
     try { rec.start(); el.setAttribute("aria-pressed", "true"); } catch (e) { rec = null; }
   },
@@ -3173,8 +3539,16 @@ const act = {
   tag(el) { ui.tag = el.dataset.t; ui.tab = "shelf"; ui.book = null; ui.filter = "all"; render(); window.scrollTo(0, 0); },
   "tag-add"(el) { const i = $("#bk-tags"); if (!i) return; const have = i.value.split(",").map(x => x.trim()).filter(Boolean); if (!have.some(x => x.toLowerCase() === el.dataset.t.toLowerCase())) have.push(el.dataset.t); i.value = have.join(", "); el.remove(); },
   search() { sheetSearch(); },
-  settings() { sheetSettings(); },
-  skin() { setSkin(skin() === "light" ? "dark" : "light"); paintTop(); if (ui.tab === "settings" && !ui.book) render(); if ($("#sheet").open && $("form[data-form=cfg]")) sheetSettings(); },
+  settings() { ui.tab = "settings"; ui.book = null; render(); window.scrollTo(0, 0); },
+  "set-algo"() { sheetAlgo(); },
+  "set-goal"() { sheetGoalCfg(); },
+  "set-cue"() { sheetCue(); },
+  "set-push"() { sheetPush(); },
+  "set-tg"() { sheetLinks("tg"); },
+  "set-key"() { sheetLinks("key"); },
+  "set-rules"() { sheetRules(); },
+  "cfg-pick"(el) { const i = $("#" + el.dataset.k); if (i) { i.value = el.dataset.v; i.focus(); } },
+  skin() { setSkin(skin() === "light" ? "dark" : "light"); paintTop(); if (ui.tab === "settings" && !ui.book) render(); },
   goal(el) { const g = el.dataset.id && recs[el.dataset.id]; sheetGoal(g && !g.del ? g : null); },
   "goal-preset"(el) {
     const f = el.closest("form");
@@ -3318,8 +3692,7 @@ const forms = {
     if (end > (b.cur || 0)) out.push({ ...b, cur: end });
     clearTimeout(draftTimer); dropDraft(b.id);
     put(out); closeSheet();
-    popGain(made * 10 + (qty || mins ? sessionX({ unit, qty, min: mins }) : 0));
-    toast(`Saqlandi. ${made} ta yozuvning birinchi takrori ertaga.`);
+    toast(`Saqlandi. Ertaga birinchi takrorda eslasangiz, +${made * XV} XOTIR hisobga tushadi.`);
     if (b.pages && end >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
   finish(form) {
@@ -3333,15 +3706,18 @@ const forms = {
     const fd = new FormData(form), id = form.dataset.id, t = form.dataset.t, val = k => str(fd.get(k)).trim();
     const q = val("q"), a = val("a"), r = val("r"), m = val("m");
     if ((t === "card" || t === "mnemo") && (!q || !a)) return fail(form, "Savolni ham, javobni ham yozing.");
-    if (!a) return fail(form, "Matn bo'sh qolmasin.");
+    if (t === "sketch" && !q) return fail(form, "Eskiz nima haqida ekanini yozing.");
+    if (!a && t !== "sketch") return fail(form, "Matn bo'sh qolmasin.");
     if (t === "cloze" && !/\[\[.+?\]\]/.test(a)) return fail(form, "Yashiriladigan so'zni [[ ]] ichiga oling.");
     if (id) {
-      if (recs[id]) put({ ...recs[id], q, a, r, ...(t === "mnemo" ? { m } : {}) });
-      closeSheet(); return toast("Yozuv saqlandi.");
+      if (recs[id]) put({ ...recs[id], q, a, r, ...(t === "mnemo" ? { m } : {}) }, $("#review").open);
+      closeSheet();
+      if ($("#review").open && rv.q[rv.i] === id) { const sh = rv.shown; paintReview(); if (sh) act["rv-show"](); }
+      return toast("Yozuv saqlandi.");
     }
     const b = recs[form.dataset.book]; if (!b) return closeSheet();
     const type = NEW_TYPES.some(x => x[0] === t) ? t : "card";
-    put({ id: uid(), k: "i", b: b.id, t: type, q: type === "cloze" ? "" : q, a, r, f: 0, e: 0, c: Date.now(), s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [], ...(type === "mnemo" ? { m } : {}) });
+    put({ id: uid(), k: "i", b: b.id, t: type, att: pend.splice(0), q: type === "cloze" ? "" : q, a, r, f: 0, e: 0, c: Date.now(), s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [], ...(type === "mnemo" ? { m } : {}) });
     closeSheet(); toast("Qo'shildi. Birinchi takrori ertaga.");
   },
   focus(form) {
@@ -3354,10 +3730,28 @@ const forms = {
     closeSheet(); ui.tab = "today"; ui.book = null; render(); window.scrollTo(0, 0);
   },
   cfg(form) {
-    const fd = new FormData(form);
+    const fd = new FormData(form), c = cfg(), next = { ...c };
     const num = (k, lo, hi) => Math.max(lo, Math.min(hi, int(fd.get(k)) || CFG0[k]));
-    put({ ...cfg(), id: "cfg", k: "c", algo: ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder", cue: str(fd.get("cue")).trim(), eb: num("eb", 100, 300), im: num("im", 50, 300), mx: num("mx", 7, 3650), dg: num("dg", 10, 2000) });
-    closeSheet(); toast("Sozlamalar saqlandi.");
+    if (fd.has("algo")) next.algo = ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder";
+    if (fd.has("cue")) next.cue = str(fd.get("cue")).trim();
+    for (const [k, lo, hi] of [["eb", 100, 300], ["im", 50, 300], ["mx", 7, 3650], ["dg", 10, 2000]]) if (fd.has(k)) next[k] = num(k, lo, hi);
+    put({ ...next, id: "cfg", k: "c" }); closeSheet(); toast("Saqlandi.");
+  },
+  idea(form) {
+    const b = recs[form.dataset.b]; if (!b) return closeSheet();
+    const fd = new FormData(form), text = str(fd.get("text")).trim(), kind = IDEA[fd.get("kind")] ? fd.get("kind") : "fikr";
+    if (!text) return fail(form, kind === "savol" ? "Savolingizni yozing." : "Fikringizni yozing.");
+    const old = form.dataset.id && recs[form.dataset.id];
+    const n = { ...(old || { id: uid(), k: "n", b: b.id, c: Date.now() }), kind, page: int(fd.get("page")), line: int(fd.get("line")), quote: str(fd.get("quote")).trim(), text, answer: str(fd.get("answer")).trim(), done: fd.get("done") === "1" || (kind === "savol" && !!str(fd.get("answer")).trim() && !old) ? 1 : 0 };
+    ui.ideaKind = kind;
+    if (rec) rec.stop();
+    put(n); closeSheet(); toast(`${IDEA[kind][0]} saqlandi${ideaWhere(n) ? ` · ${ideaWhere(n)}` : ""}.`);
+  },
+  sess(form) {
+    const x = recs[form.dataset.id]; if (!x) return closeSheet();
+    const fd = new FormData(form), qty = Math.max(0, int(fd.get("qty"))), min = Math.max(0, int(fd.get("min"))), d = str(fd.get("day"));
+    if (!qty && !min) return fail(form, "Miqdor yoki vaqtni kiriting. Butunlay keraksiz bo'lsa, «O'chirish»ni bosing.");
+    put({ ...x, qty: x.unit ? qty : 0, min, day: DATE.test(d) && d <= today() ? d : x.day }); closeSheet(); toast("Tuzatildi.");
   },
   cap(form) {
     const fd = new FormData(form), b = recs[fd.get("b")];
@@ -3375,15 +3769,15 @@ const forms = {
     }
     const now = Date.now(), out = [], U = UNITS[unit];
     const range = U && from ? (to !== from ? `${from}–${to}-${U.many}` : `${from}-${U.one}`) : "";
-    if (text) out.push({ id: uid(), k: "i", b: b.id, t: "recall", q: "", a: text, r: range || `${fmtDate(today())}dagi o'rganish`, f: from, e: to, c: now, s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [] });
+    if (pend.length && !text) return fail(form, "Rasm yoki fayl uchun bir-ikki so'z yozing: unda nima bor?");
+    if (text) out.push({ id: uid(), k: "i", b: b.id, t: "recall", att: pend.splice(0), q: "", a: text, r: range || `${fmtDate(today())}dagi o'rganish`, f: from, e: to, c: now, s: 0, d: addDays(today(), LADDER[0]), n: 0, l: 0, h: [] });
     if (qty || mins) out.push({ id: uid(), k: "s", b: b.id, day: today(), qty, unit, min: mins, from, to, c: now + 1 });
     if (unit && unit !== "daqiqa" && to > (b.cur || 0)) out.push({ ...b, cur: to });
     if (unit === "daqiqa" && to > (b.cur || 0)) out.push({ ...b, cur: to });
     try { localStorage.setItem(LASTSRC, b.id); } catch (e) { /* convenience only */ }
     if (rec) rec.stop();
     put(out); closeSheet();
-    popGain((text ? 10 : 0) + sessionX({ unit, qty, min: mins }));
-    toast([qty && U ? `+${qty} ${U.one}` : "", mins ? fmtMin(mins) : "", text ? "yozuv ertaga so'raladi" : ""].filter(Boolean).join(" · ") || "Saqlandi.");
+    toast([qty && U ? `+${qty} ${U.one}` : "", mins ? fmtMin(mins) : "", text ? `ertaga eslasangiz +${XV} XOTIR` : ""].filter(Boolean).join(" · ") || "Saqlandi.");
     if (b.pages && to >= b.pages && b.status !== "done") sheetFinish(recs[b.id]);
   },
   learn(form) { const v = str(new FormData(form).get("a")).trim(); if (!v) return; learnAnswer(sameAnswer(v, st.cur.p.k), v); },
@@ -3406,7 +3800,7 @@ const forms = {
     if (!rows.length) return fail(form, "Kartochka topilmadi. Har qatorda savol va javobni « — » bilan ajrating.");
     const now = Date.now(), due = addDays(today(), LADDER[0]), out = [];
     rows.forEach(([q, a], k) => { out.push({ id: uid(), k: "i", b: b.id, t: "card", q, a, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [] }); if (two) out.push({ id: uid(), k: "i", b: b.id, t: "card", q: a, a: q, r: "", f: 0, e: 0, c: now + out.length, s: 0, d: due, n: 0, l: 0, h: [], rev: 1 }); });
-    put(out); closeSheet(); popGain(rows.length * 10); toast(`${rows.length} ta kartochka qo'shildi. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
+    put(out); closeSheet(); toast(`${rows.length} ta kartochka qo'shildi: har biri birinchi eslanganda +${XV} XOTIR. Endi «Kartochkalar» yoki «Moslashtirish» bilan mashq qiling.`);
   },
   async auth(form) {
     const fd = new FormData(form), reg = form.dataset.m === "reg", btn = form.querySelector("button[type=submit]");
@@ -3460,6 +3854,7 @@ document.addEventListener("input", e => {
   if (t.id === "mj-in") $("#mj-out").textContent = majorOut(t.value);
   if (t.id === "q-in") searchOut(t.value);
   if (t.name === "b" && t.closest && t.closest("form[data-form=cap]")) paintCapAmount(t.form);
+  if (t.name === "kind" && t.closest && t.closest("form[data-form=idea]")) { const f = t.form; f.querySelector(".idea-answer").hidden = t.value !== "savol"; f.querySelector("label[for=id-t]").textContent = t.value === "savol" ? "Savolingiz" : t.value === "goya" ? "G'oyangiz" : "Fikringiz"; }
   if (t.id === "dk-q") { const v = t.value.trim().toLowerCase(); let n = 0; for (const r of document.querySelectorAll(".dk-list .row-btn")) { const hit = !v || r.dataset.s.includes(v); r.hidden = !hit; n += hit; } $("#dk-none").hidden = !!n; }
   if (t.id === "bl-text") $("#bl-n").textContent = `${parseBulk(t.value).length} ta kartochka`;
   if (t.name === "a" && t.closest(".card-pair")) { const h = t.closest(".card-pair").querySelector(".qhint"); if (h) h.hidden = !(t.value.length > 140 || (t.value.match(/,|;/g) || []).length >= 4 || t.value.includes("\n")); }
@@ -3486,7 +3881,7 @@ document.addEventListener("keydown", e => {
   if (!rv.shown && (e.key === "Enter" || e.key === " ") && !(t.closest && t.closest("button"))) { e.preventDefault(); act["rv-show"](); }
   else if (rv.shown && ["1", "2", "3", "4"].includes(e.key)) act["rv-grade"]({ dataset: { g: String(+e.key - 1) } });
 });
-$("#sheet").addEventListener("close", () => { lock(); if (chat.ctl) chat.ctl.abort(); if (pend.length) { pend.forEach(forgetFile); pend = []; } });
+$("#sheet").addEventListener("close", () => { lock(); if (ui.tab === "settings" && !ui.book) setTimeout(render, 0); if (chat.ctl) chat.ctl.abort(); if (pend.length) { pend.forEach(forgetFile); pend = []; } });
 $("#auth").addEventListener("cancel", e => e.preventDefault());
 document.addEventListener("change", async e => { const t = e.target;
   if (t.id === "bl-photo" && t.files && t.files[0]) {

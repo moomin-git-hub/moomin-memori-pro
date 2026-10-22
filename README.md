@@ -2,24 +2,28 @@
 
 O'rgangan va bilganlaringiz hisobi. Kitob, kurs, video va til hayot davomida bir joyda yig'iladi va ilmiy usullar bilan uzoq xotirada saqlanadi.
 
-Hisob birligi **XOTIR**. Hisob ilovasida pul so'mda, Vaqt Banki'da vaqt soatda o'lchanadi. Bu yerda bilim XOTIR'da o'lchanadi: o'rgansangiz ko'payadi, unutsangiz kamayadi. Ilova nomidagi yil o'z-o'zidan almashadi (ME'MORI 2026, ME'MORI 2027…).
+Hisob birligi **XOTIR**. Hisob ilovasida pul so'mda, Vaqt Banki'da vaqt soatda o'lchanadi. Bu yerda bilim XOTIR'da o'lchanadi, va balans **hozir xotirangizda turgan** bilimni ko'rsatadi. Ilova nomidagi yil o'z-o'zidan almashadi (ME'MORI 2026, ME'MORI 2027…).
 
-| XOTIR | Nima uchun |
-|---|---|
-| +10 | har yangi yozuv yoki karta |
-| +1 | har o'qilgan bet |
-| +10 | har o'tilgan dars |
-| +2 | har 10 daqiqa o'rganish |
-| +3 / +4 / +1 | takrorda «Esladim» / «Oson» / «Qiynaldim» |
-| +50 | tugatilgan manba |
-| −5 | har «Unutdim» |
+- Har bir yozuv yoki karta **10 XOTIR** turadi. U birinchi takrorda eslanganda hisobga tushadi, shungacha «kutilmoqda».
+- Keyin u esda qolish ehtimoliga qarab hisoblanadi: `R = (1 + t / 9S)^-1`, bu yerda `t` oxirgi takrordan beri o'tgan kunlar, `S` esa yozuv turgan pog'onaning oralig'i (FSRS egri chizig'i). Takrorlanmagan bilim o'z-o'zidan kamayadi, takrorlansa yana 10 ga chiqadi va keyingi safar sekinroq kamayadi.
+- «Unutdim» jarima emas: yozuv qayta eslanguncha 0 turadi.
+- Bet, dars va vaqt harakat hisobi: hisobotda ko'rinadi, XOTIR bermaydi.
+- Oy hisobida: **O'rgandim** = takrorlarda topilgan XOTIR, **Unutdim** = unutilgan + vaqt bilan eskirgan XOTIR.
 
-Unvonlar umr bo'yi to'plangan XOTIR'ga qarab beriladi: Boshlovchi (0), Havaskor (250), Izlanuvchi (1 000), Talaba (3 000), Bilimdon (7 500), Ustoz (15 000), Olim (30 000), Alloma (60 000). Kunlik maqsad (asli 50 XOTIR) Sozlamalarda o'zgartiriladi.
+Unvonlar hozirgi balansga qarab beriladi: Boshlovchi (0), Havaskor (100), Izlanuvchi (300), Talaba (700), Bilimdon (1 500), Ustoz (3 000), Olim (6 000), Alloma (12 000). Kunlik maqsad (asli 30 XOTIR) Sozlamalarda o'zgartiriladi.
 
 - **Server:** Node.js + Express, `server.js`
 - **Baza:** PostgreSQL (Neon)
 - **Hosting:** Render (bepul tarif)
 - **Ilova:** `app.html`. Xuddi shu sahifa Claude ichida ham ishlaydi. `npm run build` uni `public/index.html` ga o'raydi.
+
+## Yozish oynalari
+
+- Har bir yozish oynasida matnni bezash tugmalari bor: **qalin**, tagiga chizish, belgilash, boshqa shrift, katta sarlavha, iqtibos, 5 ta rang va havola. Matn oddiy belgilar bilan saqlanadi (`**qalin**`, `__tagiga__`, `==belgi==`, `` `shrift` ``, `{r|qizil}`, `[matn](https://…)`, qator boshida `# ` va `> `), takrorda esa bezalgan holda ko'rinadi.
+- **Fikrlar daftari**: manba → «Fikr yozish». Kitob o'qiyotganda qaysi bet va qatorda qanday **fikr**, **savol** yoki **g'oya** kelganini yozib qo'yasiz; xohlasangiz, sababchi jumlani ham. Manba sahifasida bet tartibida turadi, «Javobsiz savollar» alohida ajraladi, savolga keyin javob yozib «Javob topildi» deb belgilanadi va bir tugma bilan kartaga aylantiriladi. Fikrlar XOTIR hisobiga kirmaydi.
+- Tez yozish va «Bitta karta» oynalarida ham rasm va fayl biriktiriladi.
+- Takrorda: ovoz bilan javob berish, «Orqaga» (oxirgi bahoni bekor qilish) va shu joyning o'zida tahrirlash.
+- Adashib kiritilgan bet yoki daqiqani «So'nggi amallar», Kundalik yoki manba sahifasidan ochib tuzatish yoki o'chirish mumkin.
 
 ## Fayllar
 
@@ -48,6 +52,7 @@ Unvonlar umr bo'yi to'plangan XOTIR'ga qarab beriladi: Boshlovchi (0), Havaskor 
 | `GET /api/push/key`, `POST /api/push/subscribe`, `/unsubscribe`, `/test` | Takror eslatmasi (web push) |
 | `GET /api/cron?key=CRON_KEY` | Eslatmalar va haftalik zaxirani tekshirish (tashqi pinger uchun) |
 | `POST /api/ai/cards` | Kitob sahifasi rasmi yoki matndan savol-javob kartochkalari |
+| `POST /api/ai/chat` | Sokrat imtihoni va «Xatoni top» o'yini (Gemini yoki Claude) |
 | `GET /api/tg`, `POST /api/tg/code`, `/unlink`, `/backup` | Telegram'ni ulash, uzish, zaxira yuborish |
 | `POST /api/tg/hook/…` | Telegram'dan keladigan xabarlar (server o'zi ro'yxatdan o'tkazadi) |
 | `GET /api/ext/summary?key=…`, `POST /api/ext/log?key=…` | Vaqt Banki va Mo'min uchun |
@@ -78,7 +83,7 @@ Bu papkani GitHub repo qilib yuklang.
 ### 5. Telegram bot
 1. Telegram'da **@BotFather** → `/newbot` → nom bering (masalan «ME'MORI»), username bering (masalan `memori_hisob_bot`).
 2. BotFather bergan tokenni Render → Environment → `TELEGRAM_BOT_TOKEN` ga qo'ying. Saqlang, server qayta ishga tushadi.
-3. Server botni o'zi ulaydi (webhook). Manzilni Render o'zi beradi. Boshqa joyga joylasangiz, `PUBLIC_URL` ga sayt manzilini yozing.
+3. Server botni o'zi ulaydi (webhook). Manzilni Render o'zi beradi. Ochiq manzil bo'lmasa (masalan, kompyuterda ishga tushirilsa), server xabarlarni o'zi so'rab oladi (polling), hech narsa sozlash kerak emas.
 4. Ilovada **Sozlamalar → Telegram → «Telegram'ni ulash»** → Telegram ochiladi → **Start**.
 
 Botga nima yozsa bo'ladi:
@@ -94,7 +99,10 @@ Bot har kuni tanlangan soatda takror eslatmasini va **har 7 kunda zaxira faylini
 ### 6. Rasmdan va yozuvlardan karta (sun'iy intellekt)
 1. aistudio.google.com → **Get API key**. Bepul tarif shaxsiy foydalanishga yetadi.
 2. Kalitni Render'da `GEMINI_API_KEY` ga qo'ying.
-3. Shundan keyin manba → **Ko'p karta** oynasida «Kitob sahifasi rasmidan» va «Yozuvlarimdan» tugmalari paydo bo'ladi.
+3. Shundan keyin ishga tushadi:
+   - manba → **Ko'p karta**: «Kitob sahifasi rasmidan» va «Yozuvlarimdan»;
+   - **Batafsil yozish**: «Yozganimdan savol tuzib ber»;
+   - manba → ⋮: **Sokrat imtihoni** (yozuvlaringiz bo'yicha bittadan savol) va **Xatoni top** o'yini.
 
 Gemini o'rniga Claude ishlatsa ham bo'ladi: `ANTHROPIC_API_KEY` (pullik) qo'yiladi. Ikkalasi bo'lsa, Gemini ishlatiladi.
 
@@ -114,7 +122,7 @@ Ilovada **Sozlamalar → Boshqa ilovalar bilan ulash → Kalit yaratish**. Shu k
 ```js
 const r = await fetch("https://memori.onrender.com/api/ext/summary?key=KALIT").then(r => r.json());
 // r.due — bugungi takror soni
-// r.month.xotir, r.all.xotir — oy va umr bo'yi XOTIR
+// r.xotir — hozirgi XOTIR balansi; r.month.kirim / r.month.chiqim — oy davomida topilgan va yo'qotilgan
 // r.month.bet, r.month.dars, r.month.min, r.month.notes — oy hisobi
 ```
 

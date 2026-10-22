@@ -181,7 +181,7 @@ app.get("/api/me", auth, (req, res) => res.json(publicUser(req.user)));
    The client sends the records it changed (each carries "u", its last-edit time) and the cursor it holds.
    A stored record is replaced only by a newer "u". Every write takes a new revision from one sequence,
    so the reply is simply everything of this user with a revision above the cursor, plus the new cursor. */
-const KINDS = new Set(["b", "i", "c", "g", "s"]);   // source, note, settings, goal, study session
+const KINDS = new Set(["b", "i", "c", "g", "s", "n"]);   // source, note, settings, goal, study session, idea
 app.post("/api/sync", auth, wrap(async (req, res) => {
   const since = Math.max(0, +req.body.since || 0);
   const incoming = Array.isArray(req.body.recs) ? req.body.recs : [];
@@ -427,7 +427,31 @@ async function logEntry(userId, e) {
 const UNIT_WORD = { bet: "bet", dars: "dars", daqiqa: "daqiqa" };
 const entryLine = r => [r.qty && r.unit ? `+${r.qty} ${UNIT_WORD[r.unit]}` : "", r.minutes && r.unit !== "daqiqa" ? `${r.minutes} daqiqa` : "", r.note ? "yozuv saqlandi, ertaga so'raladi" : ""].filter(Boolean).join(" · ");
 
-// A month and a lifetime in one glance: notes, pages, lessons, minutes, words, finished sources.
+/* XOTIR, the same way the app counts it: each note is worth 10 once recalled in a review,
+   then by its chance of still being remembered, R = (1 + t / 9S)^-1, S the gap of its step. */
+const LADDER = [1, 3, 7, 14, 30, 60, 120, 240], XV = 10;
+const dDiff = (a, b) => Math.round((Date.parse(a + "T00:00:00Z") - Date.parse(b + "T00:00:00Z")) / 864e5);
+function memoryOf(notes, day, from) {
+  let bal = 0, start = 0, gain = 0, lost = 0, pending = 0;
+  const before = addDay(from, -1);
+  for (const i of notes) {
+    let proven = false, s = 0, last = "", vStart = null;
+    const val = d => proven ? XV / (1 + Math.max(0, dDiff(d, last)) / (9 * LADDER[s])) : 0;
+    for (const [d, g] of i.h || []) {
+      if (vStart === null && d > before) vStart = val(before);
+      const v = val(d);
+      if (g >= 1) { if (d >= from) gain += XV - v; proven = true; s = g === 3 ? Math.min(s + 2, 7) : g === 2 ? Math.min(s + 1, 7) : s; }
+      else { if (d >= from) lost += v; proven = false; s = 0; }
+      last = d;
+    }
+    if (vStart === null) vStart = val(before);
+    start += vStart; bal += val(day);
+    if (!proven && !i.off) pending++;
+  }
+  const net = bal - start;
+  return { xotir: Math.round(bal), kirim: Math.round(gain), unutildi: Math.round(lost), eskirdi: Math.max(0, Math.round(gain - lost - net)), pending };
+}
+// A month and a lifetime in one glance: XOTIR, notes, pages, lessons, minutes, words, finished sources.
 async function ledger(userId) {
   const recs = await recordsOf(userId, ["b", "i", "s"]);
   const books = new Map(recs.filter(r => r.k === "b").map(b => [b.id, b]));
@@ -444,10 +468,13 @@ async function ledger(userId) {
     if (r.k === "s") for (const x of String(r.day).startsWith(month) ? [m, all] : [all]) { if (r.unit && UNIT_WORD[r.unit]) x[r.unit] += +r.qty || 0; x.min += (+r.min || 0) || (r.unit === "daqiqa" ? +r.qty || 0 : 0); }
     if (r.k === "b" && r.status === "done" && r.fin) for (const x of dayOf(r.fin).startsWith(month) ? [m, all] : [all]) x.done++;
   }
-  for (const x of [m, all]) { x.kirim = x.notes * 10 + x.bet + x.dars * 10 + Math.floor(x.min / 10) * 2 + x.good * 3 + x.easy * 4 + x.hard + x.done * 50; x.chiqim = x.forgot * 5; x.xotir = x.kirim - x.chiqim; }
-  return { day, month: m, all, due: await dueCount(userId, day) };
+  const notes = recs.filter(r => r.k === "i" && !r.rev && books.has(r.b));
+  Object.assign(m, memoryOf(notes, day, month + "-01"));
+  Object.assign(all, memoryOf(notes, day, "1970-01-01"));
+  for (const x of [m, all]) x.chiqim = x.unutildi + x.eskirdi;
+  return { day, month: m, all, xotir: all.xotir, due: await dueCount(userId, day) };
 }
-const ledgerText = (L, head) => [`${head} ${L.xotir} XOTIR (+${L.kirim} / −${L.chiqim})`, `• ${L.notes} ta yangi yozuv`, L.bet ? `• ${L.bet} bet o'qildi` : "", L.dars ? `• ${L.dars} ta dars` : "", L.min ? `• ${Math.floor(L.min / 60)} soat ${L.min % 60} daqiqa` : "", L.words ? `• ${L.words} ta yangi so'z` : "", L.done ? `• ${L.done} ta manba tugatildi` : ""].filter(Boolean).join("\n");
+const ledgerText = (L, head) => [`${head} +${L.kirim} / −${L.chiqim} XOTIR`, `• ${L.notes} ta yangi yozuv`, L.bet ? `• ${L.bet} bet o'qildi` : "", L.dars ? `• ${L.dars} ta dars` : "", L.min ? `• ${Math.floor(L.min / 60)} soat ${L.min % 60} daqiqa` : "", L.words ? `• ${L.words} ta yangi so'z` : "", L.done ? `• ${L.done} ta manba tugatildi` : ""].filter(Boolean).join("\n");
 
 /* ── cards from a photo or text, by Gemini (free tier) or Claude ── */
 const AI_RULES = "You make retrieval-practice flashcards for a learner. From the material below, write 3 to 10 short question-answer pairs that test its most important facts, terms, names, dates and ideas. For foreign-language vocabulary, make pairs of «word or phrase» and its Uzbek translation. Otherwise write in Uzbek, Latin script. Use only what is in the material. Questions must need real recall, not yes or no. Reply with only a JSON array like [{\"q\":\"...\",\"a\":\"...\"}].";
@@ -485,6 +512,33 @@ async function aiCards({ text, image, title }) {
   if (image) return pairsFrom(await aiAsk(`${head}The material is the photographed page in the image.`, image, true));
   return pairsFrom(await aiAsk(`${head}Material:\n${String(text).slice(0, 12000)}`, null, true));
 }
+// A conversation (Socratic exam, find-the-mistake) with the same model.
+async function aiChat(messages) {
+  const turns = messages.filter(m => m && typeof m.content === "string" && m.content.trim()).slice(-30).map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.content.slice(0, 12000) }));
+  if (!turns.length) return "";
+  if (GEMINI_KEY) {
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
+      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": GEMINI_KEY },
+      body: JSON.stringify({ contents: turns.map(t => ({ role: t.role === "assistant" ? "model" : "user", parts: [{ text: t.content }] })), generationConfig: { temperature: 0.5 } }),
+    });
+    const j = await r.json().catch(() => null);
+    if (!r.ok) throw new Error((j && j.error && j.error.message) || `Gemini ${r.status}`);
+    return ((j.candidates || [])[0] || { content: { parts: [] } }).content.parts.map(p => p.text || "").join("");
+  }
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST", headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01" },
+    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: 1200, messages: turns }),
+  });
+  const j = await r.json().catch(() => null);
+  if (!r.ok) throw new Error((j && j.error && j.error.message) || `Claude ${r.status}`);
+  return (j.content || []).map(c => c.text || "").join("");
+}
+app.post("/api/ai/chat", auth, wrap(async (req, res) => {
+  if (!AI_ON) return fail(res, 400, "Serverda GEMINI_API_KEY yoki ANTHROPIC_API_KEY sozlanmagan.");
+  if (!Array.isArray(req.body.messages)) return fail(res, 400, "Xabarlar yo'q.");
+  try { res.json({ text: await aiChat(req.body.messages) }); }
+  catch (e) { console.error("ai chat:", e.message); fail(res, 502, "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
+}));
 app.post("/api/ai/cards", auth, wrap(async (req, res) => {
   if (!AI_ON) return fail(res, 400, "Serverda GEMINI_API_KEY yoki ANTHROPIC_API_KEY sozlanmagan.");
   const img = req.body.image, text = String(req.body.text || "").trim();
@@ -590,7 +644,7 @@ async function onTelegram(msg) {
   if (!link) return say(chat, "Avval hisobingizni ulang: ME'MORI ilovasida Sozlamalar → Telegram → «Ulash».");
   const uid = link.user_id;
   if (/^\/(start|yordam|help)\b/.test(text)) return say(chat, HELP);
-  if (/^\/bugun\b/.test(text)) { const L = await ledger(uid); return say(chat, `Bugun ${L.due} ta takror bor.${L.due ? " Ilovani ochib takrorlang." : ""}\n\n${ledgerText(L.month, "Shu oy:")}\n\n${ledgerText(L.all, "Xotira balansi:")}`); }
+  if (/^\/bugun\b/.test(text)) { const L = await ledger(uid); return say(chat, `Xotira balansi: ${L.xotir} XOTIR${L.all.pending ? ` (yana ${L.all.pending} ta yozuv birinchi takrorni kutmoqda)` : ""}\nBugun ${L.due} ta takror bor.${L.due ? " Takrorlamasangiz, balans kamayib boradi." : ""}\n\n${ledgerText(L.month, "Shu oy:")}`); }
   if (/^\/manbalar\b/.test(text)) { const bs = (await recordsOf(uid, ["b"])).filter(b => b.status !== "done"); return say(chat, bs.length ? "O'rganilayotgan manbalar:\n" + bs.map(b => "• " + b.title).join("\n") : "Hali manba yo'q."); }
   if (/^\/zaxira\b/.test(text)) { try { await sendBackup(uid, chat); } catch (e) { say(chat, "Zaxira yuborilmadi, birozdan keyin qayta urining."); } return; }
   const hr = /^\/soat\s+(\d{1,2})/.exec(text);
@@ -663,12 +717,22 @@ async function telegramRound() {
     } catch (e) { console.error("tg round:", e.message); }
   }
 }
+// Without a public address (a local run, another host) the bot asks Telegram for new messages itself.
+let tgOffset = 0;
+async function pollTelegram() {
+  for (;;) {
+    try {
+      const ups = await tg("getUpdates", { offset: tgOffset, timeout: 50, allowed_updates: ["message", "edited_message"] });
+      for (const u of ups) { tgOffset = u.update_id + 1; const m = u.message || u.edited_message; if (m) await onTelegram(m).catch(e => console.error("tg:", e.message)); }
+    } catch (e) { console.error("tg poll:", e.message); await new Promise(r => setTimeout(r, 5000)); }
+  }
+}
 async function setupTelegram() {
   if (!TG_TOKEN) return;
   try {
     tgBot = (await tg("getMe")).username || "";
     if (PUBLIC_URL) await tg("setWebhook", { url: `${PUBLIC_URL}/api/tg/hook/${TG_SECRET}`, allowed_updates: ["message", "edited_message"] });
-    else console.warn("PUBLIC_URL is not set, so the Telegram webhook was not registered.");
+    else { await tg("deleteWebhook", {}); pollTelegram(); console.log("Telegram: no PUBLIC_URL, reading messages by polling."); }
   } catch (e) { console.error("telegram setup:", e.message); }
 }
 
