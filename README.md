@@ -56,6 +56,7 @@ Unvonlar hozirgi balansga qarab beriladi: Boshlovchi (0), Havaskor (100), Izlanu
 | `GET /api/tg`, `POST /api/tg/code`, `/unlink`, `/backup` | Telegram'ni ulash, uzish, zaxira yuborish |
 | `POST /api/tg/hook/…` | Telegram'dan keladigan xabarlar (server o'zi ro'yxatdan o'tkazadi) |
 | `GET /api/ext/summary?key=…`, `POST /api/ext/log?key=…` | Vaqt Banki va Mo'min uchun |
+| `GET /api/storage` | Fayllar ombori: qancha joy band, qancha bo'sh, ko'chirish holati |
 | `GET /api/health` | Render tekshiruvi uchun |
 
 Jadvallar server birinchi ishga tushganda o'zi yaratiladi.
@@ -135,6 +136,31 @@ await fetch("https://memori.onrender.com/api/ext/log?key=KALIT", {
 ```
 `title` bo'yicha manba topiladi, topilmasa ochiladi. `unit`: `bet`, `dars` yoki `daqiqa`. Bu kodni Vaqt Banki va Mo'min fayllariga qo'shish kerak.
 
+### 9. Fayllar ombori (Neon Object Storage)
+Neon bepul tarifida har loyihaga **5 GB** Object Storage beriladi. Bu bazadagi 0,5 GB joydan alohida. Rasmlar u yerga o'tsa, baza faqat matnli yozuvlar uchun qoladi.
+
+Object Storage hozircha shu regionlarda bor: **aws-eu-central-1 (Frankfurt)**, aws-us-east-1, aws-us-east-2, aws-ap-southeast-1. Neon loyihangiz shulardan birida bo'lishi kerak.
+
+1. Kompyuterda Neon CLI'ni o'rnating va kiring: `npm i -g neonctl`, so'ng `neon auth`.
+2. Kalit yarating: `neon credentials create --scope storage:read --scope storage:write`. Javobdagi ikki qiymatni darhol saqlab qo'ying, ular boshqa ko'rsatilmaydi:
+   - `token_id` → Render'da `AWS_ACCESS_KEY_ID`
+   - `s3_secret_access_key` → Render'da `AWS_SECRET_ACCESS_KEY`
+3. Ombor manzilini oling. Neon Console → Settings → API keys'dan kalit olib, quyidagini yuboring:
+   `curl "https://console.neon.tech/api/v2/projects/LOYIHA_ID/branches/BRANCH_ID/storage" -H "Authorization: Bearer NEON_API_KEY"`
+   Javobdagi qiymatlar:
+   - `s3_endpoint` → `AWS_ENDPOINT_URL_S3`, masalan `https://br-...storage.c-2.eu-central-1.aws.neon.tech`
+   - `region` → `AWS_REGION`, masalan `eu-central-1`
+4. Render → Environment'ga shu 4 qiymatni qo'ying va saqlang. `S3_BUCKET` (asli `memori-files`) va `STORAGE_LIMIT_GB` (asli `5`) render.yaml'da bor.
+5. Server qayta ishga tushganda bucket'ni o'zi yaratadi. **Bazadagi eski rasmlarni ham o'zi omborga ko'chiradi** va bazadagi nusxasini o'chiradi. Ko'chirish fonda, bir necha soniyadan bir necha daqiqagacha davom etadi.
+
+**Joyni kuzatish:**
+- Ilovada **Sozlamalar → Ma'lumotlar → Fayllar ombori**: band joy («436 KB / 5 GB»), bo'sh joy, foiz, fayllar soni va ko'chirish holati. 85% dan oshsa, raqam to'q sariq rangga kiradi.
+- Neon Console'da: loyiha → branch → **Overview** → «Object storage» qatori.
+
+Bucket ochiq emas. Rasmni faqat egasi ko'radi: server unga 1 soatlik vaqtinchalik havola beradi.
+
+Diqqat: fayllar omborga ko'chgandan keyin `AWS_*` kalitlarini Render'dan o'chirib yubormang, aks holda rasmlar ochilmay qoladi.
+
 ## O'zgartirish va qayta joylash
 1. `app.html` ni tahrirlang.
 2. `npm run build` ni ishga tushiring.
@@ -150,3 +176,13 @@ DATABASE_URL=postgres://user:pass@localhost:5432/memori JWT_SECRET=$(openssl ran
 - Render bepul tarifida server 15 daqiqa ishlatilmasa uxlaydi va birinchi ochilish 30–50 soniya oladi. Bu vaqtda ilova brauzerdagi nusxa bilan ishlayveradi va server uyg'ongach sinxronlanadi.
 - Neon bepul tarifida 0.5 GB joy bor. Matnli yozuvlar uchun bu ko'p yillarga yetadi. Joyni asosan rasmlar egallaydi.
 - Umr bo'yi saqlash uchun Telegram'ni ulang: har hafta zaxira fayli keladi.
+
+## 10. To'rt ilova bitta zanjir
+
+Sozlamalar → **Bog'langan ilovalar**.
+- Mo'min o'rganish bo'limlarini `POST /api/ext/mirror` bilan yuboradi: manba va kartalar «Mo'min» belgisi bilan chiqadi,
+  takror holati hech qachon ustidan yozilmaydi, Mo'min'dan o'chgani tarixini saqlab to'xtatiladi, yangi kartalar kuniga 15 tadan.
+- O'qish yozuvlari va takrorlash vaqti (har manba uchun kuniga bitta «Takror» yozuvi) Vaqt Bankiga `POST <vaqt>/api/ext/time`
+  bilan boradi; yuborilmaganlari `fwd_out` jadvalida kutadi va 10 daqiqada qayta yuboriladi.
+- Vaqt Banki ulanishini Mo'min o'zi o'tkazadi (`POST /api/ext/links`) yoki shu yerda «Ulash» bilan.
+- Ruxsat sahifasi: `/link?to=<qaytish manzili>&app=<ilova>`.

@@ -28,6 +28,10 @@ const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || "";
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5";
 const AI_ON = !!(GEMINI_KEY || ANTHROPIC_KEY);
+// Neon Object Storage (S3-compatible). When these are set, files live in the bucket instead of the database.
+const S3_ON = !!(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_ENDPOINT_URL_S3);
+const S3_BUCKET = process.env.S3_BUCKET || "memori-files";
+const STORAGE_LIMIT_GB = +process.env.STORAGE_LIMIT_GB || 5;   // Neon Free: 5 GB of object storage per project
 
 if (!DATABASE_URL) { console.error("DATABASE_URL is not set. Put your Neon connection string there."); process.exit(1); }
 if (!JWT_SECRET || JWT_SECRET.length < 24) { console.error("JWT_SECRET must be set to a random string of at least 24 characters."); process.exit(1); }
@@ -67,6 +71,8 @@ async function migrate() {
       created_at timestamptz NOT NULL DEFAULT now()
     );
     CREATE INDEX IF NOT EXISTS files_user ON files (user_id);
+    ALTER TABLE files ADD COLUMN IF NOT EXISTS store text NOT NULL DEFAULT 'db';
+    ALTER TABLE files ALTER COLUMN data DROP NOT NULL;
     CREATE TABLE IF NOT EXISTS kv (k text PRIMARY KEY, v jsonb NOT NULL);
     CREATE TABLE IF NOT EXISTS push_subs (
       endpoint text PRIMARY KEY,
@@ -88,6 +94,8 @@ async function migrate() {
       last_backup timestamptz,
       created_at timestamptz NOT NULL DEFAULT now()
     );
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS links jsonb NOT NULL DEFAULT '{}'::jsonb;
+    CREATE TABLE IF NOT EXISTS fwd_out (user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, id text NOT NULL, tries integer NOT NULL DEFAULT 0, at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY (user_id, id));
     CREATE TABLE IF NOT EXISTS tg_codes (code text PRIMARY KEY, user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, exp timestamptz NOT NULL);
   `);
 }
@@ -129,7 +137,7 @@ const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.length <= 200;
 
 /* ── health and config ── */
 app.get("/api/health", (req, res) => res.json({ ok: true, app: "esda-qolsin" }));
-app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB, ai: AI_ON, telegram: !!TG_TOKEN }));
+app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB, ai: AI_ON, telegram: !!TG_TOKEN, storage: S3_ON ? "neon-object-storage" : "database" }));
 
 /* ── accounts ── */
 app.post("/api/auth/register", wrap(async (req, res) => {
@@ -206,6 +214,8 @@ app.post("/api/sync", auth, wrap(async (req, res) => {
     }
     await client.query("COMMIT");
   } catch (e) { await client.query("ROLLBACK"); throw e; } finally { client.release(); }
+  const sess = incoming.filter(r => r && r.k === "s" && typeof r.id === "string");
+  if (sess.length) queueSessions(req.user.id, sess).catch(e => console.error("vaqt queue:", e.message));
   const { rows } = await pool.query("SELECT data, rev FROM records WHERE user_id = $1 AND rev > $2 ORDER BY rev LIMIT 20000", [req.user.id, since]);
   const top = rows.length ? Math.max(...rows.map(r => +r.rev)) : since;
   res.json({ recs: rows.map(r => r.data), since: top });
@@ -232,15 +242,30 @@ app.post("/api/files", auth, (req, res, next) => upload.single("file")(req, res,
   const { rows: [q] } = await pool.query("SELECT COALESCE(SUM(size), 0)::bigint AS used FROM files WHERE user_id = $1", [req.user.id]);
   if (+q.used + f.size > USER_QUOTA_MB * 1024 * 1024) return fail(res, 413, `Fayllar uchun joy tugadi (${USER_QUOTA_MB} MB). Keraksiz fayllarni o'chiring.`);
   const name = String(req.body.name || f.originalname || "fayl").slice(0, 160);
+  if (S3_ON) {
+    const id = crypto.randomUUID();
+    try { await s3Put(fileKey(req.user.id, id), f.buffer, type); }
+    catch (e) { console.error("s3 put:", e.message); return fail(res, 502, "Fayl omborga yuklanmadi. Birozdan keyin qayta urining."); }
+    const { rows } = await pool.query("INSERT INTO files (id, user_id, name, type, size, data, store) VALUES ($1, $2, $3, $4, $5, NULL, 's3') RETURNING id, name, type, size", [id, req.user.id, name, type, f.size]);
+    usageCache = null;
+    return res.json({ ...rows[0], src: "s" });
+  }
   const { rows } = await pool.query("INSERT INTO files (user_id, name, type, size, data) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, type, size", [req.user.id, name, type, f.size, f.buffer]);
   res.json({ ...rows[0], src: "s" });
 }));
 app.get("/api/files/:id", auth, wrap(async (req, res) => {
   if (!/^[0-9a-f-]{36}$/.test(req.params.id)) return fail(res, 404, "Fayl topilmadi.");
-  const { rows } = await pool.query("SELECT name, type, data FROM files WHERE id = $1 AND user_id = $2", [req.params.id, req.user.id]);
+  const { rows } = await pool.query("SELECT name, type, data, store FROM files WHERE id = $1 AND user_id = $2", [req.params.id, req.user.id]);
   const f = rows[0];
   if (!f) return fail(res, 404, "Fayl topilmadi.");
   const inline = /^(image|audio|video)\/|^application\/pdf$|^text\/plain$/.test(f.type) && f.type !== "image/svg+xml";
+  if (f.store === "s3") {
+    if (!S3_ON) return fail(res, 503, "Fayllar ombori sozlanmagan.");
+    // The bucket is private: the owner gets a link that works for one hour.
+    const url = await s3Link(fileKey(req.user.id, req.params.id), `${inline ? "inline" : "attachment"}; filename*=UTF-8''${encodeURIComponent(f.name)}`, f.type);
+    res.setHeader("Cache-Control", "private, max-age=3000");
+    return res.redirect(302, url);
+  }
   res.setHeader("Content-Type", f.type);
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Cache-Control", "private, max-age=31536000, immutable");
@@ -248,8 +273,88 @@ app.get("/api/files/:id", auth, wrap(async (req, res) => {
   res.send(f.data);
 }));
 app.delete("/api/files/:id", auth, wrap(async (req, res) => {
-  if (/^[0-9a-f-]{36}$/.test(req.params.id)) await pool.query("DELETE FROM files WHERE id = $1 AND user_id = $2", [req.params.id, req.user.id]);
+  if (/^[0-9a-f-]{36}$/.test(req.params.id)) {
+    const { rows } = await pool.query("DELETE FROM files WHERE id = $1 AND user_id = $2 RETURNING store", [req.params.id, req.user.id]);
+    if (rows[0] && rows[0].store === "s3" && S3_ON) { await s3Del(fileKey(req.user.id, req.params.id)).catch(e => console.error("s3 delete:", e.message)); usageCache = null; }
+  }
   res.json({ ok: true });
+}));
+/* ── Neon Object Storage ── */
+const fileKey = (userId, id) => `u/${userId}/${id}`;
+let s3 = null, S3c = null;
+function s3c() {
+  if (!s3) {
+    S3c = require("@aws-sdk/client-s3");
+    s3 = new S3c.S3Client({
+      region: process.env.AWS_REGION || "us-east-1", endpoint: process.env.AWS_ENDPOINT_URL_S3, forcePathStyle: true,
+      credentials: { accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY },
+      requestChecksumCalculation: "WHEN_REQUIRED", responseChecksumValidation: "WHEN_REQUIRED",
+    });
+  }
+  return s3;
+}
+const s3Put = (Key, Body, ContentType) => s3c().send(new S3c.PutObjectCommand({ Bucket: S3_BUCKET, Key, Body, ContentType }));
+const s3Del = Key => s3c().send(new S3c.DeleteObjectCommand({ Bucket: S3_BUCKET, Key }));
+async function s3Link(Key, disposition, type) {
+  const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+  return getSignedUrl(s3c(), new S3c.GetObjectCommand({ Bucket: S3_BUCKET, Key, ResponseContentDisposition: disposition, ResponseContentType: type }), { expiresIn: 3600 });
+}
+async function ensureBucket() {
+  try { await s3c().send(new S3c.HeadBucketCommand({ Bucket: S3_BUCKET })); }
+  catch (e) {
+    if (e.$metadata && e.$metadata.httpStatusCode === 403) throw new Error(`no access to bucket ${S3_BUCKET}`);
+    await s3c().send(new S3c.CreateBucketCommand({ Bucket: S3_BUCKET }));
+    console.log(`Object storage: bucket ${S3_BUCKET} created.`);
+  }
+}
+// The whole bucket, counted object by object (Neon has no size API); kept for five minutes.
+let usageCache = null;
+async function bucketUsage() {
+  if (usageCache && Date.now() - usageCache.at < 5 * 60e3) return usageCache;
+  let bytes = 0, objects = 0, token;
+  do {
+    const r = await s3c().send(new S3c.ListObjectsV2Command({ Bucket: S3_BUCKET, ContinuationToken: token, MaxKeys: 1000 }));
+    for (const o of r.Contents || []) { bytes += +o.Size || 0; objects++; }
+    token = r.IsTruncated ? r.NextContinuationToken : undefined;
+  } while (token);
+  return usageCache = { bytes, objects, at: Date.now() };
+}
+// Files saved in the database before the bucket existed move over in the background, a few at a time.
+const moving = { running: false, moved: 0, failed: 0, last: "" };
+async function moveFilesToBucket() {
+  if (!S3_ON || moving.running) return;
+  moving.running = true;
+  try {
+    for (;;) {
+      const { rows } = await pool.query("SELECT id, user_id, type FROM files WHERE store = 'db' AND data IS NOT NULL ORDER BY created_at LIMIT 10");
+      if (!rows.length) break;
+      for (const f of rows) {
+        try {
+          const { rows: [d] } = await pool.query("SELECT data FROM files WHERE id = $1", [f.id]);
+          await s3Put(fileKey(f.user_id, f.id), d.data, f.type);
+          await pool.query("UPDATE files SET store = 's3', data = NULL WHERE id = $1", [f.id]);
+          moving.moved++;
+        } catch (e) { moving.failed++; moving.last = e.message; console.error("move file:", e.message); await pool.query("UPDATE files SET store = 'db-retry' WHERE id = $1", [f.id]); }
+      }
+      usageCache = null;
+    }
+    if (moving.moved) console.log(`Object storage: ${moving.moved} files moved from the database.`);
+    await pool.query("UPDATE files SET store = 'db' WHERE store = 'db-retry'");   // try those again next start
+  } finally { moving.running = false; }
+}
+app.get("/api/storage", auth, wrap(async (req, res) => {
+  const { rows: [mine] } = await pool.query("SELECT COUNT(*)::int AS files, COALESCE(SUM(size), 0)::bigint AS bytes FROM files WHERE user_id = $1", [req.user.id]);
+  const { rows: [left] } = await pool.query("SELECT COUNT(*)::int AS n, COALESCE(SUM(size), 0)::bigint AS bytes FROM files WHERE store <> 's3'");
+  const out = { backend: S3_ON ? "neon-object-storage" : "database", bucket: S3_ON ? S3_BUCKET : "", limitBytes: STORAGE_LIMIT_GB * 1024 ** 3, userQuotaBytes: USER_QUOTA_MB * 1048576,
+    mine: { files: mine.files, bytes: +mine.bytes }, inDatabase: { files: left.n, bytes: +left.bytes }, moving: { ...moving } };
+  if (S3_ON) {
+    try { const u = await bucketUsage(); out.used = { bytes: u.bytes, objects: u.objects, checkedAt: new Date(u.at).toISOString() }; }
+    catch (e) { out.error = "Omborga ulanib bo'lmadi: " + e.message; }
+  } else {
+    const { rows: [db] } = await pool.query("SELECT pg_database_size(current_database())::bigint AS bytes");
+    out.used = { bytes: +db.bytes, objects: left.n }; out.limitBytes = 512 * 1048576;   // Neon Free database: 0.5 GB
+  }
+  res.json(out);
 }));
 app.get("/api/usage", auth, wrap(async (req, res) => {
   const { rows: [r] } = await pool.query("SELECT COUNT(*)::int AS n, COALESCE(SUM(size), 0)::bigint AS used FROM files WHERE user_id = $1", [req.user.id]);
@@ -422,6 +527,7 @@ async function logEntry(userId, e) {
   if (to > (b.cur || 0) && unit) out.push({ ...b, cur: b.pages ? Math.min(b.pages, to) : to, u: now + 3 });
   if (!out.length) return null;
   await saveRecords(userId, out);
+  queueSessions(userId, out.filter(r => r.k === "s")).catch(e => console.error("vaqt queue:", e.message));
   return { title: b.title, unit, qty, minutes, note: !!text, from, to };
 }
 const UNIT_WORD = { bet: "bet", dars: "dars", daqiqa: "daqiqa" };
@@ -586,6 +692,211 @@ app.post("/api/ext/log", keyUser, wrap(async (req, res) => {
   res.json({ ok: !!r, ...(r || {}) });
 }));
 
+/* ── the four apps as one: Mo'min, Vaqt Banki, Hisob ──
+   Pairing: every app shows a link code «https://<app>/link#<key>». The «Ulash» button opens the other app's /link
+   page, the person allows it there, and the code comes back in the address (#link=…&from=vaqt).
+   • Mo'min sends its learning sections here (POST /api/ext/mirror): words, cards, ayahs, hadith, quotes,
+     the book being read. They become sources and cards; review progress made here is never overwritten.
+   • Study and review time is forwarded to Vaqt Banki (POST <vaqt>/api/ext/time), one entry per session,
+     updated in place when the session changes. Failed sends wait in fwd_out and are retried. */
+const LINK_APPS = { vaqt: "Vaqt Banki", hisob: "Hisob", momin: "Mo'min" };
+function parseCode(code) {
+  try {
+    const u = new URL(String(code || "").trim());
+    const key = decodeURIComponent(u.hash.slice(1));
+    if (!/^https?:$/.test(u.protocol) || !/^[a-z]{2,6}_[0-9a-f]{20,64}$/.test(key)) return null;
+    if (u.protocol === "http:" && !/^(localhost|127\.0\.0\.1)$/.test(u.hostname)) return null;
+    return { url: u.origin, key };
+  } catch (e) { return null; }
+}
+async function linksOf(userId) {
+  const { rows } = await pool.query("SELECT links FROM users WHERE id = $1", [userId]);
+  return (rows[0] && rows[0].links) || {};
+}
+async function setLink(userId, app, code) {
+  if (!LINK_APPS[app]) throw Object.assign(new Error("Noma'lum ilova."), { status: 400 });
+  let val = null;
+  if (code) {
+    const c = parseCode(code);
+    if (!c) throw Object.assign(new Error("Ulanish kodi noto'g'ri. U «https://…/link#…» ko'rinishida bo'ladi."), { status: 400 });
+    if (app === "vaqt") {
+      const r = await fetch(c.url + "/api/ext/summary", { headers: { "X-Link-Key": c.key }, signal: AbortSignal.timeout(60000) }).catch(e => ({ ok: false, status: 0 }));
+      if (!r.ok) throw Object.assign(new Error(r.status === 401 ? "Vaqt Banki bu kodni tanimadi. Yangi kod oling." : "Vaqt Banki serveri javob bermadi. Bir daqiqadan keyin qayta urining."), { status: 400 });
+    }
+    val = { ...c, at: Date.now() };
+  }
+  await pool.query("UPDATE users SET links = CASE WHEN $3::jsonb IS NULL THEN links - $2 ELSE jsonb_set(links, ARRAY[$2], $3::jsonb) END WHERE id = $1", [userId, app, val ? JSON.stringify(val) : null]);
+  if (app === "vaqt" && val) queueAllSessions(userId).then(() => flushTime(userId)).catch(e => console.error("vaqt queue:", e.message));
+  return val;
+}
+const linkView = l => Object.fromEntries(Object.keys(LINK_APPS).map(a => [a, l[a] ? { url: l[a].url, at: l[a].at || 0, last: l[a].last || 0, err: l[a].err || "", sent: l[a].sent || 0 } : null]));
+app.get("/api/links", auth, wrap(async (req, res) => {
+  const l = await linksOf(req.user.id);
+  const { rows: [q] } = await pool.query("SELECT count(*)::int AS n FROM fwd_out WHERE user_id = $1", [req.user.id]);
+  const { rows: [m] } = await pool.query("SELECT count(*) FILTER (WHERE k = 'b')::int AS b, count(*) FILTER (WHERE k = 'i')::int AS i FROM records WHERE user_id = $1 AND data->>'ext' = 'momin' AND NOT (data ? 'del')", [req.user.id]);
+  res.json({ links: linkView(l), waiting: q.n, momin: { sources: m.b, cards: m.i, last: (l.momin && l.momin.last) || 0 }, key: req.user.api_key || "" });
+}));
+app.post("/api/links", auth, wrap(async (req, res) => {
+  try { await setLink(req.user.id, String(req.body.app || ""), req.body.code || null); }
+  catch (e) { return fail(res, e.status || 500, e.message); }
+  res.json({ links: linkView(await linksOf(req.user.id)) });
+}));
+// Mo'min passes on the codes it holds, so pairing once in Mo'min is enough.
+app.post("/api/ext/links", keyUser, wrap(async (req, res) => {
+  const out = {};
+  for (const a of ["vaqt", "hisob"]) {
+    if (!(a in (req.body || {}))) continue;
+    const cur = (await linksOf(req.user.id))[a], c = req.body[a] ? parseCode(req.body[a]) : null;
+    if (req.body[a] && cur && c && cur.key === c.key && cur.url === c.url) { out[a] = "ok"; continue; }
+    try { await setLink(req.user.id, a, req.body[a] || null); out[a] = req.body[a] ? "ok" : "off"; } catch (e) { out[a] = e.message; }
+  }
+  res.json({ ok: true, links: out });
+}));
+
+/* forwarding study time to Vaqt Banki */
+const KAT = { kitob: "05 Kitob o'qishga", dars: "06 Dars qilishga", sura: "07 Sura yodlashga" };
+function katOf(b, s) {
+  const t = fold((b && b.title) || "");
+  if (/qur'?on|sura|surah|oyat|xatm|yodla/.test(t)) return KAT.sura;
+  if (s && s.via === "Takror") return KAT.dars;
+  return b && ["badiiy", "ilmiy", "sher", "diniy"].includes(b.kind) ? KAT.kitob : KAT.dars;
+}
+function timeItem(s, b) {
+  const min = Math.round(+s.min || 0);
+  if (s.del || !(min > 0)) return { id: "memori-" + s.id, del: 1 };
+  const U = { bet: "bet", dars: "dars", daqiqa: "daqiqa" }[s.unit];
+  const what = s.via === "Takror" ? "takrorlash" : s.qty && U ? `+${s.qty} ${U}` : "";
+  return { id: "memori-" + s.id, sana: s.day, daqiqa: Math.min(1440, min), kat: katOf(b, s), izoh: ["ME'MORI", (b && b.title) || "", what].filter(Boolean).join(" · ").slice(0, 300) };
+}
+async function queueSessions(userId, sessions) {
+  sessions = sessions.filter(s => s && s.k === "s" && !s.demo);
+  if (!sessions.length) return;
+  const l = await linksOf(userId);
+  if (!l.vaqt) return;
+  await pool.query(`INSERT INTO fwd_out (user_id, id, at) SELECT $1, x, now() FROM unnest($2::text[]) AS x ON CONFLICT (user_id, id) DO UPDATE SET at = now(), tries = 0`, [userId, sessions.map(s => s.id)]);
+  flushSoon(userId);
+}
+async function queueAllSessions(userId) {
+  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND k = 's' AND NOT (data ? 'del') AND (data->>'min')::numeric > 0 AND data->>'day' >= $2", [userId, addDay(localNow("Asia/Tashkent").day, -60)]);
+  await queueSessions(userId, rows.map(r => r.data));
+}
+const flushTimers = new Map();
+function flushSoon(userId, ms) {
+  if (flushTimers.has(userId)) return;
+  flushTimers.set(userId, setTimeout(() => { flushTimers.delete(userId); flushTime(userId).catch(e => console.error("vaqt flush:", e.message)); }, ms == null ? 4000 : ms));
+}
+async function flushTime(userId) {
+  const l = await linksOf(userId), v = l.vaqt;
+  const { rows: q } = await pool.query("SELECT id FROM fwd_out WHERE user_id = $1 ORDER BY at LIMIT 300", [userId]);
+  if (!q.length) return 0;
+  if (!v) { await pool.query("DELETE FROM fwd_out WHERE user_id = $1", [userId]); return 0; }
+  const ids = q.map(r => r.id);
+  const { rows } = await pool.query("SELECT id, data FROM records WHERE user_id = $1 AND id = ANY($2)", [userId, ids]);
+  const byId = new Map(rows.map(r => [r.id, r.data]));
+  const bids = [...new Set(rows.map(r => r.data.b).filter(Boolean))];
+  const { rows: bs } = await pool.query("SELECT id, data FROM records WHERE user_id = $1 AND id = ANY($2)", [userId, bids]);
+  const src = new Map(bs.map(r => [r.id, r.data]));
+  const items = ids.map(id => { const s = byId.get(id); return s ? timeItem(s, src.get(s.b)) : { id: "memori-" + id, del: 1 }; });
+  let err = "";
+  try {
+    const r = await fetch(v.url + "/api/ext/time", { method: "POST", headers: { "Content-Type": "application/json", "X-Link-Key": v.key }, body: JSON.stringify({ items }), signal: AbortSignal.timeout(70000) });
+    if (r.status === 401) err = "Vaqt Banki kodni rad etdi — qayta ulang.";
+    else if (!r.ok) err = `Vaqt Banki javobi: ${r.status}`;
+  } catch (e) { err = "Vaqt Banki serveriga yetib bo'lmadi."; }
+  if (err) {
+    await pool.query("UPDATE fwd_out SET tries = tries + 1 WHERE user_id = $1 AND id = ANY($2)", [userId, ids]);
+    await pool.query("UPDATE users SET links = jsonb_set(links, '{vaqt,err}', to_jsonb($2::text)) WHERE id = $1 AND links ? 'vaqt'", [userId, err]);
+    return -1;
+  }
+  await pool.query("DELETE FROM fwd_out WHERE user_id = $1 AND id = ANY($2)", [userId, ids]);
+  await pool.query("UPDATE users SET links = jsonb_set(jsonb_set(jsonb_set(links, '{vaqt,err}', '\"\"'), '{vaqt,last}', to_jsonb($2::bigint)), '{vaqt,sent}', to_jsonb(COALESCE((links #>> '{vaqt,sent}')::int, 0) + $3)) WHERE id = $1 AND links ? 'vaqt'", [userId, Date.now(), items.length]);
+  if (q.length === 300) flushSoon(userId, 500);
+  return items.length;
+}
+// retry what is waiting, every 10 minutes
+setInterval(async () => {
+  try { const { rows } = await pool.query("SELECT DISTINCT user_id FROM fwd_out WHERE tries < 200"); for (const r of rows) await flushTime(r.user_id).catch(() => {}); } catch (e) {}
+}, 10 * 60 * 1000).unref();
+
+/* Mo'min's learning sections, mirrored as sources and cards.
+   Body: { app: "momin", full: true, sources: [{ key, title, kind, author, pages, cur, status, cards: [{ key, q, a, r }] }],
+           sessions: [{ key, src, day, qty, unit, min }] }
+   The ids are derived from the keys, so sending the same thing twice changes nothing. Review state stays here.
+   A card that disappears from Mo'min is paused (it keeps its history) — or removed, if it was never reviewed.
+   What the person deleted here on purpose stays deleted. New cards come at most NEW_PER_DAY a day. */
+const NEW_PER_DAY = 15;
+const hid = (...p) => "mm" + crypto.createHash("sha1").update(p.join("\u0001")).digest("hex").slice(0, 18);
+const clipS = (s, n) => String(s == null ? "" : s).replace(/\u0000/g, "").slice(0, n);
+async function saveMany(userId, list) {
+  for (let k = 0; k < list.length; k += 400) {
+    const part = list.slice(k, k + 400);
+    await pool.query(`
+      INSERT INTO records (user_id, id, k, u, data)
+      SELECT $1, x.id, x.k, x.u, x.d::jsonb FROM unnest($2::text[], $3::text[], $4::bigint[], $5::text[]) AS x(id, k, u, d)
+      ON CONFLICT (user_id, id) DO UPDATE SET k = EXCLUDED.k, u = EXCLUDED.u, data = EXCLUDED.data, rev = nextval('rec_rev')
+      WHERE records.u < EXCLUDED.u`, [userId, part.map(r => r.id), part.map(r => r.k), part.map(r => r.u), part.map(r => JSON.stringify(r))]);
+  }
+}
+app.post("/api/ext/mirror", keyUser, wrap(async (req, res) => {
+  const body = req.body || {}, appId = /^[a-z]{2,12}$/.test(body.app) ? body.app : "momin", via = LINK_APPS[appId] || appId;
+  const inSrc = (Array.isArray(body.sources) ? body.sources : []).slice(0, 300);
+  const uid = req.user.id, day = localNow("Asia/Tashkent").day, tomorrow = addDay(day, 1);
+  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND data->>'ext' = $2", [uid, appId]);
+  const old = new Map(rows.map(r => [r.data.id, r.data]));
+  let now = Date.now();
+  for (const r of old.values()) now = Math.max(now, (r.u || 0) + 1);
+  const out = [], seen = new Set(), stat = { sources: 0, cards: 0, newCards: 0, sessions: 0, paused: 0 };
+  const load = new Map();   // day → new mirrored cards already waiting for that day
+  for (const r of old.values()) if (r.k === "i" && !r.del && !r.n && r.d >= tomorrow) load.set(r.d, (load.get(r.d) || 0) + 1);
+  const nextNewDay = () => { let d = tomorrow; while ((load.get(d) || 0) >= NEW_PER_DAY) d = addDay(d, 1); load.set(d, (load.get(d) || 0) + 1); return d; };
+  const userGone = r => r && r.del && !r.gone;          // deleted here by the person: leave it alone
+  const live = r => { const x = { ...r }; delete x.del; delete x.gone; return x; };
+  let c = now;
+  for (const s of inSrc) {
+    if (!s || !s.key || !s.title) continue;
+    const id = hid(appId, "b", s.key), o = old.get(id);
+    seen.add(id);
+    if (userGone(o)) continue;
+    const kind = ["badiiy", "ilmiy", "sher", "diniy", "kurs", "til", "video", "podkast"].includes(s.kind) ? s.kind : "ilmiy";
+    const want = { title: clipS(s.title, 160), author: clipS(s.author, 120), kind, pages: Math.max(0, Math.round(+s.pages || 0)), status: s.status === "done" ? "done" : "reading" };
+    if (s.cur != null) want.cur = Math.max(0, Math.round(+s.cur || 0));
+    if (!o) out.push({ id, k: "b", ...want, cur: want.cur || 0, c: c++, fin: want.status === "done" ? now : 0, ext: appId, xk: clipS(s.key, 120), via, u: now });
+    else if (o.gone || Object.keys(want).some(k => o[k] !== want[k])) out.push({ ...live(o), ...want, fin: want.status === "done" ? (o.fin || now) : 0, u: now });
+    stat.sources++;
+    for (const cd of (Array.isArray(s.cards) ? s.cards : []).slice(0, 5000)) {
+      if (!cd || !cd.key || !(cd.q || cd.a)) continue;
+      const cid = hid(appId, "i", s.key, cd.key), co = old.get(cid);
+      seen.add(cid);
+      if (userGone(co)) continue;
+      const q = clipS(cd.q, 1000), a = clipS(cd.a, 4000), r = clipS(cd.r || via, 200);
+      stat.cards++;
+      if (!co) { out.push({ id: cid, k: "i", b: id, t: "card", q, a, r, f: 0, e: 0, c: c++, s: 0, d: nextNewDay(), n: 0, l: 0, h: [], ext: appId, via, u: now }); stat.newCards++; }
+      else if (co.gone || co.q !== q || co.a !== a || co.r !== r || co.b !== id) { const x = { ...live(co), q, a, r, b: id, u: now }; if (co.gone && co.off === 1) delete x.off; out.push(x); }
+    }
+  }
+  for (const x of (Array.isArray(body.sessions) ? body.sessions : []).slice(0, 3000)) {
+    if (!x || !x.key || !x.src || !/^\d{4}-\d{2}-\d{2}$/.test(String(x.day))) continue;
+    const id = hid(appId, "s", x.key), o = old.get(id), b = hid(appId, "b", x.src);
+    seen.add(id);
+    if (userGone(o) || userGone(old.get(b))) continue;
+    const want = { b, day: x.day, qty: Math.max(0, Math.round(+x.qty || 0)), unit: ["bet", "dars", "daqiqa"].includes(x.unit) ? x.unit : "", min: Math.max(0, Math.min(1440, Math.round(+x.min || 0))), from: Math.max(0, Math.round(+x.from || 0)), to: Math.max(0, Math.round(+x.to || 0)) };
+    stat.sessions++;
+    if (!o) out.push({ id, k: "s", ...want, c: c++, ext: appId, via, u: now });
+    else if (o.gone || Object.keys(want).some(k => o[k] !== want[k])) out.push({ ...live(o), ...want, u: now });
+  }
+  if (body.full) for (const o of old.values()) {
+    if (seen.has(o.id) || o.del) continue;
+    if (o.k === "i" && (o.h || []).length) { if (o.off !== 1 || !o.gone) { out.push({ ...o, off: 1, gone: 1, u: now }); stat.paused++; } }
+    else if (o.k === "b" && [...old.values()].some(i => i.k === "i" && i.b === o.id && (i.h || []).length)) { if (!o.gone) out.push({ ...o, status: "done", gone: 1, u: now }); }
+    else out.push({ ...o, del: 1, gone: 1, u: now });
+  }
+  await saveMany(uid, out);
+  await pool.query("UPDATE users SET links = jsonb_set(links, ARRAY[$2], jsonb_build_object('last', $3::bigint)) WHERE id = $1", [uid, appId, Date.now()]);
+  await queueSessions(uid, out.filter(r => r.k === "s"));
+  res.json({ ok: true, changed: out.length, ...stat, perDay: NEW_PER_DAY });
+}));
+app.get("/link", (req, res) => { res.setHeader("Cache-Control", "no-cache"); res.sendFile(path.join(__dirname, "public", "link.html")); });
+
 /* ── Telegram bot: write from the chat, get reminders and a weekly backup ── */
 const TG_SECRET = crypto.createHash("sha256").update(JWT_SECRET + ":tg").digest("hex").slice(0, 32);
 let tgBot = "";
@@ -744,7 +1055,11 @@ app.use(express.static(path.join(__dirname, "public"), {
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 app.use((err, req, res, next) => { console.error(err); fail(res, 500, "Serverda xato yuz berdi. Birozdan keyin qayta urining."); });
 
-migrate().then(loadVapid).then(setupTelegram).then(() => {
+migrate().then(loadVapid).then(setupTelegram).then(async () => {
+  if (S3_ON) {
+    try { await ensureBucket(); console.log(`Object storage: files go to bucket ${S3_BUCKET}.`); setTimeout(() => moveFilesToBucket().catch(e => console.error("move:", e.message)), 3000); }
+    catch (e) { console.error("Object storage is set but not reachable:", e.message); }
+  }
   setInterval(remind, 5 * 60 * 1000);
   setTimeout(remind, 15000);
   app.listen(PORT, () => console.log(`ME'MORI is listening on ${PORT}`));

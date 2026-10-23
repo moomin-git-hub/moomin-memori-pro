@@ -25,3 +25,15 @@ services:
         sync: false
       - key: GEMINI_API_KEY
         sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_ENDPOINT_URL_S3
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: S3_BUCKET
+        value: memori-files
+      - key: STORAGE_LIMIT_GB
+        value: "5"

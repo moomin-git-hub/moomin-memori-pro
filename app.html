@@ -172,6 +172,14 @@ input[type="file"]{max-width:100%;font-size:.875rem;color:var(--mute)}
 .item-text{font:600 .9375rem/1.45 var(--ui);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
 .tag{display:inline-flex;align-items:center;gap:.25rem;font:800 .6875rem/1 var(--ui);color:var(--c,var(--pri-hi));background:color-mix(in srgb,var(--c,var(--pri)) 16%,transparent);border-radius:999px;padding:.3125rem .5625rem;white-space:nowrap}
 .tag-demo{--c:#f6b73c}
+.tag-momin{--c:#3f9a74}
+.lk{display:grid;gap:10px}
+.lk-row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--card, transparent)}
+.lk-row .tile{flex:none}
+.lk-t{flex:1;min-width:0}.lk-t b{display:block}.lk-t small{display:block;color:var(--mute);line-height:1.45}
+.lk-st{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;margin-top:6px}
+.lk-st i{width:8px;height:8px;border-radius:50%;background:var(--mute)}.lk-st.on i{background:#2f9e5f}.lk-st.bad i{background:#d0533f}
+.lk-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .bar{display:block;height:6px;background:var(--line);border-radius:999px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:999px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
 .bar-cap{margin-top:.375rem;font-variant-numeric:tabular-nums}
@@ -821,6 +829,22 @@ label.srow{grid-template-columns:auto minmax(0,1fr) auto}
 .idea-ans{white-space:pre-wrap;font-size:.9375rem;color:var(--mute)}
 .idea-ans b{color:#2fd08f}
 .idea-src{margin-top:1rem}
+
+.store{display:grid;gap:.75rem;padding:1.125rem;border-radius:22px;background:var(--card);border:1px solid var(--line)}
+.store-where{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--mute)}
+.store-where svg{width:1.125rem;height:1.125rem;color:var(--pri-hi)}
+.store-where b{color:var(--text)}
+.store-n{font-size:1rem;color:var(--mute)}
+.store-n b{font:800 2rem var(--display);color:var(--text);margin-right:.25rem}
+.store-bar{height:12px}
+.store-bar i{background:linear-gradient(90deg,#33d6c4,#4b6bfb)}
+.store-bar.warn i{background:linear-gradient(90deg,#ff9f43,#ff6f7d)}
+.store-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+.store-g p{display:grid;gap:.125rem;padding:.625rem;border-radius:14px;background:var(--bg2);text-align:center}
+.store-g b{font:800 1rem var(--display)}
+.store-g small{font-size:.6875rem;color:var(--mute)}
+.srow-v.warn{color:#ff9f43}
+div.srow{cursor:default}
 .toast{position:fixed;left:50%;top:calc(.75rem + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:30;width:max-content;max-width:calc(100% - 2rem);background:var(--text);color:var(--bg);font:700 .875rem/1.35 var(--ui);padding:.75rem 1rem;border-radius:16px;box-shadow:var(--shadow)}
 
 @media (min-width:48rem){
@@ -1339,7 +1363,7 @@ function signedIn(me) {
   cloud.mode = "srv"; cloud.ready = true;
   if (!cloud.since) for (const id in recs) cloud.dirty.add(id);     // first sign-in here: what this browser holds joins the account
   const wasOpen = $("#auth").open;
-  closeAuth(); render(); srvSync();
+  closeAuth(); render(); srvSync(); linkReturn();
   if (wasOpen) tourLater();
   clearInterval(cloud.poll);
   cloud.poll = setInterval(() => { if (document.visibilityState === "visible") srvSync(); }, 45000);
@@ -1884,7 +1908,7 @@ function deckRow(b, day) {
   const k = its.length ? Math.round(its.filter(i => i.s >= 2).length / its.length * 100) : 0;
   return `<button type="button" class="deck" data-act="book" data-id="${esc(b.id)}">
     ${tile(b)}
-    <span class="deck-t"><b>${esc(b.title)}${b.demo ? ` <span class="tag tag-demo">namuna</span>` : ""}</b>
+    <span class="deck-t"><b>${esc(b.title)}${b.demo ? ` <span class="tag tag-demo">namuna</span>` : ""}${b.ext === "momin" ? ` <span class="tag tag-momin">Mo'min</span>` : ""}</b>
       <small class="${due ? "on" : ""}">${its.length ? `${its.length} ta yozuv` : "Hali yozuv yo'q"}${due ? ` · ${ic("clock")}bugun ${due} ta takror` : ""}</small>
       ${its.length ? `<span class="bar"><i data-w="${k}"></i></span>` : ""}</span>
     ${ic("arrow")}
@@ -2034,7 +2058,7 @@ function srcCard(b, day, go) {
   const meta = [KINDS[b.kind].name, b.author, b.status === "done" ? "tugatilgan" : progText(b), last ? `oxirgi yozuv ${ago(last)}` : "hali yozuv yo'q"].filter(Boolean).join(" · ");
   return `<div class="src">
     ${tile(b)}
-    <button type="button" class="src-main" data-act="book" data-id="${esc(b.id)}"><span class="bk-title">${esc(b.title)}${b.demo ? ` <span class="tag tag-demo">namuna</span>` : ""}</span><span class="bk-meta">${esc(meta)}</span></button>
+    <button type="button" class="src-main" data-act="book" data-id="${esc(b.id)}"><span class="bk-title">${esc(b.title)}${b.demo ? ` <span class="tag tag-demo">namuna</span>` : ""}${b.ext === "momin" ? ` <span class="tag tag-momin">Mo'min</span>` : ""}</span><span class="bk-meta">${esc(meta)}</span></button>
     ${go ? `<button type="button" class="src-go" data-act="read" data-id="${esc(b.id)}" aria-label="O'rgandim: ${esc(b.title)}">${ic("plus")}</button>` : due ? `<span class="dueb" title="Bugungi takror">${due}</span>` : "<span></span>"}
     ${p != null ? `<span class="bar"><i data-w="${p}"></i></span>` : ""}
     ${go ? "" : `<span class="row-foot">${hist(its)}<span>${its.length} ta yozuv</span>${its.filter(i => i.s >= LONG).length ? `<span>${its.filter(i => i.s >= LONG).length} tasi uzoq xotirada</span>` : ""}</span>`}
@@ -2461,17 +2485,41 @@ async function paintLinks() {
         <div><button type="button" class="btn btn-gold btn-sm" data-act="tg-link">${ic("arrow")}Telegram'ni ulash</button></div>`}`;
   }
   if (kb) {
-    let k = ""; try { k = (await api("/api/key")).key; } catch (e) { k = ""; }
-    const base = location.origin;
-    kb.innerHTML = `<p class="eyebrow">Boshqa ilovalar bilan ulash</p>
-      <p class="small muted">Vaqt Banki o'qishga ketgan vaqtni shu yerga yozadi, Mo'min esa bugungi takror sonini ko'rsatadi. Buning uchun ular shu kalitdan foydalanadi.</p>
-      ${k ? `<div class="field"><label for="ext-key">Kalit</label><input id="ext-key" type="text" readonly value="${esc(k)}"></div>
-        <details class="how"><summary>Ilovalarga nima yoziladi</summary><div class="rules">
-          <p><b>Bugungi holat:</b> <code>GET ${esc(base)}/api/ext/summary?key=KALIT</code></p>
-          <p><b>Vaqt yoki o'qishni yozish:</b> <code>POST ${esc(base)}/api/ext/log?key=KALIT</code> va <code>{"title":"Atomic Habits","minutes":40,"qty":25,"text":"…"}</code></p></div></details>
-        <div class="acts"><button type="button" class="btn btn-sm" data-act="key-copy">Nusxalash</button><button type="button" class="btn btn-sm" data-act="key-new">Yangi kalit</button><button type="button" class="btn btn-sm" data-act="key-del">O'chirish</button></div>`
-      : `<div><button type="button" class="btn btn-sm" data-act="key-new">Kalit yaratish</button></div>`}`;
+    let L = null; try { L = await api("/api/links"); } catch (e) { L = null; }
+    if (!L) { kb.innerHTML = `<p class="small muted">Server bilan aloqa yo'q. Bog'lanish hisobga kirilganda ishlaydi.</p>`; return; }
+    const v = L.links.vaqt, m = L.momin, k = L.key, base = location.origin;
+    const when = t => t ? `${fmtDate(dayOf(t))}, ${new Date(t).toTimeString().slice(0, 5)}` : "";
+    const st = (on, bad, txt) => `<span class="lk-st${on ? " on" : ""}${bad ? " bad" : ""}"><i></i>${txt}</span>`;
+    kb.innerHTML = `<p class="small muted">To'rt ilova bitta zanjir: Mo'min o'rganish bo'limlarini (so'zlar, kartochkalar, oyatlar, iqtiboslar, o'qilayotgan kitob) shu yerga yuboradi, bu yerdagi o'qish va takrorlash vaqti esa Vaqt Bankiga o'zi yoziladi.</p>
+      <div class="lk">
+        <div class="lk-row"><span class="tile c-teal">${ic("clock")}</span><div class="lk-t"><b>Vaqt Banki</b>
+          <small>O'qish yozuvlari va takrorlashga ketgan vaqt «Kitob o'qishga», «Dars qilishga» yoki «Sura yodlashga» toifasiga tushadi. Yozuvni tuzatsangiz yoki o'chirsangiz, u yerda ham o'zgaradi.</small>
+          ${v ? st(!v.err, !!v.err, v.err ? esc(v.err) : v.last ? `Ulangan · oxirgi yuborish ${when(v.last)}` : "Ulangan") : st(false, false, "Ulanmagan")}
+          ${L.waiting ? `<small>${L.waiting} ta yozuv yuborilishini kutmoqda.</small>` : ""}
+          <div class="lk-acts"><button type="button" class="btn btn-gold btn-sm" data-act="lk-go" data-app="vaqt" data-url="${esc(v ? v.url : "https://vaqt-banki.onrender.com")}">${ic("arrow")}${v ? "Qayta ulash" : "Ulash"}</button>${v ? `<button type="button" class="btn btn-sm" data-act="lk-off" data-app="vaqt">Uzish</button>` : ""}</div></div></div>
+        <div class="lk-row"><span class="tile c-green">${ic("book")}</span><div class="lk-t"><b>Mo'min</b>
+          <small>Mo'min'dagi o'rganish bo'limlari shu yerda «Mo'min» belgili manba bo'lib chiqadi. Takror natijalari shu yerda saqlanadi; yangi kartalar kuniga 15 tadan qo'shiladi.</small>
+          ${m.sources ? st(true, false, `${m.sources} ta manba, ${m.cards} ta karta${m.last ? ` · ${when(m.last)}` : ""}`) : st(false, false, "Hali hech narsa kelmagan")}
+          <small>Ulash Mo'min tomonidan: Sozlamalar → «Bog'langan ilovalar» → ME'MORI → «Ulash». Mo'min Vaqt Banki ulanishini ham shu yerga o'tkazadi.</small></div></div>
+      </div>
+      <details class="how"><summary>Qo'lda ulash va kalit</summary><div class="rules">
+        <div class="field"><label for="lk-code">Vaqt Banki ulanish kodi</label><input id="lk-code" type="url" placeholder="https://vaqt-banki.onrender.com/link#vb_…" autocomplete="off"></div>
+        <div class="acts"><button type="button" class="btn btn-sm" data-act="lk-save" data-app="vaqt">Kodni saqlash</button></div>
+        ${k ? `<div class="field"><label for="ext-key">ME'MORI ulanish kodi</label><input id="ext-key" type="text" readonly value="${esc(base + "/link#" + k)}"></div>
+          <p class="small muted">API: <code>GET ${esc(base)}/api/ext/summary?key=…</code>, <code>POST ${esc(base)}/api/ext/log?key=…</code>, <code>POST ${esc(base)}/api/ext/mirror?key=…</code></p>
+          <div class="acts"><button type="button" class="btn btn-sm" data-act="key-copy">Nusxalash</button><button type="button" class="btn btn-sm" data-act="key-new">Yangi kalit</button><button type="button" class="btn btn-sm" data-act="key-del">O'chirish</button></div>`
+        : `<div><button type="button" class="btn btn-sm" data-act="key-new">Kalit yaratish</button></div>`}</div></details>`;
   }
+}
+// Coming back from another app's /link page: #link=<code>&from=<app>
+async function linkReturn() {
+  const m = /[#&]link=([^&]+)&from=([a-z]+)/.exec(location.hash);
+  if (!m) return;
+  try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
+  const code = decodeURIComponent(m[1]), from = m[2];
+  if (from !== "vaqt") return toast("Bu kod ME'MORI uchun emas.");
+  try { await api("/api/links", { app: from, code }); toast("Vaqt Banki ulandi. O'qish va takror vaqti endi o'zi yoziladi."); sheetLinks("key"); }
+  catch (e) { toast(e.msg || "Ulab bo'lmadi."); }
 }
 // Settings: grouped rows like Hisob; each row opens its own small sheet.
 const srow = (act, icon, col, title, sub, right, extra) => `<button type="button" class="srow" data-act="${act}"${extra || ""}><span class="tile c-${col}">${ic(icon)}</span><span class="srow-t"><b>${title}</b><small>${sub}</small></span>${right != null ? `<span class="srow-v"${right && right.id ? ` id="${right.id}"` : ""}>${right && right.id ? right.text : right}</span>` : ""}${ic("chev")}</button>`;
@@ -2500,9 +2548,10 @@ function viewSettings() {
   ])}
   ${signed ? sgroup("Ulanishlar", [
     srow("set-tg", "send", "blue", "Telegram bot", "Telegram'dan yozish, eslatma, zaxira", { id: "sv-tg", text: "…" }),
-    srow("set-key", "link", "purple", "Boshqa ilovalar", "Vaqt Banki va Mo'min bilan ulash", { id: "sv-key", text: "…" }),
+    srow("set-key", "link", "purple", "Bog'langan ilovalar", "Mo'min, Vaqt Banki, Hisob bilan bitta zanjir", { id: "sv-key", text: "…" }),
   ]) : ""}
   ${sgroup("Ma'lumotlar", [
+    signed ? srow("set-store", "layers", "teal", "Fayllar ombori", "rasm va fayllar uchun joy", { id: "sv-store", text: "…" }) : "",
     canSave ? srow("export", "download", "green", "Zaxira nusxani saqlash", "hamma yozuvlar .json faylda", null) : "",
     srow("export-copy", "doc", "blue", "Zaxirani nusxalash", "matn sifatida, istalgan joyga", null),
     srow("restore", "upload", "orange", "Zaxiradan tiklash", "faylni yoki matnni qayta yuklash", null),
@@ -2521,8 +2570,32 @@ async function paintSetVals() {
   if (cloud.mode !== "srv" || !cloud.me || !cloud.me.id) return;
   const put_ = (id, text, cls) => { const el = $("#" + id); if (el) { el.textContent = text; el.className = "srow-v" + (cls ? " " + cls : ""); } };
   if ($("#sv-tg")) api("/api/tg").then(t => put_("sv-tg", !t.configured ? "sozlanmagan" : t.linked ? "Ulangan" : "Ulanmagan", t.linked ? "on" : ""), () => put_("sv-tg", "—"));
-  if ($("#sv-key")) api("/api/key").then(k => put_("sv-key", k.key ? "Kalit bor" : "yo'q", k.key ? "on" : ""), () => put_("sv-key", "—"));
+  if ($("#sv-store")) api("/api/storage").then(st => put_("sv-store", st.used ? `${bytesText(st.used.bytes)} / ${bytesText(st.limitBytes)}` : "—", st.used && st.used.bytes > st.limitBytes * .85 ? "warn" : ""), () => put_("sv-store", "—"));
+  if ($("#sv-key")) api("/api/links").then(k => { const n = ["vaqt", "momin"].filter(a => a === "momin" ? k.momin.sources : k.links[a]).length; put_("sv-key", n ? `${n} ta ulangan` : "ulanmagan", n ? "on" : ""); }, () => put_("sv-key", "—"));
   if ($("#sv-push") && window.EsdaPush) window.EsdaPush.status().then(st => put_("sv-push", st && st.on ? `${pad(st.hour)}:00` : "O'chiq", st && st.on ? "on" : ""), () => put_("sv-push", "—"));
+}
+const bytesText = n => n >= 1024 ** 3 ? `${(n / 1024 ** 3).toFixed(n >= 10 * 1024 ** 3 ? 0 : 1).replace(".", ",")} GB` : n >= 1048576 ? `${(n / 1048576).toFixed(n >= 100 * 1048576 ? 0 : 1).replace(".", ",")} MB` : `${Math.max(0, Math.round(n / 1024))} KB`;
+async function sheetStore() {
+  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>Fayllar ombori</h2><div id="store-box"><p class="small muted">Hisoblanmoqda…</p></div></div>`);
+  let st;
+  try { st = await api("/api/storage"); } catch (e) { const b = $("#store-box"); if (b) b.innerHTML = `<p class="small muted">${esc(e.msg || "Server bilan aloqa yo'q.")}</p>`; return; }
+  const box = $("#store-box"); if (!box) return;
+  const s3 = st.backend === "neon-object-storage", used = st.used ? st.used.bytes : 0, k = Math.min(100, Math.round(used / st.limitBytes * 1000) / 10), free = Math.max(0, st.limitBytes - used);
+  box.innerHTML = `
+    <div class="store">
+      <p class="store-where">${ic(s3 ? "layers" : "doc")}${s3 ? `Neon Object Storage · <b>${esc(st.bucket)}</b>` : "Neon bazasining ichida"}</p>
+      <p class="store-n"><b>${bytesText(used)}</b> / ${bytesText(st.limitBytes)}</p>
+      <span class="bar store-bar${k > 85 ? " warn" : ""}"><i data-w="${Math.max(k, used ? 1 : 0)}"></i></span>
+      <div class="store-g"><p><b>${bytesText(free)}</b><small>bo'sh joy</small></p><p><b>${k.toString().replace(".", ",")}%</b><small>band</small></p><p><b>${s3 && st.used ? st.used.objects : st.mine.files}</b><small>fayl</small></p></div>
+    </div>
+    <div class="sgroup">
+      <div class="srow"><span class="tile c-blue">${ic("clip")}</span><span class="srow-t"><b>Sizning fayllaringiz</b><small>${st.mine.files} ta rasm va fayl</small></span><span class="srow-v">${bytesText(st.mine.bytes)}</span></div>
+      <div class="srow"><span class="tile c-purple">${ic("target")}</span><span class="srow-t"><b>Shaxsiy chegara</b><small>bitta hisob uchun</small></span><span class="srow-v">${bytesText(st.userQuotaBytes)}</span></div>
+      ${s3 ? `<div class="srow"><span class="tile c-${st.inDatabase.files ? "orange" : "green"}">${ic(st.inDatabase.files ? "upload" : "check")}</span><span class="srow-t"><b>${st.inDatabase.files ? "Ko'chirilmoqda" : "Hammasi omborda"}</b><small>${st.inDatabase.files ? `bazada yana ${st.inDatabase.files} ta fayl (${bytesText(st.inDatabase.bytes)}) qoldi` : "bazada fayl qolmadi"}${st.moving && st.moving.moved ? ` · shu safar ${st.moving.moved} tasi ko'chdi` : ""}</small></span></div>` : ""}
+    </div>
+    ${st.error ? `<p class="err">${esc(st.error)}</p>` : ""}
+    <p class="small muted">${s3 ? `Neon bepul tarifida loyiha uchun ${bytesText(st.limitBytes)} Object Storage beriladi. Shu raqam Neon Console'da: loyiha → branch → <b>Overview</b> → «Object storage» qatorida ham ko'rinadi. Hisob har 5 daqiqada yangilanadi.` : `Hozir fayllar Neon bazasi ichida saqlanmoqda (bepul tarifda baza ${bytesText(st.limitBytes)}). Neon Object Storage ulansa (README → «Fayllar ombori»), fayllar u yerga o'zi ko'chadi va 5 GB joy bo'ladi.`}</p>`;
+  paintBars(box);
 }
 function cfgSheet(title, lead, body) {
   openSheet(`<form class="sheet-body" data-form="cfg" novalidate>
@@ -2564,7 +2637,7 @@ function sheetPush() {
   if (window.EsdaPush) window.EsdaPush.status().then(st => paintPush(st), () => paintPush(null));
 }
 function sheetLinks(which) {
-  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>${which === "tg" ? "Telegram bot" : "Boshqa ilovalar"}</h2>
+  openSheet(`<div class="sheet-body"><h2 class="sheet-h" tabindex="-1" autofocus>${which === "tg" ? "Telegram bot" : "Bog'langan ilovalar"}</h2>
     <div class="sec" id="${which === "tg" ? "tg-box" : "key-box"}"><p class="small muted">Yuklanmoqda…</p></div></div>`);
   paintLinks();
 }
@@ -3223,11 +3296,22 @@ function startReview(mode, id) {
   const q = (mode === "quick" ? M[0] : interleave(M[0])).map(i => i.id);
   if (!q.length) return toast("Bu ro'yxatda hozir yozuv yo'q.");
   XC = null;
-  Object.assign(rv, { undo: null, b0: balanceOn(today()), popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
+  Object.assign(rv, { t: Date.now(), undo: null, b0: balanceOn(today()), popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
   paintReview();
   const d = $("#review");
   if (!d.open) d.showModal();
   lock();
+}
+// Time spent reviewing is study time too: from one answer to the next, at most 2 minutes a card.
+// It is kept as one session per source and day ("Takror"), so the ledger and Vaqt Banki see it.
+function rvClock(it) {
+  const now = Date.now(), sec = Math.min(120, Math.max(0, (now - (rv.t || now)) / 1000));
+  rv.t = now;
+  const b = recs[it.b];
+  if (!b || b.del || b.demo || it.demo || sec < 1) return;
+  const day = today(), id = `rvt-${day}-${b.id}`, x = recs[id] && !recs[id].del ? recs[id] : null;
+  const total = Math.round((x ? x.sec || 0 : 0) + sec);
+  put(x ? { ...x, sec: total, min: Math.round(total / 60) } : { id, k: "s", b: b.id, day, qty: 0, unit: "", min: Math.round(total / 60), from: 0, to: 0, sec: total, via: "Takror", c: now }, true);
 }
 const GRADES = ["Unutdim", "Qiynaldim", "Esladim", "Oson"];
 // compact gap for the grade buttons: 1 kun, 18 kun, 2 hafta, 1,5 oy, 2 yil
@@ -3489,6 +3573,7 @@ const act = {
       if (!rv.practice) put(schedule(it, g, today(), rv.conf), true);
       if (g === 0) rv.q.push(id);            // successive relearning: ask once more at the end of this session
     }
+    rvClock(it);
     rv.seen.add(id); rv.i++;
     paintReview();
   },
@@ -3519,7 +3604,10 @@ const act = {
   async "tg-backup"(el) { el.disabled = true; try { const r = await api("/api/tg/backup", {}); toast(`Zaxira Telegram'ga yuborildi: ${r.notes} ta yozuv.`); paintLinks(); } catch (e) { toast(e.msg || "Yuborilmadi."); } finally { el.disabled = false; } },
   async "key-new"(el) { if ($("#ext-key") && !armed(el, "Ha, eskisi ishlamay qoladi")) return; try { await api("/api/key", {}); paintLinks(); } catch (e) { toast(e.msg); } },
   async "key-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { await api("/api/key", null, "DELETE"); paintLinks(); } catch (e) { toast(e.msg); } },
-  "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kalit nusxalandi."); },
+  "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kod nusxalandi."); },
+  "lk-go"(el) { location.href = `${el.dataset.url.replace(/\/+$/, "")}/link?to=${encodeURIComponent(location.origin + "/")}&app=memori`; },
+  async "lk-off"(el) { if (!confirm("Uzilsinmi? Yangi yozuvlar boshqa yuborilmaydi; yuborilganlari joyida qoladi.")) return; try { await api("/api/links", { app: el.dataset.app, code: null }); toast("Uzildi."); paintLinks(); } catch (e) { toast(e.msg); } },
+  async "lk-save"(el) { const v = ($("#lk-code") || {}).value || ""; if (!v.trim()) return toast("Kodni qo'ying."); try { await api("/api/links", { app: el.dataset.app, code: v.trim() }); toast("Ulandi."); paintLinks(); } catch (e) { toast(e.msg); } },
   rank() { sheetRank(); },
   "pick-next"() { ui.pick = (ui.pick || 0) + 1; render(); },
   tag(el) { ui.tag = el.dataset.t; ui.tab = "shelf"; ui.book = null; ui.filter = "all"; render(); window.scrollTo(0, 0); },
@@ -3533,6 +3621,7 @@ const act = {
   "set-tg"() { sheetLinks("tg"); },
   "set-key"() { sheetLinks("key"); },
   "set-rules"() { sheetRules(); },
+  "set-store"() { sheetStore(); },
   "cfg-pick"(el) { const i = $("#" + el.dataset.k); if (i) { i.value = el.dataset.v; i.focus(); } },
   skin() { setSkin(skin() === "light" ? "dark" : "light"); paintTop(); if (ui.tab === "settings" && !ui.book) render(); },
   goal(el) { const g = el.dataset.id && recs[el.dataset.id]; sheetGoal(g && !g.del ? g : null); },
