@@ -96,6 +96,9 @@ async function migrate() {
     );
     ALTER TABLE users ADD COLUMN IF NOT EXISTS links jsonb NOT NULL DEFAULT '{}'::jsonb;
     CREATE TABLE IF NOT EXISTS fwd_out (user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, id text NOT NULL, tries integer NOT NULL DEFAULT 0, at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY (user_id, id));
+    ALTER TABLE tg_links ADD COLUMN IF NOT EXISTS docs_on boolean NOT NULL DEFAULT true;
+    ALTER TABLE tg_links ADD COLUMN IF NOT EXISTS docs_hour smallint NOT NULL DEFAULT 21;
+    ALTER TABLE tg_links ADD COLUMN IF NOT EXISTS docs_day text NOT NULL DEFAULT '';
     CREATE TABLE IF NOT EXISTS tg_codes (code text PRIMARY KEY, user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, exp timestamptz NOT NULL);
   `);
 }
@@ -912,6 +915,28 @@ async function tgFile(fileId) {
   const r = await fetch(`https://api.telegram.org/file/bot${TG_TOKEN}/${f.file_path}`);
   return Buffer.from(await r.arrayBuffer());
 }
+async function tgDoc(chat, buf, name, mime, caption) {
+  const fd = new FormData();
+  fd.append("chat_id", String(chat));
+  if (caption) fd.append("caption", caption.slice(0, 1000));
+  fd.append("document", new Blob([buf], { type: mime }), name);
+  const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendDocument`, { method: "POST", body: fd });
+  const j = await r.json().catch(() => null);
+  if (!j || !j.ok) throw new Error((j && j.description) || "sendDocument");
+}
+// The daily report: today's summary and everything learned so far, as Word and PDF.
+async function sendReport(userId, chat) {
+  const { buildReport } = require("./report");
+  const { rows } = await pool.query("SELECT data FROM records WHERE user_id = $1 AND k = ANY($2) AND NOT (data ? 'del') AND NOT (data ? 'demo')", [userId, ["b", "i", "s", "n"]]);
+  const L = await ledger(userId), day = L.day;
+  const r = await buildReport(rows.map(x => x.data), L, day);
+  const today = rows.filter(x => x.data.k === "i" && !x.data.rev && new Date((x.data.c || 0) + 5 * 3600e3).toISOString().slice(0, 10) === day).length;
+  await tgDoc(chat, r.docx, r.name + ".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    `${APP()} · ${day} hisoboti\nXotira balansi: ${L.xotir} XOTIR · bugun ${today} ta yangi yozuv${L.due ? ` · ${L.due} ta takror kutmoqda` : ""}`);
+  await tgDoc(chat, r.pdf, r.name + ".pdf", "application/pdf", "Shu hisobotning PDF nusxasi.");
+  await pool.query("UPDATE tg_links SET docs_day = $2 WHERE user_id = $1", [userId, day]);
+  return { day, bytes: r.docx.length + r.pdf.length };
+}
 async function sendBackup(userId, chat) {
   const data = await backupOf(userId), n = Object.values(data.recs).filter(r => r.k === "i").length;
   const fd = new FormData();
@@ -937,6 +962,8 @@ Kitob sahifasini rasmga olib yuborsangiz, undan kartochkalar tuzaman (izohga man
 
 /bugun — bugungi takror va oy hisobi
 /manbalar — manbalar ro'yxati
+/hisobot — hozir Word va PDF hisobot
+/hisobot_soat 21 — kundalik hisobot soati (/hisobot_off — o'chirish)
 /zaxira — hozir zaxira fayli
 /soat 7 — takror eslatmasi soati`;
 async function onTelegram(msg) {
@@ -957,6 +984,9 @@ async function onTelegram(msg) {
   if (/^\/(start|yordam|help)\b/.test(text)) return say(chat, HELP);
   if (/^\/bugun\b/.test(text)) { const L = await ledger(uid); return say(chat, `Xotira balansi: ${L.xotir} XOTIR${L.all.pending ? ` (yana ${L.all.pending} ta yozuv birinchi takrorni kutmoqda)` : ""}\nBugun ${L.due} ta takror bor.${L.due ? " Takrorlamasangiz, balans kamayib boradi." : ""}\n\n${ledgerText(L.month, "Shu oy:")}`); }
   if (/^\/manbalar\b/.test(text)) { const bs = (await recordsOf(uid, ["b"])).filter(b => b.status !== "done"); return say(chat, bs.length ? "O'rganilayotgan manbalar:\n" + bs.map(b => "• " + b.title).join("\n") : "Hali manba yo'q."); }
+  if (/^\/hisobot_soat\s+\d/.test(text)) { const h = Math.min(23, +/\d{1,2}/.exec(text)[0]); await pool.query("UPDATE tg_links SET docs_hour = $1, docs_on = true WHERE user_id = $2", [h, uid]); return say(chat, `Word va PDF hisobot har kuni soat ${String(h).padStart(2, "0")}:00 da keladi.`); }
+  if (/^\/hisobot_(off|ochir)\b/.test(text)) { await pool.query("UPDATE tg_links SET docs_on = false WHERE user_id = $1", [uid]); return say(chat, "Kundalik hisobot o'chirildi. Qayta yoqish: /hisobot_soat 21"); }
+  if (/^\/hisobot\b/.test(text)) { await tg("sendChatAction", { chat_id: chat, action: "upload_document" }).catch(() => {}); try { await sendReport(uid, chat); } catch (e) { console.error("report:", e.message); say(chat, "Hisobot tayyorlanmadi, birozdan keyin qayta urining."); } return; }
   if (/^\/zaxira\b/.test(text)) { try { await sendBackup(uid, chat); } catch (e) { say(chat, "Zaxira yuborilmadi, birozdan keyin qayta urining."); } return; }
   const hr = /^\/soat\s+(\d{1,2})/.exec(text);
   if (hr) { const h = Math.min(23, +hr[1]); await pool.query("UPDATE tg_links SET hour = $1 WHERE user_id = $2", [h, uid]); return say(chat, `Takror eslatmasi har kuni soat ${String(h).padStart(2, "0")}:00 da keladi.`); }
@@ -996,8 +1026,21 @@ app.post("/api/tg/hook/:secret", wrap(async (req, res) => {
   if (m) onTelegram(m).catch(e => console.error("tg:", e.message));
 }));
 app.get("/api/tg", auth, wrap(async (req, res) => {
-  const { rows } = await pool.query("SELECT name, hour, last_backup FROM tg_links WHERE user_id = $1", [req.user.id]);
-  res.json({ configured: !!TG_TOKEN, bot: tgBot, linked: !!rows[0], name: rows[0] ? rows[0].name : "", hour: rows[0] ? rows[0].hour : 7, lastBackup: rows[0] && rows[0].last_backup });
+  const { rows } = await pool.query("SELECT name, hour, last_backup, docs_on, docs_hour, docs_day FROM tg_links WHERE user_id = $1", [req.user.id]);
+  const l = rows[0];
+  res.json({ configured: !!TG_TOKEN, bot: tgBot, linked: !!l, name: l ? l.name : "", hour: l ? l.hour : 7, lastBackup: l && l.last_backup, docsOn: l ? l.docs_on : true, docsHour: l ? l.docs_hour : 21, docsDay: l ? l.docs_day : "" });
+}));
+app.post("/api/tg/docs", auth, wrap(async (req, res) => {
+  const on = !!req.body.on, hour = Math.min(23, Math.max(0, Math.floor(+req.body.hour)));
+  if (!Number.isFinite(hour)) return fail(res, 400, "Soatni tanlang.");
+  const { rowCount } = await pool.query("UPDATE tg_links SET docs_on = $2, docs_hour = $3 WHERE user_id = $1", [req.user.id, on, hour]);
+  if (!rowCount) return fail(res, 400, "Avval Telegram'ni ulang.");
+  res.json({ docsOn: on, docsHour: hour });
+}));
+app.post("/api/tg/report", auth, wrap(async (req, res) => {
+  const { rows: [l] } = await pool.query("SELECT chat_id FROM tg_links WHERE user_id = $1", [req.user.id]);
+  if (!l) return fail(res, 400, "Avval Telegram'ni ulang.");
+  try { res.json(await sendReport(req.user.id, l.chat_id)); } catch (e) { console.error("report:", e.message); fail(res, 502, "Hisobotni Telegram'ga yuborib bo'lmadi."); }
 }));
 app.post("/api/tg/code", auth, wrap(async (req, res) => {
   if (!TG_TOKEN || !tgBot) return fail(res, 400, "Telegram bot serverda sozlanmagan (TELEGRAM_BOT_TOKEN).");
@@ -1023,6 +1066,10 @@ async function telegramRound() {
         await pool.query("UPDATE tg_links SET last_day = $1 WHERE user_id = $2", [now.day, l.user_id]);
         const n = await dueCount(l.user_id, now.day);
         if (n) await say(l.chat_id, `Bugun ${n} ta yozuvni eslash vaqti keldi. Bir necha daqiqa yetadi.${PUBLIC_URL ? `\n${PUBLIC_URL}/#takror` : ""}`);
+      }
+      if (l.docs_on && now.hour >= l.docs_hour && l.docs_day !== now.day) {
+        await pool.query("UPDATE tg_links SET docs_day = $1 WHERE user_id = $2", [now.day, l.user_id]);
+        await sendReport(l.user_id, l.chat_id).catch(e => console.error("tg report:", e.message));
       }
       if (!l.last_backup || Date.now() - new Date(l.last_backup).getTime() > 7 * 864e5) await sendBackup(l.user_id, l.chat_id);
     } catch (e) { console.error("tg round:", e.message); }

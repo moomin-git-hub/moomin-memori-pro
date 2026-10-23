@@ -84,6 +84,14 @@ svg{width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:1.
 .fab{position:fixed;right:max(1rem,calc(50% - 19rem));bottom:calc(5.75rem + env(safe-area-inset-bottom,0px));z-index:21;width:3.75rem;height:3.75rem;border:0;border-radius:20px;background:var(--grad);color:#fff;display:grid;place-items:center;box-shadow:0 10px 28px var(--glow);transition:transform .15s}
 .fab svg{width:1.75rem;height:1.75rem;stroke-width:2.2}
 .fab:active{transform:scale(.92)}
+.fab-ai{width:3.25rem;height:3.25rem;border-radius:17px;right:max(1.25rem,calc(50% - 18.75rem));bottom:calc(10.25rem + env(safe-area-inset-bottom,0px));background:linear-gradient(140deg,#8b5cf6,#5b5bf0);box-shadow:0 10px 24px rgba(108,92,231,.38)}
+.fab-ai svg{width:1.5rem;height:1.5rem;fill:currentColor;stroke:none}
+.gl-ans{display:grid;gap:.75rem;padding:1rem;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.gl-ans .gl-w{font:800 1.25rem/1.2 var(--display)}
+.gl-list{display:grid;gap:.5rem}
+.gl-it{display:grid;gap:.125rem;text-align:left;padding:.75rem .875rem;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit}
+.gl-it b{font-weight:800}.gl-it small{color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gl-it .gl-src{font-size:.75rem;color:var(--mute)}
 
 .view{display:grid;gap:1.25rem}
 .view>*{min-width:0}
@@ -187,6 +195,8 @@ input[type="file"]{max-width:100%;font-size:.875rem;color:var(--mute)}
 .tag{display:inline-flex;align-items:center;gap:.25rem;font:800 .6875rem/1 var(--ui);color:var(--c,var(--pri-hi));background:color-mix(in srgb,var(--c,var(--pri)) 16%,transparent);border-radius:999px;padding:.3125rem .5625rem;white-space:nowrap}
 .tag-demo{--c:#f6b73c}
 .tag-momin{--c:#3f9a74}
+.tg-docs{display:grid;gap:.75rem;margin:.75rem 0;padding:.75rem;border:1px solid var(--line);border-radius:18px}
+.tg-docs .srow{padding:0;border:0;background:none}
 .lk{display:grid;gap:10px}
 .lk-row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--card, transparent)}
 .lk-row .tile{flex:none}
@@ -899,6 +909,7 @@ div.srow{cursor:default}
   <button type="button" data-act="tab" data-tab="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-6M10 20V8M15 20v-9M20 20V5M3 20h18"/></svg><span>Tahlil</span></button>
   <button type="button" data-act="tab" data-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Sozlamalar</span></button>
 </nav>
+<button type="button" class="fab fab-ai" data-act="assistant" aria-label="AI yordamchi va lug'at"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.6 4.4 4.4 1.6-4.4 1.6L12 15.5l-1.6-4.4L6 9.5l4.4-1.6z"/><path d="M18.5 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></button>
 <button type="button" class="fab" data-act="quick" aria-label="O'rganganimni yozish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
 <dialog class="sheet" id="sheet"></dialog>
 <dialog class="full" id="review" aria-label="Takrorlash"></dialog>
@@ -2494,7 +2505,9 @@ async function paintLinks() {
       : !t.configured ? `<p class="small muted">Telegram bot hali serverga ulanmagan. Render'da TELEGRAM_BOT_TOKEN qo'shilgach shu yerda «Ulash» tugmasi chiqadi (README'da qadamlar bor).</p>`
       : t.linked ? `<p>Ulangan: <b>${esc(t.name || "Telegram")}</b></p>
         <p class="small muted">Botga o'rganganingizni yozing yoki ovozli xabar yuboring: hisobga tushadi. Har kuni soat ${pad(t.hour)}:00 da takror eslatmasi va har hafta zaxira fayli keladi.${t.lastBackup ? ` Oxirgi zaxira: ${fmtDate(dayOf(new Date(t.lastBackup).getTime()))}.` : ""}</p>
-        <div class="acts"><button type="button" class="btn btn-sm" data-act="tg-backup">Zaxirani hozir yuborish</button><button type="button" class="btn btn-sm" data-act="tg-unlink">Uzish</button></div>`
+        <div class="tg-docs"><label class="srow" for="tg-docs-on"><span class="tile c-blue">${ic("doc")}</span><span class="srow-t"><b>Har kuni Word va PDF hisobot</b><small>Bugungi yozuvlar, takror, vaqt va butun bilimlaringiz — ikki faylda${t.docsDay ? `. Oxirgisi: ${fmtDate(t.docsDay)}` : ""}</small></span><input type="checkbox" class="switch" id="tg-docs-on"${t.docsOn ? " checked" : ""}></label>
+          <div class="field"><label for="tg-docs-h">Yuborish vaqti</label><select id="tg-docs-h">${Array.from({ length: 24 }, (_, h) => `<option value="${h}"${h === t.docsHour ? " selected" : ""}>${pad(h)}:00</option>`).join("")}</select></div></div>
+        <div class="acts"><button type="button" class="btn btn-gold btn-sm" data-act="tg-report">${ic("doc")}Hisobotni hozir yuborish</button><button type="button" class="btn btn-sm" data-act="tg-backup">Zaxirani hozir yuborish</button><button type="button" class="btn btn-sm" data-act="tg-unlink">Uzish</button></div>`
       : `<p class="small muted">Telegram'dan bir qator yozib hisobga qo'shasiz («O'tkan kunlar 40-65 bet: …»), ovozli xabar va kitob sahifasining rasmini yuborasiz. Bot har kuni takrorni eslatadi va har hafta zaxira faylini yuboradi.</p>
         <div><button type="button" class="btn btn-gold btn-sm" data-act="tg-link">${ic("arrow")}Telegram'ni ulash</button></div>`}`;
   }
@@ -3423,7 +3436,7 @@ function sheetChat(b, mode) {
   const notes = notesOf(b);
   if (!notes) return toast("Avval bu manbadan yozuv qiling.");
   if (chat.ctl) chat.ctl.abort();
-  Object.assign(chat, { turns: [{ role: "user", content: `${CHAT_RULES[mode]}\n\nSource: ${b.title} (${KINDS[b.kind].name})\nLearner's notes:\n${notes}` }], busy: false, ctl: null });
+  Object.assign(chat, { mode, turns: [{ role: "user", content: `${CHAT_RULES[mode]}\n\nSource: ${b.title} (${KINDS[b.kind].name})\nLearner's notes:\n${notes}` }], busy: false, ctl: null });
   openSheet(`<div class="sheet-body">
     <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>${mode === "exam" ? "Sokrat imtihoni" : "Xatoni top"}</h2></div>
     <p class="small muted">${mode === "exam" ? "Sun'iy intellekt faqat sizning yozuvlaringiz asosida bittadan savol beradi: avval eslash, keyin tushunish va qo'llash. Avval yoddan javob bering." : "Sun'iy intellekt yozuvlaringizdan xulosa yozadi va unga 2 ta xato qo'shadi. Ularni toping."}</p>
@@ -3456,6 +3469,87 @@ async function askChat() {
     if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(code)) cloud.sample = null;
     if (p) p.textContent = code === "rate_limited" ? "Hozir so'rovlar ko'p. Birozdan keyin qayta yuboring." : e && e.msg ? e.msg : aiOn() ? "Javob kelmadi. Qayta yuborib ko'ring." : "Bu yerda Claude'dan foydalanishga ruxsat berilmagan.";
   } finally { chat.busy = false; if (send) send.disabled = false; }
+}
+
+/* ── AI assistant and glossary ──
+   The AI button above «+» opens the assistant: «Lug'at» asks the meaning of a word met while learning and keeps it
+   in the «Lug'atim» source as a card (word → meaning), so it comes back in reviews and earns XOTIR;
+   «Suhbat» is a free chat about what the learner studies. */
+const GLOSS_ID = "glossary";
+const glossSrc = () => { const b = recs[GLOSS_ID]; return b && !b.del ? b : null; };
+const glossItems = () => glossSrc() ? itemsOf(GLOSS_ID).filter(i => i.gl).sort((a, b) => (b.c || 0) - (a.c || 0)) : [];
+const asst = { tab: "gl", word: "", ctx: "", b: "", ans: null, busy: false, q: "" };
+const GLOSS_PROMPT = (w, ctx, src) => `You are a concise dictionary for an Uzbek learner. Explain the word or phrase «${w}»${ctx ? ` as it is used in this sentence: «${ctx}»` : ""}${src ? ` (it came from «${src}»)` : ""}.
+Write in Uzbek, Latin script. Reply with only a JSON object: {"m": "the meaning in that context, 1-2 short sentences", "x": "one short example sentence using it (in the word's own language)", "t": "the word's language and part of speech, e.g. «ingliz tili, fe'l»"}.`;
+function sheetAssistant(tab) {
+  if (tab) asst.tab = tab;
+  if (!asst.b && ui.book && recs[ui.book] && ui.book !== GLOSS_ID) asst.b = ui.book;
+  const n = glossItems().length;
+  openSheet(`<div class="sheet-body">
+    <div><p class="eyebrow">${aiOn() ? "Sun'iy intellekt" : "AI hozir ulanmagan"}</p><h2 class="sheet-h" tabindex="-1" autofocus>AI yordamchi</h2></div>
+    <div class="seg" role="tablist"><button type="button" role="tab" data-act="asst-tab" data-t="gl" aria-selected="${asst.tab === "gl"}">Lug'at${n ? ` · ${n}` : ""}</button><button type="button" role="tab" data-act="asst-tab" data-t="chat" aria-selected="${asst.tab === "chat"}">Suhbat</button></div>
+    <div id="asst-body"></div></div>`);
+  paintAssistant();
+}
+function paintAssistant() {
+  const box = $("#asst-body"); if (!box) return;
+  if (asst.tab === "chat") {
+    box.innerHTML = `<p class="small muted">O'rganayotganingiz haqida istalgan savolni bering: tushuntirib bersin, misol keltirsin, reja tuzsin.</p>
+      <div class="msgs" id="chat-msgs" aria-live="polite"></div>
+      <form class="chat-in" data-form="chat" novalidate>
+        <div class="field"><label for="chat-in">Savolingiz</label><textarea id="chat-in" name="m" rows="2" maxlength="4000" data-grow></textarea></div>
+        <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Yopish</button><button type="submit" class="btn btn-gold" id="chat-send"${aiOn() ? "" : " disabled"}>Yuborish</button></div>
+      </form>`;
+    if (chat.mode !== "asst") {
+      if (chat.ctl) chat.ctl.abort();
+      const bs = books().filter(b => b.status !== "done").slice(0, 25).map(b => `${b.title} (${KINDS[b.kind] ? KINDS[b.kind].name : b.kind})`).join("; ");
+      Object.assign(chat, { mode: "asst", busy: false, ctl: null, turns: [{ role: "user", content: `You are a warm, precise study assistant inside ME'MORI, an app where an Uzbek learner keeps what they learn in long-term memory. Answer in Uzbek, Latin script, addressing the learner as «siz». Be concise: under 150 words unless asked for more. When explaining, give one concrete example. Sources the learner is studying now: ${bs || "—"}.` }, { role: "assistant", content: "Assalomu alaykum! Nimani tushuntirib beray?" }] });
+    }
+    for (const t of chat.turns.slice(1)) bubble(t.content, t.role === "user");
+    return;
+  }
+  const opts = books().filter(b => b.id !== GLOSS_ID && b.status !== "done").slice(0, 60);
+  const a = asst.ans, list = glossItems(), q = asst.q.trim().toLowerCase();
+  const shown = (q ? list.filter(i => (i.q + " " + i.a).toLowerCase().includes(q)) : list).slice(0, 60);
+  box.innerHTML = `<form class="vlist" data-form="gloss" novalidate style="display:grid;gap:.75rem">
+      <div class="field"><label for="gl-w">Tushunmagan so'z yoki ibora</label><input id="gl-w" name="w" type="text" maxlength="120" autocomplete="off" autocapitalize="off" placeholder="Masalan: serendipity, istiqbol, ijtihod" value="${esc(asst.word)}"></div>
+      <div class="field"><label for="gl-c">Qaysi gapda uchradi? <span class="opt">ixtiyoriy</span></label><textarea id="gl-c" name="c" class="no-rt" rows="2" maxlength="600" data-grow placeholder="Gapni yozsangiz, ma'nosi aynan shu ma'noda tushuntiriladi">${esc(asst.ctx)}</textarea></div>
+      ${opts.length ? `<div class="field"><label for="gl-b">Qayerdan <span class="opt">ixtiyoriy</span></label><select id="gl-b" name="b"><option value="">—</option>${opts.map(b => `<option value="${esc(b.id)}"${b.id === asst.b ? " selected" : ""}>${esc(b.title)}</option>`).join("")}</select></div>` : ""}
+      <p class="err" data-err hidden></p>
+      <button type="submit" class="btn btn-gold" id="gl-ask"${asst.busy ? " disabled" : ""}>${asst.busy ? "So'ralmoqda…" : aiOn() ? `${ic("spark")}Ma'nosini so'rash` : "Ma'nosini o'zim yozaman"}</button>
+    </form>
+    ${a ? `<form class="gl-ans" data-form="gloss-save" novalidate>
+      <div><span class="gl-w">${esc(a.w)}</span>${a.t ? ` <span class="small muted">· ${esc(a.t)}</span>` : ""}</div>
+      <div class="field"><label for="gl-m">Ma'nosi</label><textarea id="gl-m" name="m" class="no-rt" rows="3" maxlength="1500" data-grow>${esc(a.m)}</textarea></div>
+      <div class="field"><label for="gl-x">Misol <span class="opt">ixtiyoriy</span></label><textarea id="gl-x" name="x" class="no-rt" rows="2" maxlength="600" data-grow>${esc(a.x)}</textarea></div>
+      <p class="err" data-err hidden></p>
+      <div class="sheet-actions"><button type="button" class="btn" data-act="gl-clear">Bekor qilish</button><button type="submit" class="btn btn-gold">${ic("plus")}Lug'atga saqlash</button></div>
+      <p class="small muted">Saqlangan so'z ertaga takrorda so'raladi: so'zni ko'rasiz, ma'nosini eslaysiz.</p></form>` : ""}
+    <div style="display:grid;gap:.625rem">
+      <div class="row-head" style="display:flex;align-items:center;justify-content:space-between;gap:.5rem"><p class="eyebrow" style="margin:0">Lug'atim · ${list.length} ta so'z</p>${list.length ? `<button type="button" class="btn btn-sm" data-act="gl-open">Takrorlash</button>` : ""}</div>
+      ${list.length > 6 ? `<div class="field"><label for="gl-q" class="vh">Lug'atdan qidirish</label><input id="gl-q" type="search" placeholder="Lug'atdan qidirish" value="${esc(asst.q)}" autocomplete="off"></div>` : ""}
+      <div class="gl-list">${shown.map(i => `<button type="button" class="gl-it" data-act="gl-item" data-id="${esc(i.id)}"><b>${esc(i.q)}</b><small>${esc(str(i.a).split("\n")[0])}</small>${i.r ? `<span class="gl-src">${esc(i.r)}</span>` : ""}</button>`).join("") || `<p class="small muted">${q ? "Topilmadi." : "Hali so'z yo'q. Kitob, kurs yoki videoda tushunmagan so'zingizni yuqoriga yozing."}</p>`}</div>
+    </div>`;
+  addRt(box);
+  const qi = $("#gl-q"); if (qi) qi.addEventListener("input", () => { asst.q = qi.value; const pos = qi.selectionStart; paintAssistant(); const n = $("#gl-q"); if (n) { n.focus(); try { n.setSelectionRange(pos, pos); } catch (e) {} } });
+  for (const t of box.querySelectorAll("textarea[data-grow]")) grow(t);
+}
+async function glossAsk(w, ctx, src) {
+  const text = await aiText([{ role: "user", content: GLOSS_PROMPT(w, ctx, src) }]);
+  const m = /\{[\s\S]*\}/.exec(text || "");
+  try { const j = JSON.parse(m ? m[0] : text); return { w, m: str(j.m).trim(), x: str(j.x).trim(), t: str(j.t).trim() }; }
+  catch (e) { return { w, m: str(text).trim(), x: "", t: "" }; }
+}
+function glossSave(a, b) {
+  const now = Date.now(), out = [];
+  if (!glossSrc()) out.push({ id: GLOSS_ID, k: "b", title: "Lug'atim", author: "", kind: "til", pages: 0, tags: [], cur: 0, status: "reading", c: now, fin: 0 });
+  const same = glossItems().find(i => i.q.toLowerCase() === a.w.toLowerCase());
+  const ans = [a.m, a.x ? "Misol: " + a.x : ""].filter(Boolean).join("\n");
+  const ref = [b ? b.title : "", a.ctx ? "«" + a.ctx.slice(0, 140) + "»" : ""].filter(Boolean).join(" · ");
+  if (same) out.push({ ...same, a: ans, r: a.ctx ? ref : same.r || ref });
+  else out.push({ id: uid(), k: "i", b: GLOSS_ID, t: "card", gl: 1, q: a.w, a: ans, r: ref, src: b ? b.id : "", f: 0, e: 0, c: now + 1, s: 0, d: addDays(today(), 1), n: 0, l: 0, h: [] });
+  put(out, true);
+  return !!same;
 }
 
 /* ── actions ── */
@@ -3618,6 +3712,12 @@ const act = {
   async "tg-backup"(el) { el.disabled = true; try { const r = await api("/api/tg/backup", {}); toast(`Zaxira Telegram'ga yuborildi: ${r.notes} ta yozuv.`); paintLinks(); } catch (e) { toast(e.msg || "Yuborilmadi."); } finally { el.disabled = false; } },
   async "key-new"(el) { if ($("#ext-key") && !armed(el, "Ha, eskisi ishlamay qoladi")) return; try { await api("/api/key", {}); paintLinks(); } catch (e) { toast(e.msg); } },
   async "key-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { await api("/api/key", null, "DELETE"); paintLinks(); } catch (e) { toast(e.msg); } },
+  assistant() { sheetAssistant(); },
+  "asst-tab"(el) { asst.tab = el.dataset.t; for (const b of el.parentNode.children) b.setAttribute("aria-selected", String(b === el)); paintAssistant(); },
+  "gl-clear"() { asst.ans = null; asst.word = ""; asst.ctx = ""; paintAssistant(); const w = $("#gl-w"); if (w) w.focus(); },
+  "gl-open"() { closeSheet(); if (!ui.book) ui.from = ui.tab; ui.book = GLOSS_ID; render(); window.scrollTo(0, 0); },
+  "gl-item"(el) { const i = recs[el.dataset.id]; if (!i) return; asst.ans = { w: i.q, m: str(i.a).split("\nMisol: ")[0], x: (str(i.a).split("\nMisol: ")[1] || ""), t: "", ctx: "" }; asst.word = i.q; asst.b = i.src || ""; paintAssistant(); const f = $(".gl-ans"); if (f) f.scrollIntoView({ block: "nearest" }); },
+  async "tg-report"(el) { el.disabled = true; toast("Hisobot tayyorlanmoqda…"); try { await api("/api/tg/report", {}); toast("Word va PDF hisobot Telegram'ga yuborildi."); } catch (e) { toast(e.msg || "Yuborilmadi."); } finally { el.disabled = false; } },
   "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kod nusxalandi."); },
   "lk-go"(el) { location.href = `${el.dataset.url.replace(/\/+$/, "")}/link?to=${encodeURIComponent(location.origin + "/")}&app=memori`; },
   async "lk-off"(el) { if (!confirm("Uzilsinmi? Yangi yozuvlar boshqa yuborilmaydi; yuborilganlari joyida qoladi.")) return; try { await api("/api/links", { app: el.dataset.app, code: null }); toast("Uzildi."); paintLinks(); } catch (e) { toast(e.msg); } },
@@ -3907,6 +4007,27 @@ const forms = {
     const g = { ...(id && recs[id] ? recs[id] : { id: uid(), k: "g", c: Date.now() }), metric: str(fd.get("metric")) || "notes", period: fd.get("period") === "year" ? "year" : "month", target, title: str(fd.get("title")).trim() };
     put(g); closeSheet(); toast("Maqsad saqlandi.");
   },
+  async gloss(form) {
+    const fd = new FormData(form), w = str(fd.get("w")).trim().replace(/\s+/g, " "), ctx = str(fd.get("c")).trim();
+    if (!w) return fail(form, "So'zni yozing.");
+    asst.word = w; asst.ctx = ctx; asst.b = str(fd.get("b"));
+    const b = recs[asst.b];
+    if (!aiOn()) { asst.ans = { w, m: "", x: "", t: "", ctx }; paintAssistant(); const m = $("#gl-m"); if (m) m.focus(); return; }
+    if (asst.busy) return;
+    asst.busy = true; paintAssistant();
+    try { asst.ans = { ...(await glossAsk(w, ctx, b ? b.title : "")), ctx }; }
+    catch (e) { asst.ans = { w, m: "", x: "", t: "", ctx }; toast(e && e.msg ? e.msg : "AI javob bermadi. Ma'nosini o'zingiz yozib saqlashingiz mumkin."); }
+    finally { asst.busy = false; }
+    paintAssistant();
+  },
+  "gloss-save"(form) {
+    const fd = new FormData(form), a = asst.ans; if (!a) return;
+    const m = str(fd.get("m")).trim(); if (!m) return fail(form, "Ma'nosini yozing.");
+    const upd = glossSave({ ...a, m, x: str(fd.get("x")).trim() }, recs[asst.b]);
+    toast(upd ? `«${a.w}» yangilandi.` : `«${a.w}» lug'atga qo'shildi. Ertaga takrorda so'raladi.`);
+    asst.ans = null; asst.word = ""; asst.ctx = "";
+    render(); paintAssistant(); const w = $("#gl-w"); if (w) w.focus();
+  },
   chat(form) {
     const t = $("#chat-in"), m = str(t.value).trim();
     if (!m || chat.busy) return;
@@ -3973,6 +4094,12 @@ document.addEventListener("keydown", e => {
 $("#sheet").addEventListener("close", () => { lock(); if (ui.tab === "settings" && !ui.book) setTimeout(render, 0); if (chat.ctl) chat.ctl.abort(); if (pend.length) { pend.forEach(forgetFile); pend = []; } });
 $("#auth").addEventListener("cancel", e => e.preventDefault());
 document.addEventListener("change", async e => { const t = e.target;
+  if (t.id === "tg-docs-on" || t.id === "tg-docs-h") {
+    const on = $("#tg-docs-on"), h = $("#tg-docs-h");
+    try { const r = await api("/api/tg/docs", { on: !!(on && on.checked), hour: h ? +h.value : 21 }); toast(r.docsOn ? `Hisobot har kuni soat ${pad(r.docsHour)}:00 da Telegram'ga keladi.` : "Kundalik hisobot o'chirildi."); }
+    catch (err) { toast(err.msg || "Saqlanmadi."); }
+    return;
+  }
   if (t.id === "bl-photo" && t.files && t.files[0]) {
     const f = await shrink(t.files[0]), st = $("#bl-ai"), form = t.closest("form"), b = form && recs[form.dataset.id]; t.value = "";
     st.textContent = "Rasm o'qilmoqda…";

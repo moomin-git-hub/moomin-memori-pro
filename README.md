@@ -186,3 +186,20 @@ Sozlamalar → **Bog'langan ilovalar**.
   bilan boradi; yuborilmaganlari `fwd_out` jadvalida kutadi va 10 daqiqada qayta yuboriladi.
 - Vaqt Banki ulanishini Mo'min o'zi o'tkazadi (`POST /api/ext/links`) yoki shu yerda «Ulash» bilan.
 - Ruxsat sahifasi: `/link?to=<qaytish manzili>&app=<ilova>`.
+
+## 11. AI yordamchi va lug'at
+
+«+» tugmasi ustidagi binafsha tugma — AI yordamchi.
+- **Lug'at:** tushunmagan so'z yoki iborani yozasiz (xohlasangiz, u uchragan gapni va manbani ham), AI shu ma'nodagi
+  izohini va misolni beradi; tahrirlab «Lug'atga saqlash». So'z «Lug'atim» manbasiga karta bo'lib tushadi
+  (so'z → ma'nosi), ertadan takrorda so'raladi va XOTIR beradi. Bir xil so'z ikki marta qo'shilmaydi — yangilanadi.
+  AI ulanmagan bo'lsa, ma'nosini o'zingiz yozib saqlaysiz.
+- **Suhbat:** o'rganayotganingiz haqida erkin savol-javob.
+
+## 12. Har kuni Word va PDF hisobot (Telegram)
+
+Telegram ulangan bo'lsa, bot har kuni kechqurun (standart 21:00) ikki fayl yuboradi: `memori-YYYY-MM-DD.docx` va `.pdf`.
+Ichida: bugungi XOTIR, yangi yozuvlar, takror, o'qilgan bet va vaqt, bugungi fikr-g'oyalar, keyin butun bilimlaringiz
+manbama-manba (yozuvlar, lug'at, fikrlar). Sozlamalar → Telegram bot → «Har kuni Word va PDF hisobot» (yoqish, soat,
+«Hisobotni hozir yuborish»). Botda: `/hisobot` — hozir, `/hisobot_soat 21` — soat, `/hisobot_off` — o'chirish.
+Shrift: `assets/fonts/DejaVuSans*.ttf` (o'zbek lotin harflari PDF'da to'g'ri chiqishi uchun).
