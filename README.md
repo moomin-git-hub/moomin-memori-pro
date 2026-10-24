@@ -203,3 +203,12 @@ Ichida: bugungi XOTIR, yangi yozuvlar, takror, o'qilgan bet va vaqt, bugungi fik
 manbama-manba (yozuvlar, lug'at, fikrlar). Sozlamalar → Telegram bot → «Har kuni Word va PDF hisobot» (yoqish, soat,
 «Hisobotni hozir yuborish»). Botda: `/hisobot` — hozir, `/hisobot_soat 21` — soat, `/hisobot_off` — o'chirish.
 Shrift: `assets/fonts/DejaVuSans*.ttf` (o'zbek lotin harflari PDF'da to'g'ri chiqishi uchun).
+
+## 13. Bezakli matn, AI kaliti, kalit bilan ulash
+
+- **Matn bezash endi ko'rinib turadi:** qalin, tagiga chiziq, marker, boshqa shrift, 5 rang, sarlavha, iqtibos, havola va «bezakni olib tashlash».
+  Yozayotganda qizil so'z qizil bo'lib ko'rinadi (ichkarida avvalgi qisqa belgilar bilan saqlanadi: `{r|…}`, `**…**` va hokazo).
+- **AI kaliti:** Sozlamalar → «AI kaliti». Gemini (`AIza…`, bepul), Claude (`sk-ant-…`) yoki OpenAI (`sk-…`) kaliti — saqlashda tekshiriladi va
+  serverda shu hisob uchun saqlanadi; AI yordamchi, lug'at, kartochka tuzish, Telegram rasm va ovoz shu kalit bilan ishlaydi.
+  Serverdagi `GEMINI_API_KEY`/`ANTHROPIC_API_KEY`/`OPENAI_API_KEY` endi majburiy emas (kalit kiritmagan hisoblar uchun zaxira).
+- **Bog'langan ilovalar:** tepada ME'MORI'ning o'z kaliti (`eq_…`). Vaqt Banki, Mo'min, Hisob — kalit va manzilni yozib «Kalit bilan ulash».

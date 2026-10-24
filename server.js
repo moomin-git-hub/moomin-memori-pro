@@ -27,7 +27,6 @@ const GEMINI_KEY = process.env.GEMINI_API_KEY || "";
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || "";
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5";
-const AI_ON = !!(GEMINI_KEY || ANTHROPIC_KEY);
 // Neon Object Storage (S3-compatible). When these are set, files live in the bucket instead of the database.
 const S3_ON = !!(process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_ENDPOINT_URL_S3);
 const S3_BUCKET = process.env.S3_BUCKET || "memori-files";
@@ -94,6 +93,8 @@ async function migrate() {
       last_backup timestamptz,
       created_at timestamptz NOT NULL DEFAULT now()
     );
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS ai_key text;
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS ai_model text;
     ALTER TABLE users ADD COLUMN IF NOT EXISTS links jsonb NOT NULL DEFAULT '{}'::jsonb;
     CREATE TABLE IF NOT EXISTS fwd_out (user_id uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE, id text NOT NULL, tries integer NOT NULL DEFAULT 0, at timestamptz NOT NULL DEFAULT now(), PRIMARY KEY (user_id, id));
     ALTER TABLE tg_links ADD COLUMN IF NOT EXISTS docs_on boolean NOT NULL DEFAULT true;
@@ -113,7 +114,7 @@ app.use(express.json({ limit: "15mb" }));
 /* ── small helpers ── */
 const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 const fail = (res, status, error) => res.status(status).json({ error });
-const publicUser = u => ({ id: u.id, email: u.email, name: u.name, picture: u.picture || "" });
+const publicUser = u => ({ id: u.id, email: u.email, name: u.name, picture: u.picture || "", ai: !!aiFor(u) });
 function setSession(res, user) {
   const token = jwt.sign({ sub: user.id }, JWT_SECRET, { expiresIn: "90d" });
   res.cookie(COOKIE, token, { httpOnly: true, sameSite: "lax", secure: PROD, maxAge: 90 * 864e5, path: "/" });
@@ -140,7 +141,7 @@ const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e) && e.length <= 200;
 
 /* ── health and config ── */
 app.get("/api/health", (req, res) => res.json({ ok: true, app: "esda-qolsin" }));
-app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB, ai: AI_ON, telegram: !!TG_TOKEN, storage: S3_ON ? "neon-object-storage" : "database" }));
+app.get("/api/config", (req, res) => res.json({ googleClientId: GOOGLE_CLIENT_ID, maxFileMb: MAX_FILE_MB, quotaMb: USER_QUOTA_MB, ai: !!ENV_PROV, telegram: !!TG_TOKEN, storage: S3_ON ? "neon-object-storage" : "database" }));
 
 /* ── accounts ── */
 app.post("/api/auth/register", wrap(async (req, res) => {
@@ -593,63 +594,100 @@ function pairsFrom(text) {
   try { arr = JSON.parse(m ? m[0] : text); } catch (e) { arr = []; }
   return (Array.isArray(arr) ? arr : []).map(x => ({ q: String((x && x.q) || "").trim().slice(0, 300), a: String((x && x.a) || "").trim().slice(0, 600) })).filter(x => x.q && x.a).slice(0, 12);
 }
-async function aiAsk(prompt, media, json) {
-  if (GEMINI_KEY) {
-    const parts = [{ text: prompt }];
-    if (media) parts.push({ inline_data: { mime_type: media.mime, data: media.data } });
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
-      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": GEMINI_KEY },
-      body: JSON.stringify({ contents: [{ role: "user", parts }], generationConfig: json ? { responseMimeType: "application/json", temperature: 0.3 } : { temperature: 0.2 } }),
-    });
-    const j = await r.json().catch(() => null);
-    if (!r.ok) throw new Error((j && j.error && j.error.message) || `Gemini ${r.status}`);
-    return ((j.candidates || [])[0] || { content: { parts: [] } }).content.parts.map(p => p.text || "").join("");
-  }
-  const content = [];
-  if (media) content.push({ type: "image", source: { type: "base64", media_type: media.mime, data: media.data } });
-  content.push({ type: "text", text: prompt });
-  const r = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST", headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: 2000, messages: [{ role: "user", content }] }),
-  });
-  const j = await r.json().catch(() => null);
-  if (!r.ok) throw new Error((j && j.error && j.error.message) || `Claude ${r.status}`);
-  return (j.content || []).map(c => c.text || "").join("");
+/* The model to ask: the key the person saved in Settings → «AI kaliti», otherwise the server's own.
+   The key's shape tells the provider: «AIza…» Google Gemini, «sk-ant-…» Anthropic Claude, «sk-…» OpenAI. */
+function provOf(key, model) {
+  key = String(key || "").trim();
+  if (!key) return null;
+  if (/^sk-ant-/.test(key)) return { kind: "anthropic", key, model: model || ANTHROPIC_MODEL };
+  if (/^sk-/.test(key)) return { kind: "openai", key, model: model || process.env.OPENAI_MODEL || "gpt-4o-mini" };
+  return { kind: "gemini", key, model: model || GEMINI_MODEL };
 }
-async function aiCards({ text, image, title }) {
+const ENV_PROV = GEMINI_KEY ? provOf(GEMINI_KEY, GEMINI_MODEL) : ANTHROPIC_KEY ? provOf(ANTHROPIC_KEY, ANTHROPIC_MODEL) : process.env.OPENAI_API_KEY ? provOf(process.env.OPENAI_API_KEY) : null;
+function aiFor(user) { return (user && user.ai_key && provOf(user.ai_key, user.ai_model)) || ENV_PROV; }
+async function aiUserProv(userId) { const { rows } = await pool.query("SELECT ai_key, ai_model FROM users WHERE id = $1", [userId]); return aiFor(rows[0]); }
+const PROV_NAME = { gemini: "Gemini", anthropic: "Claude", openai: "OpenAI" };
+async function aiCall(prov, turns, opt = {}) {
+  // turns: [{role: "user"|"assistant", content: string}]; opt.media on the last user turn; opt.json asks for JSON
+  if (!prov) throw Object.assign(new Error("AI kaliti kiritilmagan. Sozlamalar → «AI kaliti»."), { user: 1 });
+  const ctl = AbortSignal.timeout(opt.timeout || 90000);
+  let r, j;
+  if (prov.kind === "gemini") {
+    const contents = turns.map((t, k) => ({ role: t.role === "assistant" ? "model" : "user", parts: [{ text: t.content }, ...(opt.media && k === turns.length - 1 ? [{ inline_data: { mime_type: opt.media.mime, data: opt.media.data } }] : [])] }));
+    r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${prov.model}:generateContent`, { method: "POST", signal: ctl,
+      headers: { "Content-Type": "application/json", "x-goog-api-key": prov.key },
+      body: JSON.stringify({ contents, generationConfig: opt.json ? { responseMimeType: "application/json", temperature: 0.3 } : { temperature: opt.temp == null ? 0.5 : opt.temp } }) });
+    j = await r.json().catch(() => null);
+    if (!r.ok) throw provErr(prov, r.status, j && j.error && j.error.message);
+    const c = (j.candidates || [])[0];
+    if (!c || !c.content) throw provErr(prov, 200, (j.promptFeedback && j.promptFeedback.blockReason) ? "so'rov bloklandi" : "bo'sh javob");
+    return c.content.parts.map(p => p.text || "").join("");
+  }
+  if (prov.kind === "anthropic") {
+    const msgs = turns.map((t, k) => ({ role: t.role === "assistant" ? "assistant" : "user", content: opt.media && k === turns.length - 1 ? [{ type: "image", source: { type: "base64", media_type: opt.media.mime, data: opt.media.data } }, { type: "text", text: t.content }] : t.content }));
+    r = await fetch("https://api.anthropic.com/v1/messages", { method: "POST", signal: ctl,
+      headers: { "Content-Type": "application/json", "x-api-key": prov.key, "anthropic-version": "2023-06-01" },
+      body: JSON.stringify({ model: prov.model, max_tokens: opt.max || 2000, messages: msgs }) });
+    j = await r.json().catch(() => null);
+    if (!r.ok) throw provErr(prov, r.status, j && j.error && j.error.message);
+    return (j.content || []).map(c => c.text || "").join("");
+  }
+  const msgs = turns.map((t, k) => ({ role: t.role === "assistant" ? "assistant" : "user", content: opt.media && k === turns.length - 1 ? [{ type: "text", text: t.content }, { type: "image_url", image_url: { url: `data:${opt.media.mime};base64,${opt.media.data}` } }] : t.content }));
+  r = await fetch("https://api.openai.com/v1/chat/completions", { method: "POST", signal: ctl,
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + prov.key },
+    body: JSON.stringify({ model: prov.model, messages: msgs, ...(opt.json ? { response_format: { type: "json_object" } } : {}) }) });
+  j = await r.json().catch(() => null);
+  if (!r.ok) throw provErr(prov, r.status, j && j.error && j.error.message);
+  return ((j.choices || [])[0] || { message: { content: "" } }).message.content || "";
+}
+function provErr(prov, status, msg) {
+  const m = String(msg || "");
+  const why = status === 401 || status === 403 || /api key|API_KEY_INVALID|invalid x-api-key|Incorrect API key/i.test(m) ? "kalit noto'g'ri yoki o'chirilgan"
+    : status === 429 || /quota|rate/i.test(m) ? "limit tugadi yoki so'rovlar juda ko'p — birozdan keyin urining"
+    : status === 404 || /model/i.test(m) && /not found|does not exist/i.test(m) ? "bunday model topilmadi"
+    : status >= 500 ? "xizmat vaqtincha ishlamayapti" : m.slice(0, 160) || `xato ${status}`;
+  return Object.assign(new Error(`${PROV_NAME[prov.kind]}: ${why}`), { user: 1, status });
+}
+async function aiAsk(prompt, media, json, prov) { return aiCall(prov || ENV_PROV, [{ role: "user", content: prompt }], { media, json, temp: json ? 0.3 : 0.2 }); }
+async function aiCards({ text, image, title }, prov) {
   const head = `${AI_RULES}\n\n${title ? `Source: ${title}\n` : ""}`;
-  if (image) return pairsFrom(await aiAsk(`${head}The material is the photographed page in the image.`, image, true));
-  return pairsFrom(await aiAsk(`${head}Material:\n${String(text).slice(0, 12000)}`, null, true));
+  if (image) return pairsFrom(await aiAsk(`${head}The material is the photographed page in the image. Reply with only a JSON array.`, image, true, prov));
+  return pairsFrom(await aiAsk(`${head}Material:\n${String(text).slice(0, 12000)}\n\nReply with only a JSON array.`, null, true, prov));
 }
-// A conversation (Socratic exam, find-the-mistake) with the same model.
-async function aiChat(messages) {
+// A conversation (study assistant, Socratic exam, find-the-mistake, glossary) with the same model.
+async function aiChat(messages, prov) {
   const turns = messages.filter(m => m && typeof m.content === "string" && m.content.trim()).slice(-30).map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.content.slice(0, 12000) }));
-  if (!turns.length) return "";
-  if (GEMINI_KEY) {
-    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
-      method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": GEMINI_KEY },
-      body: JSON.stringify({ contents: turns.map(t => ({ role: t.role === "assistant" ? "model" : "user", parts: [{ text: t.content }] })), generationConfig: { temperature: 0.5 } }),
-    });
-    const j = await r.json().catch(() => null);
-    if (!r.ok) throw new Error((j && j.error && j.error.message) || `Gemini ${r.status}`);
-    return ((j.candidates || [])[0] || { content: { parts: [] } }).content.parts.map(p => p.text || "").join("");
-  }
-  const r = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST", headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01" },
-    body: JSON.stringify({ model: ANTHROPIC_MODEL, max_tokens: 1200, messages: turns }),
-  });
-  const j = await r.json().catch(() => null);
-  if (!r.ok) throw new Error((j && j.error && j.error.message) || `Claude ${r.status}`);
-  return (j.content || []).map(c => c.text || "").join("");
+  while (turns.length && turns[0].role === "assistant") turns.shift();
+  // providers want user/assistant turns to alternate: join neighbours of the same role
+  const alt = []; for (const t of turns) { const l = alt[alt.length - 1]; if (l && l.role === t.role) l.content += "\n\n" + t.content; else alt.push({ ...t }); }
+  if (!alt.length) return "";
+  return aiCall(prov, alt, { max: 1500 });
 }
+// Settings → «AI kaliti»: the person's own key, checked before it is kept.
+app.get("/api/ai", auth, (req, res) => {
+  const p = aiFor(req.user), own = !!req.user.ai_key;
+  res.json({ on: !!p, own, provider: p ? PROV_NAME[p.kind] : "", model: p ? p.model : "", hint: own ? req.user.ai_key.slice(0, 6) + "…" + req.user.ai_key.slice(-4) : "" });
+});
+app.post("/api/ai/key", auth, wrap(async (req, res) => {
+  const key = String(req.body.key || "").trim(), model = String(req.body.model || "").trim().slice(0, 80);
+  if (!key) { await pool.query("UPDATE users SET ai_key = NULL, ai_model = NULL WHERE id = $1", [req.user.id]); return res.json({ on: !!ENV_PROV, own: false, provider: ENV_PROV ? PROV_NAME[ENV_PROV.kind] : "" }); }
+  if (key.length < 20 || key.length > 300 || /\s/.test(key)) return fail(res, 400, "Kalit noto'g'ri ko'rinishda. To'liq nusxalang.");
+  const p = provOf(key, model || null);
+  try { const t = await aiCall(p, [{ role: "user", content: "Reply with the single word: OK" }], { max: 20, temp: 0, timeout: 30000 }); if (!t) throw new Error("bo'sh javob"); }
+  catch (e) { return fail(res, 400, e.user ? e.message + ". Kalit saqlanmadi." : "Kalitni tekshirib bo'lmadi: " + e.message); }
+  await pool.query("UPDATE users SET ai_key = $2, ai_model = $3 WHERE id = $1", [req.user.id, key, model || null]);
+  res.json({ on: true, own: true, provider: PROV_NAME[p.kind], model: p.model, hint: key.slice(0, 6) + "…" + key.slice(-4) });
+}));
 app.post("/api/ai/chat", auth, wrap(async (req, res) => {
-  if (!AI_ON) return fail(res, 400, "Serverda GEMINI_API_KEY yoki ANTHROPIC_API_KEY sozlanmagan.");
+  const prov = aiFor(req.user);
+  if (!prov) return fail(res, 400, "AI kaliti kiritilmagan. Sozlamalar → «AI kaliti».");
   if (!Array.isArray(req.body.messages)) return fail(res, 400, "Xabarlar yo'q.");
-  try { res.json({ text: await aiChat(req.body.messages) }); }
-  catch (e) { console.error("ai chat:", e.message); fail(res, 502, "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
+  try { res.json({ text: await aiChat(req.body.messages, prov) }); }
+  catch (e) { console.error("ai chat:", e.message); fail(res, 502, e.user ? e.message : "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
 }));
 app.post("/api/ai/cards", auth, wrap(async (req, res) => {
-  if (!AI_ON) return fail(res, 400, "Serverda GEMINI_API_KEY yoki ANTHROPIC_API_KEY sozlanmagan.");
+  const prov = aiFor(req.user);
+  if (!prov) return fail(res, 400, "AI kaliti kiritilmagan. Sozlamalar → «AI kaliti».");
   const img = req.body.image, text = String(req.body.text || "").trim();
   let image = null;
   if (img) {
@@ -657,8 +695,8 @@ app.post("/api/ai/cards", auth, wrap(async (req, res) => {
     if (!m) return fail(res, 400, "Rasm o'qilmadi. JPG yoki PNG tanlang.");
     image = { mime: m[1], data: m[2] };
   } else if (!text) return fail(res, 400, "Matn yoki rasm yuboring.");
-  try { res.json({ cards: await aiCards({ text, image, title: String(req.body.title || "").slice(0, 160) }) }); }
-  catch (e) { console.error("ai:", e.message); fail(res, 502, "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
+  try { res.json({ cards: await aiCards({ text, image, title: String(req.body.title || "").slice(0, 160) }, prov) }); }
+  catch (e) { console.error("ai:", e.message); fail(res, 502, e.user ? e.message : "Sun'iy intellekt javob bermadi. Birozdan keyin qayta urining."); }
 }));
 
 /* ── other apps: Vaqt Banki, Mo'min ──
@@ -722,22 +760,37 @@ async function setLink(userId, app, code) {
   if (code) {
     const c = parseCode(code);
     if (!c) throw Object.assign(new Error("Ulanish kodi noto'g'ri. U «https://…/link#…» ko'rinishida bo'ladi."), { status: 400 });
-    if (app === "vaqt") {
-      const r = await fetch(c.url + "/api/ext/summary", { headers: { "X-Link-Key": c.key }, signal: AbortSignal.timeout(60000) }).catch(e => ({ ok: false, status: 0 }));
-      if (!r.ok) throw Object.assign(new Error(r.status === 401 ? "Vaqt Banki bu kodni tanimadi. Yangi kod oling." : "Vaqt Banki serveri javob bermadi. Bir daqiqadan keyin qayta urining."), { status: 400 });
-    }
+    const want = { vaqt: "vb_", hisob: "hb_", momin: "mo_" }[app];
+    if (!c.key.startsWith(want)) throw Object.assign(new Error(`Bu ${LINK_APPS[app]} kaliti emas: u «${want}» bilan boshlanadi.`), { status: 400 });
+    const r = await fetch(c.url + "/api/ext/summary", { headers: { "X-Link-Key": c.key }, signal: AbortSignal.timeout(60000) }).catch(e => ({ ok: false, status: 0 }));
+    if (!r.ok) throw Object.assign(new Error(r.status === 401 ? `${LINK_APPS[app]} bu kalitni tanimadi. Ilovadan yangisini oling.` : `${LINK_APPS[app]} serveri javob bermadi: manzilni tekshiring yoki bir daqiqadan keyin urining.`), { status: 400 });
     val = { ...c, at: Date.now() };
+    if (app === "momin") { const cur = (await linksOf(userId)).momin; if (cur && cur.last) val.last = cur.last; }
   }
   await pool.query("UPDATE users SET links = CASE WHEN $3::jsonb IS NULL THEN links - $2 ELSE jsonb_set(links, ARRAY[$2], $3::jsonb) END WHERE id = $1", [userId, app, val ? JSON.stringify(val) : null]);
   if (app === "vaqt" && val) queueAllSessions(userId).then(() => flushTime(userId)).catch(e => console.error("vaqt queue:", e.message));
   return val;
 }
-const linkView = l => Object.fromEntries(Object.keys(LINK_APPS).map(a => [a, l[a] ? { url: l[a].url, at: l[a].at || 0, last: l[a].last || 0, err: l[a].err || "", sent: l[a].sent || 0 } : null]));
+const linkView = l => Object.fromEntries(Object.keys(LINK_APPS).map(a => [a, l[a] && l[a].key ? { url: l[a].url, at: l[a].at || 0, last: l[a].last || 0, err: l[a].err || "", sent: l[a].sent || 0 } : null]));
+async function mominToday(l) {
+  if (!l.momin || !l.momin.key) return null;
+  try { const r = await fetch(l.momin.url + "/api/ext/summary", { headers: { "X-Link-Key": l.momin.key }, signal: AbortSignal.timeout(6000) }); return r.ok ? await r.json() : { err: r.status === 401 ? "kalit eskirgan" : "javob yo'q" }; }
+  catch (e) { return { err: "Mo'min serveri javob bermadi" }; }
+}
+async function linkSummary(x) {
+  try { const r = await fetch(x.url + "/api/ext/summary", { headers: { "X-Link-Key": x.key }, signal: AbortSignal.timeout(9000) }); return r.ok ? await r.json() : { err: r.status === 401 ? "kalit eskirgan — qayta ulang" : `javob ${r.status}` }; }
+  catch (e) { return { err: "server javob bermadi" }; }
+}
 app.get("/api/links", auth, wrap(async (req, res) => {
+  if (!req.user.api_key) {   // every account has its own ME'MORI key from the start
+    await pool.query("UPDATE users SET api_key = $1 WHERE id = $2 AND api_key IS NULL", ["eq_" + crypto.randomBytes(18).toString("hex"), req.user.id]);
+    req.user.api_key = (await pool.query("SELECT api_key FROM users WHERE id = $1", [req.user.id])).rows[0].api_key;
+  }
   const l = await linksOf(req.user.id);
   const { rows: [q] } = await pool.query("SELECT count(*)::int AS n FROM fwd_out WHERE user_id = $1", [req.user.id]);
   const { rows: [m] } = await pool.query("SELECT count(*) FILTER (WHERE k = 'b')::int AS b, count(*) FILTER (WHERE k = 'i')::int AS i FROM records WHERE user_id = $1 AND data->>'ext' = 'momin' AND NOT (data ? 'del')", [req.user.id]);
-  res.json({ links: linkView(l), waiting: q.n, momin: { sources: m.b, cards: m.i, last: (l.momin && l.momin.last) || 0 }, key: req.user.api_key || "" });
+  const [today, vaqtLive, hisobLive] = await Promise.all([mominToday(l), l.vaqt && l.vaqt.key ? linkSummary(l.vaqt) : null, l.hisob && l.hisob.key ? linkSummary(l.hisob) : null]);
+  res.json({ links: linkView(l), live: { vaqt: vaqtLive, hisob: hisobLive }, waiting: q.n, momin: { sources: m.b, cards: m.i, last: (l.momin && l.momin.last) || 0, today }, key: req.user.api_key || "", base: PUBLIC_URL || "" });
 }));
 app.post("/api/links", auth, wrap(async (req, res) => {
   try { await setLink(req.user.id, String(req.body.app || ""), req.body.code || null); }
@@ -747,7 +800,7 @@ app.post("/api/links", auth, wrap(async (req, res) => {
 // Mo'min passes on the codes it holds, so pairing once in Mo'min is enough.
 app.post("/api/ext/links", keyUser, wrap(async (req, res) => {
   const out = {};
-  for (const a of ["vaqt", "hisob"]) {
+  for (const a of ["vaqt", "hisob", "momin"]) {
     if (!(a in (req.body || {}))) continue;
     const cur = (await linksOf(req.user.id))[a], c = req.body[a] ? parseCode(req.body[a]) : null;
     if (req.body[a] && cur && c && cur.key === c.key && cur.url === c.url) { out[a] = "ok"; continue; }
@@ -894,7 +947,7 @@ app.post("/api/ext/mirror", keyUser, wrap(async (req, res) => {
     else out.push({ ...o, del: 1, gone: 1, u: now });
   }
   await saveMany(uid, out);
-  await pool.query("UPDATE users SET links = jsonb_set(links, ARRAY[$2], jsonb_build_object('last', $3::bigint)) WHERE id = $1", [uid, appId, Date.now()]);
+  await pool.query("UPDATE users SET links = links || jsonb_build_object($2::text, COALESCE(links->$2, '{}'::jsonb) || jsonb_build_object('last', $3::bigint)) WHERE id = $1", [uid, appId, Date.now()]);
   await queueSessions(uid, out.filter(r => r.k === "s"));
   res.json({ ok: true, changed: out.length, ...stat, perDay: NEW_PER_DAY });
 }));
@@ -992,11 +1045,12 @@ async function onTelegram(msg) {
   if (hr) { const h = Math.min(23, +hr[1]); await pool.query("UPDATE tg_links SET hour = $1 WHERE user_id = $2", [h, uid]); return say(chat, `Takror eslatmasi har kuni soat ${String(h).padStart(2, "0")}:00 da keladi.`); }
   if (text.startsWith("/")) return say(chat, HELP);
   if (msg.photo && msg.photo.length) {
-    if (!AI_ON) return say(chat, "Rasmdan karta tuzish serverda sozlanmagan (GEMINI_API_KEY).");
+    const prov = await aiUserProv(uid);
+    if (!prov) return say(chat, "Rasmdan karta tuzish uchun ilovada Sozlamalar → «AI kaliti»ga kalit kiriting.");
     await tg("sendChatAction", { chat_id: chat, action: "typing" }).catch(() => {});
     try {
       const buf = await tgFile(msg.photo[msg.photo.length - 1].file_id);
-      const cards = await aiCards({ image: { mime: "image/jpeg", data: buf.toString("base64") }, title: text });
+      const cards = await aiCards({ image: { mime: "image/jpeg", data: buf.toString("base64") }, title: text }, prov);
       if (!cards.length) return say(chat, "Rasmdan savol tuzib bo'lmadi. Aniqroq suratga olib ko'ring.");
       const sources = await recordsOf(uid, ["b"]), p = parseEntry(text, sources);
       const b = p.src || await sourceFor(uid, text || "Telegram yozuvlari");
@@ -1007,10 +1061,11 @@ async function onTelegram(msg) {
   }
   let body = text;
   if (!body && (msg.voice || msg.audio)) {
-    if (!GEMINI_KEY) return say(chat, "Ovozli xabarni matnga aylantirish uchun serverda GEMINI_API_KEY kerak. Hozircha matn bilan yozing.");
+    const vp = await aiUserProv(uid);
+    if (!vp || vp.kind !== "gemini") return say(chat, "Ovozli xabarni matnga aylantirish uchun Gemini kaliti kerak (ilovada Sozlamalar → «AI kaliti», AIza… bilan boshlanadigan). Hozircha matn bilan yozing.");
     try {
       const v = msg.voice || msg.audio, buf = await tgFile(v.file_id);
-      body = (await aiAsk("Transcribe this audio verbatim in its own language (usually Uzbek, Latin script). Reply with only the text.", { mime: v.mime_type || "audio/ogg", data: buf.toString("base64") }, false)).trim();
+      body = (await aiAsk("Transcribe this audio verbatim in its own language (usually Uzbek, Latin script). Reply with only the text.", { mime: v.mime_type || "audio/ogg", data: buf.toString("base64") }, false, vp)).trim();
       if (!body) return say(chat, "Ovozni tushunib bo'lmadi. Qayta yozib ko'ring.");
     } catch (e) { console.error("tg voice:", e.message); return say(chat, "Ovozni matnga aylantirib bo'lmadi."); }
   }

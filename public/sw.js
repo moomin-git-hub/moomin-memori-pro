@@ -1,5 +1,5 @@
 // ME'MORI service worker: offline app shell and review reminders. The API is never cached.
-const CACHE = "memori-v14";
+const CACHE = "memori-v15";
 const SHELL = ["/", "/manifest.json", "/push.js", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", e => {

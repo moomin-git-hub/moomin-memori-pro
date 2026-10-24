@@ -165,7 +165,7 @@ svg{width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:1.
 .field>label,.field>legend{font:700 .8125rem/1.3 var(--ui);color:var(--mute)}
 .field>.big-label{font:800 1.125rem/1.3 var(--display);color:var(--text);text-wrap:balance}
 .opt{font-weight:500;opacity:.75}
-input[type="text"],input[type="number"],input[type="search"],input[type="email"],input[type="password"],textarea,select{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:16px;color:var(--text);font:500 1rem/1.5 var(--ui);padding:.75rem .9375rem;transition:border-color .2s}
+input[type="text"],input[type="number"],input[type="search"],input[type="email"],input[type="password"],input[type="url"],textarea,select{width:100%;background:var(--bg2);border:1.5px solid var(--line);border-radius:16px;color:var(--text);font:500 1rem/1.5 var(--ui);padding:.75rem .9375rem;transition:border-color .2s}
 input:focus,textarea:focus,select:focus{border-color:var(--pri);outline:none}
 textarea{display:block;resize:vertical;min-height:4.5rem}
 input::placeholder,textarea::placeholder{color:var(--mute);opacity:.75}
@@ -200,10 +200,15 @@ input[type="file"]{max-width:100%;font-size:.875rem;color:var(--mute)}
 .lk{display:grid;gap:10px}
 .lk-row{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--card, transparent)}
 .lk-row .tile{flex:none}
-.lk-t{flex:1;min-width:0}.lk-t b{display:block}.lk-t small{display:block;color:var(--mute);line-height:1.45}
+.lk-t{flex:1;min-width:0}.lk-t>b{display:block}.lk-t small{display:block;color:var(--mute);line-height:1.45}
 .lk-st{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;margin-top:6px}
 .lk-st i{width:8px;height:8px;border-radius:50%;background:var(--mute)}.lk-st.on i{background:#2f9e5f}.lk-st.bad i{background:#d0533f}
 .lk-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.lk-own{padding:1rem;border-radius:20px;border:1px solid var(--line);background:linear-gradient(140deg,color-mix(in srgb,var(--pri) 16%,var(--card)),var(--card))}
+.lk-own .eyebrow{margin:0}
+.lk-key{font:600 .8125rem/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;padding:.75rem .875rem;border-radius:14px;background:var(--bg2);border:1px solid var(--line);user-select:all;margin-top:.5rem}
+.lk-form{display:grid;gap:.5rem;margin-top:.625rem}
+.lk-t small.lk-bad{color:var(--bad)}
 .bar{display:block;height:6px;background:var(--line);border-radius:999px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:999px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
 .bar-cap{margin-top:.375rem;font-variant-numeric:tabular-nums}
@@ -792,6 +797,12 @@ code{font:600 .75rem/1.5 ui-monospace,monospace;overflow-wrap:anywhere;backgroun
 .tipline span{flex:none;padding:.125rem .5rem;border-radius:8px;background:color-mix(in srgb,var(--pri) 18%,transparent);color:var(--pri-hi);font:800 .625rem var(--ui);letter-spacing:.06em;text-transform:uppercase}
 .rv-top .icon-btn svg{width:1.125rem;height:1.125rem}
 .rt{display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.375rem;align-items:center}
+.rt-src{position:absolute!important;width:1px!important;height:1px!important;opacity:0;pointer-events:none;overflow:hidden}
+.rt-ed{min-height:5.5rem;max-height:60vh;overflow:auto;padding:.875rem 1rem;border-radius:16px;border:1.5px solid var(--line);background:var(--bg2);color:var(--text);font:400 1rem/1.55 var(--ui);white-space:pre-wrap;overflow-wrap:anywhere;outline:none;cursor:text}
+.rt-ed:focus{border-color:var(--pri)}
+.rt-ed:empty::before{content:attr(data-ph);color:var(--mute);pointer-events:none}
+.rt-ed a{color:var(--pri-hi);text-decoration:underline}
+.rt-ed .rt-h{font:800 1.25rem/1.35 var(--display)}
 .rt button{min-width:2.125rem;height:2.125rem;padding:0 .5rem;border-radius:10px;border:1px solid var(--line);background:var(--chip);color:var(--text);font:600 .875rem var(--ui);display:grid;place-items:center}
 .rt button:active{transform:scale(.94)}
 .rt-cs{display:inline-flex;gap:.25rem;margin-left:.25rem}
@@ -1378,7 +1389,7 @@ async function startServer() {
   }
 }
 function signedIn(me) {
-  cloud.me = { id: me.id, name: me.name || me.email.split("@")[0], email: me.email, avatarUrl: me.picture || "" };
+  cloud.me = { id: me.id, name: me.name || me.email.split("@")[0], email: me.email, avatarUrl: me.picture || "", ai: !!me.ai };
   try {
     const prev = localStorage.getItem(UIDK);
     if (prev && prev !== me.id) { recs = {}; pageOf = {}; localStorage.removeItem(SINCE); saveLocal(true); }   // another person signed in on this browser
@@ -2514,28 +2525,48 @@ async function paintLinks() {
   if (kb) {
     let L = null; try { L = await api("/api/links"); } catch (e) { L = null; }
     if (!L) { kb.innerHTML = `<p class="small muted">Server bilan aloqa yo'q. Bog'lanish hisobga kirilganda ishlaydi.</p>`; return; }
-    const v = L.links.vaqt, m = L.momin, k = L.key, base = location.origin;
+    const m = L.momin, k = L.key, base = L.base || location.origin;
     const when = t => t ? `${fmtDate(dayOf(t))}, ${new Date(t).toTimeString().slice(0, 5)}` : "";
     const st = (on, bad, txt) => `<span class="lk-st${on ? " on" : ""}${bad ? " bad" : ""}"><i></i>${txt}</span>`;
-    kb.innerHTML = `<p class="small muted">To'rt ilova bitta zanjir: Mo'min o'rganish bo'limlarini (so'zlar, kartochkalar, oyatlar, iqtiboslar, o'qilayotgan kitob) shu yerga yuboradi, bu yerdagi o'qish va takrorlash vaqti esa Vaqt Bankiga o'zi yoziladi.</p>
-      <div class="lk">
-        <div class="lk-row"><span class="tile c-teal">${ic("clock")}</span><div class="lk-t"><b>Vaqt Banki</b>
-          <small>O'qish yozuvlari va takrorlashga ketgan vaqt «Kitob o'qishga», «Dars qilishga» yoki «Sura yodlashga» toifasiga tushadi. Yozuvni tuzatsangiz yoki o'chirsangiz, u yerda ham o'zgaradi.</small>
-          ${v ? st(!v.err, !!v.err, v.err ? esc(v.err) : v.last ? `Ulangan · oxirgi yuborish ${when(v.last)}` : "Ulangan") : st(false, false, "Ulanmagan")}
-          ${L.waiting ? `<small>${L.waiting} ta yozuv yuborilishini kutmoqda.</small>` : ""}
-          <div class="lk-acts"><button type="button" class="btn btn-gold btn-sm" data-act="lk-go" data-app="vaqt" data-url="${esc(v ? v.url : "https://vaqt-banki.onrender.com")}">${ic("arrow")}${v ? "Qayta ulash" : "Ulash"}</button>${v ? `<button type="button" class="btn btn-sm" data-act="lk-off" data-app="vaqt">Uzish</button>` : ""}</div></div></div>
-        <div class="lk-row"><span class="tile c-green">${ic("book")}</span><div class="lk-t"><b>Mo'min</b>
-          <small>Mo'min'dagi o'rganish bo'limlari shu yerda «Mo'min» belgili manba bo'lib chiqadi. Takror natijalari shu yerda saqlanadi; yangi kartalar kuniga 15 tadan qo'shiladi.</small>
-          ${m.sources ? st(true, false, `${m.sources} ta manba, ${m.cards} ta karta${m.last ? ` · ${when(m.last)}` : ""}`) : st(false, false, "Hali hech narsa kelmagan")}
-          <small>Ulash Mo'min tomonidan: Sozlamalar → «Bog'langan ilovalar» → ME'MORI → «Ulash». Mo'min Vaqt Banki ulanishini ham shu yerga o'tkazadi.</small></div></div>
-      </div>
-      <details class="how"><summary>Qo'lda ulash va kalit</summary><div class="rules">
-        <div class="field"><label for="lk-code">Vaqt Banki ulanish kodi</label><input id="lk-code" type="url" placeholder="https://vaqt-banki.onrender.com/link#vb_…" autocomplete="off"></div>
-        <div class="acts"><button type="button" class="btn btn-sm" data-act="lk-save" data-app="vaqt">Kodni saqlash</button></div>
-        ${k ? `<div class="field"><label for="ext-key">ME'MORI ulanish kodi</label><input id="ext-key" type="text" readonly value="${esc(base + "/link#" + k)}"></div>
-          <p class="small muted">API: <code>GET ${esc(base)}/api/ext/summary?key=…</code>, <code>POST ${esc(base)}/api/ext/log?key=…</code>, <code>POST ${esc(base)}/api/ext/mirror?key=…</code></p>
-          <div class="acts"><button type="button" class="btn btn-sm" data-act="key-copy">Nusxalash</button><button type="button" class="btn btn-sm" data-act="key-new">Yangi kalit</button><button type="button" class="btn btn-sm" data-act="key-del">O'chirish</button></div>`
-        : `<div><button type="button" class="btn btn-sm" data-act="key-new">Kalit yaratish</button></div>`}</div></details>`;
+    const num = n => Math.round(+n || 0).toLocaleString("ru-RU").replace(/,/g, " ");
+    const live = (id, d) => {
+      if (!d) return "";
+      if (d.err) return `<small class="lk-bad">${esc(d.err)}</small>`;
+      if (id === "vaqt") return `<small>Bugun Vaqt Bankida: <b>${d.yozildi || 0}/1440</b> tanga yozilgan · o'rganish ${d.organish || 0} daq · foydali ${d.foydali || 0} daq</small>`;
+      if (id === "hisob") return d.encrypted ? `<small>Hisob shifrlangan — jami ko'rinmaydi.</small>` : `<small>Bugun chiqim <b>${num(d.today && d.today.chiqim)} so'm</b> · shu oy ta'limga ${num(d.month && d.month.talim)} so'm</small>`;
+      if (id === "momin") return `<small>Bugun Mo'min'da: <b>${d.score || 0}%</b> bajarildi · tartib ${(d.tartib || [0, 0]).join("/")} · namoz ${(d.namoz || [0, 5]).join("/")} · ${d.streak || 0} kunlik streak</small>`;
+      return "";
+    };
+    const APPS = [
+      { id: "vaqt", name: "Vaqt Banki", icon: "clock", col: "teal", pre: "vb_", def: "https://vaqt-banki.onrender.com", where: "Vaqt Banki → Profil → Bog'langan ilovalar",
+        what: "O'qish va takrorlashga ketgan vaqt «Kitob o'qishga», «Dars qilishga», «Sura yodlashga» toifalariga o'zi yoziladi.",
+        extra: L.links.vaqt ? `${L.waiting ? `<small>${L.waiting} ta yozuv yuborilishini kutmoqda.</small>` : ""}${L.links.vaqt.last ? `<small>Oxirgi yuborish: ${when(L.links.vaqt.last)}</small>` : ""}` : "" },
+      { id: "momin", name: "Mo'min", icon: "book", col: "green", pre: "mo_", def: "https://momin.onrender.com", where: "Mo'min → Sozlamalar → Bog'langan ilovalar",
+        what: "Mo'min'dagi o'rganish bo'limlari shu yerda «Mo'min» belgili manba bo'lib chiqadi; bugungi natijasi shu yerda ko'rinadi.",
+        extra: m.sources ? `<small>${m.sources} ta manba, ${m.cards} ta karta keldi${m.last ? ` · ${when(m.last)}` : ""}</small>` : "" },
+      { id: "hisob", name: "Hisob", icon: "target", col: "orange", pre: "hb_", def: "https://moomin-finance-pro.onrender.com", where: "Hisob manzili + /api/link/page sahifasidan",
+        what: "Bugungi chiqim va shu oy ta'limga (kitob, kurs) ketgan pul shu yerda ko'rinadi.", extra: "" },
+    ];
+    const row = a => {
+      const l = L.links[a.id], d = a.id === "momin" ? m.today : L.live && L.live[a.id];
+      return `<div class="lk-row"><span class="tile c-${a.col}">${ic(a.icon)}</span><div class="lk-t"><b>${a.name}</b>
+        ${l ? st(!(l.err || d && d.err), !!(l.err || d && d.err), l.err ? esc(l.err) : "Ulangan · " + esc(l.url.replace(/^https?:\/\//, ""))) : st(false, false, "Ulanmagan")}
+        ${live(a.id, d)}${a.extra}
+        <small>${a.what}</small>
+        <div class="lk-form">
+          <div class="field"><label for="lk-${a.id}">${a.name} kaliti (${a.pre}…)</label><input id="lk-${a.id}" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${a.where}"></div>
+          <div class="field"><label for="lk-${a.id}-url">Manzili</label><input id="lk-${a.id}-url" type="url" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(l ? l.url : a.def)}"></div>
+        </div>
+        <div class="lk-acts"><button type="button" class="btn btn-gold btn-sm" data-act="lk-save" data-app="${a.id}">${ic("check")}Kalit bilan ulash</button>${a.id === "vaqt" ? `<button type="button" class="btn btn-sm" data-act="lk-go" data-app="vaqt">Avtomatik</button>` : ""}${l ? `<button type="button" class="btn btn-sm" data-act="lk-off" data-app="${a.id}">Uzish</button>` : ""}</div></div></div>`;
+    };
+    kb.innerHTML = `<div class="lk-own"><p class="eyebrow">ME'MORI kaliti</p>
+        <p class="small muted">Shu loyihaning o'z kaliti. Mo'min (yoki boshqa ilova) ME'MORI'ga ulanishi uchun uni nusxalab, o'sha ilovaning «Bog'langan ilovalar» oynasiga qo'ying.</p>
+        <div class="lk-key" id="ext-key-box">${esc(k)}</div>
+        <div class="lk-acts"><button type="button" class="btn btn-gold btn-sm" data-act="key-copy">${ic("check")}Kalitni nusxalash</button><button type="button" class="btn btn-sm" data-act="code-copy">Kod (manzil bilan)</button><button type="button" class="btn btn-sm" data-act="key-new">Yangi kalit</button></div>
+        <input type="hidden" id="ext-key" value="${esc(k)}"><input type="hidden" id="ext-code" value="${esc(base + "/link#" + k)}"></div>
+      <p class="small muted" style="margin:1rem 0 .5rem">Boshqa ilovani ulash: o'sha ilovadan kalitni oling va shu yerga qo'ying. Manzil Render bergan manzil bo'lishi kerak.</p>
+      <div class="lk">${APPS.map(row).join("")}</div>
+      <details class="how"><summary>Dasturchilar uchun</summary><div class="rules"><p class="small muted">API: <code>GET ${esc(base)}/api/ext/summary?key=…</code>, <code>POST ${esc(base)}/api/ext/log?key=…</code>, <code>POST ${esc(base)}/api/ext/mirror?key=…</code></p></div></details>`;
   }
 }
 // Coming back from another app's /link page: #link=<code>&from=<app>
@@ -2544,7 +2575,7 @@ async function linkReturn() {
   if (!m) return;
   try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { location.hash = ""; }
   const code = decodeURIComponent(m[1]), from = m[2];
-  if (from !== "vaqt") return toast("Bu kod ME'MORI uchun emas.");
+  if (!["vaqt", "hisob", "momin"].includes(from)) return toast("Bu kod ME'MORI uchun emas.");
   try { await api("/api/links", { app: from, code }); toast("Vaqt Banki ulandi. O'qish va takror vaqti endi o'zi yoziladi."); sheetLinks("key"); }
   catch (e) { toast(e.msg || "Ulab bo'lmadi."); }
 }
@@ -2574,6 +2605,7 @@ function viewSettings() {
     sswitch("haptic", "phone", "pink", "Tebranish", "javob berganda yengil titrash", hapticOn()),
   ])}
   ${signed ? sgroup("Ulanishlar", [
+    srow("set-ai", "spark", "purple", "AI kaliti", "Gemini, Claude yoki OpenAI: yordamchi, lug'at, kartalar", { id: "sv-ai", text: "…" }),
     srow("set-tg", "send", "blue", "Telegram bot", "Telegram'dan yozish, eslatma, zaxira", { id: "sv-tg", text: "…" }),
     srow("set-key", "link", "purple", "Bog'langan ilovalar", "Mo'min, Vaqt Banki, Hisob bilan bitta zanjir", { id: "sv-key", text: "…" }),
   ]) : ""}
@@ -2596,6 +2628,7 @@ function viewSettings() {
 async function paintSetVals() {
   if (cloud.mode !== "srv" || !cloud.me || !cloud.me.id) return;
   const put_ = (id, text, cls) => { const el = $("#" + id); if (el) { el.textContent = text; el.className = "srow-v" + (cls ? " " + cls : ""); } };
+  if ($("#sv-ai")) api("/api/ai").then(a => put_("sv-ai", a.on ? a.provider + (a.own ? "" : " · server") : "kiritilmagan", a.on ? "on" : "warn"), () => put_("sv-ai", "—"));
   if ($("#sv-tg")) api("/api/tg").then(t => put_("sv-tg", !t.configured ? "sozlanmagan" : t.linked ? "Ulangan" : "Ulanmagan", t.linked ? "on" : ""), () => put_("sv-tg", "—"));
   if ($("#sv-store")) api("/api/storage").then(st => put_("sv-store", st.used ? `${bytesText(st.used.bytes)} / ${bytesText(st.limitBytes)}` : "—", st.used && st.used.bytes > st.limitBytes * .85 ? "warn" : ""), () => put_("sv-store", "—"));
   if ($("#sv-key")) api("/api/links").then(k => { const n = ["vaqt", "momin"].filter(a => a === "momin" ? k.momin.sources : k.links[a]).length; put_("sv-key", n ? `${n} ta ulangan` : "ulanmagan", n ? "on" : ""); }, () => put_("sv-key", "—"));
@@ -3013,7 +3046,29 @@ async function aiText(turns, onText, signal) {
   if (cloud.mode === "srv") return (await api("/api/ai/chat", { messages: turns })).text || "";
   return (await cloud.sample(turns, { cache: false, signal, onText: onText ? ({ text }) => onText(text) : undefined })).text;
 }
-const aiOn = () => (cloud.mode === "srv" && cloud.conf && cloud.conf.ai) || !!cloud.sample;
+const aiOn = () => (cloud.mode === "srv" && ((cloud.conf && cloud.conf.ai) || (cloud.me && cloud.me.ai))) || !!cloud.sample;
+// Settings → «AI kaliti»: the person's own key. It is checked with one tiny request before it is kept on the server.
+async function sheetAi() {
+  openSheet(`<form class="sheet-body" data-form="aikey" novalidate>
+    <div><p class="eyebrow">Sun'iy intellekt</p><h2 class="sheet-h" tabindex="-1" autofocus>AI kaliti</h2></div>
+    <div id="ai-st"><p class="small muted">Yuklanmoqda…</p></div>
+    <div class="field"><label for="ai-key">API kaliti</label><input id="ai-key" name="key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="AIza…  yoki  sk-ant-…  yoki  sk-…"></div>
+    <details class="how"><summary>Model (ixtiyoriy)</summary><div class="rules"><div class="field"><label for="ai-model">Model nomi</label><input id="ai-model" name="model" type="text" autocomplete="off" spellcheck="false" placeholder="gemini-2.5-flash · claude-sonnet-5-5 · gpt-4o-mini"></div><p class="small muted">Bo'sh qolsa, eng mosi tanlanadi.</p></div></details>
+    <details class="how" open><summary>Bepul kalitni qanday olaman?</summary><div class="rules">
+      <p>1. <b>aistudio.google.com/apikey</b> sahifasini oching va Google hisobingiz bilan kiring.</p>
+      <p>2. «Create API key» → kalitni nusxalang (u <code>AIza</code> bilan boshlanadi).</p>
+      <p>3. Shu yerga qo'yib «Tekshirib saqlash»ni bosing. Gemini bepul rejasi kundalik foydalanishga yetadi; Telegram'dagi ovozli xabar ham faqat Gemini bilan ishlaydi.</p>
+      <p>Claude (<code>sk-ant-…</code>, console.anthropic.com) yoki OpenAI (<code>sk-…</code>, platform.openai.com) kaliti ham bo'ladi.</p></div></details>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Yopish</button><span class="grow"></span><button type="submit" class="btn btn-gold" id="ai-save">Tekshirib saqlash</button></div>
+  </form>`);
+  try {
+    const a = await api("/api/ai");
+    $("#ai-st").innerHTML = a.own ? `<p><span class="lk-st on"><i></i>${esc(a.provider)} ulangan</span></p><p class="small muted">Kalit: <code>${esc(a.hint)}</code> · model: ${esc(a.model)}. AI yordamchi, lug'at, kartochka tuzish va Telegram bot shu kalit bilan ishlaydi.</p><div class="acts"><button type="button" class="btn btn-sm" data-act="ai-del">Kalitni o'chirish</button></div>`
+      : a.on ? `<p><span class="lk-st on"><i></i>Server kaliti ishlayapti (${esc(a.provider)})</span></p><p class="small muted">O'z kalitingizni kiritsangiz, faqat siz uchun o'shasi ishlatiladi.</p>`
+      : `<p><span class="lk-st bad"><i></i>Kalit kiritilmagan</span></p><p class="small muted">AI yordamchi, lug'at va kartochka tuzish ishlashi uchun API kalitini kiriting.</p>`;
+  } catch (e) { $("#ai-st").innerHTML = `<p class="small muted">${esc(e.msg || "Server bilan aloqa yo'q.")}</p>`; }
+}
 function addAiCards(list) {
   const t = $("#bl-text"), st = $("#bl-ai");
   if (!t) return;
@@ -3044,35 +3099,170 @@ function sheetBulk(b) {
 
 /* ── sheets ── */
 function lock() { document.documentElement.classList.toggle("locked", $("#sheet").open || $("#review").open || $("#onb").open || $("#auth").open || $("#study").open); }
-const grow = t => { t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
-const RT_BTNS = [["b", "<b>B</b>", "Qalin", "**", "**"], ["u", "<u>U</u>", "Tagiga chizish", "__", "__"], ["m", '<mark class="rt-m">M</mark>', "Belgilash", "==", "=="], ["f", '<span class="rt-f">Aa</span>', "Boshqa shrift", "`", "`"], ["h", "H", "Katta sarlavha", "# ", ""], ["q", "❝", "Iqtibos", "> ", ""], ["l", "🔗", "Havola", "[", "](https://)"]];
+const grow = t => { if (t._ed) { if (t.value !== t._edVal) edLoad(t); return; } t.style.height = "auto"; t.style.height = t.scrollHeight + 2 + "px"; };
+/* ── text formatting: what you see is what you get ──
+   Every note textarea gets a toolbar and an editable box that shows bold, underline, marker, the other font,
+   colours, big headings, quotes and links as they look. The textarea stays (hidden) in the form and always holds
+   the same text in the app's small markup (**qalin**, __chiziq__, ==marker==, `shrift`, {r|rang}, # sarlavha,
+   > iqtibos, [havola](https://…)), so saving, search, sync and export work as before. */
+const RT_BTNS = [["b", "<b>B</b>", "Qalin"], ["u", "<u>U</u>", "Tagiga chizish"], ["m", '<mark class="rt-m">M</mark>', "Marker"], ["f", '<span class="rt-f">Aa</span>', "Boshqa shrift"], ["h", "H", "Katta sarlavha"], ["q", "❝", "Iqtibos"], ["l", "🔗", "Havola"], ["x", "⌫", "Bezakni olib tashlash"]];
+const RT_NAMES = { r: "Qizil", g: "Yashil", b: "Ko'k", y: "Sariq", p: "Binafsha" };
 function rtBar(id) {
-  return `<div class="rt" role="toolbar" aria-label="Matnni bezash">${RT_BTNS.map(([k, h, t]) => `<button type="button" data-act="rt" data-k="${k}" data-t="${id}" title="${t}" aria-label="${t}">${h}</button>`).join("")}<span class="rt-cs">${Object.keys(RT_COLORS).map(c => `<button type="button" class="rt-c" data-act="rt" data-k="c" data-c="${c}" data-t="${id}" aria-label="Rang"><i class="rt-c-${c}">A</i></button>`).join("")}</span></div>`;
+  return `<div class="rt" role="toolbar" aria-label="Matnni bezash">${RT_BTNS.map(([k, h, t]) => `<button type="button" data-act="rt" data-k="${k}" data-t="${id}" title="${t}" aria-label="${t}">${h}</button>`).join("")}<span class="rt-cs">${Object.keys(RT_COLORS).map(c => `<button type="button" class="rt-c" data-act="rt" data-k="c" data-c="${c}" data-t="${id}" title="${RT_NAMES[c]} matn" aria-label="${RT_NAMES[c]} matn"><i class="rt-c-${c}">A</i></button>`).join("")}</span></div>`;
+}
+const edLine = line => {
+  let cls = "";
+  if (/^# /.test(line)) { cls = "rt-h"; line = line.slice(2); } else if (/^> /.test(line)) { cls = "rt-q"; line = line.slice(2); }
+  const inner = fmt(esc(line)) || "<br>";
+  return `<div${cls ? ` class="${cls}"` : ""}>${inner}</div>`;
+};
+function edLoad(t) { t._ed.innerHTML = t.value ? t.value.split("\n").map(edLine).join("") : ""; t._edVal = t.value; }
+const RT_RGB = { r: [229, 72, 77], g: [47, 158, 110], b: [62, 99, 221], y: [213, 155, 0], p: [142, 78, 198] };
+function nearColor(css) {
+  const m = /(\d+)\D+(\d+)\D+(\d+)/.exec(css || ""); if (!m) return "";
+  let best = "", bd = 1e9;
+  for (const [k, c] of Object.entries(RT_RGB)) { const d = (c[0] - m[1]) ** 2 + (c[1] - m[2]) ** 2 + (c[2] - m[3]) ** 2; if (d < bd) { bd = d; best = k; } }
+  return best;
+}
+// The editable box back to markup.
+function edText(root) {
+  const inline = n => {
+    if (n.nodeType === 3) return n.nodeValue.replace(/ /g, " ").replace(/​/g, "");
+    if (n.nodeType !== 1) return "";
+    if (n.tagName === "BR") return "\n";
+    let x = [...n.childNodes].map(inline).join("");
+    if (!x.replace(/\n/g, "").trim()) return x;
+    const tag = n.tagName, cl = n.classList, st = n.style || {};
+    const wrap = (a, b) => { const lead = /^\s*/.exec(x)[0], tail = /\s*$/.exec(x)[0]; return lead + a + x.trim() + b + tail; };
+    if (tag === "A" && /^https?:\/\//.test(n.getAttribute("href") || "")) x = `[${x.trim()}](${n.getAttribute("href")})`;
+    const c = [...cl].map(k => /^rt-c-([rgbyp])$/.exec(k)).find(Boolean);
+    const col = c ? c[1] : tag === "FONT" && n.getAttribute("color") ? nearColor(hexRgb(n.getAttribute("color"))) : st.color ? nearColor(st.color) : "";
+    if (cl.contains("rt-f")) x = wrap("`", "`");
+    if (tag === "MARK" || cl.contains("rt-m")) x = wrap("==", "==");
+    if (tag === "U" || /underline/.test(st.textDecoration || "")) x = wrap("__", "__");
+    if (tag === "B" || tag === "STRONG" || +st.fontWeight >= 600 || st.fontWeight === "bold") x = wrap("**", "**");
+    if (col) x = wrap(`{${col}|`, "}");
+    return x;
+  };
+  const lines = [];
+  let cur = null;
+  const flush = () => { if (cur !== null) { lines.push(cur); cur = null; } };
+  for (const n of root.childNodes) {
+    const block = n.nodeType === 1 && /^(DIV|P|H[1-6]|BLOCKQUOTE|LI)$/.test(n.tagName);
+    if (block) {
+      flush();
+      const pre = n.classList.contains("rt-h") || /^H[1-6]$/.test(n.tagName) ? "# " : n.classList.contains("rt-q") || n.tagName === "BLOCKQUOTE" ? "> " : "";
+      const body = inline(n).replace(/\n$/, "");
+      body.split("\n").forEach((l, k) => lines.push((k ? "" : pre) + l));
+    } else {
+      const t = inline(n);
+      const parts = t.split("\n");
+      parts.forEach((p, k) => { if (k) { flush(); cur = ""; } cur = (cur || "") + p; });
+    }
+  }
+  flush();
+  return lines.join("\n").replace(/\n+$/, "");
+}
+const hexRgb = h => { const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(h || ""); return m ? `${parseInt(m[1], 16)},${parseInt(m[2], 16)},${parseInt(m[3], 16)}` : ""; };
+function edSync(t) {
+  const v = edText(t._ed);
+  t._edVal = v;
+  if (t.value !== v) { t.value = v; t.dispatchEvent(new Event("input", { bubbles: true })); }
 }
 function addRt(root) {
   let n = 0;
   for (const t of root.querySelectorAll("textarea[data-grow]:not(.no-rt)")) {
-    if (["chat-in", "bl-text", "cp-text", "rs-text"].includes(t.id) || t.previousElementSibling && t.previousElementSibling.classList.contains("rt")) continue;
+    if (["chat-in", "bl-text", "cp-text", "rs-text"].includes(t.id) || t._ed) continue;
     if (!t.id) t.id = "rt-" + (++n) + "-" + Date.now().toString(36);
     t.insertAdjacentHTML("beforebegin", rtBar(t.id));
+    t.previousElementSibling.addEventListener("mousedown", e => e.preventDefault());   // the buttons must not take the selection away
+    const ed = document.createElement("div");
+    ed.className = "rt-ed"; ed.contentEditable = "true"; ed.setAttribute("role", "textbox"); ed.setAttribute("aria-multiline", "true");
+    ed.dataset.ph = t.placeholder || ""; ed.dataset.for = t.id; ed.spellcheck = true;
+    const lab = t.id && root.querySelector(`label[for="${t.id}"]`);
+    if (lab) { lab.addEventListener("click", e => { e.preventDefault(); ed.focus(); }); ed.setAttribute("aria-label", lab.textContent.trim()); }
+    t.after(ed); t.classList.add("rt-src"); t.tabIndex = -1; t._ed = ed;
+    edLoad(t);
+    t.addEventListener("input", () => { if (t.value !== t._edVal) edLoad(t); });   // text put in by code (voice, hints)
+    ed.addEventListener("input", () => edSync(t));
+    const keep = () => { const sel = getSelection(); if (sel.rangeCount && ed.contains(sel.getRangeAt(0).commonAncestorContainer)) ed._r = sel.getRangeAt(0).cloneRange(); };
+    ed.addEventListener("keyup", keep); ed.addEventListener("mouseup", keep); ed.addEventListener("blur", keep);
+    document.addEventListener("selectionchange", () => { if (document.activeElement === ed) keep(); });
+    // typing always happens inside a line <div>: an empty box gets one on focus, and loses it again on blur
+    ed.addEventListener("focus", () => { if (!ed.firstChild) { ed.innerHTML = "<div><br></div>"; const r = document.createRange(); r.setStart(ed.firstChild, 0); r.collapse(true); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); } });
+    ed.addEventListener("blur", () => { if (!ed.textContent.trim() && !ed.querySelector("img")) ed.innerHTML = ""; });
+    ed.addEventListener("paste", e => { e.preventDefault(); const tx = (e.clipboardData || window.clipboardData).getData("text/plain"); document.execCommand("insertText", false, tx); });
+    ed.addEventListener("keydown", e => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { const f = t.form; if (f) { e.preventDefault(); edSync(t); f.requestSubmit(); } }
+      if (e.key === "Enter") setTimeout(() => { const b = edBlock(ed); if (b && !b.textContent.trim()) { b.classList.remove("rt-h", "rt-q"); edSync(t); } }, 0);
+    });
+    if (t.hasAttribute("autofocus") || document.activeElement === t) setTimeout(() => ed.focus(), 30);
   }
 }
-function rtApply(el) {
-  const t = $("#" + el.dataset.t); if (!t) return;
-  const k = el.dataset.k, b = RT_BTNS.find(x => x[0] === k), s0 = t.selectionStart, s1 = t.selectionEnd, sel = t.value.slice(s0, s1);
-  let pre, post;
-  if (k === "c") { pre = `{${el.dataset.c}|`; post = "}"; }
-  else { pre = b[3]; post = b[4]; }
-  if (k === "h" || k === "q") {
-    const ls = t.value.lastIndexOf("\n", s0 - 1) + 1;
-    if (t.value.startsWith(pre, ls)) t.setRangeText("", ls, ls + pre.length, "end"); else t.setRangeText(pre, ls, ls, "end");
-  } else {
-    const word = sel || (k === "l" ? "havola" : "matn");
-    t.setRangeText(pre + word + post, s0, s1, "end");
-    if (k === "l") { const p = s0 + pre.length + word.length + 2; t.setSelectionRange(p, p + 8); }
-    else t.setSelectionRange(s0 + pre.length, s0 + pre.length + word.length);   // the word stays selected, so a second style wraps it too
+function edBlock(ed) {
+  const sel = getSelection(); if (!sel.rangeCount) return null;
+  let n = sel.getRangeAt(0).startContainer;
+  while (n && n.parentNode !== ed) n = n.parentNode;
+  if (n && n.nodeType === 3) { const d = document.createElement("div"); n.replaceWith(d); d.append(n); n = d; }
+  return n && n !== ed ? n : null;
+}
+function edSelect(ed) {
+  const sel = getSelection();
+  if ((!sel.rangeCount || !ed.contains(sel.getRangeAt(0).commonAncestorContainer)) && ed._r && ed.contains(ed._r.commonAncestorContainer)) { sel.removeAllRanges(); sel.addRange(ed._r); }
+  if (!sel.rangeCount || !ed.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+    ed.focus(); const r = document.createRange(); r.selectNodeContents(ed); r.collapse(false); sel.removeAllRanges(); sel.addRange(r);
   }
-  t.focus(); grow(t); t.dispatchEvent(new Event("input", { bubbles: true }));
+  return sel;
+}
+// Wrap the selection (or a new placeholder word) in a span; the same style again takes it off.
+function edWrap(ed, cls, group) {
+  const sel = edSelect(ed);
+  let r = sel.getRangeAt(0);
+  const host = n => { for (; n && n !== ed; n = n.parentNode) if (n.nodeType === 1 && [...n.classList].some(c => group.test(c))) return n; return null; };
+  const h = host(r.commonAncestorContainer);
+  if (h) {   // inside the same kind of span: switch it off, or change the colour
+    const same = h.classList.contains(cls);
+    if (same) { h.replaceWith(...h.childNodes); } else { [...h.classList].filter(c => group.test(c)).forEach(c => h.classList.remove(c)); h.classList.add(cls); }
+    return;
+  }
+  if (r.collapsed) { const tx = document.createTextNode("matn"); r.insertNode(tx); r = document.createRange(); r.selectNodeContents(tx); }
+  const span = document.createElement("span"); span.className = cls;
+  span.append(r.extractContents());
+  for (const old of span.querySelectorAll("span")) if ([...old.classList].some(c => group.test(c))) old.replaceWith(...old.childNodes);
+  r.insertNode(span);
+  const nr = document.createRange(); nr.selectNodeContents(span); sel.removeAllRanges(); sel.addRange(nr);
+}
+function rtApply(el) {
+  const t = $("#" + el.dataset.t); if (!t || !t._ed) return;
+  const ed = t._ed, k = el.dataset.k;
+  const saved = ed._r && ed.contains(ed._r.commonAncestorContainer) ? ed._r.cloneRange() : null;
+  if (document.activeElement !== ed) { ed.focus(); if (saved) { const sel = getSelection(); sel.removeAllRanges(); sel.addRange(saved); } }
+  edSelect(ed);
+  document.execCommand("styleWithCSS", false, false);
+  if (k === "b" || k === "u") {
+    const sel = getSelection();
+    if (sel.getRangeAt(0).collapsed) { const r = sel.getRangeAt(0), tx = document.createTextNode("matn"); r.insertNode(tx); const nr = document.createRange(); nr.selectNodeContents(tx); sel.removeAllRanges(); sel.addRange(nr); }
+    document.execCommand(k === "b" ? "bold" : "underline");
+  } else if (k === "m") edWrap(ed, "rt-m", /^rt-m$/);
+  else if (k === "f") edWrap(ed, "rt-f", /^rt-f$/);
+  else if (k === "c") edWrap(ed, "rt-c-" + el.dataset.c, /^rt-c-[rgbyp]$/);
+  else if (k === "h" || k === "q") {
+    const b = edBlock(ed) || (() => { const d = document.createElement("div"); d.innerHTML = "<br>"; ed.append(d); return d; })();
+    const cls = k === "h" ? "rt-h" : "rt-q", on = b.classList.contains(cls);
+    b.classList.remove("rt-h", "rt-q"); if (!on) b.classList.add(cls);
+  } else if (k === "l") {
+    const sel = getSelection(), r = sel.getRangeAt(0), txt = r.toString().trim();
+    const url = (prompt("Havola manzili", "https://") || "").trim();
+    if (!/^https?:\/\/\S+\.\S+/.test(url)) { if (url) toast("Manzil https:// bilan boshlansin."); return; }
+    const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+    a.textContent = txt || url.replace(/^https?:\/\//, "");
+    r.deleteContents(); r.insertNode(a);
+  } else if (k === "x") {
+    const sel = getSelection(), r = sel.getRangeAt(0);
+    if (r.collapsed) { const b = edBlock(ed); if (b) { b.className = ""; b.textContent = b.textContent; } }
+    else { const tx = document.createTextNode(r.toString()); r.deleteContents(); r.insertNode(tx); }
+  }
+  edSync(t);
 }
 function openSheet(html) {
   const d = $("#sheet");
@@ -3487,6 +3677,7 @@ function sheetAssistant(tab) {
   const n = glossItems().length;
   openSheet(`<div class="sheet-body">
     <div><p class="eyebrow">${aiOn() ? "Sun'iy intellekt" : "AI hozir ulanmagan"}</p><h2 class="sheet-h" tabindex="-1" autofocus>AI yordamchi</h2></div>
+    ${aiOn() ? "" : `<div class="lk-own"><p class="small" style="margin:0 0 .5rem"><b>AI hali ulanmagan.</b> Ma'no so'rash va suhbat uchun API kalitini kiriting (Gemini kaliti bepul).</p><button type="button" class="btn btn-gold btn-sm" data-act="set-ai">${ic("spark")}AI kalitini kiritish</button></div>`}
     <div class="seg" role="tablist"><button type="button" role="tab" data-act="asst-tab" data-t="gl" aria-selected="${asst.tab === "gl"}">Lug'at${n ? ` · ${n}` : ""}</button><button type="button" role="tab" data-act="asst-tab" data-t="chat" aria-selected="${asst.tab === "chat"}">Suhbat</button></div>
     <div id="asst-body"></div></div>`);
   paintAssistant();
@@ -3718,10 +3909,22 @@ const act = {
   "gl-open"() { closeSheet(); if (!ui.book) ui.from = ui.tab; ui.book = GLOSS_ID; render(); window.scrollTo(0, 0); },
   "gl-item"(el) { const i = recs[el.dataset.id]; if (!i) return; asst.ans = { w: i.q, m: str(i.a).split("\nMisol: ")[0], x: (str(i.a).split("\nMisol: ")[1] || ""), t: "", ctx: "" }; asst.word = i.q; asst.b = i.src || ""; paintAssistant(); const f = $(".gl-ans"); if (f) f.scrollIntoView({ block: "nearest" }); },
   async "tg-report"(el) { el.disabled = true; toast("Hisobot tayyorlanmoqda…"); try { await api("/api/tg/report", {}); toast("Word va PDF hisobot Telegram'ga yuborildi."); } catch (e) { toast(e.msg || "Yuborilmadi."); } finally { el.disabled = false; } },
-  "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kod nusxalandi."); },
-  "lk-go"(el) { location.href = `${el.dataset.url.replace(/\/+$/, "")}/link?to=${encodeURIComponent(location.origin + "/")}&app=memori`; },
+  "key-copy"() { const i = $("#ext-key"); if (i) copyText(i.value, "Kalit nusxalandi."); },
+  "lk-go"(el) { const u = str(($("#lk-" + el.dataset.app + "-url") || {}).value).trim().replace(/\/+$/, "") || "https://vaqt-banki.onrender.com"; location.href = `${u}/link?to=${encodeURIComponent(location.origin + "/")}&app=memori`; },
+  "code-copy"() { const i = $("#ext-code"); if (i) copyText(i.value, "Kod nusxalandi."); },
   async "lk-off"(el) { if (!confirm("Uzilsinmi? Yangi yozuvlar boshqa yuborilmaydi; yuborilganlari joyida qoladi.")) return; try { await api("/api/links", { app: el.dataset.app, code: null }); toast("Uzildi."); paintLinks(); } catch (e) { toast(e.msg); } },
-  async "lk-save"(el) { const v = ($("#lk-code") || {}).value || ""; if (!v.trim()) return toast("Kodni qo'ying."); try { await api("/api/links", { app: el.dataset.app, code: v.trim() }); toast("Ulandi."); paintLinks(); } catch (e) { toast(e.msg); } },
+  async "lk-save"(el) {
+    const id = el.dataset.app, want = { vaqt: "vb_", momin: "mo_", hisob: "hb_" }[id];
+    let v = str(($("#lk-" + id) || {}).value).trim().replace(/\s+/g, ""), url = str(($("#lk-" + id + "-url") || {}).value).trim().replace(/\/+$/, "");
+    if (!v) return toast("Kalitni qo'ying.");
+    if (/^[a-z]{2,6}_[0-9a-f]{20,64}$/.test(v)) {
+      if (!v.startsWith(want)) return toast(`Bu kalit ${id === "vaqt" ? "Vaqt Banki" : id === "momin" ? "Mo'min" : "Hisob"}niki emas: «${want}» bilan boshlanishi kerak.`);
+      if (!/^https?:\/\/[^\s/]+\.[^\s/]+|^http:\/\/localhost/.test(url)) return toast("Manzilni to'g'ri yozing: https://….onrender.com");
+      v = url + "/link#" + v;
+    }
+    el.disabled = true; toast("Tekshirilmoqda… (server uxlab qolgan bo'lsa, bir daqiqagacha)");
+    try { await api("/api/links", { app: id, code: v }); toast("Ulandi ✓"); paintLinks(); } catch (e) { toast(e.msg || "Ulanmadi."); } finally { el.disabled = false; }
+  },
   rank() { sheetRank(); },
   "pick-next"() { ui.pick = (ui.pick || 0) + 1; render(); },
   tag(el) { ui.tag = el.dataset.t; ui.tab = "shelf"; ui.book = null; ui.filter = "all"; render(); window.scrollTo(0, 0); },
@@ -3733,6 +3936,8 @@ const act = {
   "set-cue"() { sheetCue(); },
   "set-push"() { sheetPush(); },
   "set-tg"() { sheetLinks("tg"); },
+  "set-ai"() { sheetAi(); },
+  async "ai-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { const r = await api("/api/ai/key", { key: "" }); cloud.conf.ai = !!r.on; toast("Kalit o'chirildi."); sheetAi(); } catch (e) { toast(e.msg); } },
   "set-key"() { sheetLinks("key"); },
   "set-rules"() { sheetRules(); },
   "set-store"() { sheetStore(); },
@@ -4006,6 +4211,14 @@ const forms = {
     if (!target) return fail(form, "Maqsad sonini yozing.");
     const g = { ...(id && recs[id] ? recs[id] : { id: uid(), k: "g", c: Date.now() }), metric: str(fd.get("metric")) || "notes", period: fd.get("period") === "year" ? "year" : "month", target, title: str(fd.get("title")).trim() };
     put(g); closeSheet(); toast("Maqsad saqlandi.");
+  },
+  async aikey(form) {
+    const fd = new FormData(form), key = str(fd.get("key")).trim(), model = str(fd.get("model")).trim();
+    if (!key) return fail(form, "Kalitni qo'ying.");
+    const b = $("#ai-save"); b.disabled = true; b.textContent = "Tekshirilmoqda…";
+    try { const r = await api("/api/ai/key", { key, model }); cloud.conf.ai = true; if (cloud.me) cloud.me.ai = true; toast(`${r.provider} ulandi ✓ AI yordamchi tayyor.`); sheetAi(); render(); }
+    catch (e) { fail(form, e.msg || "Kalit ishlamadi."); }
+    finally { b.disabled = false; b.textContent = "Tekshirib saqlash"; }
   },
   async gloss(form) {
     const fd = new FormData(form), w = str(fd.get("w")).trim().replace(/\s+/g, " "), ctx = str(fd.get("c")).trim();
