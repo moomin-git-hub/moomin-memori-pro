@@ -212,3 +212,30 @@ Shrift: `assets/fonts/DejaVuSans*.ttf` (o'zbek lotin harflari PDF'da to'g'ri chi
   serverda shu hisob uchun saqlanadi; AI yordamchi, lug'at, kartochka tuzish, Telegram rasm va ovoz shu kalit bilan ishlaydi.
   Serverdagi `GEMINI_API_KEY`/`ANTHROPIC_API_KEY`/`OPENAI_API_KEY` endi majburiy emas (kalit kiritmagan hisoblar uchun zaxira).
 - **Bog'langan ilovalar:** tepada ME'MORI'ning o'z kaliti (`eq_…`). Vaqt Banki, Mo'min, Hisob — kalit va manzilni yozib «Kalit bilan ulash».
+
+## 14. Papka → ichki papka → to'plam (Noji kabi)
+
+- **Manbalar** bo'limi endi kutubxona: papkalar, ichki papkalar va to'plamlar. Yuqorida yo'l (Manbalar / Papka / …), har papkada «Ichiga papka» va «Shu papkaga to'plam».
+- Har papka va to'plam **alohida takrorlanadi**: «N ta kartani o'rganish». Bosh sahifada «Papkalarim» kartalari (o'rganilgan X / Y va bugungi takror).
+- **Algoritm har darajada:** Sozlamalar (hammasi uchun) → papka → to'plam. Aqlli takror (FSRS, Noji'dagi «Spaced repetition»), oraliqli (zinapoya) yoki erkin.
+  Bo'sh qoldirilgan maydon yuqoridagisini oladi.
+- **Kunlik chegara:** yangi kartalar kuniga (standart 20) va takror chegarasi — har to'plamda alohida.
+- **«Unutdim» = 1 daqiqa:** karta shu sessiyada yana chiqadi va bugun takrorda qoladi (Noji'dagi «Again 1m»).
+- **To'plam sozlamalari:** papka, algoritm, chegaralar, ovoz tili (TTS) va savolni avtomatik o'qish, karta matni o'lchami, markazga tekislash;
+  kartalarni import (Tab, «;», «—», CSV — Noji/Quizlet/Anki eksporti), eksport (CSV), teskari kartalar, AI bilan kartalar, tarixni nolga qaytarish.
+- **Faollik:** streak, eng uzun seriya, faol kunlar va oy taqvimi (bosh sahifadagi «N kun» tugmasi).
+
+## 15. Noji funksiyalari: 1–11
+
+1. **Yulduzcha** — takrorda, karta oynasida; to'plamda «Yulduzli» tugmasi faqat yulduzlilarni mashq qildiradi (jadval o'zgarmaydi).
+2. **To'xtatish** — takrordagi «To'xtatish» (yoki `X`) kartani takrordan chiqaradi; ro'yxatdan qaytariladi.
+3. **Ertaga qoldirish** — «Ertaga qoldirish» (yoki `B`): karta bugun yana chiqmaydi.
+4. **Qiyin kartalar** — 8 marta unutilgan karta «qiyin» deb belgilanadi, «Qiyin» tugmasi bilan alohida mashq. Sozlamalarda o'zi to'xtatish yoqiladi.
+5. **Karta filtrlari** — to'plamda: Hammasi / Bugun / Yangi / ★ / Qiyin / To'xtatilgan (qidiruv bilan birga).
+6. **Oldindan o'rganish** — 1, 3, 7 yoki 14 kunlik hali vaqti kelmagan kartalar.
+7. **Xotira darajasi** — Sozlamalar → Kengaytirilgan: FSRS uchun 70–97% (standart 90%).
+8. **Kartalar tartibi** — aralash, yangilari birinchi, eskilari birinchi yoki tasodifiy.
+9. **Sessiya hajmi** — bir takrorda nechta karta (bo'sh = cheksiz).
+10. **Swipe bilan baho** — javob ustida o'ngga «Esladim», chapga «Unutdim».
+11. **To'plam statistikasi** — yangi / o'rganilyapti / o'zlashtirilgan, 30 kunlik eslab qolish %, keyingi 14 kun prognozi.
+Yangi klavishlar: `S` yulduz, `B` ertaga, `X` to'xtatish.

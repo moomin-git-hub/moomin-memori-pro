@@ -195,6 +195,40 @@ input[type="file"]{max-width:100%;font-size:.875rem;color:var(--mute)}
 .tag{display:inline-flex;align-items:center;gap:.25rem;font:800 .6875rem/1 var(--ui);color:var(--c,var(--pri-hi));background:color-mix(in srgb,var(--c,var(--pri)) 16%,transparent);border-radius:999px;padding:.3125rem .5625rem;white-space:nowrap}
 .tag-demo{--c:#f6b73c}
 .tag-momin{--c:#3f9a74}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.375rem;font-size:.875rem;color:var(--mute);margin:-.25rem 0 .25rem}
+.crumbs .link{display:inline-flex;align-items:center;gap:.25rem;color:var(--mute)}.crumbs .link svg{width:1rem;height:1rem}
+.crumbs b{color:var(--text);font-weight:700}
+.fold .tile{background:color-mix(in srgb,#f6b73c 18%,var(--card));color:#f6b73c}
+.fold-head{display:grid;gap:.625rem;margin-bottom:.75rem}
+.fold-t{display:flex;align-items:center;gap:.5rem}.fold-t svg{width:1.5rem;height:1.5rem;color:#f6b73c}
+.fold-acts{margin-top:.75rem}
+.dueb[data-act]{border:0;cursor:pointer;font:inherit}
+.fcards{display:grid;gap:.75rem}
+.fcard{display:grid;gap:.625rem;padding:1.125rem;border-radius:22px;background:var(--card);border:1px solid var(--line)}
+.fcard-t{display:flex;align-items:center;gap:.5rem;background:none;border:0;padding:0;color:var(--text);font:800 1.1875rem/1.25 var(--display);text-align:left;cursor:pointer}
+.fcard-t svg{width:1.25rem;height:1.25rem;color:#f6b73c;flex:none}
+.fcard p{margin:0}.fcard-ok{display:flex;align-items:center;gap:.375rem}.fcard-ok svg{width:1rem;height:1rem;color:var(--ok)}
+.dk-algo{display:flex;align-items:center;gap:.5rem;background:none;border:0;padding:0;color:var(--mute);font:500 .875rem var(--ui);cursor:pointer;text-align:left}
+.dk-algo svg{width:1rem;height:1rem;flex:none}.dk-algo b{color:var(--pri-hi);font-weight:700}
+.dk-today{display:grid;justify-items:center;margin:.25rem 0}.dk-today b{font:800 3rem/1 var(--display)}.dk-today span{color:var(--mute);font-weight:600}
+.algo-l .aopt{cursor:pointer}.algo-l .aopt input{margin:0 .5rem 0 0}
+button.pill{border:0;cursor:pointer;font:inherit;color:inherit}
+.rv-body.rv-c .rv-q,.rv-body.rv-c .rv-ans .note{text-align:center}
+.rv-body.fs-l .rv-q{font-size:1.75rem}.rv-body.fs-l .note{font-size:1.1875rem}
+.rv-body.fs-xl .rv-q{font-size:2.25rem}.rv-body.fs-xl .note{font-size:1.375rem}
+.rv-body.fs-s .rv-q{font-size:1.125rem}.rv-body.fs-s .note{font-size:.9375rem}
+.act-figs{display:grid;grid-template-columns:1fr 1fr;gap:.625rem}
+.act-figs p{display:grid;justify-items:center;gap:.125rem;margin:0;padding:1rem .5rem;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}
+.act-figs svg{width:1.25rem;height:1.25rem;color:#f6b73c}.act-figs b{font:800 2rem/1 var(--display)}.act-figs span{color:var(--mute);font-size:.8125rem}
+.act-days{display:flex;align-items:center;justify-content:center;gap:.375rem;padding:.75rem;border-radius:16px;background:var(--bg2);border:1px solid var(--line);margin:0}
+.act-days svg{width:1.125rem;height:1.125rem;color:var(--pri-hi)}
+.act-cal{padding:.875rem;border-radius:18px;border:1px solid var(--line)}
+.act-mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}.act-mh .flip{display:inline-flex;transform:scaleX(-1)}
+.act-g{display:grid;grid-template-columns:repeat(7,1fr);gap:.25rem;text-align:center}
+.act-g i{font-style:normal;font-size:.75rem;color:var(--mute);font-weight:700;padding:.25rem 0}
+.act-g span{aspect-ratio:1;display:grid;place-items:center;border-radius:999px;font-weight:600;font-size:.875rem}
+.act-g span.on{background:color-mix(in srgb,#f6b73c 26%,transparent);color:var(--text)}
+.act-g span.now{outline:2px solid #f6b73c}
 .tg-docs{display:grid;gap:.75rem;margin:.75rem 0;padding:.75rem;border:1px solid var(--line);border-radius:18px}
 .tg-docs .srow{padding:0;border:0;background:none}
 .lk{display:grid;gap:10px}
@@ -898,6 +932,18 @@ div.srow{cursor:default}
   @keyframes rise{from{transform:translateY(2rem);opacity:.6}}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.rv-tools,.dk-tools{display:flex;flex-wrap:wrap;gap:.5rem}
+.rv-tools .chip,.dk-tools .chip{display:inline-flex;align-items:center;gap:.375rem;font-size:.8125rem}
+.rv-tools svg,.dk-tools svg{width:1rem;height:1rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rv-tools .chip[aria-pressed=true]{color:var(--warn,#f5b301)}.rv-tools .chip[aria-pressed=true] svg{fill:currentColor}
+.rv-sw{text-align:center;margin:0}.rv-ans .note{touch-action:pan-y}
+.tag-star{color:var(--warn,#f5b301)}.tag-leech{color:var(--bad,#ef5350)}
+.cfbar{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.25rem}
+.stbars{display:grid;gap:.5rem}.stb{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 2.25rem;gap:.5rem;align-items:center;font-size:.8125rem}
+.stb b{text-align:right}.stb .bar i.s-new{background:var(--mute)}.stb .bar i.s-mid{background:#f5b301}.stb .bar i.s-far{background:#2ecc71}
+.stfc{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px;align-items:end;height:7.5rem}
+.stc{display:grid;grid-template-rows:auto 1fr auto;justify-items:center;height:100%;font-size:.625rem;color:var(--mute)}
+.stc i{align-self:end;width:100%;min-height:2px;border-radius:4px;background:var(--grad,#7c5cff)}
 </style>
 
 <div class="shell">
@@ -960,7 +1006,7 @@ function inDays(n) {
 // Grades map to Again, Hard, Good, Easy; the next review is set where R falls to 90%, which is t = S.
 const FW = [0.4872, 1.4003, 3.7145, 13.8206, 5.1618, 1.2298, 0.8975, 0.031, 1.6474, 0.1367, 1.0461, 2.1072, 0.0793, 0.3246, 1.587, 0.2272, 2.8755];
 const clampD = d => Math.min(10, Math.max(1, d));
-function fsrsNext(it, g, day) {
+function fsrsNext(it, g, day, rt) {
   const G = g + 1, h = it.h || [];
   let S = it.S, D = it.D;
   if (!S && !it.n) { S = FW[G - 1]; D = clampD(FW[4] - (G - 3) * FW[5]); }
@@ -972,7 +1018,8 @@ function fsrsNext(it, g, day) {
     S = G === 1 ? FW[11] * Math.pow(D, -FW[12]) * (Math.pow(S + 1, FW[13]) - 1) * Math.exp(FW[14] * (1 - R))
       : S * (Math.exp(FW[8]) * (11 - D) * Math.pow(S, -FW[9]) * (Math.exp(FW[10] * (1 - R)) - 1) * (G === 2 ? FW[15] : G === 4 ? FW[16] : 1) + 1);
   }
-  const days = G === 1 ? 1 : Math.min(1095, Math.max(1, Math.round(S)));
+  const r = Math.min(97, Math.max(70, +rt || 90)) / 100;   // wanted chance of remembering when the card comes back; 90% means t = S
+  const days = G === 1 ? 1 : Math.min(1095, Math.max(1, Math.round(9 * S * (1 / r - 1))));
   let s = 0; while (s < LADDER.length - 1 && LADDER[s + 1] <= days) s++;
   return { ...it, S: +S.toFixed(3), D: +D.toFixed(3), lr: day, s, d: addDays(day, days), n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...h, [day, g]].slice(-60) };
 }
@@ -1038,11 +1085,12 @@ function ago(ms) {
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 function norm(r) {
   if (!r || typeof r !== "object" || typeof r.id !== "string" || !r.id) return null;
-  if (!["b", "i", "c", "g", "s", "n"].includes(r.k)) return null;
+  if (!["b", "i", "c", "g", "s", "n", "f"].includes(r.k)) return null;
+  if (r.k === "f") return r.del ? r : { ...r, name: str(r.name).slice(0, 80) || "Papka", parent: str(r.parent) };
   if (r.k === "n") return { ...r, b: str(r.b), kind: IDEA[r.kind] ? r.kind : "fikr", page: int(r.page), line: int(r.line), quote: str(r.quote), text: str(r.text), answer: str(r.answer), done: r.done ? 1 : 0 };
   if (r.del) return r;
   if (r.k === "g") return { ...r, metric: ["notes", "reviews", "days", "done", "long"].includes(r.metric) ? r.metric : "notes", period: r.period === "year" ? "year" : "month", target: int(r.target) || 1, title: str(r.title) };
-  if (r.k === "c") return { ...r, algo: ["fsrs", "free"].includes(r.algo) ? r.algo : "ladder", cue: str(r.cue) };
+  if (r.k === "c") return { ...r, algo: ["fsrs", "free"].includes(r.algo) ? r.algo : "ladder", cue: str(r.cue), np: r.np == null ? 20 : Math.max(0, int(r.np)), mr: r.mr == null ? 9999 : Math.max(1, int(r.mr) || 9999) };
   if (r.k === "s") return { ...r, b: str(r.b), day: DATE.test(r.day) ? r.day : today(), qty: Math.max(0, int(r.qty)), unit: UNITS[r.unit] ? r.unit : "", min: Math.max(0, int(r.min)), from: int(r.from), to: int(r.to) };
   if (r.k === "b") return { ...r, title: str(r.title), author: str(r.author), kind: KINDS[r.kind] ? r.kind : "boshqa", pages: int(r.pages), cur: int(r.cur), status: r.status === "done" ? "done" : "reading", tags: Array.isArray(r.tags) ? r.tags.map(t => str(t).trim()).filter(Boolean).slice(0, 8) : [] };
   return { ...r, b: str(r.b), t: TYPES[r.t] ? r.t : "card", q: str(r.q), a: str(r.a), r: str(r.r), att: Array.isArray(r.att) ? r.att.filter(a => a && typeof a.id === "string" && a.id).map(a => ({ id: a.id, name: str(a.name) || "fayl", type: str(a.type), size: +a.size || 0, src: a.src === "a" ? "a" : "s" })) : [], x: str(r.x), m: str(r.m), pre: str(r.pre), s: Math.min(Math.max(int(r.s), 0), LADDER.length - 1), d: DATE.test(r.d) ? r.d : today(), h: Array.isArray(r.h) ? r.h.filter(x => Array.isArray(x) && DATE.test(x[0])) : [] };
@@ -1070,19 +1118,19 @@ const all = () => Object.values(recs);
 const books = () => all().filter(r => r.k === "b" && !r.del).sort((a, b) => (b.c || 0) - (a.c || 0));
 const items = () => all().filter(r => r.k === "i" && !r.del && recs[r.b] && !recs[r.b].del);
 const itemsOf = id => items().filter(i => i.b === id).sort((a, b) => (a.c || 0) - (b.c || 0));
-const dueItems = day => items().filter(i => (free() || i.d <= day) && !i.off).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : (a.c || 0) - (b.c || 0));
-const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 30 };
+const CFG0 = { algo: "ladder", cue: "", eb: 130, im: 100, mx: 1000, dg: 30, np: 20, mr: 9999, rt: 90, ss: 0, ord: "", la: 0 };
 const cfg = () => ({ ...CFG0, ...(recs.cfg && !recs.cfg.del ? recs.cfg : {}) });
 const free = () => cfg().algo === "free";
 // The scheduler in use, plus what the learner said about confidence before seeing the answer.
 function schedule(it, g, day, conf) {
-  const c = cfg();
+  const c = { ...cfg(), ...srOf(it.b) };
   let x;
   if (c.algo === "free") x = { ...it, n: (it.n || 0) + 1, l: (it.l || 0) + (g === 0 ? 1 : 0), h: [...(it.h || []), [day, g]].slice(-60) };
   else {
-    x = c.algo === "fsrs" ? fsrsNext(it, g, day) : graded(it, g, day);
+    x = c.algo === "fsrs" ? fsrsNext(it, g, day, c.rt) : graded(it, g, day);
     // interval modifier, easy bonus (ladder only: FSRS has its own) and the longest gap allowed
-    if (g > 0) { let n = diffDays(x.d, day) * c.im / 100 * (g === 3 && c.algo !== "fsrs" ? c.eb / 100 : 1); x.d = addDays(day, Math.max(1, Math.min(c.mx, Math.round(n)))); }
+    if (g > 0) { let n = diffDays(x.d, day) * c.im / 100 * (g === 3 && c.algo !== "fsrs" ? c.eb / 100 : 1); x.d = addDays(day, Math.max(1, Math.min(c.mx, Math.round(n)))); delete x.dt; }
+    else { x.d = day; x.dt = Date.now() + 60e3; }   // «Unutdim»: a learning step of one minute, the card comes back today
   }
   if (conf >= 0) x.h = [...x.h.slice(0, -1), [day, g, conf]];
   if (conf === 2 && g === 0) x.hc = (it.hc || 0) + 1;
@@ -1093,6 +1141,7 @@ const tomb = r => r.k === "b" ? { id: r.id, k: "b", del: 1, title: "", author: "
 function put(list, quiet) {
   XC = null;
   const now = Date.now();
+  PUTN++;
   for (const r of [].concat(list)) { const x = { ...r, u: now }; recs[x.id] = x; if (syncing()) cloud.dirty.add(x.id); }
   saveLocal();
   if (syncing()) scheduleFlush();
@@ -1592,6 +1641,8 @@ function demoNote() {
 
 /* ── icons ── */
 const IC = {
+  folder: '<path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h3.6l2 2h7.4a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   book: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
   cap: '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
   play: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>',
@@ -1822,7 +1873,7 @@ function paintTop() {
 }
 
 function render() {
-  XC = null;
+  XC = null; DQ.k = "";   // records may have come from storage or sync: count today's queue afresh
   const day = lastDay = today(), due = dueItems(day);
   if (ui.tab === "journal") { ui.tab = "stats"; ui.sub = "journal"; }
   for (const t of document.querySelectorAll(".nav button")) { if (t.dataset.tab === ui.tab) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current"); }
@@ -1940,7 +1991,7 @@ function memories(day) {
   </section>`;
 }
 function deckRow(b, day) {
-  const its = itemsOf(b.id).filter(i => !i.off), due = its.filter(i => i.d <= day).length;
+  const its = itemsOf(b.id).filter(i => !i.off), due = dueIn([b.id], day).length;
   const k = its.length ? Math.round(its.filter(i => i.s >= 2).length / its.length * 100) : 0;
   return `<button type="button" class="deck" data-act="book" data-id="${esc(b.id)}">
     ${tile(b)}
@@ -1973,7 +2024,7 @@ function viewToday(day, due) {
       ${goalRing(got, goal)}
     </div>
     ${r.next ? `<div class="rank-bar"><span class="bar"><i data-w="${r.pct}"></i></span><small>«${r.nextName}» unvonigacha ${nf(r.next - bal)} XOTIR${pend ? ` · ${pend} ta yozuv kutilmoqda (+${nf(pend * XV)})` : ""}</small></div>` : ""}
-    <div class="pills">${bits.map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<span class="pill">${ic("flame")}${streak} kun</span></div>
+    <div class="pills">${bits.map(([i, v]) => `<span class="pill">${ic(i)}${v}</span>`).join("")}<button type="button" class="pill" data-act="activity">${ic("flame")}${streak} kun</button></div>
   </section>
   <div class="cta">
     ${due.length ? `<button type="button" class="btn btn-big" data-act="review" data-m="all">${ic("learn")}Takrorlash · ${due.length}</button>`
@@ -1981,6 +2032,7 @@ function viewToday(day, due) {
     <button type="button" class="btn btn-big ghost" data-act="quick">${ic("plus")}O'rgandim</button>
   </div>
   ${due.length ? layers(due) : ""}
+  ${folderCards(day)}
   <p class="tipline"><span>${cfg().cue ? "Odat" : "Maslahat"}</span>${esc(cfg().cue ? `Takror vaqti: ${cfg().cue}` : TIPS[(+day.slice(8) + +day.slice(5, 7)) % TIPS.length])}</p>
   ${due.length && risk > 0 ? `<p class="risk">${ic("down")}Bugun takrorlamasangiz, ertaga balans <b>−${nf(risk)} XOTIR</b> kamayadi.</p>` : ""}
   ${demoNote()}
@@ -2089,7 +2141,7 @@ function sheetRank() {
   </div>`);
 }
 function srcCard(b, day, go) {
-  const its = itemsOf(b.id), due = its.filter(i => i.d <= day && !i.off).length, p = prog(b);
+  const its = itemsOf(b.id), due = dueIn([b.id], day).length, p = prog(b);
   const last = its.length ? its[its.length - 1].c : 0;
   const meta = [KINDS[b.kind].name, b.author, b.status === "done" ? "tugatilgan" : progText(b), last ? `oxirgi yozuv ${ago(last)}` : "hali yozuv yo'q"].filter(Boolean).join(" · ");
   return `<div class="src">
@@ -2175,22 +2227,43 @@ function viewShelf(day) {
     ${tags.length && f !== "quotes" ? `<div class="chips scroller tagbar" aria-label="Mavzu">${tags.map(t => `<button type="button" class="chip tagchip" data-act="tag" data-t="${esc(t)}" aria-pressed="${!!ui.tag && ui.tag.toLowerCase() === t}">#${esc(t)}</button>`).join("")}</div>` : ""}
   </section>
   ${f === "ideas" ? `<section class="sec"><p class="small muted">O'qiyotganda kelgan fikr, savol va g'oyalar, bet tartibida.</p>${books().filter(b => ideas(b.id).length).map(b => `<h2 class="h2 idea-src">${esc(b.title)}</h2><div class="ideas">${ideas(b.id).sort((x, y) => (x.page || 1e9) - (y.page || 1e9) || (x.c || 0) - (y.c || 0)).map(x => ideaCard(x)).join("")}</div>`).join("")}</section>` : f === "quotes" ? (quotes.length ? `<section class="sec"><p class="small muted">Barcha manbalardagi iqtiboslar bir joyda.</p><div class="rows">${quotes.map(i => itemRow(i, day, true)).join("")}</div></section>` : `<p class="muted">Hali iqtibos yo'q. «O'rgandim» oynasidagi «Iqtibos yoki bayt» bo'limida qo'shasiz.</p>`)
-    : list.length ? `<div class="rows">${list.map(b => srcCard(b, day, false)).join("")}</div>` : `<p class="muted">${empty}</p>`}`;
+    : shelfList(list, day, empty)}`;
+}
+// The library: the current folder's subfolders, then its decks. With a tag chosen, the plain list of decks.
+function shelfList(list, day, empty) {
+  if (ui.tag) return list.length ? `<div class="rows">${list.map(b => srcCard(b, day, false)).join("")}</div>` : `<p class="muted">${empty}</p>`;
+  const cur = ui.folder && recs[ui.folder] && !recs[ui.folder].del ? ui.folder : (ui.folder = "");
+  const f = cur && recs[cur], subs = subFolders(cur), ds = list.filter(b => deckFolder(b) === cur);
+  const n = cur ? deckCounts(decksUnder(cur).map(b => b.id), day) : null;
+  return `${cur ? `<section class="fold-head">${crumbs(f.parent && recs[f.parent] && !recs[f.parent].del ? f.parent : "", "")}
+      <div class="sec-head"><h2 class="h1 fold-t">${ic("folder")}${esc(f.name)}</h2><button type="button" class="icon-btn" data-act="folder-edit" data-id="${esc(cur)}" aria-label="Papka sozlamalari">${ic("gear")}</button></div>
+      <p class="small muted">${ALGO_NAME[srOf(cur).algo]} · yangi ${srOf(cur).np} ta/kun · ${n.all} ta karta, ${n.learned} tasi o'rganilgan</p>
+      ${n.due ? `<button type="button" class="btn btn-big" data-act="review" data-m="folder" data-id="${esc(cur)}">${ic("learn")}${n.due} ta kartani o'rganish</button>` : ""}</section>` : ""}
+    <div class="rows">${subs.map(x => folderRow(x, day)).join("")}${ds.map(b => srcCard(b, day, false)).join("")}</div>
+    ${!subs.length && !ds.length ? `<p class="muted">${cur ? "Bu papka bo'sh. Yangi papka yoki to'plam qo'shing." : empty}</p>` : ""}
+    <div class="acts fold-acts"><button type="button" class="btn btn-sm" data-act="folder-new" data-id="${esc(cur)}">${ic("folder")}${cur ? "Ichiga papka" : "Yangi papka"}</button><button type="button" class="btn btn-sm" data-act="book-new">${ic("plus")}${cur ? "Shu papkaga to'plam" : "Yangi to'plam"}</button></div>`;
 }
 
 function viewBook(b, day) {
   const its = itemsOf(b.id), p = prog(b), done = b.status === "done", id = esc(b.id);
   const linked = items().filter(i => i.x === b.id && i.b !== b.id);
-  const live = its.filter(i => !i.off && !i.rev), due = its.filter(i => !i.off && (free() || i.d <= day));
+  const live = its.filter(i => !i.off && !i.rev), due = dueIn([b.id], day), sr = srOf(b.id);
   const fresh = live.filter(i => !i.n).length, far = live.filter(i => i.s >= LONG).length, mid = live.length - fresh - far;
   const meta = [KINDS[b.kind].name, b.author, done ? "tugatilgan" : ""].filter(Boolean).join(" · ");
-  return `<section class="dk">
+  return `${crumbs(deckFolder(b), b.title)}<section class="dk">
     <div class="dk-head">${tile(b)}<div class="dk-name"><p class="small muted">${esc(meta)}</p><h1 class="dk-title">${esc(b.title)}${b.demo ? ` <span class="tag tag-demo">namuna</span>` : ""}</h1></div></div>
     ${(b.tags || []).length ? `<div class="chips">${b.tags.map(t => `<button type="button" class="chip tagchip" data-act="tag" data-t="${esc(t)}">#${esc(t)}</button>`).join("")}</div>` : ""}
     ${p != null ? `<div class="dk-prog"><span class="bar"><i data-w="${p}"></i></span><small>${esc(progText(b))}</small></div>` : ""}
     ${(() => { const t = tally(() => true); for (const k of ["notes", "bet", "dars", "min", "words", "done"]) t[k] = 0; for (const x of sessions()) if (x.b === b.id) { if (x.unit) t[x.unit] += x.qty; t.min += x.min || (x.unit === "daqiqa" ? x.qty : 0); } return unitsRow(t); })()}
     ${live.length ? `<div class="dk-stats"><p><i class="s-new"></i><b>${fresh}</b>Yangi</p><p><i class="s-mid"></i><b>${mid}</b>O'rganilyapti</p><p><i class="s-far"></i><b>${far}</b>O'zlashtirilgan</p></div>` : ""}
-    ${due.length ? `<button type="button" class="btn btn-big" data-act="review" data-m="deck" data-id="${id}">Takrorlash · ${due.length} ta karta</button>`
+    <button type="button" class="dk-algo" data-act="deck-settings" data-id="${id}">${ic("gear")}<span>Algoritm: <b>${ALGO_NAME[sr.algo]}</b> · yangi ${sr.np} ta/kun</span></button>
+    <div class="dk-tools">
+      <button type="button" class="chip" data-act="ahead" data-id="${id}">${ic("clock")}<span>Oldindan o'rganish</span></button>
+      ${its.some(i => i.st) ? `<button type="button" class="chip" data-act="review" data-m="starred" data-id="${id}">${ic("star")}<span>Yulduzli · ${its.filter(i => i.st).length}</span></button>` : ""}
+      ${its.some(i => i.lc) ? `<button type="button" class="chip" data-act="review" data-m="leech" data-id="${id}">${ic("eraser")}<span>Qiyin · ${its.filter(i => i.lc).length}</span></button>` : ""}
+      ${live.length ? `<button type="button" class="chip" data-act="deck-stats" data-id="${id}">${ic("chart")}<span>Statistika</span></button>` : ""}
+    </div>
+    ${due.length ? `<p class="dk-today"><b data-count="${due.length}">${due.length}</b><span>ta karta bugun</span></p><button type="button" class="btn btn-big" data-act="review" data-m="deck" data-id="${id}">${ic("learn")}Kartalarni o'rganish</button>`
       : live.length ? `<p class="small muted center">Bu to'plamdan bugun takror yo'q${its.length ? ` · keyingisi ${inDays(diffDays(its.filter(i => !i.off).map(i => i.d).sort()[0] || day, day))}` : ""}</p>` : ""}
   </section>
   <section class="sec">
@@ -2206,8 +2279,9 @@ function viewBook(b, day) {
   ${modesGrid(b.id)}
   <section class="sec">
     <div class="sec-head"><h2 class="h2">Kartalar${its.length ? ` · ${its.length}` : ""}</h2>${its.length ? `<button type="button" class="link" data-act="item-new" data-id="${id}" data-t="card">${ic("plus")}Karta</button>` : ""}</div>
+    ${its.length > 5 ? (() => { const ds = new Set(due.map(i => i.id)), F = [["", "Hammasi", its.length], ["due", "Bugun", due.length], ["new", "Yangi", its.filter(i => !i.n && !i.off).length], ["star", "★", its.filter(i => i.st).length], ["leech", "Qiyin", its.filter(i => i.lc).length], ["off", "To'xtatilgan", its.filter(i => i.off).length]]; return `<div class="chips scroller cfbar" aria-label="Filtr">${F.filter(f => f[0] === "" || f[2]).map(([v, n, k]) => `<button type="button" class="chip" data-act="cf" data-f="${v}" aria-pressed="${(ui.cf || "") === v}">${n}${v ? ` · ${k}` : ""}</button>`).join("")}</div>`; })() : ""}
     ${its.length > 5 ? `<div class="dk-search">${ic("search")}<input type="search" id="dk-q" placeholder="Kartalardan qidirish" autocomplete="off" aria-label="Kartalardan qidirish"></div>` : ""}
-    ${its.length ? `<div class="rows dk-list">${its.map(i => itemRow(i, day)).join("")}</div><p class="muted small" id="dk-none" hidden>Hech narsa topilmadi.</p>` : `<div class="empty"><p>Bu to'plamda hali karta yo'q.</p><p class="small muted">Tepada «Bugun o'rgandim» yoki «Bitta karta»ni bosing.</p></div>`}
+    ${its.length ? `<div class="rows dk-list">${its.filter(i => { const f = ui.cf || ""; return !f || (f === "due" ? due.some(x => x.id === i.id) : f === "new" ? !i.n && !i.off : f === "star" ? i.st : f === "leech" ? i.lc : f === "off" ? i.off : true); }).map(i => itemRow(i, day)).join("")}</div><p class="muted small" id="dk-none" hidden>Hech narsa topilmadi.</p>` : `<div class="empty"><p>Bu to'plamda hali karta yo'q.</p><p class="small muted">Tepada «Bugun o'rgandim» yoki «Bitta karta»ni bosing.</p></div>`}
   </section>
   ${(() => { const ss = sessions().filter(x => x.b === b.id).sort((x, y) => (y.c || 0) - (x.c || 0)); return ss.length ? `<section class="sec"><h2 class="h2">O'qish yozuvlari · ${ss.length}</h2><div class="ledger-list">${ss.slice(0, ui.allSess ? 500 : 6).map(sessRow).join("")}</div>${ss.length > 6 && !ui.allSess ? `<button type="button" class="link small" data-act="all-sess">Hammasini ko'rsatish</button>` : ""}</section>` : ""; })()}
   ${sketchGallery_old(b.id)}
@@ -2219,13 +2293,33 @@ function modesGrid(bid, title) {
   return `<section class="sec"><h2 class="h2">${title || "Mashq qilish"}</h2><div class="mgrid">${MODES.map(([m, n, d, i, c, need]) => { const okk = (m === "cards" ? ps.length : sp.length) >= need;
     return `<button type="button" class="mg" data-act="study" data-m="${m}" data-id="${esc(bid)}"${okk ? "" : ` disabled title="Kamida ${need} ta qisqa savol-javob kerak"`}><span class="mode-ic c-${c}">${ic(i)}</span><b>${n}</b>${okk ? "" : `<small>${need} ta karta kerak</small>`}</button>`; }).join("")}</div></section>`;
 }
+function sheetDeckStats(b) {
+  const day = today(), its = itemsOf(b.id).filter(i => !i.rev), live = its.filter(i => !i.off);
+  const fresh = live.filter(i => !i.n).length, mature = live.filter(i => i.n && i.s >= LONG).length, young = live.length - fresh - mature;
+  const since = addDays(day, -29); let tot = 0, ok = 0, today_ = 0, all_ = 0;
+  for (const i of its) for (const h of i.h) { all_++; if (h[0] === day) today_++; if (h[0] >= since) { tot++; if (h[1] > 0) ok++; } }
+  const fc = Array.from({ length: 14 }, (_, k) => { const d = addDays(day, k); return { n: live.filter(i => i.n && (k ? i.d === d : i.d <= d)).length, d }; }), mx = Math.max(1, ...fc.map(x => x.n));
+  const bar = (n, name, cls) => `<div class="stb"><span>${name}</span><span class="bar"><i class="${cls}" data-w="${live.length ? Math.round(n / live.length * 100) : 0}"></i></span><b>${n}</b></div>`;
+  openSheet(`<div class="sheet-body"><div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>Statistika</h2></div>
+    <div class="dk-stats"><p><i class="s-new"></i><b>${fresh}</b>Yangi</p><p><i class="s-mid"></i><b>${young}</b>O'rganilyapti</p><p><i class="s-far"></i><b>${mature}</b>O'zlashtirilgan</p></div>
+    <div class="stbars">${bar(fresh, "Yangi", "s-new")}${bar(young, "O'rganilyapti", "s-mid")}${bar(mature, "O'zlashtirilgan", "s-far")}</div>
+    <div class="figs"><p class="fig"><b>${tot ? Math.round(ok / tot * 100) + "%" : "—"}</b><span>oxirgi 30 kunda eslab qolish</span></p><p class="fig"><b>${today_}</b><span>bugun takror</span></p><p class="fig"><b>${all_}</b><span>jami takror</span></p></div>
+    <h3 class="h2">Keyingi 14 kun</h3>
+    <div class="stfc">${fc.map((x, k) => `<span class="stc"><b>${x.n}</b><i data-h="${Math.round(x.n / mx * 100)}"></i><small>${k ? parse(x.d).getDate() : "bugun"}</small></span>`).join("")}</div>
+    <p class="small muted">Algoritm: ${ALGO_NAME[srOf(b.id).algo]}${srOf(b.id).algo === "fsrs" ? ` · xotira darajasi ${cfg().rt}%` : ""}</p>
+    <div class="sheet-actions"><span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Yopish</button></div></div>`);
+  paintBars($("#sheet"));
+}
 function sheetDeckMenu(b) {
   const id = esc(b.id), its = itemsOf(b.id), f = FIELD_OF[b.kind] || "k";
   const row = (act, icon, name, extra = "", cls = "") => `<button type="button" class="menu-row${cls}" data-act="${act}" data-id="${id}"${extra}>${ic(icon)}<span>${name}</span>${ic("arrow")}</button>`;
   openSheet(`<div class="sheet-body">
     <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>To'plam</h2></div>
     <div class="menu">
+      ${row("deck-settings", "gear", "Takror sozlamalari, papka, ovoz")}
       ${row("book-edit", "pen", "Nomini va turini o'zgartirish")}
+      ${row("deck-import", "download", "Kartalarni import qilish")}
+      ${its.length ? row("deck-export", "upload", "Eksport va ulashish") : ""}
       ${b.status === "done" ? "" : row("finish", "check", "Tugatdim deb belgilash")}
       ${its.length ? row("review", "layers", "Hamma kartalarni takrorlash", ` data-m="source"`) : ""}
       ${row("focus-new", "clock", "Diqqat taymeri (Pomodoro)")}
@@ -2262,7 +2356,7 @@ const fullText = i => i.t === "card" || i.t === "mnemo" ? `${i.q}\n${i.a}${i.m ?
 function itemRow(i, day, from) {
   const n = diffDays(i.d, day), src = from && recs[i.b] ? recs[i.b].title : "";
   return `<button type="button" class="row-btn c-${TYPE_COLOR[i.t] || "blue"}" data-act="item" data-id="${esc(i.id)}" data-s="${esc((fullText(i) + " " + (i.r || "")).toLowerCase())}">
-    <span class="item-head"><span class="item-what"><span class="tag">${TYPES[i.t]}</span>${i.att && i.att.length ? `<span class="tag mute">${ic("clip")}${i.att.length}</span>` : ""}${i.off ? `<span class="tag mute">to'xtatilgan</span>` : ""}${src ? `<span class="ref">${esc(src)}</span>` : i.r ? `<span class="ref">${esc(i.r)}</span>` : ""}</span><span class="item-when">${ladder(i.s)}<span class="${n <= 0 ? "hot" : ""}">${n < 0 ? "kechikkan" : inDays(n)}</span></span></span>
+    <span class="item-head"><span class="item-what"><span class="tag">${TYPES[i.t]}</span>${i.att && i.att.length ? `<span class="tag mute">${ic("clip")}${i.att.length}</span>` : ""}${i.st ? `<span class="tag tag-star">★</span>` : ""}${i.lc ? `<span class="tag tag-leech">qiyin</span>` : ""}${i.off ? `<span class="tag mute">to'xtatilgan</span>` : ""}${src ? `<span class="ref">${esc(src)}</span>` : i.r ? `<span class="ref">${esc(i.r)}</span>` : ""}</span><span class="item-when">${ladder(i.s)}<span class="${n <= 0 ? "hot" : ""}">${n < 0 ? "kechikkan" : inDays(n)}</span></span></span>
     <span class="item-text">${esc(itemText(i))}</span>
   </button>`;
 }
@@ -2669,9 +2763,16 @@ function sheetAlgo() {
   cfgSheet("Takror algoritmi", "Yozuv qachon qayta so'ralishini hal qiladi.", `
     <div class="field" role="radiogroup" aria-label="Takror algoritmi"><input type="hidden" name="algo" value="${esc(c.algo)}">
       ${ALGOS.map(([a, n, d, tag]) => `<button type="button" class="algo" role="radio" data-act="algo" data-a="${a}" aria-checked="${c.algo === a}"><span class="algo-ic">${ic(a === "free" ? "cards" : "learn")}</span><span class="algo-t"><b>${n}${tag ? ` <em>${tag}</em>` : ""}</b><small>${d}</small></span><span class="algo-box">${ic("check")}</span></button>`).join("")}</div>
-    <details class="how adv"${c.eb !== CFG0.eb || c.im !== CFG0.im || c.mx !== CFG0.mx ? " open" : ""}><summary>Kengaytirilgan sozlamalar</summary><div class="adv-in">
+    <details class="how adv"${c.eb !== CFG0.eb || c.im !== CFG0.im || c.mx !== CFG0.mx || c.np !== CFG0.np || c.mr !== CFG0.mr ? " open" : ""}><summary>Kengaytirilgan sozlamalar</summary><div class="adv-in">
       <div class="field"><label for="cf-eb">«Oson» bonusi</label><span class="unit-in"><input id="cf-eb" name="eb" type="number" inputmode="numeric" min="100" max="300" value="${c.eb}"><i>%</i></span><p class="small muted">«Oson» bosilganda oraliq yana shuncha ko'paytiriladi (Zinapoyada).</p></div>
       <div class="field"><label for="cf-im">Oraliq ko'paytiruvchisi</label><span class="unit-in"><input id="cf-im" name="im" type="number" inputmode="numeric" min="50" max="300" value="${c.im}"><i>%</i></span><p class="small muted">Hamma oraliqlar shunga ko'paytiriladi. 150% bo'lsa takrorlar siyrakroq, 80% bo'lsa tezroq.</p></div>
+      <div class="pair"><div class="field"><label for="cf-np">Yangi kartalar kuniga (har to'plamda)</label><input id="cf-np" name="np" type="number" inputmode="numeric" min="0" max="9999" value="${c.np}"></div>
+        <div class="field"><label for="cf-mr">Takror chegarasi kuniga</label><input id="cf-mr" name="mr" type="number" inputmode="numeric" min="1" max="9999" value="${c.mr}"></div></div>
+      <p class="small muted">Papka yoki to'plam sozlamalarida alohida qiymat berish mumkin.</p>
+      <div class="field"><label for="cf-rt">Xotira darajasi (FSRS)</label><span class="unit-in"><input id="cf-rt" name="rt" type="number" inputmode="numeric" min="70" max="97" value="${c.rt}"><i>%</i></span><p class="small muted">Karta qaytib kelganda uni eslash ehtimoli. Yuqori bo'lsa takror ko'p, past bo'lsa kam (standart 90%).</p></div>
+      <div class="pair"><div class="field"><label for="cf-ss">Bir sessiyada kartalar</label><input id="cf-ss" name="ss" type="number" inputmode="numeric" min="0" max="9999" placeholder="cheksiz" value="${c.ss || ""}"></div>
+        <div class="field"><label for="cf-ord">Kartalar tartibi</label><select id="cf-ord" name="ord">${[["", "Aralash (to'plamlar navbat bilan)"], ["new", "Yangilari birinchi"], ["old", "Eskilari birinchi"], ["rand", "Tasodifiy"]].map(([v, n]) => `<option value="${v}"${(c.ord || "") === v ? " selected" : ""}>${n}</option>`).join("")}</select></div></div>
+      <label class="srow" for="cf-la"><span class="tile c-orange">${ic("eraser")}</span><span class="srow-t"><b>Qiyin kartani o'zi to'xtatsin</b><small>8 marta unutilgan karta takrordan chiqariladi (keyin qaytarish mumkin)</small></span><input type="hidden" name="la_f" value="1"><input type="checkbox" class="switch" id="cf-la" name="la"${c.la ? " checked" : ""}></label>
       <div class="field"><label for="cf-mx">Eng uzun oraliq</label><span class="unit-in"><input id="cf-mx" name="mx" type="number" inputmode="numeric" min="7" max="3650" value="${c.mx}"><i>kun</i></span><p class="small muted">Yaxshi eslangan karta ham bundan uzoq kutmaydi.</p></div>
       <div><button type="button" class="btn btn-sm" data-act="cfg-reset">Asl qiymatlar</button></div></div></details>`);
 }
@@ -2823,7 +2924,7 @@ function langOf(text, bid) {
 }
 function say(text, bid) {
   if (!("speechSynthesis" in window) || !text) return;
-  const u = new SpeechSynthesisUtterance(String(text).replace(/\[\[|\]\]/g, "").slice(0, 400)), lang = langOf(text, bid);
+  const u = new SpeechSynthesisUtterance(String(text).replace(/\[\[|\]\]/g, "").slice(0, 400)), lang = (recs[bid] && recs[bid].tts) || langOf(text, bid);
   const vs = speechSynthesis.getVoices(), v = vs.find(x => x.lang.replace("_", "-") === lang) || vs.find(x => x.lang.slice(0, 2) === lang.slice(0, 2));
   u.lang = v ? v.lang : lang; if (v) u.voice = v; u.rate = .95;
   speechSynthesis.cancel(); speechSynthesis.speak(u);
@@ -3433,6 +3534,8 @@ function sheetItem(i) {
     <div class="sheet-actions">
       <button type="button" class="btn btn-danger" data-act="item-del" data-id="${esc(i.id)}">O'chirish</button>
       <button type="button" class="btn btn-sm" data-act="item-off" data-id="${esc(i.id)}">${i.off ? "Takrorga qaytarish" : "Takrordan chiqarish"}</button>
+      <button type="button" class="btn btn-sm" data-act="item-star" data-id="${esc(i.id)}">${i.st ? "★ Yulduzni olish" : "☆ Yulduzlash"}</button>
+      ${i.lc ? `<button type="button" class="btn btn-sm" data-act="item-leech" data-id="${esc(i.id)}">Qiyin belgisini olish</button>` : ""}
       <button type="button" class="btn btn-sm" data-act="share" data-id="${esc(i.id)}">Ulashish</button><span class="grow"></span>
       <button type="button" class="btn" data-act="sheet-close">Yopish</button>
       <button type="submit" class="btn btn-gold">Saqlash</button>
@@ -3497,6 +3600,8 @@ function interleave(list) {
   while (out.length < list.length) for (const g of qs) if (g.length) out.push(g.shift());
   return out;
 }
+let AHEAD = 3;
+const aheadItems = (id, n) => { const day = today(), end = addDays(day, n); return items().filter(i => !i.off && !i.rev && i.n && i.bu !== day && i.d > day && i.d <= end && (!id || i.b === id) && srOf(i.b).algo !== "free").sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : 0); };
 function startReview(mode, id) {
   const day = today(), due = dueItems(day);
   const M = {
@@ -3508,9 +3613,18 @@ function startReview(mode, id) {
     evening: [touchedToday(day), "Kechki takror", 1],
     errors: [errorItems(), "Xatolar daftari", 1],
     deck: [due.filter(i => i.b === id), `Takror: ${recs[id] ? recs[id].title : ""}`],
+    folder: [(() => { const s = new Set(decksUnder(id || "").map(b => b.id)); return due.filter(i => s.has(i.b)); })(), id && recs[id] ? recs[id].name : "Papkasiz to'plamlar"],
     source: [itemsOf(id).filter(i => !i.off), `Mashq: ${recs[id] ? recs[id].title : ""}`, 1],
+    starred: [items().filter(i => i.st && !i.off && !i.rev && (!id || i.b === id)), "Yulduzli kartalar", 1],
+    leech: [items().filter(i => i.lc && !i.rev && (!id || i.b === id)), "Qiyin kartalar", 1],
+    ahead: [aheadItems(id, AHEAD), `Oldindan: ${AHEAD} kunlik${id && recs[id] ? " · " + recs[id].title : ""}`],
   }[mode] || [due, "Bugungi takror"];
-  const q = (mode === "quick" ? M[0] : interleave(M[0])).map(i => i.id);
+  const c0 = cfg(), plain_ = ["quick", "evening", "errors", "source", "starred", "leech"].includes(mode);
+  let list = mode === "quick" ? M[0] : c0.ord === "old" && !plain_ ? M[0] : interleave(M[0]);
+  if (!plain_ && c0.ord === "new") list = [...list.filter(i => !i.n), ...list.filter(i => i.n)];
+  else if (c0.ord === "rand" && !plain_) list = shuffle(list);
+  if (+c0.ss > 0 && !plain_) list = list.slice(0, +c0.ss);
+  const q = list.map(i => i.id);
   if (!q.length) return toast("Bu ro'yxatda hozir yozuv yo'q.");
   XC = null;
   Object.assign(rv, { t: Date.now(), undo: null, b0: balanceOn(today()), popped: false, q, i: 0, tally: [0, 0, 0, 0], title: M[1], practice: !!M[2], seen: new Set(), conf: -1 });
@@ -3541,7 +3655,7 @@ function gap(n) {
 function paintReview() {
   const d = $("#review");
   let it = null;
-  while (rv.i < rv.q.length) { const x = recs[rv.q[rv.i]]; if (x && !x.del) { it = x; break; } rv.i++; }
+  while (rv.i < rv.q.length) { const x = recs[rv.q[rv.i]]; if (x && !x.del && !x.off && x.bu !== today()) { it = x; break; } rv.i++; }
   rv.shown = false; rv.conf = -1;
   if (!it) {
     const [f, h, g0, e] = rv.tally, g = g0 + e, n = f + h + g;
@@ -3576,10 +3690,10 @@ function paintReview() {
   const answer = it.t === "sketch" ? `${sketchImg(it, "big")}${it.a ? `<span class="sk-note">${rich(it.a)}</span>` : ""}` : it.t === "cloze" ? clozeHTML(it.a, true)
     : rich(it.a) + (it.t === "mnemo" && it.m ? `<span class="mnemo"><b>Eslatkich:</b> ${rich(it.m)}</span>` : "")
       + (it.pre ? `<span class="mnemo"><b>Boshida qo'ygan savolingiz:</b> ${esc(it.pre)}</span>` : "");
-  const day = today(), when = g => rv.practice || again ? "—" : free() ? "jadvalsiz" : gap(diffDays(schedule(it, g, day, -1).d, day));
+  const day = today(), alg = srOf(it.b).algo, when = g => rv.practice || again ? "—" : alg === "free" ? "jadvalsiz" : g === 0 ? "1 daq" : gap(diffDays(schedule(it, g, day, -1).d, day));
   d.innerHTML = `<div class="rv">
     <div class="rv-top"><button type="button" class="icon-btn" data-act="rv-close" aria-label="Takrorlashni yopish">${ICON.close}</button>${rv.undo ? `<button type="button" class="icon-btn" data-act="rv-undo" aria-label="Oldingi bahoni bekor qilish" title="Orqaga">${ic("undo")}</button>` : ""}<button type="button" class="icon-btn" data-act="rv-edit" aria-label="Shu yozuvni tahrirlash" title="Tahrirlash">${ic("pen")}</button><span class="bar"><i data-w="${Math.round(rv.i / rv.q.length * 100)}"></i></span><span class="rv-count">${rv.i + 1} / ${rv.q.length}</span></div>
-    <div class="rv-body">
+    <div class="rv-body${b.fs ? " fs-" + b.fs : ""}${b.al !== 0 ? " rv-c" : ""}">
       <p class="eyebrow">${esc(b.title)}${it.r ? " · " + esc(it.r) : ""} · ${TYPES[it.t]}${again ? " · yana bir bor" : ""}</p>
       <h2 class="rv-q${it.t === "quote" && !it.q ? " is-quote" : ""}">${P[0]}${it.t === "card" || it.t === "mnemo" ? sayBtn(it.q, it.b) : ""}</h2>
       ${P[1] ? `<p class="muted">${P[1]}</p>` : ""}
@@ -3587,22 +3701,39 @@ function paintReview() {
       <div class="field"><label for="rv-try">Yodingizdan yozing yoki ovoz chiqarib ayting${opt}</label><div class="cap-text"><textarea id="rv-try" rows="3" data-grow class="no-rt"></textarea>${Rec ? `<button type="button" class="mic" id="rv-mic" data-act="mic" data-t="rv-try" aria-label="Ovoz bilan javob berish" aria-pressed="false">${ic("mic")}</button>` : ""}</div></div>
       <div class="field"><span class="small muted">Javobni ochishdan oldin: qanchalik ishonchingiz komil?${opt}</span><div class="chips">${["Past", "O'rta", "Yuqori"].map((n, c) => `<button type="button" class="chip" data-act="rv-conf" data-c="${c}" aria-pressed="false">${n}</button>`).join("")}</div></div>
       <button type="button" class="btn btn-gold btn-wide" id="rv-show" data-act="rv-show" autofocus>${P[2]}</button>
+      <div class="rv-tools"><button type="button" class="chip" id="rv-star" data-act="rv-star" aria-pressed="${it.st ? "true" : "false"}" title="Yulduz (S)">${ic("star")}<span>${it.st ? "Yulduzli" : "Yulduz"}</span></button><button type="button" class="chip" data-act="rv-bury" title="Bugun ko'rsatmasin (B)">${ic("clock")}<span>Ertaga qoldirish</span></button><button type="button" class="chip" data-act="rv-off" title="Takrordan chiqarish (X)">${ic("eraser")}<span>To'xtatish</span></button></div>
       <div class="rv-ans" id="rv-ans" hidden>
         <p class="eyebrow">${P[3]} · ${fmtDate(dayOf(it.c))}</p>
         <div class="note">${answer}${["card", "mnemo", "quote"].includes(it.t) ? sayBtn(it.a, it.b) : ""}</div>
         ${attList(it.att)}
         <p class="small hc" id="rv-hc" hidden>Ishonchingiz yuqori edi. Agar xato bo'lsa, «Unutdim»ni bosing: ishonch bilan qilingan xato tuzatilgach eng yaxshi esda qoladi.</p>
         <p class="eyebrow rv-ask">Qanchalik esladingiz?</p>
+        <p class="small muted rv-sw">Javob ustida o'ngga surish — «Esladim», chapga — «Unutdim».</p>
         <div class="grades">
           ${GRADES.map((n, g) => `<button type="button" class="grade" data-act="rv-grade" data-g="${g}"><b>${n}</b><span>${when(g)}</span></button>`).join("")}
         </div>
       </div>
     </div></div>`;
   paintBars(d);
+  bindRvSwipe(d);
   d.scrollTop = 0;
+  if (b.say && it.q && canSay()) setTimeout(() => say(plain(it.q), it.b), 250);
   if (d.open) $("#rv-show").focus({ preventScroll: true });   // Enter or Space shows the answer; 1, 2, 3 grade it
 }
 
+// Swipe the answer: right = «Esladim», left = «Unutdim». Vertical moves still scroll.
+function bindRvSwipe(d) {
+  const el = d.querySelector(".rv-ans .note"); if (!el) return;
+  let x0 = null, y0 = 0;
+  el.addEventListener("pointerdown", e => { x0 = e.clientX; y0 = e.clientY; });
+  el.addEventListener("pointercancel", () => { x0 = null; });
+  el.addEventListener("pointerup", e => {
+    if (x0 == null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+    if (!rv.shown || Math.abs(dx) < 90 || Math.abs(dx) < 2 * Math.abs(dy)) return;
+    act["rv-grade"]({ dataset: { g: dx > 0 ? "2" : "0" } });
+  });
+}
 async function copyText(text, okMsg) {
   try { await navigator.clipboard.writeText(text); toast(okMsg); }
   catch (e) {
@@ -3743,13 +3874,192 @@ function glossSave(a, b) {
   return !!same;
 }
 
+/* ── folders, subfolders and decks, each studied on its own (as in Noji) ──
+   A folder is a record { k: "f", name, parent }. A deck (source) sits in a folder through b.fd.
+   Takror settings live on three levels: Settings (for everything) → a folder (for what is inside it) → a deck.
+   sr = { algo: "fsrs" | "ladder" | "free", np: new cards a day, mr: reviews a day }; an empty field means «as above». */
+const folders = () => all().filter(r => r.k === "f" && !r.del).sort((a, b) => str(a.name).localeCompare(str(b.name), "uz"));
+const deckFolder = b => b && b.fd && recs[b.fd] && !recs[b.fd].del ? b.fd : "";
+const subFolders = pid => folders().filter(f => (f.parent && recs[f.parent] && !recs[f.parent].del ? f.parent : "") === (pid || ""));
+const decksIn = fid => books().filter(b => deckFolder(b) === (fid || ""));
+function folderPath(fid) { const out = []; let f = fid && recs[fid]; for (let n = 0; f && !f.del && n < 30; n++) { out.unshift(f); f = f.parent ? recs[f.parent] : null; } return out; }
+function folderTree(fid) {           // the folder itself and every folder below it
+  const ids = new Set([fid || ""]); let grew = true;
+  while (grew) { grew = false; for (const f of folders()) if (!ids.has(f.id) && ids.has(f.parent || "") && (f.parent || "") !== "" ) { ids.add(f.id); grew = true; } }
+  if (!fid) for (const f of folders()) ids.add(f.id);
+  return ids;
+}
+const decksUnder = fid => { const ids = folderTree(fid); return books().filter(b => ids.has(deckFolder(b))); };
+const ALGO_NAME = { fsrs: "Aqlli takror (FSRS)", ladder: "Oraliqli takror (zinapoya)", free: "Erkin (jadvalsiz)" };
+function srOf(bid) {
+  const c = cfg(), out = { algo: c.algo, np: +c.np || 20, mr: +c.mr || 9999 }, b = recs[bid];
+  const chain = b && b.k === "b" ? [...folderPath(deckFolder(b)), b] : b && b.k === "f" ? folderPath(b.id) : [];
+  for (const x of chain) { const s = x.sr || {}; if (ALGO_NAME[s.algo]) out.algo = s.algo; if (s.np !== "" && s.np != null && +s.np >= 0) out.np = +s.np; if (s.mr !== "" && s.mr != null && +s.mr > 0) out.mr = +s.mr; }
+  return out;
+}
+// Today's queue: in every deck the due reviews (up to its daily limit) and as many new cards as it allows a day.
+let DQ = { k: "", v: [] }, PUTN = 0;
+function dueItems(day) {
+  const key = day + "|" + PUTN + "|" + Math.floor(Date.now() / 30000) + "|" + Object.keys(recs).length;
+  if (DQ.k === key) return DQ.v;
+  const now = Date.now(), per = new Map();
+  for (const i of items()) { if (i.off || i.bu === day) continue; let p = per.get(i.b); if (!p) per.set(i.b, p = []); p.push(i); }
+  const out = [];
+  for (const [bid, its] of per) {
+    const sr = srOf(bid);
+    if (sr.algo === "free") { out.push(...its); continue; }
+    const due = its.filter(i => i.d <= day && !(i.dt && i.dt > now));
+    const newToday = its.filter(i => i.h.length && i.h[0][0] === day).length;
+    const rev = due.filter(i => i.n), neu = due.filter(i => !i.n).sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : (a.c || 0) - (b.c || 0));
+    out.push(...rev.slice(0, sr.mr), ...neu.slice(0, Math.max(0, sr.np - newToday)));
+  }
+  out.sort((a, b) => a.d < b.d ? -1 : a.d > b.d ? 1 : a.b < b.b ? -1 : a.b > b.b ? 1 : (a.c || 0) - (b.c || 0));
+  DQ = { k: key, v: out };
+  return out;
+}
+const dueIn = (bids, day) => { const s = new Set(bids); return dueItems(day).filter(i => s.has(i.b)); };
+function deckCounts(bids, day) {
+  const s = new Set(bids), its = items().filter(i => s.has(i.b) && !i.off && !i.rev);
+  const fresh = its.filter(i => !i.n).length, far = its.filter(i => i.s >= LONG).length;
+  return { all: its.length, fresh, mid: its.length - fresh - far, far, learned: its.length - fresh, due: dueIn(bids, day).length };
+}
+const crumbs = (fid, last) => `<nav class="crumbs" aria-label="Joylashuv"><button type="button" class="link" data-act="folder-open" data-id="">${ic("shelf")}Manbalar</button>${folderPath(fid).map(f => `<span>/</span><button type="button" class="link" data-act="folder-open" data-id="${esc(f.id)}">${esc(f.name)}</button>`).join("")}${last ? `<span>/</span><b>${esc(last)}</b>` : ""}</nav>`;
+function folderRow(f, day) {
+  const ds = decksUnder(f.id), n = deckCounts(ds.map(b => b.id), day), subs = subFolders(f.id).length;
+  return `<div class="src fold">
+    <span class="tile c-${f.col || "yellow"}">${ic("folder")}</span>
+    <button type="button" class="src-main" data-act="folder-open" data-id="${esc(f.id)}"><span class="bk-title">${esc(f.name)}</span><span class="bk-meta">${[subs ? `${subs} ta papka` : "", `${ds.length} ta to'plam`, `${n.all} ta karta`].filter(Boolean).join(" · ")}</span></button>
+    ${n.due ? `<button type="button" class="dueb" data-act="review" data-m="folder" data-id="${esc(f.id)}" title="Takrorlash">${n.due}</button>` : "<span></span>"}
+    ${n.all ? `<span class="bar"><i data-w="${Math.round(n.learned / n.all * 100)}"></i></span>` : ""}
+  </div>`;
+}
+// Home: every top folder (and the decks outside folders) as one card, like Noji's home screen.
+function folderCards(day) {
+  const fs = subFolders("").filter(f => decksUnder(f.id).some(b => itemsOf(b.id).length));
+  const loose = decksIn("").filter(b => itemsOf(b.id).some(i => !i.off));
+  if (!fs.length) return "";
+  const card = (id, name, bids, mode) => { const n = deckCounts(bids, day);
+    return `<div class="fcard"><div class="fcard-h"><button type="button" class="fcard-t" data-act="${mode === "folder" ? "folder-open" : "folder-open"}" data-id="${esc(id)}">${ic("folder")}<b>${esc(name)}</b></button></div>
+      <span class="bar"><i data-w="${n.all ? Math.round(n.learned / n.all * 100) : 0}"></i></span>
+      <p class="small muted">O'rganilgan: <b>${n.learned}</b> / ${n.all}${n.far ? ` · ${n.far} tasi o'zlashtirilgan` : ""}</p>
+      ${n.due ? `<button type="button" class="btn btn-big" data-act="review" data-m="folder" data-id="${esc(id)}">${ic("learn")}${n.due} ta kartani o'rganish</button>` : `<p class="small muted fcard-ok">${ic("check")}Bugun bu papkadan takror yo'q</p>`}</div>`; };
+  return `<section class="sec"><div class="sec-head"><h2 class="h2">Papkalarim</h2><button type="button" class="link" data-act="tab" data-tab="shelf">Hammasi${ic("arrow")}</button></div>
+    <div class="fcards">${fs.map(f => card(f.id, f.name, decksUnder(f.id).map(b => b.id), "folder")).join("")}${loose.length ? card("", "Papkasiz to'plamlar", loose.map(b => b.id), "root") : ""}</div></section>`;
+}
+const folderOptions = (sel, skip) => {
+  const bad = skip ? folderTree(skip) : new Set(), out = [`<option value="">— Manbalar (papkasiz) —</option>`];
+  const walk = (pid, depth) => { for (const f of subFolders(pid)) { if (bad.has(f.id)) continue; out.push(`<option value="${esc(f.id)}"${f.id === sel ? " selected" : ""}>${"  ".repeat(depth)}${depth ? "└ " : ""}${esc(f.name)}</option>`); walk(f.id, depth + 1); } };
+  walk("", 0); return out.join("");
+};
+const srFields = (sr, inherit) => `
+  <fieldset class="field"><legend>Takror algoritmi</legend><div class="vlist algo-l">
+    ${[["", inherit ? `Yuqoridagidek (${ALGO_NAME[inherit.algo]})` : ""], ["fsrs", ALGO_NAME.fsrs, "Har kartaning qiyinligini hisoblab, unutishga yaqin payt so'raydi. Noji'dagi «Spaced repetition» shu."], ["ladder", ALGO_NAME.ladder, "Ertaga, 3 kun, 1 hafta, 2 hafta, 1 oy…"], ["free", ALGO_NAME.free, "Jadvalsiz: hamma karta har doim tayyor (imtihon oldidan)."]].filter(x => x[1]).map(([a, n, d]) => `<label class="aopt"><input type="radio" name="algo" value="${a}"${(sr.algo || "") === a ? " checked" : ""}><span><b>${n}</b>${d ? `<small class="muted"> — ${d}</small>` : ""}</span></label>`).join("")}</div></fieldset>
+  <div class="pair">
+    <div class="field"><label for="sr-np">Yangi kartalar kuniga</label><input id="sr-np" name="np" type="number" inputmode="numeric" min="0" max="9999" placeholder="${inherit ? inherit.np : 20}" value="${sr.np ?? ""}"></div>
+    <div class="field"><label for="sr-mr">Takror chegarasi kuniga</label><input id="sr-mr" name="mr" type="number" inputmode="numeric" min="1" max="9999" placeholder="${inherit ? (inherit.mr >= 9999 ? "cheksiz" : inherit.mr) : "cheksiz"}" value="${sr.mr ?? ""}"></div>
+  </div>`;
+const readSr = fd => { const o = {}; const a = str(fd.get("algo")); if (ALGO_NAME[a]) o.algo = a; const np = str(fd.get("np")).trim(), mr = str(fd.get("mr")).trim(); if (np !== "") o.np = Math.min(9999, Math.max(0, int(np) || 0)); if (mr !== "") o.mr = Math.min(9999, Math.max(1, int(mr) || 1)); return o; };
+function sheetFolder(f, parent) {
+  const sr = (f && f.sr) || {}, up = srOf(f ? (f.parent || "") : parent || "");
+  openSheet(`<form class="sheet-body" data-form="folder" data-id="${f ? esc(f.id) : ""}" novalidate>
+    <h2 class="sheet-h" tabindex="-1">${f ? "Papka" : "Yangi papka"}</h2>
+    <div class="field"><label for="fd-name">Nomi</label><input id="fd-name" name="name" type="text" maxlength="80" autocomplete="off" autofocus placeholder="Masalan: Ingliz tili, IELTS, Diniy ilmlar" value="${f ? esc(f.name) : ""}"></div>
+    <div class="field"><label for="fd-parent">Qaysi papka ichida</label><select id="fd-parent" name="parent">${folderOptions(f ? f.parent || "" : parent || "", f && f.id)}</select></div>
+    <details class="how"${Object.keys(sr).length ? " open" : ""}><summary>Shu papkadagi to'plamlar uchun takror sozlamalari</summary><div class="rules">${srFields(sr, f && f.parent ? srOf(f.parent) : { ...srOf(""), ...cfgSr() })}</div></details>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions">${f ? `<button type="button" class="btn btn-danger" data-act="folder-del" data-id="${esc(f.id)}">O'chirish</button>` : ""}<span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><button type="submit" class="btn btn-gold">Saqlash</button></div>
+  </form>`);
+}
+const cfgSr = () => { const c = cfg(); return { algo: c.algo, np: +c.np || 20, mr: +c.mr || 9999 }; };
+function sheetDeckSettings(b) {
+  const sr = b.sr || {}, up = (() => { const s = srOf(b.id); const p = deckFolder(b) ? srOf(deckFolder(b)) : cfgSr(); return p || s; })();
+  const LANGS = [["", "Avtomatik"], ["en-US", "Ingliz"], ["ru-RU", "Rus"], ["uz-UZ", "O'zbek"], ["ar-SA", "Arab"], ["tr-TR", "Turk"], ["de-DE", "Nemis"], ["fr-FR", "Fransuz"], ["es-ES", "Ispan"], ["ko-KR", "Koreys"], ["ja-JP", "Yapon"], ["zh-CN", "Xitoy"]];
+  openSheet(`<form class="sheet-body" data-form="decksr" data-id="${esc(b.id)}" novalidate>
+    <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>To'plam sozlamalari</h2></div>
+    <div class="field"><label for="ds-fd">Papka</label><select id="ds-fd" name="fd">${folderOptions(deckFolder(b))}</select></div>
+    ${srFields(sr, up)}
+    <div class="pair">
+      <div class="field"><label for="ds-tts">Ovoz (matnni o'qish)</label><select id="ds-tts" name="tts">${LANGS.map(([v, n]) => `<option value="${v}"${(b.tts || "") === v ? " selected" : ""}>${n}</option>`).join("")}</select></div>
+      <div class="field"><label for="ds-fs">Karta matni</label><select id="ds-fs" name="fs">${[["", "O'rta"], ["l", "Katta"], ["xl", "Juda katta"], ["s", "Kichik"]].map(([v, n]) => `<option value="${v}"${(b.fs || "") === v ? " selected" : ""}>${n}</option>`).join("")}</select></div>
+    </div>
+    <label class="srow" for="ds-say"><span class="tile c-blue">${ic("sound")}</span><span class="srow-t"><b>Savolni o'zi o'qib bersin</b><small>Takrorda karta ochilganda ovoz chiqadi</small></span><input type="checkbox" class="switch" id="ds-say" name="say"${b.say ? " checked" : ""}></label>
+    <label class="srow" for="ds-al"><span class="tile c-purple">${ic("doc")}</span><span class="srow-t"><b>Matnni markazga tekislash</b><small>Noji'dagidek: savol va javob o'rtada</small></span><input type="checkbox" class="switch" id="ds-al" name="al"${b.al !== 0 ? " checked" : ""}></label>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><span class="grow"></span><button type="submit" class="btn btn-gold">Saqlash</button></div>
+    <div class="menu" style="margin-top:.5rem">
+      <button type="button" class="menu-row" data-act="deck-import" data-id="${esc(b.id)}">${ic("download")}<span>Kartalarni import qilish (matn, CSV, Noji/Quizlet)</span>${ic("arrow")}</button>
+      <button type="button" class="menu-row" data-act="deck-export" data-id="${esc(b.id)}">${ic("upload")}<span>Eksport va ulashish (CSV)</span>${ic("arrow")}</button>
+      <button type="button" class="menu-row" data-act="deck-reverse" data-id="${esc(b.id)}">${ic("undo")}<span>Teskari kartalar yaratish (javob → savol)</span>${ic("arrow")}</button>
+      ${aiOn() ? `<button type="button" class="menu-row" data-act="bulk" data-id="${esc(b.id)}">${ic("spark")}<span>AI bilan kartalar yaratish</span>${ic("arrow")}</button>` : ""}
+      <button type="button" class="menu-row" data-act="deck-reset" data-id="${esc(b.id)}">${ic("eraser")}<span>Takror tarixini boshidan boshlash</span>${ic("arrow")}</button>
+    </div>
+  </form>`);
+}
+// Import: one card a line — «savol⇥javob», «savol;javob», «savol — javob», «savol - javob»; quotes as in CSV.
+function splitCard(line) {
+  line = line.replace(/\r$/, "");
+  if (!line.trim()) return null;
+  let m;
+  if (line.includes("\t")) m = line.split("\t");
+  else if (/^"/.test(line)) { const r = []; let cur = "", q = false; for (let k = 0; k < line.length; k++) { const c = line[k]; if (q) { if (c === '"' && line[k + 1] === '"') { cur += '"'; k++; } else if (c === '"') q = false; else cur += c; } else if (c === '"') q = true; else if (c === "," || c === ";") { r.push(cur); cur = ""; } else cur += c; } r.push(cur); m = r; }
+  else if (line.includes(";")) m = line.split(";");
+  else if (/\s[—–]\s/.test(line)) m = line.split(/\s[—–]\s/);
+  else if (/\s-\s/.test(line)) m = line.split(/\s-\s/);
+  else if (line.includes(",")) m = line.split(",");
+  else return null;
+  const q = str(m[0]).trim(), a = m.slice(1).join(" / ").trim();
+  return q && a ? { q: q.slice(0, 1000), a: a.slice(0, 4000) } : null;
+}
+function sheetImport(b) {
+  openSheet(`<form class="sheet-body" data-form="deckimp" data-id="${esc(b.id)}" novalidate>
+    <div><p class="eyebrow">${esc(b.title)}</p><h2 class="sheet-h" tabindex="-1" autofocus>Kartalarni import qilish</h2></div>
+    <p class="small muted">Har qatorda bitta karta: savol va javob orasida <b>Tab</b>, <b>;</b> yoki <b>—</b>. Noji, Quizlet va Anki'dan «matn/CSV» qilib eksport qilingan fayl ham bo'ladi.</p>
+    <div class="field"><label for="im-text">Kartalar</label><textarea id="im-text" name="text" class="no-rt" rows="8" data-grow placeholder="apple — olma&#10;Buromad; 1. Chiqim, sarf-xarajat. 2. Gapning xulosasi&#10;perseverance	sabot"></textarea></div>
+    <div class="field"><label for="im-file">Yoki fayl (.txt, .csv, .tsv)</label><input id="im-file" type="file" accept=".txt,.csv,.tsv,text/plain,text/csv"></div>
+    <p class="small hot" id="im-n" aria-live="polite">0 ta karta</p>
+    <p class="err" data-err hidden></p>
+    <div class="sheet-actions"><button type="button" class="btn" data-act="sheet-close">Bekor qilish</button><span class="grow"></span><button type="submit" class="btn btn-gold">Qo'shish</button></div>
+  </form>`);
+  const t = $("#im-text"), n = $("#im-n"), count = () => { n.textContent = `${t.value.split("\n").map(splitCard).filter(Boolean).length} ta karta`; };
+  t.addEventListener("input", count);
+  $("#im-file").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; const fr = new FileReader(); fr.onload = () => { t.value = str(fr.result).replace(/^﻿/, ""); grow(t); count(); }; fr.readAsText(f); });
+}
+function deckCsv(b) {
+  const q = s => /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  return itemsOf(b.id).filter(i => !i.rev).map(i => `${q(plain(i.q || TYPES[i.t]))};${q(plain(i.a))}`).join("\n");
+}
+// Activity: streak, longest streak, active days and a month calendar (as in Noji).
+function activeDays() {
+  const s = new Set();
+  for (const i of items()) { for (const [d] of i.h) s.add(d); s.add(dayOf(i.c)); }
+  for (const x of sessions()) s.add(x.day);
+  return s;
+}
+function bestStreak(set) { const ds = [...set].sort(); let best = 0, run = 0, prev = ""; for (const d of ds) { run = prev && addDays(prev, 1) === d ? run + 1 : 1; best = Math.max(best, run); prev = d; } return best; }
+function sheetActivity(month) {
+  const set = activeDays(), day = today(), m = month || monthOf(day), [y, mo] = m.split("-").map(Number);
+  const first = new Date(y, mo - 1, 1), lead = (first.getDay() + 6) % 7, len = new Date(y, mo, 0).getDate();
+  const reviews = new Map(); for (const i of items()) for (const [d] of i.h) reviews.set(d, (reviews.get(d) || 0) + 1);
+  const cells = [...Array(lead).fill(""), ...Array.from({ length: len }, (_, k) => `${m}-${pad(k + 1)}`)];
+  const prev = monthOf(addDays(m + "-01", -1)), next = monthOf(addDays(m + "-" + pad(len), 1));
+  openSheet(`<div class="sheet-body act-sheet">
+    <h2 class="sheet-h" tabindex="-1" autofocus>Faollik</h2>
+    <div class="act-figs"><p>${ic("flame")}<b>${streakNow()}</b><span>kun ketma-ket</span></p><p>${ic("star")}<b>${bestStreak(set)}</b><span>eng uzun seriya</span></p></div>
+    <p class="act-days">${ic("check")}<b>${set.size}</b> faol kun</p>
+    <div class="act-cal">
+      <div class="act-mh"><button type="button" class="icon-btn" data-act="activity" data-m="${prev}" aria-label="Oldingi oy">${ICON.back}</button><b>${MONTHS[mo - 1][0].toUpperCase() + MONTHS[mo - 1].slice(1)} ${y}</b><button type="button" class="icon-btn" data-act="activity" data-m="${next}" aria-label="Keyingi oy"${next > monthOf(day) ? " disabled" : ""}><span class="flip">${ICON.back}</span></button></div>
+      <div class="act-g">${["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"].map(w => `<i>${w}</i>`).join("")}${cells.map(d => d ? `<span class="${set.has(d) ? "on" : ""}${d === day ? " now" : ""}" title="${d}${reviews.get(d) ? ` · ${reviews.get(d)} ta takror` : ""}">${+d.slice(8)}</span>` : "<span></span>").join("")}</div>
+    </div>
+  </div>`);
+}
+
 /* ── actions ── */
 const AI_PROMPT = "You help a learner build retrieval-practice flashcards. Using ONLY the learner's own notes below (written in Uzbek), write 3 to 5 short question-answer pairs in Uzbek, Latin script, that test the most important ideas, terms, names and reasons in the notes. Questions must need real recall, not yes or no. Do not add any fact that is not in the notes. Reply with only a JSON array, for example [{\"q\": \"...\", \"a\": \"...\"}].\n\n";
 const act = {
   tab(el) { ui.tab = el.dataset.tab; ui.book = null; if (ui.tab === "stats") ui.sub = "stats"; render(); window.scrollTo(0, 0); },
   filter(el) { ui.filter = el.dataset.f; render(); },
   book(el) { if (!ui.book) ui.from = ui.tab; ui.book = el.dataset.id; render(); window.scrollTo(0, 0); },
-  "deck-back"() { ui.book = null; ui.tab = ui.from || "shelf"; render(); window.scrollTo(0, 0); },
+  "deck-back"() { ui.cf = ""; ui.book = null; ui.tab = ui.from || "shelf"; render(); window.scrollTo(0, 0); },
   "deck-menu"() { const b = recs[ui.book]; if (b) sheetDeckMenu(b); },
   sub(el) { ui.sub = el.dataset.s; render(); },
   "quick-all"() { sheetQuick(); },
@@ -3833,6 +4143,36 @@ const act = {
     rv.i = u.i; rv.undo = null;
     paintReview(); act["rv-show"]();
   },
+  "rv-star"() {
+    const it = recs[rv.q[rv.i]]; if (!it) return;
+    put({ ...it, st: it.st ? 0 : 1 }, true);
+    const b = $("#rv-star"); if (b) { b.setAttribute("aria-pressed", String(!it.st)); b.lastElementChild.textContent = it.st ? "Yulduz" : "Yulduzli"; }
+    toast(it.st ? "Yulduz olib tashlandi." : "Yulduzlandi. Bosh sahifada «Yulduzli kartalar» bilan alohida takrorlaysiz.");
+  },
+  "rv-bury"() {
+    const it = recs[rv.q[rv.i]]; if (!it) return;
+    put({ ...it, bu: today() }, true); rv.undo = null; rv.i++;
+    toast("Bu karta bugun yana chiqmaydi. Ertaga qaytadi.");
+    paintReview();
+  },
+  "rv-off"() {
+    const it = recs[rv.q[rv.i]]; if (!it) return;
+    put({ ...it, off: 1 }, true); rv.undo = null; rv.i++;
+    toast("Karta takrordan chiqarildi. Kartalar ro'yxatidan qaytarishingiz mumkin.");
+    paintReview();
+  },
+  "item-star"(el) { const i = recs[el.dataset.id]; if (!i) return closeSheet(); put({ ...i, st: i.st ? 0 : 1 }); closeSheet(); toast(i.st ? "Yulduz olib tashlandi." : "Yulduzlandi."); },
+  "item-leech"(el) { const i = recs[el.dataset.id]; if (!i) return closeSheet(); put({ ...i, lc: 0 }); closeSheet(); toast("Qiyin belgisi olib tashlandi."); },
+  cf(el) { ui.cf = el.dataset.f || ""; render(); },
+  ahead(el) {
+    const id = el.dataset.id || "";
+    openSheet(`<div class="sheet-body"><div><p class="eyebrow">${id && recs[id] ? esc(recs[id].title) : "Hamma to'plamlar"}</p><h2 class="sheet-h" tabindex="-1" autofocus>Oldindan o'rganish</h2></div>
+      <p class="small muted">Hali vaqti kelmagan kartalarni oldindan takrorlaysiz. Jadval o'zgaradi: oraliq shu kundan hisoblanadi.</p>
+      <div class="vlist">${[1, 3, 7, 14].map(n => { const k = aheadItems(id, n).length; return `<button type="button" class="menu-row" data-act="ahead-go" data-id="${esc(id)}" data-n="${n}"${k ? "" : " disabled"}><span>Keyingi ${n} kun · ${k} ta karta</span>${ic("arrow")}</button>`; }).join("")}</div>
+      <div class="sheet-actions"><span class="grow"></span><button type="button" class="btn" data-act="sheet-close">Yopish</button></div></div>`);
+  },
+  "ahead-go"(el) { AHEAD = +el.dataset.n || 3; closeSheet(); startReview("ahead", el.dataset.id || ""); },
+  "deck-stats"(el) { const b = recs[el.dataset.id]; if (b && !b.del) sheetDeckStats(b); },
   "rv-edit"() { const it = recs[rv.q[rv.i]]; if (it) sheetItem(it); },
   sess(el) { const x = recs[el.dataset.id]; if (x && !x.del) sheetSession(x); },
   "sess-del"(el) {
@@ -3869,7 +4209,15 @@ const act = {
     rv.undo = { id, prev: it, i: rv.i, g, first, pushed: first && g === 0, seen: rv.seen.has(id) };
     if (first) {
       rv.tally[g]++;
-      if (!rv.practice) put(schedule(it, g, today(), rv.conf), true);
+      if (!rv.practice) {
+        put(schedule(it, g, today(), rv.conf), true);
+        const nx = recs[id];
+        if (g === 0 && nx && (nx.l || 0) >= 8 && !nx.lc) {
+          const auto = !!cfg().la;
+          put({ ...nx, lc: 1, ...(auto ? { off: 1 } : {}) }, true);
+          toast(auto ? "Qiyin karta: 8 marta unutdingiz. Takrordan chiqarildi. Uni boshqacha yozib ko'ring." : "Qiyin karta: 8 marta unutdingiz. Uni savol-javobni o'zgartirib yoki eslatkich qo'shib ko'ring.");
+        }
+      }
       if (g === 0) rv.q.push(id);            // successive relearning: ask once more at the end of this session
     }
     rvClock(it);
@@ -3904,6 +4252,38 @@ const act = {
   async "key-new"(el) { if ($("#ext-key") && !armed(el, "Ha, eskisi ishlamay qoladi")) return; try { await api("/api/key", {}); paintLinks(); } catch (e) { toast(e.msg); } },
   async "key-del"(el) { if (!armed(el, "Ha, o'chirilsin")) return; try { await api("/api/key", null, "DELETE"); paintLinks(); } catch (e) { toast(e.msg); } },
   assistant() { sheetAssistant(); },
+  "folder-open"(el) { ui.book = null; ui.tab = "shelf"; ui.folder = el.dataset.id || ""; ui.tag = ""; if (!["reading", "done", "all"].includes(ui.filter)) ui.filter = "reading"; closeSheet(); render(); window.scrollTo(0, 0); },
+  "folder-new"(el) { sheetFolder(null, el.dataset.id || ""); },
+  "folder-edit"(el) { const f = recs[el.dataset.id]; if (f && !f.del) sheetFolder(f); },
+  "folder-del"(el) {
+    const f = recs[el.dataset.id]; if (!f) return closeSheet();
+    if (!armed(el, "Ha, papkani o'chirish")) return;
+    const up = f.parent && recs[f.parent] && !recs[f.parent].del ? f.parent : "";
+    put([{ id: f.id, k: "f", del: 1 }, ...subFolders(f.id).map(x => ({ ...x, parent: up })), ...decksIn(f.id).map(b => ({ ...b, fd: up }))]);
+    if (ui.folder === f.id) ui.folder = up; closeSheet(); render(); toast("Papka o'chirildi. Ichidagilar bir pog'ona yuqoriga ko'chdi.");
+  },
+  "deck-settings"(el) { const b = recs[el.dataset.id || ui.book]; if (b && !b.del) sheetDeckSettings(b); },
+  "deck-import"(el) { const b = recs[el.dataset.id]; if (b && !b.del) sheetImport(b); },
+  "deck-export"(el) {
+    const b = recs[el.dataset.id]; if (!b) return;
+    const csv = deckCsv(b), name = b.title.replace(/[^\w\u0400-\u04ff' -]+/g, "").trim() || "to'plam";
+    try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" })); a.download = name + ".csv"; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); } catch (e) {}
+    copyText(csv, `${itemsOf(b.id).length} ta karta CSV faylga saqlandi va nusxalandi. Do'stingiz o'z ME'MORI'sida «Import»ga qo'yadi.`);
+  },
+  "deck-reverse"(el) {
+    const b = recs[el.dataset.id]; if (!b) return;
+    const its = itemsOf(b.id), have = new Set(its.map(i => i.ro).filter(Boolean)), now = Date.now(), d = addDays(today(), 1);
+    const out = its.filter(i => i.t === "card" && i.q && i.a && !i.ro && !have.has(i.id)).map((i, k) => ({ id: uid(), k: "i", b: b.id, t: "card", q: plain(i.a).slice(0, 1000), a: plain(i.q), r: "Teskari karta", ro: i.id, f: 0, e: 0, c: now + k, s: 0, d, n: 0, l: 0, h: [] }));
+    if (!out.length) return toast("Teskari qilinadigan yangi savol-javob karta yo'q.");
+    put(out); closeSheet(); toast(`${out.length} ta teskari karta qo'shildi (javob → savol).`);
+  },
+  "deck-reset"(el) {
+    const b = recs[el.dataset.id]; if (!b) return;
+    if (!armed(el, "Ha, hammasi yangi bo'lsin")) return;
+    const d = today();
+    put(itemsOf(b.id).map(i => { const x = { ...i, s: 0, d, n: 0, l: 0, h: [] }; delete x.S; delete x.D; delete x.dt; delete x.lr; return x; })); closeSheet(); toast("Bu to'plamdagi kartalar yangidan boshlanadi.");
+  },
+  activity(el) { sheetActivity(el && el.dataset.m); },
   "asst-tab"(el) { asst.tab = el.dataset.t; for (const b of el.parentNode.children) b.setAttribute("aria-selected", String(b === el)); paintAssistant(); },
   "gl-clear"() { asst.ans = null; asst.word = ""; asst.ctx = ""; paintAssistant(); const w = $("#gl-w"); if (w) w.focus(); },
   "gl-open"() { closeSheet(); if (!ui.book) ui.from = ui.tab; ui.book = GLOSS_ID; render(); window.scrollTo(0, 0); },
@@ -3955,7 +4335,7 @@ const act = {
   "auth-mode"(el) { openAuth(el.dataset.m); },
   say(el) { say(el.dataset.t, el.dataset.b); },
   algo(el) { const f = el.closest("form"); for (const c of f.querySelectorAll(".algo")) c.setAttribute("aria-checked", String(c === el)); f.querySelector("[name=algo]").value = el.dataset.a; },
-  "cfg-reset"(el) { const f = el.closest("form"); f.querySelector("[name=eb]").value = CFG0.eb; f.querySelector("[name=im]").value = CFG0.im; f.querySelector("[name=mx]").value = CFG0.mx; },
+  "cfg-reset"(el) { const f = el.closest("form"); f.querySelector("[name=eb]").value = CFG0.eb; f.querySelector("[name=im]").value = CFG0.im; f.querySelector("[name=mx]").value = CFG0.mx; for (const k of ["rt", "ss", "ord"]) { const e = f.querySelector(`[name=${k}]`); if (e) e.value = CFG0[k] || ""; } },
   study(el) { openStudy(el.dataset.m, el.dataset.id || ""); },
   "st-close"() { $("#study").close(); },
   "fc-yes"() { fcAnswer(true); },
@@ -4044,7 +4424,7 @@ const forms = {
       put({ ...b, ...base, cur, status, fin: status === "done" ? b.fin || Date.now() : 0 });
       closeSheet(); toast("Saqlandi.");
     } else {
-      const b = { id: uid(), k: "b", ...base, cur: 0, status: "reading", c: Date.now(), fin: 0 };
+      const b = { id: uid(), k: "b", ...base, cur: 0, status: "reading", c: Date.now(), fin: 0, fd: ui.tab === "shelf" && ui.folder && recs[ui.folder] ? ui.folder : "" };
       if (!ui.book) ui.from = ui.tab; ui.book = b.id;
       put(b); closeSheet(); window.scrollTo(0, 0);
       toast("Qo'shildi. O'rganib bo'lgach, «O'rgandim» tugmasini bosing.");
@@ -4128,7 +4508,12 @@ const forms = {
     const num = (k, lo, hi) => Math.max(lo, Math.min(hi, int(fd.get(k)) || CFG0[k]));
     if (fd.has("algo")) next.algo = ["fsrs", "free"].includes(fd.get("algo")) ? fd.get("algo") : "ladder";
     if (fd.has("cue")) next.cue = str(fd.get("cue")).trim();
-    for (const [k, lo, hi] of [["eb", 100, 300], ["im", 50, 300], ["mx", 7, 3650], ["dg", 10, 2000]]) if (fd.has(k)) next[k] = num(k, lo, hi);
+    for (const [k, lo, hi] of [["eb", 100, 300], ["im", 50, 300], ["mx", 7, 3650], ["dg", 10, 2000], ["mr", 1, 9999]]) if (fd.has(k)) next[k] = num(k, lo, hi);
+    if (fd.has("rt")) next.rt = Math.max(70, Math.min(97, int(fd.get("rt")) || 90));
+    if (fd.has("ss")) next.ss = Math.max(0, Math.min(9999, int(fd.get("ss")) || 0));
+    if (fd.has("ord")) next.ord = ["new", "old", "rand"].includes(fd.get("ord")) ? fd.get("ord") : "";
+    if (fd.has("la_f")) next.la = fd.get("la") ? 1 : 0;
+    if (fd.has("np")) next.np = Math.max(0, Math.min(9999, str(fd.get("np")).trim() === "" ? 20 : int(fd.get("np"))));
     put({ ...next, id: "cfg", k: "c" }); closeSheet(); toast("Saqlandi.");
   },
   idea(form) {
@@ -4211,6 +4596,31 @@ const forms = {
     if (!target) return fail(form, "Maqsad sonini yozing.");
     const g = { ...(id && recs[id] ? recs[id] : { id: uid(), k: "g", c: Date.now() }), metric: str(fd.get("metric")) || "notes", period: fd.get("period") === "year" ? "year" : "month", target, title: str(fd.get("title")).trim() };
     put(g); closeSheet(); toast("Maqsad saqlandi.");
+  },
+  folder(form) {
+    const fd = new FormData(form), name = str(fd.get("name")).trim().slice(0, 80);
+    if (!name) return fail(form, "Papka nomini yozing.");
+    const old = form.dataset.id && recs[form.dataset.id], parent = str(fd.get("parent"));
+    if (old && folderTree(old.id).has(parent)) return fail(form, "Papkani o'z ichiga ko'chirib bo'lmaydi.");
+    const f = { ...(old || { id: uid(), k: "f", c: Date.now() }), name, parent, sr: readSr(fd) };
+    put(f); closeSheet();
+    if (!old) { ui.tab = "shelf"; ui.book = null; ui.folder = f.id; render(); window.scrollTo(0, 0); }
+    toast(old ? "Saqlandi." : "Papka yaratildi. Endi ichiga to'plam qo'shing.");
+  },
+  decksr(form) {
+    const b = recs[form.dataset.id]; if (!b) return closeSheet();
+    const fd = new FormData(form);
+    put({ ...b, fd: str(fd.get("fd")), sr: readSr(fd), tts: str(fd.get("tts")), fs: ["s", "l", "xl"].includes(fd.get("fs")) ? fd.get("fs") : "", say: fd.get("say") ? 1 : 0, al: fd.get("al") ? 1 : 0 });
+    closeSheet(); toast("To'plam sozlamalari saqlandi.");
+  },
+  deckimp(form) {
+    const b = recs[form.dataset.id]; if (!b) return closeSheet();
+    const rows = str(new FormData(form).get("text")).split("\n").map(splitCard).filter(Boolean);
+    if (!rows.length) return fail(form, "Kartalar topilmadi. Har qatorda: savol, keyin Tab, «;» yoki «—», keyin javob.");
+    const known = new Set(itemsOf(b.id).map(i => plain(i.q).toLowerCase()));
+    const now = Date.now(), d = addDays(today(), 1), out = rows.filter(r => !known.has(r.q.toLowerCase())).map((r, k) => ({ id: uid(), k: "i", b: b.id, t: "card", q: r.q, a: r.a, r: "Import", f: 0, e: 0, c: now + k, s: 0, d, n: 0, l: 0, h: [] }));
+    if (!out.length) return fail(form, "Bu kartalar to'plamda allaqachon bor.");
+    put(out); closeSheet(); toast(`${out.length} ta karta qo'shildi${rows.length > out.length ? `, ${rows.length - out.length} tasi takror bo'lgani uchun o'tkazildi` : ""}. Kuniga ${srOf(b.id).np} tadan yangi karta chiqadi.`);
   },
   async aikey(form) {
     const fd = new FormData(form), key = str(fd.get("key")).trim(), model = str(fd.get("model")).trim();
@@ -4303,6 +4713,7 @@ document.addEventListener("keydown", e => {
   if (!$("#review").open || (t.matches && t.matches("textarea, input"))) return;
   if (!rv.shown && (e.key === "Enter" || e.key === " ") && !(t.closest && t.closest("button"))) { e.preventDefault(); act["rv-show"](); }
   else if (rv.shown && ["1", "2", "3", "4"].includes(e.key)) act["rv-grade"]({ dataset: { g: String(+e.key - 1) } });
+  else if (!e.metaKey && !e.ctrlKey && !e.altKey && rv.q && rv.q.length) { const k = e.key.toLowerCase(); if (k === "s") act["rv-star"](); else if (k === "b") act["rv-bury"](); else if (k === "x") act["rv-off"](); }
 });
 $("#sheet").addEventListener("close", () => { lock(); if (ui.tab === "settings" && !ui.book) setTimeout(render, 0); if (chat.ctl) chat.ctl.abort(); if (pend.length) { pend.forEach(forgetFile); pend = []; } });
 $("#auth").addEventListener("cancel", e => e.preventDefault());

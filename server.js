@@ -193,7 +193,7 @@ app.get("/api/me", auth, (req, res) => res.json(publicUser(req.user)));
    The client sends the records it changed (each carries "u", its last-edit time) and the cursor it holds.
    A stored record is replaced only by a newer "u". Every write takes a new revision from one sequence,
    so the reply is simply everything of this user with a revision above the cursor, plus the new cursor. */
-const KINDS = new Set(["b", "i", "c", "g", "s", "n"]);   // source, note, settings, goal, study session, idea
+const KINDS = new Set(["b", "i", "c", "g", "s", "n", "f"]);   // … and folder   // source, note, settings, goal, study session, idea
 app.post("/api/sync", auth, wrap(async (req, res) => {
   const since = Math.max(0, +req.body.since || 0);
   const incoming = Array.isArray(req.body.recs) ? req.body.recs : [];
